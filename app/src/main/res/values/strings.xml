@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">IONIS iGEM 2015 App</string>
+
+    <string name="app_subtitle">The IONIS iGEM 2015 Team official app</string>
+    <string name="action_settings">Settings</string>
+    <string name="label_home_new_game">New Game</string>
+    <string name="label_home_parameters">Parameters</string>
+    <string name="label_home_team">Our team</string>
+    <string name="label_home_igem">The iGEM</string>
+</resources>
