@@ -51,7 +51,8 @@
                 android:layout_height="wrap_content"
                 android:text="@string/label_home_parameters"
                 android:id="@+id/button_home_parameters"
-                android:theme="@style/AppTheme.Button"/>
+                android:theme="@style/AppTheme.Button"
+                android:layout_centerInParent="true"/>
     </RelativeLayout>
 
     <RelativeLayout android:layout_width="match_parent"
@@ -61,7 +62,8 @@
                 android:layout_height="wrap_content"
                 android:text="@string/label_home_team"
                 android:id="@+id/button_home_team"
-                android:theme="@style/AppTheme.Button"/>
+                android:theme="@style/AppTheme.Button"
+                android:layout_centerInParent="true"/>
     </RelativeLayout>
 
     <RelativeLayout android:layout_width="match_parent"
@@ -71,7 +73,8 @@
                 android:layout_height="wrap_content"
                 android:text="@string/label_home_igem"
                 android:id="@+id/button_home_igem"
-                android:theme="@style/AppTheme.Button"/>
+                android:theme="@style/AppTheme.Button"
+                android:layout_centerInParent="true"/>
     </RelativeLayout>
 
 

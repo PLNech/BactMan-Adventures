@@ -6,10 +6,7 @@
     </style>
 
     <style name="AppTheme.Button">
-        <item name="android:layout_centerHorizontal">true</item>
-        <item name="android:layout_centerInParent">true</item>
         <item name="android:shadowColor">@color/lightGreen</item>
-        <item name="android:textColor">@color/red</item>
         <item name="android:textColorHighlight">@color/lightGreen</item>
     </style>
 
