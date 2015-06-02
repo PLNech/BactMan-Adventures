@@ -4,14 +4,27 @@ import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
-
+import android.widget.Button;
+import android.widget.Toast;
+import butterknife.ButterKnife;
+import butterknife.InjectView;
+import butterknife.OnClick;
 
 public class HomeActivity extends ActionBarActivity {
+
+    @InjectView(R.id.button_home_new_game)
+    protected Button buttonNewGame;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
+        ButterKnife.inject(this);
+    }
+
+    @OnClick(R.id.button_home_new_game)
+    protected void onClickNewGame() {
+        Toast.makeText(getApplicationContext(), "You just clicked on new game!", Toast.LENGTH_SHORT).show();
     }
 
 

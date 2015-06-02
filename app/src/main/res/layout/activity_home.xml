@@ -39,7 +39,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
                 android:text="@string/label_home_new_game"
-                android:id="@+id/button_home_new"
+                android:id="@+id/button_home_new_game"
                 android:theme="@style/AppTheme.Button"
                 android:layout_centerInParent="true"/>
     </RelativeLayout>
