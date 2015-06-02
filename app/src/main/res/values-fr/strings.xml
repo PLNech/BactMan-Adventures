@@ -3,7 +3,7 @@
     <string name="app_name">Application IONIS iGEM 2015</string>
 
     <string name="app_subtitle">L\'application officielle de l\'équipe IONIS iGEM 2015</string>
-    <string name="action_settings">Settings</string>
+    <string name="action_settings">Réglages</string>
     <string name="label_home_new_game">Nouveau Jeu</string>
     <string name="label_home_parameters">Paramètres</string>
     <string name="label_home_team">Notre Équipe</string>
