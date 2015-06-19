@@ -6,5 +6,5 @@
     <string name="label_home_new_game">New Game</string>
     <string name="label_home_parameters">Parameters</string>
     <string name="label_home_team">Our team</string>
-    <string name="label_home_igem">The iGEM</string>
+    <string name="label_home_iGEM">The iGEM</string>
 </resources>

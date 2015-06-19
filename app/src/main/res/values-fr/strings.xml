@@ -7,5 +7,5 @@
     <string name="label_home_new_game">Nouveau Jeu</string>
     <string name="label_home_parameters">Paramètres</string>
     <string name="label_home_team">Notre Équipe</string>
-    <string name="label_home_igem">L\'iGEM</string>
+    <string name="label_home_iGEM">L\'iGEM</string>
 </resources>
