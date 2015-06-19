@@ -16,7 +16,30 @@
         <item name="android:layout_alignParentLeft">true</item>
         <item name="android:baselineAligned">false</item>
         <item name="android:weightSum">100</item>
+    </style>
 
+    <style name="AppTheme.ContainerTitle">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">0dp</item>
+        <item name="android:layout_weight">24</item>
+        <item name="tools:ignore">InefficientWeight,Suspicious0dp</item> <!-- IDE does not see the style weightSum-->
+    </style>
+
+    <style name="AppTheme.TextView">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_centerHorizontal">true</item>
+    </style>
+
+    <style name="AppTheme.TextView.Title">
+        <item name="android:layout_alignParentTop">true</item>
+        <item name="android:layout_marginTop">20dp</item>
+        <item name="android:textSize">25sp</item>
+    </style>
+
+    <style name="AppTheme.TextView.Subtitle">
+        <item name="android:textSize">15sp</item>
+        <item name="android:textStyle">italic</item>
     </style>
 
     <style name="AppTheme.Button">

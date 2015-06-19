@@ -1,25 +1,15 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android" xmlns:tools="http://schemas.android.com/tools"
               style="@style/AppTheme.ActivityMenu"
               tools:context=".HomeActivity">
-    <RelativeLayout android:layout_width="match_parent"
-                    android:layout_height="0dp"
-                    android:layout_weight="24"
-                    tools:ignore="InefficientWeight,Suspicious0dp"> <!-- IDE does not see the style weightSum-->
+    <RelativeLayout style="@style/AppTheme.ContainerTitle">
 
-        <TextView android:layout_height="wrap_content" android:layout_width="wrap_content"
+        <TextView style="@style/AppTheme.TextView.Title"
                   android:text="@string/app_name"
-                  android:id="@+id/home_title"
-                  android:layout_alignParentTop="true"
-                  android:layout_marginTop="20dp"
-                  android:layout_centerHorizontal="true"
-                  android:textSize="25sp"/>
+                  android:id="@+id/home_title"/>
 
-        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+        <TextView style="@style/AppTheme.TextView.Subtitle"
                   android:text="@string/app_subtitle"
                   android:id="@+id/home_subtitle"
-                  android:textStyle="italic"
-                  android:textSize="15sp"
-                  android:layout_centerHorizontal="true"
                   android:layout_below="@+id/home_title"/>
 
     </RelativeLayout>

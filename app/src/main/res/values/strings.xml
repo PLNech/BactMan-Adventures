@@ -1,19 +1,19 @@
 <resources>
     <!-- TODO: Review naming with team -->
 
-    <!--Main texts-->
+    <!-- Main texts -->
     <string name="app_name">IONIS iGEM 2015 App</string>
     <string name="app_subtitle">The IONIS iGEM 2015 Team official app</string>
     <string name="action_settings">Settings</string>
 
-    <!--Home page-->
+    <!-- Home -->
     <string name="label_home_new_game">New Game</string>
     <string name="label_home_parameters">Parameters</string>
     <string name="label_home_team">Us</string>
     <string name="label_home_iGEM">The iGEM</string>
 
 
-    <!--Us page-->
+    <!-- Home -> Us -->
     <string name="title_activity_us">Us</string>
     <string name="us_title">Our team</string>
     <string name="us_subtitle">Everything about us</string>
@@ -22,12 +22,18 @@
     <string name="label_us_sponsors">Our sponsors</string>
     <string name="label_us_contact">Contact us</string>
 
-    <string name="title_activity_i_gem" translatable="false">iGEM</string>
+
+    <!-- Home -> iGEM -->
+    <string name="title_activity_igem" translatable="false">iGEM</string>
     <string name="igem_title">The iGEM</string>
     <string name="igem_subtitle" translatable="false">International Genetically Engineered Machine</string>
     <string name="label_igem_what">Presentation</string>
     <string name="label_igem_biology">Synthetic Biology</string>
     <string name="label_igem_biobricks">The BioBricks</string>
     <string name="label_igem_partners">Our Partners</string>
+
+
+    <!-- Home -> Us -> Presentation -->
+    <string name="title_activity_presentation">Our project</string>
 
 </resources>
