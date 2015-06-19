@@ -14,5 +14,11 @@
     <string name="label_us_sponsors">Nos sponsors</string>
     <string name="label_us_team">Notre équipe</string>
     <string name="us_subtitle">Tout sur nous</string>
-    <string name="title_activity_us" translatable="false"></string>
+    <string name="title_activity_us" translatable="false">Nous</string>
+    <string name="igem_subtitle"></string>
+    <string name="igem_title">L\'iGEM</string>
+    <string name="label_igem_biobricks">Les BioBriques</string>
+    <string name="label_igem_biology">La Biologie Synthétique</string>
+    <string name="label_igem_partners">Nos partenaires</string>
+    <string name="label_igem_what">Présentation</string>
 </resources>

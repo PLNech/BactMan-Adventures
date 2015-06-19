@@ -33,6 +33,10 @@ public class HomeActivity extends ActionBarActivity {
         startActivity(new Intent(this, UsActivity.class));
     }
 
+    @OnClick(R.id.button_home_iGEM)
+    protected void onClickIGEM() {
+        startActivity(new Intent(this, iGEMActivity.class));
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

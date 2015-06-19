@@ -14,12 +14,20 @@
 
 
     <!--Us page-->
-    <string name="title_activity_us" translatable="false">UsActivity</string>
+    <string name="title_activity_us">Us</string>
     <string name="us_title">Our team</string>
     <string name="us_subtitle">Everything about us</string>
     <string name="label_us_presentation">Our project</string>
     <string name="label_us_team">Our team</string>
     <string name="label_us_sponsors">Our sponsors</string>
     <string name="label_us_contact">Contact us</string>
+
+    <string name="title_activity_i_gem" translatable="false">iGEM</string>
+    <string name="igem_title">The iGEM</string>
+    <string name="igem_subtitle" translatable="false">International Genetically Engineered Machine</string>
+    <string name="label_igem_what">Presentation</string>
+    <string name="label_igem_biology">Synthetic Biology</string>
+    <string name="label_igem_biobricks">The BioBricks</string>
+    <string name="label_igem_partners">Our Partners</string>
 
 </resources>

@@ -24,6 +24,14 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.ionis.igem.app.HomeActivity" />
         </activity>
+        <activity
+            android:name=".iGEMActivity"
+            android:label="@string/title_activity_i_gem"
+            android:parentActivityName=".HomeActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.ionis.igem.app.HomeActivity" />
+        </activity>
     </application>
 
 </manifest>
