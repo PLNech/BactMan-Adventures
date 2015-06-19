@@ -6,6 +6,13 @@
     <string name="action_settings">Réglages</string>
     <string name="label_home_new_game">Nouveau Jeu</string>
     <string name="label_home_parameters">Paramètres</string>
-    <string name="label_home_team">Notre Équipe</string>
+    <string name="label_home_team">Nous</string>
     <string name="label_home_iGEM">L\'iGEM</string>
+    <string name="us_title">L\'Équipe</string>
+    <string name="label_us_contact">Nous contacter</string>
+    <string name="label_us_presentation">Notre projet</string>
+    <string name="label_us_sponsors">Nos sponsors</string>
+    <string name="label_us_team">Notre équipe</string>
+    <string name="us_subtitle">Tout sur nous</string>
+    <string name="title_activity_us" translatable="false"></string>
 </resources>

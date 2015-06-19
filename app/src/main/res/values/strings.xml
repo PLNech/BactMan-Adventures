@@ -1,10 +1,25 @@
 <resources>
-    <string name="app_name">IONIS iGEM 2015 App</string>
+    <!-- TODO: Review naming with team -->
 
+    <!--Main texts-->
+    <string name="app_name">IONIS iGEM 2015 App</string>
     <string name="app_subtitle">The IONIS iGEM 2015 Team official app</string>
     <string name="action_settings">Settings</string>
+
+    <!--Home page-->
     <string name="label_home_new_game">New Game</string>
     <string name="label_home_parameters">Parameters</string>
-    <string name="label_home_team">Our team</string>
+    <string name="label_home_team">Us</string>
     <string name="label_home_iGEM">The iGEM</string>
+
+
+    <!--Us page-->
+    <string name="title_activity_us" translatable="false">UsActivity</string>
+    <string name="us_title">Our team</string>
+    <string name="us_subtitle">Everything about us</string>
+    <string name="label_us_presentation">Our project</string>
+    <string name="label_us_team">Our team</string>
+    <string name="label_us_sponsors">Our sponsors</string>
+    <string name="label_us_contact">Contact us</string>
+
 </resources>

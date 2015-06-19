@@ -1,43 +1,22 @@
 package com.ionis.igem.app;
 
-import android.content.Intent;
-import android.support.v7.app.ActionBarActivity;
+import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.Button;
-import android.widget.Toast;
-import butterknife.ButterKnife;
-import butterknife.InjectView;
-import butterknife.OnClick;
 
-public class HomeActivity extends ActionBarActivity {
-
-    @InjectView(R.id.button_home_new_game)
-    protected Button buttonNewGame;
+public class UsActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_home);
-        ButterKnife.inject(this);
+        setContentView(R.layout.activity_us);
     }
-
-    @OnClick(R.id.button_home_new_game)
-    protected void onClickNewGame() {
-        Toast.makeText(getApplicationContext(), "You just clicked on new game!", Toast.LENGTH_SHORT).show();
-    }
-
-    @OnClick(R.id.button_home_team)
-    protected void onClickTeam() {
-        startActivity(new Intent(this, UsActivity.class));
-    }
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_home, menu);
+        getMenuInflater().inflate(R.menu.menu_us, menu);
         return true;
     }
 
