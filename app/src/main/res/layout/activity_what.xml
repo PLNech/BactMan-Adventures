@@ -1,36 +1,36 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                xmlns:tools="http://schemas.android.com/tools"
-                style="@style/AppTheme.Activity.Detail"
-                tools:context="com.ionis.igem.app.WhatActivity">
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:tools="http://schemas.android.com/tools"
+            style="@style/AppTheme.ScrollView">
 
-    <ImageView style="@style/AppTheme.ImageView.FullWidth"
-               android:id="@+id/mainPic"
-               android:src="@drawable/people"
-               android:contentDescription="@string/igem_title"/>
+    <RelativeLayout style="@style/AppTheme.Activity.Detail"
+                    tools:context="com.ionis.igem.app.WhatActivity">
 
-    <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/box_title"
-            android:layout_below="@id/mainPic">
+        <ImageView style="@style/AppTheme.ImageView.FullWidth"
+                   android:id="@+id/mainPic"
+                   android:src="@drawable/people"
+                   android:contentDescription="@string/igem_title"/>
 
-        <TextView style="@style/AppTheme.TextView.Title"
-                  android:text="@string/title_activity_what"
-                  android:id="@+id/what_title"/>
-        <TextView style="@style/AppTheme.TextView.Subtitle"
-                  android:text="@string/what_subtitle"
-                  android:id="@+id/what_subtitle"
-                  android:layout_below="@id/what_title"/>
-    </RelativeLayout>
+        <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/box_title"
+                android:layout_below="@id/mainPic">
 
-    <ScrollView style="@style/AppTheme.ScrollView"
-                android:layout_below="@id/box_title">
+            <TextView style="@style/AppTheme.TextView.Title"
+                      android:text="@string/title_activity_what"
+                      android:id="@+id/what_title"/>
+            <TextView style="@style/AppTheme.TextView.Subtitle"
+                      android:text="@string/what_subtitle"
+                      android:id="@+id/what_subtitle"
+                      android:layout_below="@id/what_title"/>
+        </RelativeLayout>
 
-        <RelativeLayout style="@style/AppTheme.Container.Paragraphs">
+        <RelativeLayout style="@style/AppTheme.Container.Paragraphs"
+                        android:layout_below="@id/box_title">
             <TextView style="@style/AppTheme.TextView.Paragraphs"
                       android:text="@string/lorem"
                       android:id="@+id/paragraphs"/>
         </RelativeLayout>
-    </ScrollView>
 
-</RelativeLayout>
+    </RelativeLayout>
+</ScrollView>
