@@ -12,10 +12,10 @@
             android:contentDescription="@string/title_activity_presentation"/>
 
     <RelativeLayout
-                    android:layout_below="@id/picPres"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:id="@+id/pres_box_title"
+                    android:layout_below="@id/picPres"
             >
 
         <TextView style="@style/AppTheme.TextView.Title"
