@@ -1,0 +1,42 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android" xmlns:tools="http://schemas.android.com/tools"
+                style="@style/AppTheme.Activity.Detail"
+                tools:context="com.ionis.igem.app.PresentationActivity">
+    <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/picPres"
+            android:layout_alignParentTop="true" android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:adjustViewBounds="true"
+            android:src="@drawable/igem"
+            android:contentDescription="@string/title_activity_presentation"/>
+
+    <RelativeLayout
+                    android:layout_below="@id/picPres"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/pres_box_title"
+            >
+
+        <TextView style="@style/AppTheme.TextView.Title"
+                  android:text="@string/igem_title"
+                  android:id="@+id/pres_title"/>
+
+        <TextView style="@style/AppTheme.TextView.Subtitle"
+                  android:text="@string/igem_subtitle"
+                  android:id="@+id/pres_subtitle"
+                  android:layout_below="@+id/pres_title"/>
+    </RelativeLayout>
+
+    <RelativeLayout android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="@dimen/activity_horizontal_margin"
+                    android:layout_below="@id/pres_box_title">
+
+        <TextView style="@style/AppTheme.TextView.Paragraphs"
+                  android:text="@string/lorem"
+                  android:id="@+id/pres_paragraphs"
+                  />
+    </RelativeLayout>
+
+</RelativeLayout>

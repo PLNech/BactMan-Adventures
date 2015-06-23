@@ -32,6 +32,14 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.ionis.igem.app.HomeActivity" />
         </activity>
+        <activity
+            android:name=".PresentationActivity"
+            android:label="@string/title_activity_presentation"
+            android:parentActivityName=".UsActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.ionis.igem.app.UsActivity" />
+        </activity>
     </application>
 
 </manifest>
