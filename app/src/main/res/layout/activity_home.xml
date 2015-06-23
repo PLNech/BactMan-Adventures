@@ -1,7 +1,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android" xmlns:tools="http://schemas.android.com/tools"
               style="@style/AppTheme.Activity.Menu"
               tools:context=".HomeActivity">
-    <RelativeLayout style="@style/AppTheme.ContainerTitle">
+    <RelativeLayout style="@style/AppTheme.Container.Title">
 
         <TextView style="@style/AppTheme.TextView.Title"
                   android:text="@string/app_name"
@@ -13,28 +13,28 @@
                   android:layout_below="@+id/home_title"/>
 
     </RelativeLayout>
-    <RelativeLayout style="@style/AppTheme.ButtonContainer">
+    <RelativeLayout style="@style/AppTheme.Container.Button">
         <Button style="@style/AppTheme.Button"
                 android:text="@string/label_home_new_game"
                 android:id="@+id/button_home_new_game"/>
     </RelativeLayout>
 
-    <RelativeLayout style="@style/AppTheme.ButtonContainer">
+    <RelativeLayout style="@style/AppTheme.Container.Button">
         <Button style="@style/AppTheme.Button"
                 android:text="@string/label_home_iGEM"
                 android:id="@+id/button_home_iGEM"/>
     </RelativeLayout>
 
-    <RelativeLayout style="@style/AppTheme.ButtonContainer">
+    <RelativeLayout style="@style/AppTheme.Container.Button">
         <Button style="@style/AppTheme.Button"
                 android:text="@string/label_home_team"
                 android:id="@+id/button_home_team"/>
     </RelativeLayout>
 
-    <RelativeLayout style="@style/AppTheme.ButtonContainer">
+    <RelativeLayout style="@style/AppTheme.Container.Button">
         <Button style="@style/AppTheme.Button"
-                android:text="@string/label_home_parameters"
-                android:id="@+id/button_home_parameters"/>
+                android:text="@string/label_home_settings"
+                android:id="@+id/button_home_settings"/>
     </RelativeLayout>
 
 

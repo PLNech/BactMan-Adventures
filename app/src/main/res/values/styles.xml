@@ -28,10 +28,23 @@
         <item name="android:paddingBottom">0dp</item>
     </style>
 
-    <style name="AppTheme.ContainerTitle">
+    <style name="AppTheme.Container">
         <item name="android:layout_width">match_parent</item>
+    </style>
+
+    <style name="AppTheme.Container.Title">
         <item name="android:layout_height">0dp</item>
         <item name="android:layout_weight">24</item>
+    </style>
+
+    <style name="AppTheme.Container.Button">
+        <item name="android:layout_height">0dp</item>
+        <item name="android:layout_weight">19</item>
+    </style>
+
+    <style name="AppTheme.Container.Paragraphs">
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:padding">24dp</item>
     </style>
 
     <style name="AppTheme.TextView">
@@ -49,6 +62,7 @@
     <style name="AppTheme.TextView.Subtitle">
         <item name="android:textSize">15sp</item>
         <item name="android:textStyle">italic</item>
+        <item name="android:layout_marginBottom">20dp</item>
     </style>
 
     <style name="AppTheme.TextView.Paragraphs">
@@ -65,10 +79,21 @@
         <item name="android:layout_centerInParent">true</item>
     </style>
 
-    <style name="AppTheme.ButtonContainer">
+    <style name="AppTheme.ImageView">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+    </style>
+
+    <style name="AppTheme.ImageView.FullWidth">
         <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">0dp</item>
-        <item name="android:layout_weight">19</item>
+        <item name="android:layout_alignParentTop">true</item>
+        <item name="android:layout_alignParentLeft">true</item>
+        <item name="android:adjustViewBounds">true</item>
+    </style>
+
+    <style name="AppTheme.ScrollView">
+        <item name="android:layout_width">fill_parent</item>
+        <item name="android:layout_height">wrap_content</item>
     </style>
 
 </resources>

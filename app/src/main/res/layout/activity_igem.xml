@@ -1,7 +1,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android" xmlns:tools="http://schemas.android.com/tools"
               style="@style/AppTheme.Activity.Menu"
               tools:context=".teamActivity">
-    <RelativeLayout style="@style/AppTheme.ContainerTitle">
+    <RelativeLayout style="@style/AppTheme.Container.Title">
 
         <TextView style="@style/AppTheme.TextView.Title"
                   android:text="@string/igem_title"
@@ -13,25 +13,25 @@
                   android:layout_below="@+id/team_title"/>
 
     </RelativeLayout>
-    <RelativeLayout style="@style/AppTheme.ButtonContainer">
+    <RelativeLayout style="@style/AppTheme.Container.Button">
         <Button style="@style/AppTheme.Button"
                 android:text="@string/label_igem_what"
                 android:id="@+id/button_igem_what"/>
     </RelativeLayout>
 
-    <RelativeLayout style="@style/AppTheme.ButtonContainer">
+    <RelativeLayout style="@style/AppTheme.Container.Button">
         <Button style="@style/AppTheme.Button"
                 android:text="@string/label_igem_biology"
                 android:id="@+id/button_igem_biology"/>
     </RelativeLayout>
 
-    <RelativeLayout style="@style/AppTheme.ButtonContainer">
+    <RelativeLayout style="@style/AppTheme.Container.Button">
         <Button style="@style/AppTheme.Button"
                 android:text="@string/label_igem_biobricks"
                 android:id="@+id/button_igem_biobricks"/>
     </RelativeLayout>
 
-    <RelativeLayout style="@style/AppTheme.ButtonContainer">
+    <RelativeLayout style="@style/AppTheme.Container.Button">
         <Button style="@style/AppTheme.Button"
                 android:text="@string/label_igem_partners"
                 android:id="@+id/button_igem_partners"/>

@@ -1,7 +1,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android" xmlns:tools="http://schemas.android.com/tools"
               style="@style/AppTheme.Activity.Menu"
               tools:context=".teamActivity">
-    <RelativeLayout style="@style/AppTheme.ContainerTitle">
+    <RelativeLayout style="@style/AppTheme.Container.Title">
 
         <TextView style="@style/AppTheme.TextView.Title"
                   android:text="@string/us_title"
@@ -13,25 +13,25 @@
                   android:layout_below="@+id/team_title"/>
 
     </RelativeLayout>
-    <RelativeLayout style="@style/AppTheme.ButtonContainer">
+    <RelativeLayout style="@style/AppTheme.Container.Button">
         <Button style="@style/AppTheme.Button"
                 android:text="@string/label_us_presentation"
                 android:id="@+id/button_us_presentation"/>
     </RelativeLayout>
 
-    <RelativeLayout style="@style/AppTheme.ButtonContainer">
+    <RelativeLayout style="@style/AppTheme.Container.Button">
         <Button style="@style/AppTheme.Button"
                 android:text="@string/label_us_team"
                 android:id="@+id/button_us_team"/>
     </RelativeLayout>
 
-    <RelativeLayout style="@style/AppTheme.ButtonContainer">
+    <RelativeLayout style="@style/AppTheme.Container.Button">
         <Button style="@style/AppTheme.Button"
                 android:text="@string/label_us_sponsors"
                 android:id="@+id/button_us_sponsors"/>
     </RelativeLayout>
 
-    <RelativeLayout style="@style/AppTheme.ButtonContainer">
+    <RelativeLayout style="@style/AppTheme.Container.Button">
         <Button style="@style/AppTheme.Button"
                 android:text="@string/label_us_contact"
                 android:id="@+id/button_us_contact"/>
