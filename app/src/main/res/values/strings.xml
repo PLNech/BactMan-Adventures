@@ -6,6 +6,21 @@
     <string name="app_subtitle">The IONIS iGEM 2015 Team official app</string>
     <string name="action_settings">Settings</string>
 
+    <string name="lorem">
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec a diam lectus. Sed sit amet
+        ipsum mauris. Maecenas congue ligula ac quam viverra nec consectetur ante hendrerit. Donec et mollis dolor.
+        Praesent et diam eget libero egestas mattis sit amet vitae augue. Nam tincidunt congue enim, ut porta lorem
+        lacinia consectetur.\n\n
+        Donec ut libero sed arcu vehicula ultricies a non tortor. Lorem ipsum dolor sit amet,
+        consectetur adipiscing elit. Aenean ut gravida lorem. Ut turpis felis, pulvinar a semper sed, adipiscing id
+        dolor. Pellentesque auctor nisi id magna consequat sagittis. Curabitur dapibus enim sit amet elit pharetra
+        tincidunt feugiat nisl imperdiet.\n\n
+        Ut convallis libero in urna ultrices accumsan. Donec sed odio eros. Donec
+        viverra mi quis quam pulvinar at malesuada arcu rhoncus. Cum sociis natoque penatibus et magnis dis parturient
+        montes, nascetur ridiculus mus. In rutrum accumsan ultricies. Mauris vitae nisi at sem facilisis semper ac in
+        est.
+    </string>
+
     <!-- Home -->
     <string name="label_home_new_game">New Game</string>
     <string name="label_home_settings">Parameters</string>
@@ -35,27 +50,16 @@
 
     <!-- Home -> Us -> Presentation -->
     <string name="title_activity_presentation">Our project</string>
+    <string name="pres_title">The BioConsole</string>
+    <string name="pres_subtitle">A biological game to teach and learn</string>
 
     <!-- Home -> iGEM -> What -->
     <string name="title_activity_what">What is the iGEM?</string>
-
-
-    <string name="lorem">
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec a diam lectus. Sed sit amet
-        ipsum mauris. Maecenas congue ligula ac quam viverra nec consectetur ante hendrerit. Donec et mollis dolor.
-        Praesent et diam eget libero egestas mattis sit amet vitae augue. Nam tincidunt congue enim, ut porta lorem
-        lacinia consectetur.\n\n
-        Donec ut libero sed arcu vehicula ultricies a non tortor. Lorem ipsum dolor sit amet,
-        consectetur adipiscing elit. Aenean ut gravida lorem. Ut turpis felis, pulvinar a semper sed, adipiscing id
-        dolor. Pellentesque auctor nisi id magna consequat sagittis. Curabitur dapibus enim sit amet elit pharetra
-        tincidunt feugiat nisl imperdiet.\n\n
-        Ut convallis libero in urna ultrices accumsan. Donec sed odio eros. Donec
-        viverra mi quis quam pulvinar at malesuada arcu rhoncus. Cum sociis natoque penatibus et magnis dis parturient
-        montes, nascetur ridiculus mus. In rutrum accumsan ultricies. Mauris vitae nisi at sem facilisis semper ac in
-        est.
-    </string>
-    <string name="pres_title">The BioConsole</string>
-    <string name="pres_subtitle">A biological game to teach and learn</string>
     <string name="what_subtitle">A competition to celebrate science and knowledge</string>
+
+    <!-- Home -> iGEM -> SynBio -->
+    <string name="title_activity_bio">Synthetic Biology</string>
+    <string name="bio_subtitle">design and construction of biological systems</string>
+
 
 </resources>
