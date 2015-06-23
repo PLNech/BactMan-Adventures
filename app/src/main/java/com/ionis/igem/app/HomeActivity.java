@@ -13,9 +13,6 @@ import butterknife.OnClick;
 
 public class HomeActivity extends ActionBarActivity {
 
-    @InjectView(R.id.button_home_new_game)
-    protected Button buttonNewGame;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
