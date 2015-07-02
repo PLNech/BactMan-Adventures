@@ -1,6 +1,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android" xmlns:tools="http://schemas.android.com/tools"
               style="@style/AppTheme.Activity.Menu"
-              tools:context=".HomeActivity">
+              tools:context=".HomeActivity"
+              android:padding="0dp">
     <RelativeLayout style="@style/AppTheme.Container.Title">
 
         <TextView style="@style/AppTheme.TextView.Title"
@@ -34,7 +35,8 @@
     <RelativeLayout style="@style/AppTheme.Container.Button">
         <Button style="@style/AppTheme.Button"
                 android:text="@string/label_home_settings"
-                android:id="@+id/button_home_settings"/>
+                android:id="@+id/button_home_settings"
+                android:visibility="visible"/>
     </RelativeLayout>
 
 
