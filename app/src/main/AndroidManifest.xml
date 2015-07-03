@@ -41,12 +41,20 @@
                     android:value="com.ionis.igem.app.UsActivity" />
         </activity>
         <activity
-                android:name=".WhatActivity"
-                android:label="@string/title_activity_what"
-                android:parentActivityName=".iGEMActivity" >
+            android:name=".WhatActivity"
+            android:label="@string/title_activity_what"
+            android:parentActivityName=".iGEMActivity" >
             <meta-data
-                    android:name="android.support.PARENT_ACTIVITY"
-                    android:value="com.ionis.igem.app.iGEMActivity" />
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.ionis.igem.app.iGEMActivity" />
+        </activity>
+        <activity
+            android:name=".SynBioActivity"
+            android:label="@string/title_activity_bio"
+            android:parentActivityName=".iGEMActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.ionis.igem.app.iGEMActivity" />
         </activity>
     </application>
 

@@ -17,8 +17,11 @@ public class iGEMActivity extends AppCompatActivity {
     }
 
     @OnClick(R.id.button_igem_what)
-    protected void onClickWhat() {
-        startActivity(new Intent(this, WhatActivity.class));
+    protected void onClickWhat() { startActivity(new Intent(this, WhatActivity.class)); }
+
+    @OnClick(R.id.button_igem_biology)
+    protected void onClickBio() {
+        startActivity(new Intent(this, SynBioActivity.class));
     }
 
 

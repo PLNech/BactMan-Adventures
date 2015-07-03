@@ -59,7 +59,7 @@
 
     <!-- Home -> iGEM -> SynBio -->
     <string name="title_activity_bio">Synthetic Biology</string>
-    <string name="bio_subtitle">design and construction of biological systems</string>
+    <string name="bio_subtitle">Design and construction of biological systems</string>
 
 
 </resources>
