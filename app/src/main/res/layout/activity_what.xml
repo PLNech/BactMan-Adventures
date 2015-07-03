@@ -2,7 +2,7 @@
             xmlns:tools="http://schemas.android.com/tools"
             style="@style/AppTheme.ScrollView">
 
-    <RelativeLayout style="@style/AppTheme.Activity.Detail"
+    <RelativeLayout style="@style/AppTheme.Layout.Detail"
                     tools:context="com.ionis.igem.app.ui.WhatActivity">
 
         <ImageView style="@style/AppTheme.ImageView.FullWidth"

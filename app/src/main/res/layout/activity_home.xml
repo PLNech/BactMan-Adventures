@@ -8,7 +8,7 @@
 
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
                   xmlns:tools="http://schemas.android.com/tools"
-                  style="@style/AppTheme.Activity.Menu.Home"
+                  style="@style/AppTheme.Layout.Menu.Home"
                   tools:context=".HomeActivity">
 
         <RelativeLayout style="@style/AppTheme.Container.Title.Menu" android:id="@+id/titleBox">
