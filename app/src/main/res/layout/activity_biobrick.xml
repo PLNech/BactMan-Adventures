@@ -7,20 +7,22 @@
 
         <ImageView style="@style/AppTheme.ImageView.FullWidth"
                    android:id="@+id/mainPic"
-                   android:src="@drawable/synbio"
-                   android:contentDescription="@string/bio_image_desc"/>
+                   android:src="@drawable/biobrick"
+                   android:contentDescription="@string/igem_title"/>
 
-        <RelativeLayout style="@style/AppTheme.Container.Title"
-                        android:id="@+id/box_title"
-                        android:layout_below="@id/mainPic">
+        <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/box_title"
+                android:layout_below="@id/mainPic">
 
             <TextView style="@style/AppTheme.TextView.Title"
-                      android:text="@string/title_activity_bio"
-                      android:id="@+id/bio_title"/>
+                      android:text="@string/title_activity_biobrick"
+                      android:id="@+id/biobrick_title"/>
             <TextView style="@style/AppTheme.TextView.Subtitle"
-                      android:text="@string/bio_subtitle"
-                      android:id="@+id/bio_subtitle"
-                      android:layout_below="@id/bio_title"/>
+                      android:text="@string/biobrick_subtitle"
+                      android:id="@+id/biobrick_subtitle"
+                      android:layout_below="@id/biobrick_title"/>
         </RelativeLayout>
 
         <RelativeLayout style="@style/AppTheme.Container.Paragraphs"

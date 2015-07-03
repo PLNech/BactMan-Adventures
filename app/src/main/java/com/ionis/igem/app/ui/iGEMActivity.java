@@ -6,7 +6,6 @@ import android.os.Bundle;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import com.ionis.igem.app.R;
-import com.ionis.igem.app.SynBioActivity;
 
 public class iGEMActivity extends AppCompatActivity {
 
@@ -23,6 +22,11 @@ public class iGEMActivity extends AppCompatActivity {
     @OnClick(R.id.button_igem_biology)
     protected void onClickBio() {
         startActivity(new Intent(this, SynBioActivity.class));
+    }
+
+    @OnClick(R.id.button_igem_biobricks)
+    protected void onClickBiobrick() {
+        startActivity(new Intent(this, BiobrickActivity.class));
     }
 
 

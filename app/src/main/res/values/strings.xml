@@ -61,6 +61,11 @@
     <string name="bio_subtitle">Design and construction of biological systems</string>
     <string name="bio_image_desc">DNA Strands</string>
 
+    <!-- Home -> iGEM -> BioBricks -->
+    <string name="title_activity_biobrick">What is a Biobrick?</string>
+    <string name="biobrick_subtitle">A good way to work together</string>
+
+
     <!-- Fonts -->
     <string name="font_fontFamily_title" translatable="false">sans-serif</string>
     <string name="what_link">Official website</string>

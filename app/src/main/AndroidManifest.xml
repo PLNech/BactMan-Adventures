@@ -53,12 +53,28 @@
                     android:value=".ui.iGEMActivity"/>
         </activity>
         <activity
-                android:name=".SynBioActivity"
+                android:name=".ui.SynBioActivity"
                 android:label="@string/title_activity_bio"
                 android:parentActivityName=".ui.iGEMActivity">
             <meta-data
                     android:name="android.support.PARENT_ACTIVITY"
                     android:value="com.ionis.igem.app.ui.iGEMActivity"/>
+        </activity>
+        <activity
+            android:name=".ui.BiobrickActivity"
+            android:label="@string/title_activity_biobrick"
+            android:parentActivityName=".ui.iGEMActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.ionis.igem.app.ui.iGEMActivity" />
+        </activity>
+        <activity
+            android:name=".ui.BiobrickActivity"
+            android:label="@string/title_activity_biobrick"
+            android:parentActivityName=".ui.iGEMActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.ionis.igem.app.ui.iGEMActivity" />
         </activity>
     </application>
 
