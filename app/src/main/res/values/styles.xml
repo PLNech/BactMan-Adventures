@@ -18,6 +18,13 @@
         <item name="android:weightSum">100</item>
     </style>
 
+    <style name="AppTheme.Activity.Menu.Home">
+        <item name="android:background">@android:color/transparent</item>
+        <item name="android:layout_marginTop">@dimen/activity_vertical_margin</item>
+        <item name="android:layout_marginBottom">@dimen/activity_vertical_margin</item>
+
+    </style>
+
     <style name="AppTheme.Activity.Detail">
         <item name="android:layout_height">wrap_content</item>
 
@@ -26,17 +33,25 @@
 
     <style name="AppTheme.Container">
         <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
         <item name="android:padding">@dimen/activity_horizontal_margin</item>
+        <item name="android:layout_marginTop">@dimen/activity_vertical_margin</item>
+        <item name="android:layout_marginBottom">@dimen/activity_vertical_margin</item>
     </style>
 
     <style name="AppTheme.Container.Title">
+        <item name="android:gravity">center</item>
+    </style>
+
+    <style name="AppTheme.Container.Title.Menu">
+        <item name="android:background">@color/titleBox</item>
         <item name="android:layout_height">0dp</item>
-        <item name="android:layout_weight">24</item>
+        <item name="android:layout_weight">28</item>
     </style>
 
     <style name="AppTheme.Container.Button">
         <item name="android:layout_height">0dp</item>
-        <item name="android:layout_weight">19</item>
+        <item name="android:layout_weight">18</item>
         <item name="android:padding">0dp</item>
     </style>
 
@@ -55,15 +70,28 @@
 
     <style name="AppTheme.TextView.Title">
         <item name="android:layout_alignParentTop">true</item>
-        <item name="android:layout_marginTop">20dp</item>
         <item name="android:textSize">25sp</item>
     </style>
 
-    <style name="AppTheme.TextView.Subtitle">
-        <item name="android:layout_marginBottom">20dp</item>
+    <style name="AppTheme.TextView.Title.Home">
+        <item name="android:layout_marginTop">0dp</item>
+        <item name="android:layout_gravity">center</item>
 
+        <item name="android:padding">0dp</item>
+
+        <item name="android:textColor">@color/softWhite</item>
+
+        <item name="android:fontFamily">@string/font_fontFamily_title</item>
+    </style>
+
+    <style name="AppTheme.TextView.Subtitle">
         <item name="android:textSize">15sp</item>
         <item name="android:textStyle">italic</item>
+    </style>
+
+
+    <style name="AppTheme.TextView.Subtitle.Home">
+        <item name="android:textColor">@color/softWhite</item>
     </style>
 
     <style name="AppTheme.TextView.Paragraphs">

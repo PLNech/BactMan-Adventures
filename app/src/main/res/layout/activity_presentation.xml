@@ -10,11 +10,9 @@
                    android:src="@drawable/igem"
                    android:contentDescription="@string/title_activity_presentation"/>
 
-        <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/box_title"
-                android:layout_below="@id/mainPic">
+        <RelativeLayout style="@style/AppTheme.Container.Title"
+                        android:id="@+id/box_title"
+                        android:layout_below="@id/mainPic">
 
             <TextView style="@style/AppTheme.TextView.Title"
                       android:text="@string/pres_title"
@@ -24,7 +22,6 @@
                       android:id="@+id/pres_subtitle"
                       android:layout_below="@id/pres_title"/>
         </RelativeLayout>
-
 
         <RelativeLayout style="@style/AppTheme.Container.Paragraphs"
                         android:layout_below="@id/box_title">

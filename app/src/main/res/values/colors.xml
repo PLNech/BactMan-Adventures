@@ -7,5 +7,6 @@
 
     <!-- Transparent Menu Buttons -->
     <color name="buttonMenuPressed">       #66000000</color>
-    <color name="buttonMenu">              #11000000</color>
+    <color name="buttonMenu">#44000000</color>
+    <color name="titleBox">#11000000</color>
 </resources>

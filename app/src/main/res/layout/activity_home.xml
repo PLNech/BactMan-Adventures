@@ -3,24 +3,21 @@
              android:layout_height="match_parent"
              android:id="@+id/home_container">
 
-    <SurfaceView android:layout_width="fill_parent" android:layout_height="wrap_content"
+    <SurfaceView android:layout_width="fill_parent" android:layout_height="fill_parent"
                  android:id="@+id/videoView"/>
 
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android" xmlns:tools="http://schemas.android.com/tools"
-                  style="@style/AppTheme.Activity.Menu"
-                  tools:context=".HomeActivity"
-                  android:padding="0dp">
-        
-        <RelativeLayout style="@style/AppTheme.Container.Title">
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                  xmlns:tools="http://schemas.android.com/tools"
+                  style="@style/AppTheme.Activity.Menu.Home"
+                  tools:context=".HomeActivity">
 
-            <TextView style="@style/AppTheme.TextView.Title"
+        <RelativeLayout style="@style/AppTheme.Container.Title.Menu" android:id="@+id/titleBox">
+
+            <TextView style="@style/AppTheme.TextView.Title.Home"
                       android:text="@string/app_name"
-                      android:id="@+id/home_title"/>
-
-            <TextView style="@style/AppTheme.TextView.Subtitle"
-                      android:text="@string/app_subtitle"
-                      android:id="@+id/home_subtitle"
-                      android:layout_below="@id/home_title"/>
+                      android:textStyle="bold"
+                      android:id="@+id/home_title"
+                      android:layout_centerVertical="true"/>
 
         </RelativeLayout>
         <RelativeLayout style="@style/AppTheme.Container.Button">

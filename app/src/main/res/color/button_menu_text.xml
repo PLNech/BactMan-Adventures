@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <selector xmlns:android="http://schemas.android.com/apk/res/android" android:constantSize="true">
     <item android:color="@color/darkGreen" android:state_pressed="true" android:state_focused="false"/>
-    <item android:color="@color/softBlack"/>
+    <item android:color="@color/softWhite"/>
 </selector>
 

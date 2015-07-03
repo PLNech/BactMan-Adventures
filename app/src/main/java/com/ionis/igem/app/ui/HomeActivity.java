@@ -1,23 +1,41 @@
 package com.ionis.igem.app.ui;
 
 import android.content.Intent;
+import android.content.res.AssetFileDescriptor;
+import android.media.MediaPlayer;
+import android.net.Uri;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuItem;
+import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
+import android.view.*;
 import android.widget.Toast;
 import butterknife.ButterKnife;
+import butterknife.InjectView;
 import butterknife.OnClick;
 import com.ionis.igem.app.R;
 
-public class HomeActivity extends ActionBarActivity {
+import java.io.IOException;
+import java.net.URI;
+
+public class HomeActivity extends AppCompatActivity implements SurfaceHolder.Callback {
+
+    private static final String TAG = "HomeActivity";
+    private MediaPlayer mPlayer;
+
+    @InjectView(R.id.videoView)
+    protected SurfaceView videoView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
         ButterKnife.inject(this);
+
+        SurfaceHolder holder = videoView.getHolder();
+        holder.addCallback(this);
     }
+
 
     @OnClick(R.id.button_home_new_game)
     protected void onClickNewGame() {
@@ -56,5 +74,31 @@ public class HomeActivity extends ActionBarActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void surfaceCreated(SurfaceHolder holder) {
+        int screenWidth = getWindowManager().getDefaultDisplay().getWidth();
+        ViewGroup.LayoutParams lp = videoView.getLayoutParams();
+        lp.width = screenWidth;
+        lp.height = (int) (((float) videoView.getHeight() / (float) videoView.getWidth()) * (float)screenWidth);
+        videoView.setLayoutParams(lp);
+
+        Uri uri = Uri.parse("android.resource://" + getPackageName() + "/" + R.raw.drop);
+        mPlayer = MediaPlayer.create(getApplicationContext(),uri, holder);
+        mPlayer.setLooping(true);
+        mPlayer.start();
+        Log.d(TAG, "onCreate - MediaPlayer started.");
+    }
+
+    @Override
+    public void surfaceChanged(SurfaceHolder holder, int format, int width, int height) {
+
+    }
+
+    @Override
+    public void surfaceDestroyed(SurfaceHolder holder) {
+        Log.d(TAG, "surfaceDestroyed - Destroying MediaPlayer.");
+        mPlayer.release();
     }
 }
