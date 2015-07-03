@@ -1,15 +1,14 @@
-package com.ionis.igem.app;
+package com.ionis.igem.app.ui;
 
 import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.Button;
 import android.widget.Toast;
 import butterknife.ButterKnife;
-import butterknife.InjectView;
 import butterknife.OnClick;
+import com.ionis.igem.app.R;
 
 public class HomeActivity extends ActionBarActivity {
 

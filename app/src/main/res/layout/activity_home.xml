@@ -1,43 +1,52 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android" xmlns:tools="http://schemas.android.com/tools"
-              style="@style/AppTheme.Activity.Menu"
-              tools:context=".HomeActivity"
-              android:padding="0dp">
-    <RelativeLayout style="@style/AppTheme.Container.Title">
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+             android:layout_width="match_parent"
+             android:layout_height="match_parent"
+             android:id="@+id/home_container">
 
-        <TextView style="@style/AppTheme.TextView.Title"
-                  android:text="@string/app_name"
-                  android:id="@+id/home_title"/>
+    <SurfaceView android:layout_width="fill_parent" android:layout_height="wrap_content"
+                 android:id="@+id/videoView"/>
 
-        <TextView style="@style/AppTheme.TextView.Subtitle"
-                  android:text="@string/app_subtitle"
-                  android:id="@+id/home_subtitle"
-                  android:layout_below="@id/home_title"/>
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android" xmlns:tools="http://schemas.android.com/tools"
+                  style="@style/AppTheme.Activity.Menu"
+                  tools:context=".HomeActivity"
+                  android:padding="0dp">
+        
+        <RelativeLayout style="@style/AppTheme.Container.Title">
 
-    </RelativeLayout>
-    <RelativeLayout style="@style/AppTheme.Container.Button">
-        <Button style="@style/AppTheme.Button"
-                android:text="@string/label_home_new_game"
-                android:id="@+id/button_home_new_game"/>
-    </RelativeLayout>
+            <TextView style="@style/AppTheme.TextView.Title"
+                      android:text="@string/app_name"
+                      android:id="@+id/home_title"/>
 
-    <RelativeLayout style="@style/AppTheme.Container.Button">
-        <Button style="@style/AppTheme.Button"
-                android:text="@string/label_home_iGEM"
-                android:id="@+id/button_home_iGEM"/>
-    </RelativeLayout>
+            <TextView style="@style/AppTheme.TextView.Subtitle"
+                      android:text="@string/app_subtitle"
+                      android:id="@+id/home_subtitle"
+                      android:layout_below="@id/home_title"/>
 
-    <RelativeLayout style="@style/AppTheme.Container.Button">
-        <Button style="@style/AppTheme.Button"
-                android:text="@string/label_home_team"
-                android:id="@+id/button_home_team"/>
-    </RelativeLayout>
+        </RelativeLayout>
+        <RelativeLayout style="@style/AppTheme.Container.Button">
+            <Button style="@style/AppTheme.Button"
+                    android:text="@string/label_home_new_game"
+                    android:id="@+id/button_home_new_game"/>
+        </RelativeLayout>
 
-    <RelativeLayout style="@style/AppTheme.Container.Button">
-        <Button style="@style/AppTheme.Button"
-                android:text="@string/label_home_settings"
-                android:id="@+id/button_home_settings"
-                android:visibility="visible"/>
-    </RelativeLayout>
+        <RelativeLayout style="@style/AppTheme.Container.Button">
+            <Button style="@style/AppTheme.Button"
+                    android:text="@string/label_home_iGEM"
+                    android:id="@+id/button_home_iGEM"/>
+        </RelativeLayout>
 
+        <RelativeLayout style="@style/AppTheme.Container.Button">
+            <Button style="@style/AppTheme.Button"
+                    android:text="@string/label_home_team"
+                    android:id="@+id/button_home_team"/>
+        </RelativeLayout>
 
-</LinearLayout>
+        <RelativeLayout style="@style/AppTheme.Container.Button">
+            <Button style="@style/AppTheme.Button"
+                    android:text="@string/label_home_settings"
+                    android:id="@+id/button_home_settings"
+                    android:visibility="visible"/>
+        </RelativeLayout>
+
+    </LinearLayout>
+</FrameLayout>
