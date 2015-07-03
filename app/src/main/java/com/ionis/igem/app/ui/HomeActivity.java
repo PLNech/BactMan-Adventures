@@ -2,6 +2,7 @@ package com.ionis.igem.app.ui;
 
 import android.content.Intent;
 import android.content.res.AssetFileDescriptor;
+import android.graphics.Point;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.support.v7.app.ActionBarActivity;
@@ -54,7 +55,9 @@ public class HomeActivity extends AppCompatActivity implements SurfaceHolder.Cal
 
     @Override
     public void surfaceCreated(SurfaceHolder holder) {
-        int screenWidth = getWindowManager().getDefaultDisplay().getWidth();
+        Point screenSize = new Point();
+        getWindowManager().getDefaultDisplay().getSize(screenSize);
+        int screenWidth = screenSize.x;
         ViewGroup.LayoutParams lp = videoView.getLayoutParams();
         lp.width = screenWidth;
         lp.height = (int) (((float) videoView.getHeight() / (float) videoView.getWidth()) * (float)screenWidth);
