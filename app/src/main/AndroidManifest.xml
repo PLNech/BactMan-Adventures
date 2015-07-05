@@ -1,61 +1,64 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.ionis.igem.app" >
+          xmlns:tools="http://schemas.android.com/tools"
+          package="com.ionis.igem.app">
 
     <application
-        android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
-        android:label="@string/app_name"
-        android:theme="@style/AppTheme" >
-        <activity
-            android:name=".ui.HomeActivity"
+            android:allowBackup="true"
+            android:icon="@mipmap/ic_launcher"
             android:label="@string/app_name"
-            android:theme="@style/Theme.AppCompat.NoActionBar">
+            android:theme="@style/AppTheme"
+            tools:replace="android:icon"
+            >
+        <activity
+                android:name=".ui.HomeActivity"
+                android:label="@string/app_name"
+                android:theme="@style/Theme.AppCompat.NoActionBar">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
+                <action android:name="android.intent.action.MAIN"/>
 
-                <category android:name="android.intent.category.LAUNCHER" />
+                <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
         <activity
-            android:name=".ui.UsActivity"
-            android:label="@string/title_activity_us"
-            android:parentActivityName=".ui.HomeActivity" >
+                android:name=".ui.UsActivity"
+                android:label="@string/title_activity_us"
+                android:parentActivityName=".ui.HomeActivity">
             <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value=".ui.HomeActivity" />
+                    android:name="android.support.PARENT_ACTIVITY"
+                    android:value=".ui.HomeActivity"/>
         </activity>
         <activity
-            android:name=".ui.iGEMActivity"
-            android:label="@string/title_activity_igem"
-            android:parentActivityName=".ui.HomeActivity" >
+                android:name=".ui.iGEMActivity"
+                android:label="@string/title_activity_igem"
+                android:parentActivityName=".ui.HomeActivity">
             <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value=".ui.HomeActivity" />
+                    android:name="android.support.PARENT_ACTIVITY"
+                    android:value=".ui.HomeActivity"/>
         </activity>
         <activity
                 android:name=".ui.PresentationActivity"
                 android:label="@string/title_activity_presentation"
-                android:parentActivityName=".ui.UsActivity" >
+                android:parentActivityName=".ui.UsActivity">
             <meta-data
                     android:name="android.support.PARENT_ACTIVITY"
-                    android:value=".ui.UsActivity" />
+                    android:value=".ui.UsActivity"/>
         </activity>
         <activity
                 android:name=".ui.WhatActivity"
                 android:label="@string/title_activity_what"
-                android:parentActivityName=".ui.iGEMActivity" >
+                android:parentActivityName=".ui.iGEMActivity">
             <meta-data
                     android:name="android.support.PARENT_ACTIVITY"
-                    android:value=".ui.iGEMActivity" />
+                    android:value=".ui.iGEMActivity"/>
         </activity>
         <activity
-            android:name=".SynBioActivity"
-            android:label="@string/title_activity_bio"
-            android:parentActivityName=".ui.iGEMActivity" >
+                android:name=".SynBioActivity"
+                android:label="@string/title_activity_bio"
+                android:parentActivityName=".ui.iGEMActivity">
             <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.ionis.igem.app.ui.iGEMActivity" />
+                    android:name="android.support.PARENT_ACTIVITY"
+                    android:value="com.ionis.igem.app.ui.iGEMActivity"/>
         </activity>
     </application>
 
