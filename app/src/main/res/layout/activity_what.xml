@@ -17,6 +17,7 @@
             <TextView style="@style/AppTheme.TextView.Title"
                       android:text="@string/title_activity_what"
                       android:id="@+id/what_title"/>
+
             <TextView style="@style/AppTheme.TextView.Subtitle"
                       android:text="@string/what_subtitle"
                       android:id="@+id/what_subtitle"
@@ -25,9 +26,15 @@
 
         <RelativeLayout style="@style/AppTheme.Container.Paragraphs"
                         android:layout_below="@id/box_title">
+
             <TextView style="@style/AppTheme.TextView.Paragraphs"
                       android:text="@string/lorem"
                       android:id="@+id/paragraphs"/>
+
+            <TextView style="@style/AppTheme.TextView.Link"
+                      android:text="@string/what_link"
+                      android:id="@+id/link"/>
+
         </RelativeLayout>
 
     </RelativeLayout>

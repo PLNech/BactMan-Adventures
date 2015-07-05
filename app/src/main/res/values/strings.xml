@@ -63,5 +63,7 @@
 
     <!-- Fonts -->
     <string name="font_fontFamily_title" translatable="false">sans-serif</string>
+    <string name="what_link">Official website</string>
+    <string name="what_url" translatable="false">https://igem.org/Main_Page</string>
 
 </resources>
