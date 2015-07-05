@@ -5,8 +5,11 @@
     <color name="softBlack">#1a1a1a</color>
     <color name="softWhite">#e6e6e6</color>
 
+    <color name="tintFirst">@color/lightGreen</color>
+    <color name="tintSecond">@color/darkGreen</color>
+
     <!-- Transparent Menu Buttons -->
-    <color name="buttonMenuPressed">       #66000000</color>
+    <color name="buttonMenuPressed">#99000000</color>
     <color name="buttonMenu">#44000000</color>
     <color name="titleBox">#11000000</color>
 </resources>

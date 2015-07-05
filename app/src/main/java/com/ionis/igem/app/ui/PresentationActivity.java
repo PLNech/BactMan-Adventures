@@ -1,9 +1,7 @@
 package com.ionis.igem.app.ui;
 
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuItem;
+import android.support.v7.app.AppCompatActivity;
 import com.ionis.igem.app.R;
 
 public class PresentationActivity extends AppCompatActivity {

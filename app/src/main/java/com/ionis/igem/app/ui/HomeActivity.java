@@ -1,23 +1,20 @@
 package com.ionis.igem.app.ui;
 
 import android.content.Intent;
-import android.content.res.AssetFileDescriptor;
 import android.graphics.Point;
 import android.media.MediaPlayer;
 import android.net.Uri;
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
-import android.view.*;
+import android.view.SurfaceHolder;
+import android.view.SurfaceView;
+import android.view.ViewGroup;
 import android.widget.Toast;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 import butterknife.OnClick;
 import com.ionis.igem.app.R;
-
-import java.io.IOException;
-import java.net.URI;
 
 public class HomeActivity extends AppCompatActivity implements SurfaceHolder.Callback {
 
@@ -60,11 +57,11 @@ public class HomeActivity extends AppCompatActivity implements SurfaceHolder.Cal
         int screenWidth = screenSize.x;
         ViewGroup.LayoutParams lp = videoView.getLayoutParams();
         lp.width = screenWidth;
-        lp.height = (int) (((float) videoView.getHeight() / (float) videoView.getWidth()) * (float)screenWidth);
+        lp.height = (int) (((float) videoView.getHeight() / (float) videoView.getWidth()) * (float) screenWidth);
         videoView.setLayoutParams(lp);
 
         Uri uri = Uri.parse("android.resource://" + getPackageName() + "/" + R.raw.drop);
-        mPlayer = MediaPlayer.create(getApplicationContext(),uri, holder);
+        mPlayer = MediaPlayer.create(getApplicationContext(), uri, holder);
         mPlayer.setLooping(true);
         mPlayer.start();
         Log.d(TAG, "onCreate - MediaPlayer started.");
