@@ -28,4 +28,7 @@
     <string name="bio_subtitle">Conception et réalisation de systèmes biologiques</string>
     <string name="what_link">Site officiel</string>
     <string name="title_activity_partners">Qui soutient l\'iGEM ?</string>
+    <string name="title_activity_team">Notre équipe</string>
+    <string name="team_title">Qui sommes nous ?</string>
+    <string name="team_subtitle">Une équipe mix pour récupérer le meilleur de chacun</string>
 </resources>

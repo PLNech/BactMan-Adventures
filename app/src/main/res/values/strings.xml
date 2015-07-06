@@ -52,6 +52,11 @@
     <string name="pres_title">The BioConsole</string>
     <string name="pres_subtitle">A biological game to teach and learn</string>
 
+    <!-- Home -> Us -> Team -->
+    <string name="title_activity_team">Our team</string>
+    <string name="team_title">Who are we ?</string>
+    <string name="team_subtitle">A mixed team to get the best of us</string>
+
     <!-- Home -> iGEM -> What -->
     <string name="title_activity_what">What is the iGEM?</string>
     <string name="what_subtitle">A competition to celebrate science and knowledge</string>

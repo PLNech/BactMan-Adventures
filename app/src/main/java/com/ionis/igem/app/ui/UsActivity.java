@@ -21,4 +21,9 @@ public class UsActivity extends AppCompatActivity {
         startActivity(new Intent(this, PresentationActivity.class));
     }
 
+    @OnClick(R.id.button_us_team)
+    protected void onClickTeam() {
+        startActivity(new Intent(this, TeamActivity.class));
+    }
+
 }

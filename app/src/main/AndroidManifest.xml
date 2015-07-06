@@ -37,12 +37,20 @@
                     android:value=".ui.HomeActivity"/>
         </activity>
         <activity
-                android:name=".ui.PresentationActivity"
-                android:label="@string/title_activity_presentation"
-                android:parentActivityName=".ui.UsActivity">
+            android:name=".ui.PresentationActivity"
+            android:label="@string/title_activity_presentation"
+            android:parentActivityName=".ui.UsActivity">
             <meta-data
-                    android:name="android.support.PARENT_ACTIVITY"
-                    android:value=".ui.UsActivity"/>
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".ui.UsActivity"/>
+        </activity>
+        <activity
+            android:name=".ui.TeamActivity"
+            android:label="@string/title_activity_team"
+            android:parentActivityName=".ui.UsActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".ui.UsActivity"/>
         </activity>
         <activity
                 android:name=".ui.WhatActivity"
