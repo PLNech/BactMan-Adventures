@@ -31,4 +31,8 @@
     <string name="title_activity_team">Notre équipe</string>
     <string name="team_title">Qui sommes nous ?</string>
     <string name="team_subtitle">Une équipe mix pour récupérer le meilleur de chacun</string>
+    <string name="title_activity_contact_us">Contactez nous</string>
+    <string name="contact_us_title">Comment nous contacter ?</string>
+    <string name="contact_us_subtitle">Nous voulons avoir de vos nouvelles</string>
+    <string name="contact_us_email">Contactez nous par email</string>
 </resources>

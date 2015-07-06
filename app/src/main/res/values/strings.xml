@@ -57,9 +57,18 @@
     <string name="team_title">Who are we ?</string>
     <string name="team_subtitle">A mixed team to get the best of us</string>
 
+    <!-- Home -> Us -> Contact Us -->
+    <string name="title_activity_contact_us">Contact Us</string>
+    <string name="contact_us_title">How to contact us ?</string>
+    <string name="contact_us_subtitle">We want to hear from you</string>
+    <string name="contact_us_email">Contact us by mail</string>
+    <string name="contact_us_email_val">goulwenmintec@gmail.com</string>
+
     <!-- Home -> iGEM -> What -->
     <string name="title_activity_what">What is the iGEM?</string>
     <string name="what_subtitle">A competition to celebrate science and knowledge</string>
+    <string name="what_link">Official website</string>
+    <string name="what_url" translatable="false">https://igem.org/Main_Page</string>
 
     <!-- Home -> iGEM -> SynBio -->
     <string name="title_activity_bio">Synthetic Biology</string>
@@ -76,7 +85,5 @@
 
     <!-- Fonts -->
     <string name="font_fontFamily_title" translatable="false">sans-serif</string>
-    <string name="what_link">Official website</string>
-    <string name="what_url" translatable="false">https://igem.org/Main_Page</string>
 
 </resources>

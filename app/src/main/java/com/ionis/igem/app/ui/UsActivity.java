@@ -26,4 +26,9 @@ public class UsActivity extends AppCompatActivity {
         startActivity(new Intent(this, TeamActivity.class));
     }
 
+    @OnClick(R.id.button_us_contact)
+    protected void onClickContactUs() {
+        startActivity(new Intent(this, ContactUsActivity.class));
+    }
+
 }
