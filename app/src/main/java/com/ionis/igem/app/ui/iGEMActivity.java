@@ -29,5 +29,10 @@ public class iGEMActivity extends AppCompatActivity {
         startActivity(new Intent(this, BiobrickActivity.class));
     }
 
+    @OnClick(R.id.button_igem_partners)
+    protected void onClickPartners() {
+        startActivity(new Intent(this, PartnersActivity.class));
+    }
+
 
 }

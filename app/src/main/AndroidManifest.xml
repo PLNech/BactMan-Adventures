@@ -69,7 +69,7 @@
                 android:value="com.ionis.igem.app.ui.iGEMActivity" />
         </activity>
         <activity
-            android:name=".ui.BiobrickActivity"
+            android:name=".ui.PartnersActivity"
             android:label="@string/title_activity_biobrick"
             android:parentActivityName=".ui.iGEMActivity" >
             <meta-data

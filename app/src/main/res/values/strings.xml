@@ -62,8 +62,11 @@
     <string name="bio_image_desc">DNA Strands</string>
 
     <!-- Home -> iGEM -> BioBricks -->
-    <string name="title_activity_biobrick">What is a Biobrick?</string>
+    <string name="title_activity_biobrick">What is a Biobrick ?</string>
     <string name="biobrick_subtitle">A good way to work together</string>
+
+    <!-- Home -> iGEM -> Partners -->
+    <string name="title_activity_partners">Who follows the iGEM ?</string>
 
 
     <!-- Fonts -->
