@@ -53,6 +53,14 @@
                 android:value=".ui.UsActivity"/>
         </activity>
         <activity
+            android:name=".ui.SponsorsActivity"
+            android:label="@string/title_activity_sponsors"
+            android:parentActivityName=".ui.UsActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".ui.UsActivity"/>
+        </activity>
+        <activity
             android:name=".ui.ContactUsActivity"
             android:label="@string/title_activity_contact_us"
             android:parentActivityName=".ui.UsActivity">
@@ -86,7 +94,7 @@
         </activity>
         <activity
             android:name=".ui.PartnersActivity"
-            android:label="@string/title_activity_biobrick"
+            android:label="@string/title_activity_partners"
             android:parentActivityName=".ui.iGEMActivity" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
