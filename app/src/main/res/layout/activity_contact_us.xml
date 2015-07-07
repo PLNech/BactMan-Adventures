@@ -33,7 +33,7 @@
 
             <TextView style="@style/AppTheme.TextView.Link"
                       android:text="@string/contact_us_email"
-                      android:id="@+id/email"/>
+                      android:id="@+id/link"/>
 
         </RelativeLayout>
 

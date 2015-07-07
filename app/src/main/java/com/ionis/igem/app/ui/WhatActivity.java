@@ -11,6 +11,7 @@ import butterknife.ButterKnife;
 import butterknife.InjectView;
 import butterknife.OnClick;
 import com.ionis.igem.app.R;
+import com.ionis.igem.app.utils.ViewUtils;
 
 public class WhatActivity extends AppCompatActivity {
 
@@ -22,9 +23,7 @@ public class WhatActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_what);
         ButterKnife.inject(this);
-        SpannableString linkText = new SpannableString(linkView.getText());
-        linkText.setSpan(new UnderlineSpan(), 0, linkText.length(), 0);
-        linkView.setText(linkText);
+        ViewUtils.textUnderline(linkView);
 
     }
 
