@@ -135,6 +135,8 @@
         <item name="android:layout_below">@id/paragraphs</item>
         <item name="android:textStyle">italic</item>
         <item name="android:textColor">#4105ff</item>
+
+        <item name="android:clickable">true</item>
     </style>
 
 </resources>
