@@ -1,7 +1,7 @@
 <resources xmlns:android="http://schemas.android.com/apk/res/android">
 
     <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
-    </style>
+    </style>    
 
     <style name="AppTheme.Layout">
         <item name="android:layout_width">match_parent</item>
@@ -14,7 +14,7 @@
     </style>
 
     <style name="AppTheme.Layout.Menu">
-        <item name="android:background">@android:color/holo_green_dark</item>
+        <item name="android:background">@color/tintFirst</item>
         <item name="android:weightSum">100</item>
     </style>
 
@@ -108,10 +108,10 @@
         <item name="android:layout_centerInParent">true</item>
 
         <item name="android:background">@drawable/button_menu</item>
-        <item name="android:shadowColor">@color/lightGreen</item>
+        <item name="android:shadowColor">@color/ionisTurquoise</item>
 
         <item name="android:textColor">@color/button_menu_text</item>
-        <item name="android:textColorHighlight">@color/lightGreen</item>
+        <item name="android:textColorHighlight">@color/ionisTurquoise</item>
     </style>
 
     <style name="AppTheme.ImageView">
