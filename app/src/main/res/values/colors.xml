@@ -5,8 +5,13 @@
     <color name="softBlack">#1a1a1a</color>
     <color name="softWhite">#e6e6e6</color>
 
-    <color name="tintFirst">@color/lightGreen</color>
-    <color name="tintSecond">@color/darkGreen</color>
+    <color name="ionisTurquoise">#6ccaa0</color>
+    <color name="ionisLightGreen">#92d189</color>
+    <color name="ionisMiddleGreen">#2e9c63</color>
+    <color name="ionisDarkGreen">#1e6330</color>
+
+    <color name="tintFirst">@color/ionisTurquoise</color>
+    <color name="tintSecond">@color/ionisDarkGreen</color>
 
     <!-- Transparent Menu Buttons -->
     <color name="buttonMenuPressed">#99000000</color>
