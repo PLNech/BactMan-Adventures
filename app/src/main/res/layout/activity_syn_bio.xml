@@ -26,7 +26,7 @@
         <RelativeLayout style="@style/AppTheme.Container.Paragraphs"
                         android:layout_below="@id/box_title">
             <TextView style="@style/AppTheme.TextView.Paragraphs"
-                      android:text="@string/lorem"
+                      android:text="@string/text_bio"
                       android:id="@+id/paragraphs"/>
         </RelativeLayout>
 

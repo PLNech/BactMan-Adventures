@@ -11,24 +11,21 @@
                    android:contentDescription="@string/igem_title"/>
 
         <RelativeLayout style="@style/AppTheme.Container.Title"
+                        android:padding="0dp" android:layout_margin="0dp"
                         android:id="@+id/box_title"
                         android:layout_below="@id/mainPic">
 
-            <TextView style="@style/AppTheme.TextView.Title"
-                      android:text="@string/title_activity_what"
-                      android:id="@+id/what_title"/>
-
             <TextView style="@style/AppTheme.TextView.Subtitle"
+                      android:visibility="gone"
                       android:text="@string/what_subtitle"
-                      android:id="@+id/what_subtitle"
-                      android:layout_below="@id/what_title"/>
+                      android:id="@+id/what_subtitle"/>
         </RelativeLayout>
 
         <RelativeLayout style="@style/AppTheme.Container.Paragraphs"
                         android:layout_below="@id/box_title">
 
             <TextView style="@style/AppTheme.TextView.Paragraphs"
-                      android:text="@string/lorem"
+                      android:text="@string/text_igem"
                       android:id="@+id/paragraphs"/>
 
             <TextView style="@style/AppTheme.TextView.Link"

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Application IONIS iGEM 2015</string>
+    <string name="app_name">Appli IONIS iGEM 2015</string>
     <string name="action_settings">Réglages</string>
     <string name="label_home_new_game">Nouveau Jeu</string>
     <string name="label_home_settings">Paramètres</string>
@@ -15,7 +15,7 @@
     <string name="title_activity_us">Nous</string>
     <string name="igem_title">L\'iGEM</string>
     <string name="label_igem_biobricks">Les BioBriques</string>
-    <string name="label_igem_biology">La Biologie Synthétique</string>
+    <string name="label_igem_biology">La Biologie de Synthèse</string>
     <string name="label_igem_partners">Nos partenaires</string>
     <string name="label_igem_what">Présentation</string>
     <string name="pres_subtitle">Un jeu biologique pour apprendre en s\'amusant</string>
@@ -26,17 +26,49 @@
     <string name="what_subtitle">Une compétition scientifique mondiale</string>
     <string name="bio_image_desc">Brins d\'ADN</string>
     <string name="bio_subtitle">Conception et réalisation de systèmes biologiques</string>
+    <string name="text_bio">
+        <!-- TODO: Translate! -->
+        La biologie de synthèse est l’ingénierie de la biologie.
+        Elle vise à la conception rationnelle de systèmes fondés sur le vivant
+        ou inspiré du vivant,et dotés de fonction absentes dans la nature.
+        Ce domaine en pleine émergence pourra faire progresser nos connaissances du monde vivant
+        et permettra de développer de nombreuses applications industrielles
+        dans le domaine de la santé ou de l’environnement par exemple.\n\n
+        Cependant, et comme toute nouvelle technologie,
+        la biologie de synthèse soulève optimisme et enthousiasme, mais aussi inquiétude et méfiance.
+    </string>
+    <string name="text_igem">
+        iGEM est la plus grande compétition internationale de Biologie de Synthèse et a pour but
+        de lier éducation et compétition afin de faire progresser la recherche dans ce secteur.
+        Organisée par le MIT depuis 2004, des étudiants du monde entier s’affrontent
+        en créant des projets innovants dans le domaine de la biologie de synthèse.\n\n
+        Au début de l’été, les équipes reçoivent un kit de composants biologiques
+        et travaillent au laboratoire afin de concevoir des circuits génétiques synthétiques
+        qui devront fonctionner dans des cellules vivantes. La collaboration et l’échange
+        entre les différentes équipes sont valorisés,
+        dans cette optique de progression de la biologie de synthèse.
+    </string>
+    <string name="text_biobrick">
+        Les BioBricks sont des fragments d’ADN standardisés,
+        développés afin de permettre une construction plus simple de systèmes biologiques.
+        Chaque BioBrick est délimitée par des préfixes et suffixes universels.\n\n
+        Comme elles sont conçues sur le même modèle, on peut les assembler comme un jeu de briques
+        pour ensuite les incorporer dans une cellule vivante.
+
+    </string>
     <string name="what_link">Site officiel</string>
     <string name="title_activity_partners">Qui soutient l\'iGEM ?</string>
     <string name="title_activity_team">Notre équipe</string>
     <string name="team_title">Qui sommes nous ?</string>
-    <string name="team_subtitle">Une équipe mix pour récupérer le meilleur de chacun</string>
+    <string name="team_subtitle">Une équipe variée pour tirer le meilleur de chacun</string>
     <string name="title_activity_sponsors">Sponsors</string>
-    <string name="sponsors_title">Our sponsors</string>
-    <string name="sponsors_subtitle">Who support us ?</string>
+    <string name="sponsors_title">Nos sponsors</string>
+    <string name="sponsors_subtitle">Qui nous soutient ?</string>
     <string name="sponsors_separation_line">They give us a lot to build our project</string>
     <string name="title_activity_contact_us">Contactez nous</string>
     <string name="contact_us_title">Comment nous contacter ?</string>
     <string name="contact_us_subtitle">Nous voulons avoir de vos nouvelles</string>
     <string name="contact_us_email">Contactez nous par email</string>
+    <string name="title_activity_biobrick">Qu\'est-ce qu\'une BioBrique ?</string>
+    <string name="biobrick_subtitle">Un bon moyen de travailler ensemble</string>
 </resources>
