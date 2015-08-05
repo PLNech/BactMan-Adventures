@@ -10,11 +10,9 @@
                    android:src="@drawable/biobrick"
                    android:contentDescription="@string/igem_title"/>
 
-        <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/box_title"
-                android:layout_below="@id/mainPic">
+        <RelativeLayout style="@style/AppTheme.Container.Title"
+                        android:id="@+id/box_title"
+                        android:layout_below="@id/mainPic">
 
             <TextView style="@style/AppTheme.TextView.Title"
                       android:text="@string/title_activity_biobrick"
