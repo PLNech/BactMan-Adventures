@@ -21,11 +21,17 @@
     </string>
 
     <!-- Home -->
-    <string name="label_home_new_game">New Game</string>
-    <string name="label_home_settings">Parameters</string>
+    <string name="label_home_game">The Game</string>
+    <string name="label_home_credits">Credits</string>
     <string name="label_home_team">Us</string>
     <string name="label_home_iGEM">The iGEM</string>
 
+    <!-- Home -> GameMenu -->
+    <string name="title_activity_game_menu">The Game</string>
+    <string name="label_game_new">Play</string>
+    <string name="label_game_levels">Level select</string>
+    <string name="label_game_help">Help</string>
+    <string name="label_game_settings">Settings</string>
 
     <!-- Home -> Us -->
     <string name="title_activity_us">Us</string>
@@ -58,12 +64,21 @@
         dans cette optique de progression de la biologie de synthèse.
     </string>
 
+    <!-- Home -> Credits -->
+    <string name="title_activity_credits">Credits</string>
+    <string name="credits_title">Credits, Licences and Thanks</string>
+    <string name="credits_subtitle">They made it real</string>
+    <string name="text_credits">
+        Developed by Paul-Louis Nech and Goulwen Mintec\n\n
+        Games build with the AndEngine\n\n
+    </string>
 
     <!-- Home -> Us -> Presentation -->
     <string name="title_activity_presentation">Our project</string>
     <string name="pres_title">The BioConsole</string>
     <string name="pres_subtitle">A biological game to teach and learn</string>
     <string name="text_pres">
+        <!-- TODO: Translate! -->
         Notre équipe, IONIS Paris, a développé un projet en deux parties autour de la vulgarisation scientifique
         pour la compétition iGEM 2015.  La première partie consiste à créer une bio-console,
         un dispositif reliant le réel au virtuel. La bio-console IONIS Paris est composée de :\n
@@ -80,7 +95,6 @@
         autour des concepts de biotechnologie et de biologie de synthèse.
         Ces jeux ont pour but de familiariser le grand public à ces grands concepts.
         Notre philosophie : “Comprendre et apprendre tout en s\'amusant”.
-
     </string>
     <!-- Home -> Us -> Team -->
     <string name="title_activity_team">Our team</string>
@@ -129,13 +143,29 @@
     <!-- Home -> iGEM -> Partners -->
     <string name="title_activity_partners">Who follows the iGEM ?</string>
 
+    <!-- Home -> GameMenu -> Game -->
+    <string name="title_activity_game">BactMan\'s Adventures</string>
+    <string name="game_title">BactMan\'s adventures</string>
+    <string name="game_subtitle">BactMan needs your help</string>
+
+    <!-- Home -> GameMenu -> Levels -->
+    <string name="title_activity_game_levels">Level select</string>
+
+    <!-- Home -> GameMenu -> Settings -->
+    <string name="title_activity_game_settings">Game Settings</string>
+
+    <!-- Home -> GameMenu -> Help -->
+    <string name="title_activity_game_help">Game Help</string>
+
+
+
 
     <!-- Fonts -->
     <string name="font_fontFamily_title" translatable="false">sans-serif</string>
     <string name="text_biobrick">Les BioBricks sont des fragments d’ADN standardisés, développés afin de permettre une
         construction plus simple de systèmes biologiques. Chaque BioBrick est délimitée par des préfixes et suffixes
         universels.\n\n
-        Comme elles sont conçues sur le même modèle, on peut les assembler comme un jeu de briques pour
+        Comme elles sont conçues sur le même modèle, on peut les assembler comme un jeu de LEGO® pour
         ensuite les incorporer dans une cellule vivante.</string>
 
 </resources>

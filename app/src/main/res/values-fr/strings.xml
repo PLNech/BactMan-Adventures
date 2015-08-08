@@ -2,8 +2,8 @@
 <resources>
     <string name="app_name">Appli IONIS iGEM 2015</string>
     <string name="action_settings">Réglages</string>
-    <string name="label_home_new_game">Nouveau Jeu</string>
-    <string name="label_home_settings">Paramètres</string>
+    <string name="label_home_game">Le Jeu</string>
+    <string name="label_home_credits">Crédits</string>
     <string name="label_home_team">Nous</string>
     <string name="label_home_iGEM">L\'iGEM</string>
     <string name="us_title">L\'Équipe</string>
@@ -54,7 +54,24 @@
         Chaque BioBrick est délimitée par des préfixes et suffixes universels.\n\n
         Comme elles sont conçues sur le même modèle, on peut les assembler comme un jeu de briques
         pour ensuite les incorporer dans une cellule vivante.
+    </string>
+    <string name="text_pres">
+        Notre équipe, IONIS Paris, a développé un projet en deux parties autour de la vulgarisation scientifique
+        pour la compétition iGEM 2015.  La première partie consiste à créer une bio-console,
+        un dispositif reliant le réel au virtuel. La bio-console IONIS Paris est composée de :\n
+        - une puce de microfluidique\n
+        - un microscope\n
+        - un ordinateur\n
+        - une manette\n\n
 
+        Sur l’écran d’ordinateur, le joueur peut visualiser une bactérie fluorescente et contrôler ses mouvements
+        grâce à la manette. La bactérie est intégrée dans la puce microfluidique préalablement construite sous
+        forme de labyrinthe et agrandie via le microscope relié à l’ordinateur.\n\n
+
+        La deuxième partie de notre projet est l’application mobile Bact’Man proposant plusieurs jeux
+        autour des concepts de biotechnologie et de biologie de synthèse.
+        Ces jeux ont pour but de familiariser le grand public à ces grands concepts.
+        Notre philosophie : “Comprendre et apprendre tout en s\'amusant”.
     </string>
     <string name="what_link">Site officiel</string>
     <string name="title_activity_partners">Qui soutient l\'iGEM ?</string>
@@ -71,4 +88,20 @@
     <string name="contact_us_email">Contactez nous par email</string>
     <string name="title_activity_biobrick">Qu\'est-ce qu\'une BioBrique ?</string>
     <string name="biobrick_subtitle">Un bon moyen de travailler ensemble</string>
+
+    <!-- Home -> Game -->
+    <string name="title_activity_game">Les Aventures de BactMan</string>
+    <string name="game_title">Les aventures de BactMan</string>
+    <string name="game_subtitle">BactMan a besoin de ton aide</string>
+    <string name="label_game_new">Jouer</string>
+    <string name="label_game_levels">Niveaux</string>
+    <string name="label_game_help">Aide</string>
+    <string name="label_game_settings">Réglages</string>
+    <string name="title_activity_game_help">Aide</string>
+    <string name="title_activity_game_levels">Niveaux</string>
+    <string name="title_activity_game_menu">Le Jeu</string>
+    <string name="title_activity_game_settings">Réglages</string>
+    <string name="credits_subtitle"></string>
+    <string name="title_activity_credits">Crédits</string>
+    <string name="credits_title">Crédits, Licences et Remerciements</string>
 </resources>

@@ -1,0 +1,34 @@
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:tools="http://schemas.android.com/tools"
+            style="@style/AppTheme.ScrollView">
+
+    <RelativeLayout style="@style/AppTheme.Layout.Detail"
+                    tools:context="com.ionis.igem.app.ui.CreditsActivity">
+
+        <ImageView style="@style/AppTheme.ImageView.FullWidth"
+                   android:id="@+id/mainPic"
+                   android:src="@drawable/igem"
+                   android:contentDescription="@string/title_activity_credits"/>
+
+        <RelativeLayout style="@style/AppTheme.Container.Title"
+                        android:id="@+id/box_title"
+                        android:layout_below="@id/mainPic">
+
+            <TextView style="@style/AppTheme.TextView.Title"
+                      android:text="@string/credits_title"
+                      android:id="@+id/credits_title"/>
+            <TextView style="@style/AppTheme.TextView.Subtitle"
+                      android:text="@string/credits_subtitle"
+                      android:id="@+id/credits_subtitle"
+                      android:layout_below="@id/credits_title"/>
+        </RelativeLayout>
+
+        <RelativeLayout style="@style/AppTheme.Container.Paragraphs"
+                        android:layout_below="@id/box_title">
+            <TextView style="@style/AppTheme.TextView.Paragraphs"
+                      android:text="@string/text_credits"
+                      android:id="@+id/paragraphs"/>
+        </RelativeLayout>
+
+    </RelativeLayout>
+</ScrollView>

@@ -9,7 +9,7 @@
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
                   xmlns:tools="http://schemas.android.com/tools"
                   style="@style/AppTheme.Layout.Menu.Home"
-                  tools:context=".HomeActivity">
+                  tools:context="com.ionis.igem.app.ui.HomeActivity">
 
         <RelativeLayout style="@style/AppTheme.Container.Title.Menu" android:id="@+id/titleBox">
 
@@ -22,7 +22,7 @@
         </RelativeLayout>
         <RelativeLayout style="@style/AppTheme.Container.Button">
             <Button style="@style/AppTheme.Button"
-                    android:text="@string/label_home_new_game"
+                    android:text="@string/label_home_game"
                     android:id="@+id/button_home_new_game"/>
         </RelativeLayout>
 
@@ -40,8 +40,8 @@
 
         <RelativeLayout style="@style/AppTheme.Container.Button">
             <Button style="@style/AppTheme.Button"
-                    android:text="@string/label_home_settings"
-                    android:id="@+id/button_home_settings"
+                    android:text="@string/label_home_credits"
+                    android:id="@+id/button_home_credits"
                     android:visibility="visible"/>
         </RelativeLayout>
 

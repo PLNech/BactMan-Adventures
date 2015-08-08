@@ -1,40 +1,40 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android" xmlns:tools="http://schemas.android.com/tools"
               style="@style/AppTheme.Layout.Menu"
-              tools:context="com.ionis.igem.app.ui.iGEMActivity">
+              tools:context="com.ionis.igem.app.ui.GameActivity">
     <RelativeLayout style="@style/AppTheme.Container.Title.Menu">
 
         <TextView style="@style/AppTheme.TextView.Title"
-                  android:text="@string/igem_title"
+                  android:text="@string/game_title"
                   android:id="@+id/team_title"/>
 
         <TextView style="@style/AppTheme.TextView.Subtitle"
-                  android:text="@string/igem_subtitle"
+                  android:text="@string/game_subtitle"
                   android:id="@+id/team_subtitle"
                   android:layout_below="@id/team_title"/>
 
     </RelativeLayout>
     <RelativeLayout style="@style/AppTheme.Container.Button">
         <Button style="@style/AppTheme.Button"
-                android:text="@string/label_igem_what"
-                android:id="@+id/button_igem_what"/>
+                android:text="@string/label_game_new"
+                android:id="@+id/button_game_new"/>
     </RelativeLayout>
 
     <RelativeLayout style="@style/AppTheme.Container.Button">
         <Button style="@style/AppTheme.Button"
-                android:text="@string/label_igem_biology"
-                android:id="@+id/button_igem_biology"/>
+                android:text="@string/label_game_levels"
+                android:id="@+id/button_game_levels"/>
     </RelativeLayout>
 
     <RelativeLayout style="@style/AppTheme.Container.Button">
         <Button style="@style/AppTheme.Button"
-                android:text="@string/label_igem_biobricks"
-                android:id="@+id/button_igem_biobricks"/>
+                android:text="@string/label_game_settings"
+                android:id="@+id/button_game_settings"/>
     </RelativeLayout>
 
     <RelativeLayout style="@style/AppTheme.Container.Button">
         <Button style="@style/AppTheme.Button"
-                android:text="@string/label_igem_partners"
-                android:id="@+id/button_igem_partners"/>
+                android:text="@string/label_game_help"
+                android:id="@+id/button_game_help"/>
     </RelativeLayout>
 
 

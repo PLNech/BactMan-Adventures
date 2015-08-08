@@ -37,7 +37,7 @@ public class HomeActivity extends AppCompatActivity implements SurfaceHolder.Cal
 
     @OnClick(R.id.button_home_new_game)
     protected void onClickNewGame() {
-        Toast.makeText(getApplicationContext(), "You just clicked on new game!", Toast.LENGTH_SHORT).show();
+        startActivity(new Intent(this, GameMenuActivity.class));
     }
 
     @OnClick(R.id.button_home_team)
@@ -48,6 +48,11 @@ public class HomeActivity extends AppCompatActivity implements SurfaceHolder.Cal
     @OnClick(R.id.button_home_iGEM)
     protected void onClickIGEM() {
         startActivity(new Intent(this, iGEMActivity.class));
+    }
+
+    @OnClick(R.id.button_home_credits)
+    protected void onClickCredits() {
+        startActivity(new Intent(this, CreditsActivity.class));
     }
 
     @Override
