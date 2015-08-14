@@ -23,10 +23,6 @@ public abstract class BaseGameActivity extends SimpleBaseGameActivity {
     private static final int CAMERA_WIDTH = 640;
     private static final int CAMERA_HEIGHT = 480;
 
-    private static final float MAX_VELOCITY_X = 2.0f;
-    private static final float MAX_VELOCITY_Y = 2.0f;
-    private static final float MAX_ZOOM = 3.0f;
-
     protected Scene gameScene;
     protected Camera gameCamera;
 
@@ -66,7 +62,7 @@ public abstract class BaseGameActivity extends SimpleBaseGameActivity {
 
     @Override
     public EngineOptions onCreateEngineOptions() {
-        gameCamera = new SmoothCamera(0, 0, CAMERA_WIDTH, CAMERA_HEIGHT, MAX_VELOCITY_X, MAX_VELOCITY_Y, MAX_ZOOM);
+        gameCamera = new Camera(0, 0, CAMERA_WIDTH, CAMERA_HEIGHT);
         return new EngineOptions(true, ScreenOrientation.LANDSCAPE_FIXED, new RatioResolutionPolicy(CAMERA_WIDTH, CAMERA_HEIGHT), gameCamera);
     }
 }
