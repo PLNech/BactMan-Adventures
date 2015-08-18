@@ -33,9 +33,6 @@ public class GameLevelsActivity extends BaseGameActivity {
 
     public static final int BACKGROUND_WIDTH = 1920;
     public static final int BACKGROUND_HEIGHT = 1440;
-    private static final float MAX_SPEED_X = 200.0f;
-    private static final float MAX_SPEED_Y = 200.0f;
-    private static final float MAX_ZOOM_CHANGE = 0.8f;
 
     private SmoothCamera gameCamera;
 

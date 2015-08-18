@@ -25,6 +25,10 @@ public abstract class BaseGameActivity extends SimpleBaseGameActivity {
     protected static final int LAYER_BACKGROUND = 0;
     protected static final int LAYER_FOREGROUND = LAYER_BACKGROUND + 1;
 
+    protected static final float MAX_SPEED_X = 200.0f;
+    protected static final float MAX_SPEED_Y = 200.0f;
+    protected static final float MAX_ZOOM_CHANGE = 0.8f;
+
 
     @Override
     public Engine onCreateEngine(EngineOptions pEngineOptions) {
