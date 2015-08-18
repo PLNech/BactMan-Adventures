@@ -50,8 +50,8 @@
 
         <!-- GameMenu Activities -->
         <activity android:name=".ui.GameActivity"
-                android:label="@string/title_activity_game_menu"
-                android:parentActivityName=".ui.GameMenuActivity" >
+                  android:label="@string/title_activity_game_menu"
+                  android:parentActivityName=".ui.GameMenuActivity" >
             <meta-data
                     android:name="android.support.PARENT_ACTIVITY"
                     android:value=".ui.GameMenuActivity" />
