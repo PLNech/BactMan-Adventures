@@ -2,11 +2,7 @@ package com.ionis.igem.app.game;
 
 import android.util.Log;
 import org.andengine.engine.Engine;
-import org.andengine.engine.camera.Camera;
-import org.andengine.engine.camera.SmoothCamera;
 import org.andengine.engine.options.EngineOptions;
-import org.andengine.engine.options.ScreenOrientation;
-import org.andengine.engine.options.resolutionpolicy.RatioResolutionPolicy;
 import org.andengine.entity.scene.Scene;
 import org.andengine.entity.util.FPSLogger;
 import org.andengine.ui.activity.SimpleBaseGameActivity;
@@ -20,16 +16,20 @@ public abstract class BaseGameActivity extends SimpleBaseGameActivity {
 
     private Boolean shouldStartEngine = false;
 
-    private static final int CAMERA_WIDTH = 640;
-    private static final int CAMERA_HEIGHT = 480;
+    protected static final int CAMERA_WIDTH = 800;
+    protected static final int CAMERA_HEIGHT = 480;
 
     protected Scene gameScene;
-    protected Camera gameCamera;
+
+    protected static final int LAYER_COUNT = 2;
+    protected static final int LAYER_BACKGROUND = 0;
+    protected static final int LAYER_FOREGROUND = LAYER_BACKGROUND + 1;
+
 
     @Override
     public Engine onCreateEngine(EngineOptions pEngineOptions) {
         Engine engine = new Engine(pEngineOptions);
-        if(shouldStartEngine){
+        if (shouldStartEngine) {
             Log.v(TAG, "onCreateEngine - Starting engine.");
             engine.start();
             shouldStartEngine = !shouldStartEngine;
@@ -40,10 +40,9 @@ public abstract class BaseGameActivity extends SimpleBaseGameActivity {
     }
 
 
-
     @Override
     public synchronized void onResumeGame() {
-        if(mEngine != null) {
+        if (mEngine != null) {
             super.onResumeGame();
             shouldStartEngine = true;
             Log.v(TAG, "onResumeGame - We have an engine: marked as starting.");
@@ -53,16 +52,10 @@ public abstract class BaseGameActivity extends SimpleBaseGameActivity {
     }
 
 
-//    @Override
-//    protected Scene onCreateScene() {
-//        this.mEngine.registerUpdateHandler(new FPSLogger());
-
-//        return null;
-//    }
-
     @Override
-    public EngineOptions onCreateEngineOptions() {
-        gameCamera = new Camera(0, 0, CAMERA_WIDTH, CAMERA_HEIGHT);
-        return new EngineOptions(true, ScreenOrientation.LANDSCAPE_FIXED, new RatioResolutionPolicy(CAMERA_WIDTH, CAMERA_HEIGHT), gameCamera);
+    protected Scene onCreateScene() {
+        this.mEngine.registerUpdateHandler(new FPSLogger());
+
+        return null;
     }
 }
