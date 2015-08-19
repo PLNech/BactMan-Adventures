@@ -1,10 +1,12 @@
 package com.ionis.igem.app.game;
 
 import android.util.Log;
+import android.util.Pair;
 import org.andengine.engine.Engine;
 import org.andengine.engine.options.EngineOptions;
 import org.andengine.entity.scene.Scene;
 import org.andengine.entity.util.FPSLogger;
+import org.andengine.opengl.texture.region.ITextureRegion;
 import org.andengine.ui.activity.SimpleBaseGameActivity;
 
 /**
@@ -62,4 +64,23 @@ public abstract class BaseGameActivity extends SimpleBaseGameActivity {
 
         return null;
     }
+
+    protected Pair<Float, Float> spriteCenter(ITextureRegion textureRegion) {
+        /**
+         * Returns the appropriate coordinates to center the given textureRegion in the game camera.
+         */
+        return spritePosition(textureRegion, new Pair<>(0.5f, 0.5f));
+    }
+
+    protected Pair<Float, Float> spritePosition(ITextureRegion textureRegion, Pair<Float, Float> positionRatio) {
+        final Pair<Float, Float> textureDimensions = new Pair<>(textureRegion.getWidth(), textureRegion.getHeight());
+        return spritePosition(textureDimensions, positionRatio);
+    }
+
+    protected Pair<Float, Float> spritePosition(Pair<Float, Float> textureDims, Pair<Float, Float> positionRatio) {
+        return new Pair<>((CAMERA_WIDTH - textureDims.first) * positionRatio.first,
+                (CAMERA_HEIGHT - textureDims.second) * positionRatio.second);
+    }
+
+
 }

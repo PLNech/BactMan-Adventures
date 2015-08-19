@@ -33,6 +33,9 @@ public class GameLevelsActivity extends BaseGameActivity {
 
     public static final int BACKGROUND_WIDTH = 1920;
     public static final int BACKGROUND_HEIGHT = 1440;
+    private static final float MAX_SPEED_X = 200.0f;
+    private static final float MAX_SPEED_Y = 200.0f;
+    private static final float MAX_ZOOM_CHANGE = 0.8f;
 
     private SmoothCamera gameCamera;
 
@@ -135,13 +138,6 @@ public class GameLevelsActivity extends BaseGameActivity {
 //        gameCamera.setZoomFactor(1.5f);
     }
 
-    private Pair<Float, Float> spriteCenter(ITextureRegion textureRegion) {
-        /**
-         * Returns the appropriate coordinates to center the given textureRegion in the game camera.
-         */
-        return spritePosition(textureRegion, new Pair<>(0.5f, 0.5f));
-    }
-
     private Pair<Float, Float> spriteOnSpriteCenter(Pair<Float, Float> secondSize, Pair<Float, Float> secondCoords, Pair<Float, Float> firstPos) {
         final float centeredX = secondCoords.first - secondSize.first / 2;
         final float centeredY = secondCoords.second - secondSize.second / 2;
@@ -154,17 +150,6 @@ public class GameLevelsActivity extends BaseGameActivity {
          */
         return new Pair<>(secondCoords.first + firstPos.first, secondCoords.second + firstPos.second);
     }
-
-    private Pair<Float, Float> spritePosition(ITextureRegion textureRegion, Pair<Float, Float> positionRatio) {
-        final Pair<Float, Float> textureDimensions = new Pair<>(textureRegion.getWidth(), textureRegion.getHeight());
-        return spritePosition(textureDimensions, positionRatio);
-    }
-
-    private Pair<Float, Float> spritePosition(Pair<Float, Float> textureDims, Pair<Float, Float> positionRatio) {
-        return new Pair<>((CAMERA_WIDTH - textureDims.first) * positionRatio.first,
-                (CAMERA_HEIGHT - textureDims.second) * positionRatio.second);
-    }
-
 
     private void addStar(final Game game, int pX, int pY) {
 
