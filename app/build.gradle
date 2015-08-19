@@ -20,6 +20,13 @@ android {
     lintOptions {
         disable 'InvalidPackage'
     }
+
+    sourceSets {
+        main {
+            jni.srcDirs = []
+            jniLibs.srcDir 'libs'
+        }
+    }
 }
 
 dependencies {
@@ -27,4 +34,5 @@ dependencies {
     compile 'com.android.support:appcompat-v7:22.2.1'
     compile 'com.jakewharton:butterknife:6.1.0'
     compile project(':AndEngine')
+    compile project(':AndEnginePhysicsBox2DExtension')
 }

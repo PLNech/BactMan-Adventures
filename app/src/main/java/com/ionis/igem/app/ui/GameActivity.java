@@ -1,11 +1,13 @@
 package com.ionis.igem.app.ui;
 
 import android.graphics.Color;
+import android.hardware.SensorManager;
 import android.opengl.GLES20;
 import android.os.Bundle;
 import android.util.Log;
 import android.util.Pair;
 import android.widget.Toast;
+import com.badlogic.gdx.math.Vector2;
 import com.ionis.igem.app.game.BaseGameActivity;
 import com.ionis.igem.app.game.bins.Item;
 import org.andengine.engine.camera.SmoothCamera;
@@ -18,6 +20,7 @@ import org.andengine.entity.scene.Scene;
 import org.andengine.entity.scene.background.Background;
 import org.andengine.entity.sprite.Sprite;
 import org.andengine.entity.text.Text;
+import org.andengine.extension.physics.box2d.PhysicsWorld;
 import org.andengine.opengl.font.Font;
 import org.andengine.opengl.font.FontFactory;
 import org.andengine.opengl.texture.ITexture;
@@ -38,6 +41,8 @@ public class GameActivity extends BaseGameActivity {
     private TiledTextureRegion smileyTextureRegion;
 
     private SmoothCamera gameCamera;
+    private PhysicsWorld physicsWorld;
+
     private Text scoreText;
     private Font fontRoboto;
 
@@ -120,6 +125,8 @@ public class GameActivity extends BaseGameActivity {
         final Background backgroundColor = new Background(0.96862f, 0.77647f, 0.37647f);
         gameScene.setBackground(backgroundColor);
 
+        initPhysics();
+
         for (int i = 0; i < LAYER_COUNT; i++) {
             final Entity layer = new Entity();
             layer.setZIndex(i);
@@ -140,6 +147,11 @@ public class GameActivity extends BaseGameActivity {
         return gameScene;
     }
 
+    private void initPhysics() {
+        physicsWorld = new PhysicsWorld(new Vector2(0, SensorManager.GRAVITY_EARTH), false);
+        gameScene.registerUpdateHandler(physicsWorld);
+    }
+
     private void createTextDebug() {
         Pair<Float, Float> posDebug = spritePosition(new Pair<>(20f, 20f), new Pair<>(0.1f, 0.1f));
         scoreText = new Text(posDebug.first, posDebug.second, fontRoboto, "State: ", "State: Long state being here.".length(), this.getVertexBufferObjectManager());
@@ -157,7 +169,7 @@ public class GameActivity extends BaseGameActivity {
     }
 
     private void createItem(float posX, float posY) {
-        Item item = new Item(smileyTextureRegion, posX, posY, this.getVertexBufferObjectManager());
+        Item item = new Item(smileyTextureRegion, posX, posY, this.getVertexBufferObjectManager(), physicsWorld);
 
         gameScene.getChildByIndex(LAYER_BACKGROUND).attachChild(item);
         gameScene.registerTouchArea(item);
