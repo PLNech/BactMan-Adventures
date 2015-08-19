@@ -9,6 +9,7 @@ import android.util.Pair;
 import android.widget.Toast;
 import com.badlogic.gdx.math.Vector2;
 import com.ionis.igem.app.game.BaseGameActivity;
+import com.ionis.igem.app.game.bins.Bin;
 import com.ionis.igem.app.game.bins.Item;
 import org.andengine.engine.camera.SmoothCamera;
 import org.andengine.engine.options.EngineOptions;
@@ -18,7 +19,6 @@ import org.andengine.entity.Entity;
 import org.andengine.entity.IEntity;
 import org.andengine.entity.scene.Scene;
 import org.andengine.entity.scene.background.Background;
-import org.andengine.entity.sprite.Sprite;
 import org.andengine.entity.text.Text;
 import org.andengine.extension.physics.box2d.PhysicsWorld;
 import org.andengine.opengl.font.Font;
@@ -177,21 +177,16 @@ public class GameActivity extends BaseGameActivity {
 
     private void createBins() {
         final VertexBufferObjectManager vertexBufferObjectManager = getVertexBufferObjectManager();
-        Sprite bin1Sprite = new Sprite(50, 300, bin1TextureRegion, vertexBufferObjectManager);
-        Sprite bin2Sprite = new Sprite(200, 300, bin2TextureRegion, vertexBufferObjectManager);
-        Sprite bin3Sprite = new Sprite(350, 300, bin3TextureRegion, vertexBufferObjectManager);
-        Sprite bin4Sprite = new Sprite(500, 300, bin4TextureRegion, vertexBufferObjectManager);
-
-        bin1Sprite.setScale(0.5f);
-        bin2Sprite.setScale(0.5f);
-        bin3Sprite.setScale(0.5f);
-        bin4Sprite.setScale(0.5f);
+        Bin bin1 = new Bin(50, 300, bin1TextureRegion, vertexBufferObjectManager, physicsWorld);
+        Bin bin2 = new Bin(200, 300, bin2TextureRegion, vertexBufferObjectManager, physicsWorld);
+        Bin bin3 = new Bin(350, 300, bin3TextureRegion, vertexBufferObjectManager, physicsWorld);
+        Bin bin4 = new Bin(500, 300, bin4TextureRegion, vertexBufferObjectManager, physicsWorld);
 
         final IEntity foreground = gameScene.getChildByIndex(LAYER_FOREGROUND);
-        foreground.attachChild(bin1Sprite);
-        foreground.attachChild(bin2Sprite);
-        foreground.attachChild(bin3Sprite);
-        foreground.attachChild(bin4Sprite);
+        foreground.attachChild(bin1);
+        foreground.attachChild(bin2);
+        foreground.attachChild(bin3);
+        foreground.attachChild(bin4);
     }
 
 }

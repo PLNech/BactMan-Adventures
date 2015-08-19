@@ -31,7 +31,7 @@ public class Item extends AnimatedSprite {
         animate(DURATION_EACH_ANIM);
 
         body = createBody(physicsWorld);
-        physicsWorld.registerPhysicsConnector(new PhysicsConnector(this, body));
+        physicsWorld.registerPhysicsConnector(new PhysicsConnector(this, body, true, false));
     }
 
     public Body createBody(PhysicsWorld physicsWorld) {
