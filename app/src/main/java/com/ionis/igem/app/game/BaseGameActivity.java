@@ -18,8 +18,8 @@ public abstract class BaseGameActivity extends SimpleBaseGameActivity {
 
     private Boolean shouldStartEngine = false;
 
-    protected static final int CAMERA_WIDTH = 800;
-    protected static final int CAMERA_HEIGHT = 480;
+    protected static final int CAMERA_WIDTH = 480;
+    protected static final int CAMERA_HEIGHT = 800;
 
     protected Scene gameScene;
 
@@ -69,17 +69,34 @@ public abstract class BaseGameActivity extends SimpleBaseGameActivity {
         /**
          * Returns the appropriate coordinates to center the given textureRegion in the game camera.
          */
-        return spritePosition(textureRegion, new Pair<>(0.5f, 0.5f));
+        return spritePosition(textureRegion, 0.5f, 0.5f);
+    }
+
+    protected Pair<Float, Float> spritePosition(ITextureRegion textureRegion,
+                                                float positionRatioX, float positionRatioY,
+                                                float ratio) {
+        final float widthToRatio = textureRegion.getWidth() * ratio;
+        final float heightToRatio = textureRegion.getHeight() * ratio;
+        return spritePosition(new Pair<>(widthToRatio, heightToRatio), new Pair<>(positionRatioX, positionRatioY));
+    }
+    protected Pair<Float, Float> spritePosition(ITextureRegion textureRegion, float positionRatioX, float positionRatioY) {
+        final Pair<Float, Float> textureDimensions = new Pair<>(textureRegion.getWidth(), textureRegion.getHeight());
+        return spritePosition(textureDimensions, new Pair<>(positionRatioX, positionRatioY));
     }
 
     protected Pair<Float, Float> spritePosition(ITextureRegion textureRegion, Pair<Float, Float> positionRatio) {
-        final Pair<Float, Float> textureDimensions = new Pair<>(textureRegion.getWidth(), textureRegion.getHeight());
-        return spritePosition(textureDimensions, positionRatio);
+        return spritePosition(new Pair<>(textureRegion.getWidth(), textureRegion.getHeight()), positionRatio);
+    }
+
+    protected Pair<Float,Float> spritePosition(float textureDimX, float textureDimY, float posRatioX, float posRatioY) {
+        return spritePosition(new Pair<>(textureDimX, textureDimY),new Pair<>(posRatioX, posRatioY));
     }
 
     protected Pair<Float, Float> spritePosition(Pair<Float, Float> textureDims, Pair<Float, Float> positionRatio) {
-        return new Pair<>((CAMERA_WIDTH - textureDims.first) * positionRatio.first,
-                (CAMERA_HEIGHT - textureDims.second) * positionRatio.second);
+        final Pair<Float, Float> res = new Pair<>(CAMERA_WIDTH  * positionRatio.first - textureDims.first / 2,
+                CAMERA_HEIGHT * positionRatio.second - - textureDims.second / 2);
+        Log.v(TAG, "spritePosition - Returning " + res.first + ", " + res.second);
+        return res;
     }
 
 

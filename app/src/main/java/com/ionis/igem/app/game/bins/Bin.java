@@ -1,5 +1,6 @@
 package com.ionis.igem.app.game.bins;
 
+import android.util.Log;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.Fixture;
@@ -8,6 +9,7 @@ import org.andengine.entity.sprite.Sprite;
 import org.andengine.extension.physics.box2d.PhysicsConnector;
 import org.andengine.extension.physics.box2d.PhysicsFactory;
 import org.andengine.extension.physics.box2d.PhysicsWorld;
+import org.andengine.extension.physics.box2d.util.constants.PhysicsConstants;
 import org.andengine.opengl.texture.region.ITextureRegion;
 import org.andengine.opengl.vbo.VertexBufferObjectManager;
 
@@ -16,11 +18,13 @@ import org.andengine.opengl.vbo.VertexBufferObjectManager;
  */
 public class Bin extends Sprite {
 
+    private static final String TAG = "Bin";
+
     public enum Type {
-        DEFAULT, GLASS, BIO, LIQUIDS
+        NORMAL, GLASS, BIO, LIQUIDS
     }
 
-    public static final float SCALE_DEFAULT = 0.5f;
+    public static final float SCALE_DEFAULT = 0.125f;
 
     public static final int BODY_DENSITY = 1000;
     public static final float BODY_ELASTICITY = 0;
@@ -32,14 +36,16 @@ public class Bin extends Sprite {
     Body body;
     Type type;
 
-    public Bin(float pX, float pY, ITextureRegion pTextureRegion, Type binType,
+    public Bin(Type binType, float pX, float pY, ITextureRegion pTextureRegion,
                VertexBufferObjectManager pVertexBufferObject, PhysicsWorld physicsWorld) {
         super(pX, pY, pTextureRegion, pVertexBufferObject);
         setScale(SCALE_DEFAULT);
+        Log.v(TAG, "Bin - Created at " + pX + ", " + pY);
 
         id = ID++;
-        body = createBody(physicsWorld);
         this.type = binType;
+        body = createBody(physicsWorld);
+        body.setTransform(pX / PhysicsConstants.PIXEL_TO_METER_RATIO_DEFAULT, pY / PhysicsConstants.PIXEL_TO_METER_RATIO_DEFAULT, 0);
         physicsWorld.registerPhysicsConnector(new PhysicsConnector(this, body, true, false));
     }
 
@@ -71,7 +77,7 @@ public class Bin extends Sprite {
             case LIQUIDS:
                 typeString = "Liquides";
                 break;
-            case DEFAULT:
+            case NORMAL:
             default:
                 typeString = "Normale";
                 break;

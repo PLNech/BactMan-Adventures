@@ -16,7 +16,6 @@ import org.andengine.engine.options.EngineOptions;
 import org.andengine.engine.options.ScreenOrientation;
 import org.andengine.engine.options.resolutionpolicy.RatioResolutionPolicy;
 import org.andengine.entity.Entity;
-import org.andengine.entity.IEntity;
 import org.andengine.entity.scene.Scene;
 import org.andengine.entity.scene.background.Background;
 import org.andengine.entity.text.Text;
@@ -58,7 +57,7 @@ public class GameActivity extends BaseGameActivity {
     @Override
     public EngineOptions onCreateEngineOptions() {
         gameCamera = new SmoothCamera(0, 0, CAMERA_WIDTH, CAMERA_HEIGHT, MAX_SPEED_X, MAX_SPEED_Y, MAX_ZOOM_CHANGE);
-        final EngineOptions engineOptions = new EngineOptions(true, ScreenOrientation.LANDSCAPE_FIXED, new RatioResolutionPolicy(CAMERA_WIDTH, CAMERA_HEIGHT), gameCamera);
+        final EngineOptions engineOptions = new EngineOptions(true, ScreenOrientation.PORTRAIT_FIXED, new RatioResolutionPolicy(CAMERA_WIDTH, CAMERA_HEIGHT), gameCamera);
         engineOptions.getTouchOptions().setNeedsMultiTouch(true);
         return engineOptions;
     }
@@ -73,19 +72,19 @@ public class GameActivity extends BaseGameActivity {
 
     private void loadGraphics() {
         BitmapTextureAtlasTextureRegionFactory.setAssetBasePath("gfx/");
-        BitmapTextureAtlas bin1TextureAtlas = new BitmapTextureAtlas(getTextureManager(), 172, 275, TextureOptions.DEFAULT);
+        BitmapTextureAtlas bin1TextureAtlas = new BitmapTextureAtlas(getTextureManager(), 696, 1024, TextureOptions.DEFAULT);
         bin1TextureRegion = BitmapTextureAtlasTextureRegionFactory.createFromAsset(bin1TextureAtlas, this, "bin1.png", 0, 0);
         bin1TextureAtlas.load();
 
-        BitmapTextureAtlas bin2TextureAtlas = new BitmapTextureAtlas(getTextureManager(), 169, 256, TextureOptions.DEFAULT);
+        BitmapTextureAtlas bin2TextureAtlas = new BitmapTextureAtlas(getTextureManager(), 696, 1024, TextureOptions.DEFAULT);
         bin2TextureRegion = BitmapTextureAtlasTextureRegionFactory.createFromAsset(bin2TextureAtlas, this, "bin2.png", 0, 0);
         bin2TextureAtlas.load();
 
-        BitmapTextureAtlas bin3TextureAtlas = new BitmapTextureAtlas(getTextureManager(), 200, 255, TextureOptions.DEFAULT);
+        BitmapTextureAtlas bin3TextureAtlas = new BitmapTextureAtlas(getTextureManager(), 696, 1024, TextureOptions.DEFAULT);
         bin3TextureRegion = BitmapTextureAtlasTextureRegionFactory.createFromAsset(bin3TextureAtlas, this, "bin3.png", 0, 0);
         bin3TextureAtlas.load();
 
-        BitmapTextureAtlas bin4TextureAtlas = new BitmapTextureAtlas(getTextureManager(), 173, 260, TextureOptions.DEFAULT);
+        BitmapTextureAtlas bin4TextureAtlas = new BitmapTextureAtlas(getTextureManager(), 696, 1024, TextureOptions.DEFAULT);
         bin4TextureRegion = BitmapTextureAtlasTextureRegionFactory.createFromAsset(bin4TextureAtlas, this, "bin4.png", 0, 0);
         bin4TextureAtlas.load();
 
@@ -136,7 +135,7 @@ public class GameActivity extends BaseGameActivity {
 
         createBins();
         createItem(spriteCenter(smileyTextureRegion));
-        createItem(spritePosition(smileyTextureRegion, new Pair<>(0.2f, 0.5f)));
+        createItem(spritePosition(smileyTextureRegion, 0.2f, 0.5f));
 
         gameScene.setTouchAreaBindingOnActionDownEnabled(true);
 
@@ -151,8 +150,9 @@ public class GameActivity extends BaseGameActivity {
     }
 
     private void createScoreText() {
-        Pair<Float, Float> posDebug = spritePosition(new Pair<>(20f, 20f), new Pair<>(0.1f, 0.1f));
-        scoreText = new Text(posDebug.first, posDebug.second, fontRoboto, "State: ", "State: Long state being here.".length(), this.getVertexBufferObjectManager());
+        Pair<Float, Float> posScore = spritePosition(20f, 20f, 0.1f, 0.1f);
+        Log.d(TAG, "createScoreText - Score text positioned at " + posScore.first + ", " + posScore.second);
+        scoreText = new Text(posScore.first, posScore.second, fontRoboto, "State: ", "State: Long state being here.".length(), this.getVertexBufferObjectManager());
         scoreText.setBlendFunction(GLES20.GL_SRC_ALPHA, GLES20.GL_ONE_MINUS_SRC_ALPHA);
         scoreText.setAlpha(0.5f);
         gameScene.getChildByIndex(LAYER_FOREGROUND).attachChild(scoreText);
@@ -173,18 +173,22 @@ public class GameActivity extends BaseGameActivity {
         gameScene.registerTouchArea(item);
     }
 
-    private void createBins() {
-        final VertexBufferObjectManager vertexBufferObjectManager = getVertexBufferObjectManager();
-        Bin bin1 = new Bin(50, 300, bin1TextureRegion, Bin.Type.GLASS, vertexBufferObjectManager, physicsWorld);
-        Bin bin2 = new Bin(200, 300, bin2TextureRegion, Bin.Type.LIQUIDS, vertexBufferObjectManager, physicsWorld);
-        Bin bin3 = new Bin(350, 300, bin3TextureRegion, Bin.Type.DEFAULT, vertexBufferObjectManager, physicsWorld);
-        Bin bin4 = new Bin(500, 300, bin4TextureRegion, Bin.Type.BIO, vertexBufferObjectManager, physicsWorld);
+    private void createBin(Bin.Type type, TextureRegion textureRegion, float posX, float posY) {
+        Bin bin = new Bin(type, posX, posY, textureRegion, getVertexBufferObjectManager(), physicsWorld);
+        gameScene.getChildByIndex(LAYER_FOREGROUND).attachChild(bin);
+    }
 
-        final IEntity foreground = gameScene.getChildByIndex(LAYER_FOREGROUND);
-        foreground.attachChild(bin1);
-        foreground.attachChild(bin2);
-        foreground.attachChild(bin3);
-        foreground.attachChild(bin4);
+    private void createBins() {
+        final float binY = 0.85f;
+        Pair<Float, Float> bin1Pos = spritePosition(bin1TextureRegion, 0.30f, binY, Bin.SCALE_DEFAULT);
+        Pair<Float, Float> bin2Pos = spritePosition(bin2TextureRegion, 0.50f, binY, Bin.SCALE_DEFAULT);
+        Pair<Float, Float> bin3Pos = spritePosition(bin3TextureRegion, 0.70f, binY, Bin.SCALE_DEFAULT);
+        Pair<Float, Float> bin4Pos = spritePosition(bin4TextureRegion, 0.90f, binY, Bin.SCALE_DEFAULT);
+
+        createBin(Bin.Type.GLASS, bin1TextureRegion, bin1Pos.first, bin1Pos.second);
+        createBin(Bin.Type.LIQUIDS, bin2TextureRegion, bin2Pos.first, bin2Pos.second);
+        createBin(Bin.Type.NORMAL, bin3TextureRegion, bin3Pos.first, bin3Pos.second);
+        createBin(Bin.Type.BIO, bin4TextureRegion, bin4Pos.first, bin4Pos.second);
     }
 
     private ContactListener createContactListener() {
@@ -197,7 +201,6 @@ public class GameActivity extends BaseGameActivity {
                 Item item;
                 Log.d(TAG, "beginContact - Contact!");
                 if (contact.isTouching()) {
-                    Log.d(TAG, "beginContact - isTouching!");
                     if (Bin.isOne(x1)) {
                         bin = (Bin) x1.getBody().getUserData();
                         item = (Item) x2.getBody().getUserData();

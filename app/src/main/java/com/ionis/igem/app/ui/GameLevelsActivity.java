@@ -128,7 +128,7 @@ public class GameLevelsActivity extends BaseGameActivity {
 //        }
         final float scale = 0.25f;
 
-        Pair<Float, Float> posRel = spritePosition(joyauTextureRegion, new Pair<>(0.1f, 0.1f));
+        Pair<Float, Float> posRel = spritePosition(joyauTextureRegion, 0.1f, 0.1f);
         final Sprite joyau = new Sprite(posRel.first, posRel.second, joyauTextureRegion, this.getVertexBufferObjectManager());
         joyau.setScale(scale);
 

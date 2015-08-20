@@ -1,5 +1,6 @@
 package com.ionis.igem.app.game.bins;
 
+import android.util.Log;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
@@ -16,16 +17,13 @@ import org.andengine.opengl.vbo.VertexBufferObjectManager;
  */
 public class Item extends AnimatedSprite {
 
-    private Type type;
-
     public enum Type {
-        PAPER(Bin.Type.DEFAULT),
+        PAPER(Bin.Type.NORMAL),
         MICROSCOPE_SLIDE(Bin.Type.GLASS),
         PETRI_DISH(Bin.Type.BIO),
-        PEN(Bin.Type.DEFAULT),
+        PEN(Bin.Type.NORMAL),
         SUBSTRATE_BOX(Bin.Type.BIO),
         SOLVENT(Bin.Type.LIQUIDS);
-
         Bin.Type validBinType;
 
         Type(Bin.Type pType) {
@@ -37,29 +35,34 @@ public class Item extends AnimatedSprite {
         }
 
     }
-    public static final int DURATION_EACH_ANIM = 100;
 
+    private static final String TAG = "Item";
+
+    public static final int DURATION_EACH_ANIM = 100;
     public static final float SCALE_GRABBED = 1.5f;
+
     public static final float SCALE_NORMAL = 1.0f;
     public static final int BODY_DENSITY = 1;
-
     public static final float BODY_ELASTICITY = 0.5f;
+
     public static final float BODY_FRICTION = 0.5f;
     public static short ID = 0;
-
     Boolean isGrabbed = false;
 
     Body body;
+
+    Type type;
     int id;
     public Item(Type pType, TiledTextureRegion texture, float posX, float posY, VertexBufferObjectManager manager, PhysicsWorld physicsWorld) {
         super(posX, posY, texture, manager);
         setCullingEnabled(true);
         animate(DURATION_EACH_ANIM);
-
+        Log.d(TAG, "Item - Created at " + posX + ", " + posY);
         id = ID++;
         type = pType;
         body = createBody(physicsWorld);
         physicsWorld.registerPhysicsConnector(new PhysicsConnector(this, body, true, false));
+        Log.v(TAG, "Item - Body at " + body.getPosition().x + ", " + body.getPosition().y);
     }
 
     private Body createBody(PhysicsWorld physicsWorld) {
@@ -78,8 +81,10 @@ public class Item extends AnimatedSprite {
                 break;
             case TouchEvent.ACTION_MOVE:
                 if (isGrabbed) {
-                    float velocityX = pTouchAreaLocalX - body.getPosition().x;
-                    float velocityY = pTouchAreaLocalY - body.getPosition().y;
+                    final float x = body.getPosition().x;
+                    final float y = body.getPosition().y;
+                    float velocityX = pTouchAreaLocalX - x;
+                    float velocityY = pTouchAreaLocalY - y;
                     body.setLinearVelocity(velocityX, velocityY);
                 }
                 break;
