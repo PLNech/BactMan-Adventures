@@ -137,6 +137,10 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.ionis.igem.app.ui.iGEMActivity" />
         </activity>
+        <meta-data
+            android:name="io.fabric.ApiKey"
+            android:value="704f6f3270209fd9bbee18bb16a5c21f5a5e9d75" />
     </application>
 
+    <uses-permission android:name="android.permission.INTERNET" />
 </manifest>

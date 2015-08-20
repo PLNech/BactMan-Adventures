@@ -15,6 +15,8 @@ import butterknife.ButterKnife;
 import butterknife.InjectView;
 import butterknife.OnClick;
 import com.ionis.igem.app.R;
+import com.crashlytics.android.Crashlytics;
+import io.fabric.sdk.android.Fabric;
 
 public class HomeActivity extends AppCompatActivity implements SurfaceHolder.Callback {
 
@@ -27,6 +29,7 @@ public class HomeActivity extends AppCompatActivity implements SurfaceHolder.Cal
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Fabric.with(this, new Crashlytics());
         setContentView(R.layout.activity_home);
         ButterKnife.inject(this);
 
