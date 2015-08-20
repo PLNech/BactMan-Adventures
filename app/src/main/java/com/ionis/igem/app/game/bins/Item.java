@@ -50,7 +50,9 @@ public class Item extends AnimatedSprite {
                 break;
             case TouchEvent.ACTION_MOVE:
                 if (isGrabbed) {
-                    setPosition(pSceneTouchEvent.getX() - this.getWidth() / 2, pSceneTouchEvent.getY() - this.getHeight() / 2);
+                    float velocityX = pTouchAreaLocalX - body.getPosition().x;
+                    float velocityY = pTouchAreaLocalY - body.getPosition().y;
+                    body.setLinearVelocity(velocityX, velocityY);
                 }
                 break;
             case TouchEvent.ACTION_UP:
