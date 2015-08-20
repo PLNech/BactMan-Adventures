@@ -6,8 +6,8 @@ import android.opengl.GLES20;
 import android.os.Bundle;
 import android.util.Log;
 import android.util.Pair;
-import android.widget.Toast;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.physics.box2d.*;
 import com.ionis.igem.app.game.BaseGameActivity;
 import com.ionis.igem.app.game.bins.Bin;
 import com.ionis.igem.app.game.bins.Item;
@@ -46,6 +46,9 @@ public class GameActivity extends BaseGameActivity {
     private Text scoreText;
     private Font fontRoboto;
 
+    private int gameScore = 0;
+    private int gameLives = 3;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -62,9 +65,7 @@ public class GameActivity extends BaseGameActivity {
 
     @Override
     public void onCreateResources() {
-        final String msg = "onCreateResources - Beginning resource creation.";
-        Log.d(TAG, msg);
-        toastOnUIThread(msg, Toast.LENGTH_SHORT);
+        Log.d(TAG, "onCreateResources - Beginning resource creation.");
         loadGraphics();
         loadFonts();
 //        loadSounds();
@@ -100,9 +101,7 @@ public class GameActivity extends BaseGameActivity {
         final ITexture fontTexture = new BitmapTextureAtlas(getTextureManager(), 256, 256, TextureOptions.BILINEAR_PREMULTIPLYALPHA);
         fontRoboto = FontFactory.createFromAsset(getFontManager(), fontTexture, getAssets(), "Roboto-Thin.ttf", 40, true, Color.BLACK);
         fontRoboto.load();
-        final String msg = "loadFonts - Finished loading fonts.";
-        Log.d(TAG, msg);
-        toastOnUIThread(msg, Toast.LENGTH_SHORT);
+        Log.d(TAG, "loadFonts - Finished loading fonts.");
     }
 
 //    private void loadSounds() {
@@ -133,7 +132,7 @@ public class GameActivity extends BaseGameActivity {
             gameScene.attachChild(layer);
         }
 
-        createTextDebug();
+        createScoreText();
 
         createBins();
         createItem(spriteCenter(smileyTextureRegion));
@@ -141,26 +140,25 @@ public class GameActivity extends BaseGameActivity {
 
         gameScene.setTouchAreaBindingOnActionDownEnabled(true);
 
-        final String msg = "onCreateScene - Scene created.";
-        Log.d(TAG, msg);
-        toastOnUIThread(msg);
+        Log.d(TAG, "onCreateScene - Scene created.");
         return gameScene;
     }
 
     private void initPhysics() {
         physicsWorld = new PhysicsWorld(new Vector2(0, SensorManager.GRAVITY_EARTH), false);
+        physicsWorld.setContactListener(createContactListener());
         gameScene.registerUpdateHandler(physicsWorld);
     }
 
-    private void createTextDebug() {
+    private void createScoreText() {
         Pair<Float, Float> posDebug = spritePosition(new Pair<>(20f, 20f), new Pair<>(0.1f, 0.1f));
         scoreText = new Text(posDebug.first, posDebug.second, fontRoboto, "State: ", "State: Long state being here.".length(), this.getVertexBufferObjectManager());
         scoreText.setBlendFunction(GLES20.GL_SRC_ALPHA, GLES20.GL_ONE_MINUS_SRC_ALPHA);
         scoreText.setAlpha(0.5f);
-        gameScene.attachChild(scoreText);
+        gameScene.getChildByIndex(LAYER_FOREGROUND).attachChild(scoreText);
     }
 
-    private void setTextDebug(CharSequence text) {
+    private void setScoreText(CharSequence text) {
         scoreText.setText("State: " + text);
     }
 
@@ -169,7 +167,7 @@ public class GameActivity extends BaseGameActivity {
     }
 
     private void createItem(float posX, float posY) {
-        Item item = new Item(smileyTextureRegion, posX, posY, this.getVertexBufferObjectManager(), physicsWorld);
+        Item item = new Item(Item.Type.PAPER, smileyTextureRegion, posX, posY, this.getVertexBufferObjectManager(), physicsWorld);
 
         gameScene.getChildByIndex(LAYER_BACKGROUND).attachChild(item);
         gameScene.registerTouchArea(item);
@@ -177,16 +175,73 @@ public class GameActivity extends BaseGameActivity {
 
     private void createBins() {
         final VertexBufferObjectManager vertexBufferObjectManager = getVertexBufferObjectManager();
-        Bin bin1 = new Bin(50, 300, bin1TextureRegion, vertexBufferObjectManager, physicsWorld);
-        Bin bin2 = new Bin(200, 300, bin2TextureRegion, vertexBufferObjectManager, physicsWorld);
-        Bin bin3 = new Bin(350, 300, bin3TextureRegion, vertexBufferObjectManager, physicsWorld);
-        Bin bin4 = new Bin(500, 300, bin4TextureRegion, vertexBufferObjectManager, physicsWorld);
+        Bin bin1 = new Bin(50, 300, bin1TextureRegion, Bin.Type.GLASS, vertexBufferObjectManager, physicsWorld);
+        Bin bin2 = new Bin(200, 300, bin2TextureRegion, Bin.Type.LIQUIDS, vertexBufferObjectManager, physicsWorld);
+        Bin bin3 = new Bin(350, 300, bin3TextureRegion, Bin.Type.DEFAULT, vertexBufferObjectManager, physicsWorld);
+        Bin bin4 = new Bin(500, 300, bin4TextureRegion, Bin.Type.BIO, vertexBufferObjectManager, physicsWorld);
 
         final IEntity foreground = gameScene.getChildByIndex(LAYER_FOREGROUND);
         foreground.attachChild(bin1);
         foreground.attachChild(bin2);
         foreground.attachChild(bin3);
         foreground.attachChild(bin4);
+    }
+
+    private ContactListener createContactListener() {
+        return new ContactListener() {
+            @Override
+            public void beginContact(Contact contact) {
+                final Fixture x1 = contact.getFixtureA();
+                final Fixture x2 = contact.getFixtureB();
+                Bin bin;
+                Item item;
+                Log.d(TAG, "beginContact - Contact!");
+                if (contact.isTouching()) {
+                    Log.d(TAG, "beginContact - isTouching!");
+                    if (Bin.isOne(x1)) {
+                        bin = (Bin) x1.getBody().getUserData();
+                        item = (Item) x2.getBody().getUserData();
+                    } else if (Bin.isOne(x2)) {
+                        bin = (Bin) x2.getBody().getUserData();
+                        item = (Item) x1.getBody().getUserData();
+                    } else {
+                        /* Two items are touching. */
+                        return;
+                    }
+                    Log.d(TAG, "beginContact - Item " + item.toString() + " went in bin " + bin.toString() + ".");
+                    if (bin.accepts(item)) {
+                        gameScore++;
+                        Log.d(TAG, "beginContact - Increasing score to " + gameScore + ".");
+                        setScoreText("" + gameScore);
+                    } else {
+                        gameLives--;
+                        Log.d(TAG, "beginContact - Decreasing lives to " + gameLives + ".");
+                        if (gameLives == 0) {
+                            gameOver();
+                        }
+                    }
+                }
+            }
+
+            @Override
+            public void endContact(Contact contact) {
+
+            }
+
+            @Override
+            public void preSolve(Contact contact, Manifold oldManifold) {
+
+            }
+
+            @Override
+            public void postSolve(Contact contact, ContactImpulse impulse) {
+
+            }
+        };
+    }
+
+    private void gameOver() {
+        //TODO: Painfully handwritten method stub
     }
 
 }

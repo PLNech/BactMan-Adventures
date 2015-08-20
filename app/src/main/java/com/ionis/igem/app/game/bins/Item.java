@@ -15,29 +15,57 @@ import org.andengine.opengl.vbo.VertexBufferObjectManager;
  * Created by PLN on 19/08/2015.
  */
 public class Item extends AnimatedSprite {
+
+    private Type type;
+
+    public enum Type {
+        PAPER(Bin.Type.DEFAULT),
+        MICROSCOPE_SLIDE(Bin.Type.GLASS),
+        PETRI_DISH(Bin.Type.BIO),
+        PEN(Bin.Type.DEFAULT),
+        SUBSTRATE_BOX(Bin.Type.BIO),
+        SOLVENT(Bin.Type.LIQUIDS);
+
+        Bin.Type validBinType;
+
+        Type(Bin.Type pType) {
+            validBinType = pType;
+        }
+
+        Bin.Type getValid() {
+            return validBinType;
+        }
+
+    }
     public static final int DURATION_EACH_ANIM = 100;
+
     public static final float SCALE_GRABBED = 1.5f;
     public static final float SCALE_NORMAL = 1.0f;
-
     public static final int BODY_DENSITY = 1;
+
     public static final float BODY_ELASTICITY = 0.5f;
     public static final float BODY_FRICTION = 0.5f;
+    public static short ID = 0;
 
     Boolean isGrabbed = false;
-    Body body;
 
-    public Item(TiledTextureRegion texture, float posX, float posY, VertexBufferObjectManager manager, PhysicsWorld physicsWorld) {
+    Body body;
+    int id;
+    public Item(Type pType, TiledTextureRegion texture, float posX, float posY, VertexBufferObjectManager manager, PhysicsWorld physicsWorld) {
         super(posX, posY, texture, manager);
+        setCullingEnabled(true);
         animate(DURATION_EACH_ANIM);
 
+        id = ID++;
+        type = pType;
         body = createBody(physicsWorld);
         physicsWorld.registerPhysicsConnector(new PhysicsConnector(this, body, true, false));
     }
 
-    public Body createBody(PhysicsWorld physicsWorld) {
+    private Body createBody(PhysicsWorld physicsWorld) {
         final FixtureDef itemFixtureDef = PhysicsFactory.createFixtureDef(BODY_DENSITY, BODY_ELASTICITY, BODY_FRICTION);
         final Body body = PhysicsFactory.createBoxBody(physicsWorld, this, BodyDef.BodyType.DynamicBody, itemFixtureDef);
-        body.setUserData("item");
+        body.setUserData(this);
         return body;
     }
 
@@ -63,5 +91,43 @@ public class Item extends AnimatedSprite {
                 break;
         }
         return true;
+    }
+
+    public Type getType() {
+        return type;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    @Override
+    public String toString() {
+        String typeString = "type=";
+        switch (type) {
+            case PAPER:
+                typeString += "Papier";
+                break;
+            case MICROSCOPE_SLIDE:
+                typeString += "Lame";
+                break;
+            case PEN:
+                typeString += "Marqueur";
+                break;
+            case SOLVENT:
+                typeString += "Solvant";
+                break;
+            case SUBSTRATE_BOX:
+                typeString += "Boite de substrat";
+                break;
+            case PETRI_DISH:
+                typeString += "Boite de Petri";
+                break;
+        }
+
+        return "Item{" +
+                "id=" + id +
+                typeString +
+                '}';
     }
 }
