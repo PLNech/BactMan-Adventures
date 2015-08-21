@@ -11,6 +11,8 @@ import com.badlogic.gdx.physics.box2d.*;
 import com.ionis.igem.app.game.BaseGameActivity;
 import com.ionis.igem.app.game.bins.Bin;
 import com.ionis.igem.app.game.bins.Item;
+import com.ionis.igem.app.game.managers.ResMan;
+import com.ionis.igem.app.game.model.Asset;
 import org.andengine.engine.camera.SmoothCamera;
 import org.andengine.engine.options.EngineOptions;
 import org.andengine.engine.options.ScreenOrientation;
@@ -23,20 +25,19 @@ import org.andengine.extension.physics.box2d.PhysicsWorld;
 import org.andengine.opengl.font.Font;
 import org.andengine.opengl.font.FontFactory;
 import org.andengine.opengl.texture.ITexture;
+import org.andengine.opengl.texture.TextureManager;
 import org.andengine.opengl.texture.TextureOptions;
 import org.andengine.opengl.texture.atlas.bitmap.BitmapTextureAtlas;
 import org.andengine.opengl.texture.atlas.bitmap.BitmapTextureAtlasTextureRegionFactory;
+import org.andengine.opengl.texture.region.ITextureRegion;
+import org.andengine.opengl.texture.region.ITiledTextureRegion;
 import org.andengine.opengl.texture.region.TextureRegion;
 import org.andengine.opengl.texture.region.TiledTextureRegion;
 
+import java.util.HashMap;
+
 public class GameActivity extends BaseGameActivity {
     private static final String TAG = "GameActivity";
-
-    private TextureRegion bin1TextureRegion;
-    private TextureRegion bin2TextureRegion;
-    private TextureRegion bin3TextureRegion;
-    private TextureRegion bin4TextureRegion;
-    private TiledTextureRegion smileyTextureRegion;
 
     private SmoothCamera gameCamera;
     private PhysicsWorld physicsWorld;
@@ -47,6 +48,9 @@ public class GameActivity extends BaseGameActivity {
 
     private int gameScore = 0;
     private int gameLives = 3;
+
+    private HashMap<CharSequence, ITextureRegion> textureMap = new HashMap<>();
+    private TextureManager textureManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,27 +76,33 @@ public class GameActivity extends BaseGameActivity {
 
     private void loadGraphics() {
         BitmapTextureAtlasTextureRegionFactory.setAssetBasePath("gfx/");
-        BitmapTextureAtlas bin1TextureAtlas = new BitmapTextureAtlas(getTextureManager(), 696, 1024, TextureOptions.DEFAULT);
-        bin1TextureRegion = BitmapTextureAtlasTextureRegionFactory.createFromAsset(bin1TextureAtlas, this, "bin1.png", 0, 0);
-        bin1TextureAtlas.load();
 
-        BitmapTextureAtlas bin2TextureAtlas = new BitmapTextureAtlas(getTextureManager(), 696, 1024, TextureOptions.DEFAULT);
-        bin2TextureRegion = BitmapTextureAtlasTextureRegionFactory.createFromAsset(bin2TextureAtlas, this, "bin2.png", 0, 0);
-        bin2TextureAtlas.load();
-
-        BitmapTextureAtlas bin3TextureAtlas = new BitmapTextureAtlas(getTextureManager(), 696, 1024, TextureOptions.DEFAULT);
-        bin3TextureRegion = BitmapTextureAtlasTextureRegionFactory.createFromAsset(bin3TextureAtlas, this, "bin3.png", 0, 0);
-        bin3TextureAtlas.load();
-
-        BitmapTextureAtlas bin4TextureAtlas = new BitmapTextureAtlas(getTextureManager(), 696, 1024, TextureOptions.DEFAULT);
-        bin4TextureRegion = BitmapTextureAtlasTextureRegionFactory.createFromAsset(bin4TextureAtlas, this, "bin4.png", 0, 0);
-        bin4TextureAtlas.load();
-
-        BitmapTextureAtlas smileyTextureAtlas = new BitmapTextureAtlas(this.getTextureManager(), 64, 32, TextureOptions.BILINEAR);
-        smileyTextureRegion = BitmapTextureAtlasTextureRegionFactory.createTiledFromAsset(smileyTextureAtlas, this, "face_box_tiled.png", 0, 0, 2, 1);
-        smileyTextureAtlas.load();
+        loadAsset(new Asset(ResMan.BIN1, 696, 1024, 0, 0));
+        loadAsset(new Asset(ResMan.BIN2, 696, 1024, 0, 0));
+        loadAsset(new Asset(ResMan.BIN3, 696, 1024, 0, 0));
+        loadAsset(new Asset(ResMan.BIN4, 696, 1024, 0, 0));
+        loadAsset(new Asset(ResMan.FACE_BOX_TILED, 696, 1024, 0, 0, 2, 1));
 
         Log.d(TAG, "loadGraphic - Finished loading background texture.");
+    }
+
+    private void loadAsset(Asset asset) {
+        if (textureManager == null) {
+            textureManager = getTextureManager();
+        }
+
+        BitmapTextureAtlas textureAtlas = new BitmapTextureAtlas(textureManager, asset.getWidth(), asset.getHeight(), TextureOptions.BILINEAR);
+        if (asset.isTiled()) {
+            TiledTextureRegion tiledTextureRegion = BitmapTextureAtlasTextureRegionFactory.createTiledFromAsset(
+                    textureAtlas, this, asset.getFilename(), asset.getTextureX(), asset.getTextureY(), asset.getTileColumns(), asset.getTileRows());
+            textureMap.put(asset.getFilename(), tiledTextureRegion);
+        } else {
+            TextureRegion textureRegion = BitmapTextureAtlasTextureRegionFactory.createFromAsset(textureAtlas, this,
+                    asset.getFilename(), asset.getTextureX(), asset.getTextureY());
+            textureMap.put(asset.getFilename(), textureRegion);
+        }
+
+        textureAtlas.load();
     }
 
     private void loadFonts() {
@@ -132,8 +142,9 @@ public class GameActivity extends BaseGameActivity {
         }
 
         createHUD();
-
         createBins();
+
+        final ITextureRegion smileyTextureRegion = textureMap.get(ResMan.FACE_BOX_TILED);
         createItem(spriteCenter(smileyTextureRegion));
         createItem(spritePosition(smileyTextureRegion, 0.2f, 0.5f));
 
@@ -178,19 +189,25 @@ public class GameActivity extends BaseGameActivity {
     }
 
     private void createItem(float posX, float posY) {
+        final ITiledTextureRegion smileyTextureRegion = (ITiledTextureRegion) textureMap.get(ResMan.FACE_BOX_TILED);
         Item item = new Item(Item.Type.PAPER, smileyTextureRegion, posX, posY, this.getVertexBufferObjectManager(), physicsWorld);
 
         gameScene.getChildByIndex(LAYER_BACKGROUND).attachChild(item);
         gameScene.registerTouchArea(item);
     }
 
-    private void createBin(Bin.Type type, TextureRegion textureRegion, float posX, float posY) {
+    private void createBin(Bin.Type type, ITextureRegion textureRegion, float posX, float posY) {
         Bin bin = new Bin(type, posX, posY, textureRegion, getVertexBufferObjectManager(), physicsWorld);
         gameScene.getChildByIndex(LAYER_FOREGROUND).attachChild(bin);
     }
 
     private void createBins() {
         final float binY = 0.85f;
+        final ITextureRegion bin1TextureRegion = textureMap.get(ResMan.BIN1);
+        final ITextureRegion bin2TextureRegion = textureMap.get(ResMan.BIN2);
+        final ITextureRegion bin3TextureRegion = textureMap.get(ResMan.BIN3);
+        final ITextureRegion bin4TextureRegion = textureMap.get(ResMan.BIN4);
+
         Pair<Float, Float> bin1Pos = spritePosition(bin1TextureRegion, 0.30f, binY, Bin.SCALE_DEFAULT);
         Pair<Float, Float> bin2Pos = spritePosition(bin2TextureRegion, 0.50f, binY, Bin.SCALE_DEFAULT);
         Pair<Float, Float> bin3Pos = spritePosition(bin3TextureRegion, 0.70f, binY, Bin.SCALE_DEFAULT);
@@ -232,7 +249,7 @@ public class GameActivity extends BaseGameActivity {
                         Log.d(TAG, "beginContact - Decreasing lives to " + gameLives + ".");
                         setLivesText("" + gameLives);
                         if (gameLives == 0) {
-                            gameOver();
+                            onLose();
                         }
                     }
                 }
@@ -255,8 +272,7 @@ public class GameActivity extends BaseGameActivity {
         };
     }
 
-    private void gameOver() {
-        //TODO: Painfully handwritten method stub
+    private void onLose() {
     }
 
 }

@@ -24,7 +24,7 @@ public class GameMenuActivity extends AppCompatActivity {
 
     @OnClick(R.id.button_game_levels)
     protected void onClickLevels() {
-        startActivity(new Intent(this, GameLevelsActivity.class));
+//        startActivity(new Intent(this, GameLevelsActivity.class));
     }
 
     @OnClick(R.id.button_game_settings)
