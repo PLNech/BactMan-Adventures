@@ -8,11 +8,13 @@ import android.util.Log;
 import android.util.Pair;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
+import com.ionis.igem.app.BinGame;
 import com.ionis.igem.app.game.BaseGameActivity;
 import com.ionis.igem.app.game.bins.Bin;
 import com.ionis.igem.app.game.bins.Item;
 import com.ionis.igem.app.game.managers.ResMan;
 import com.ionis.igem.app.game.model.Asset;
+import com.ionis.igem.app.game.model.BaseGame;
 import org.andengine.engine.camera.SmoothCamera;
 import org.andengine.engine.options.EngineOptions;
 import org.andengine.engine.options.ScreenOrientation;
@@ -35,6 +37,7 @@ import org.andengine.opengl.texture.region.TextureRegion;
 import org.andengine.opengl.texture.region.TiledTextureRegion;
 
 import java.util.HashMap;
+import java.util.List;
 
 public class GameActivity extends BaseGameActivity {
     private static final String TAG = "GameActivity";
@@ -52,10 +55,14 @@ public class GameActivity extends BaseGameActivity {
     private HashMap<CharSequence, ITextureRegion> textureMap = new HashMap<>();
     private TextureManager textureManager;
 
+    private BinGame gameBin;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Log.d(TAG, "onCreate - Created Activity.");
+        gameBin = new BinGame();
+
     }
 
     @Override
@@ -69,21 +76,21 @@ public class GameActivity extends BaseGameActivity {
     @Override
     public void onCreateResources() {
         Log.d(TAG, "onCreateResources - Beginning resource creation.");
-        loadGraphics();
+        loadGraphics(gameBin);
         loadFonts();
 //        loadSounds();
     }
 
-    private void loadGraphics() {
+    private void loadGraphics(BaseGame game) {
         BitmapTextureAtlasTextureRegionFactory.setAssetBasePath("gfx/");
-
-        loadAsset(new Asset(ResMan.BIN1, 696, 1024, 0, 0));
-        loadAsset(new Asset(ResMan.BIN2, 696, 1024, 0, 0));
-        loadAsset(new Asset(ResMan.BIN3, 696, 1024, 0, 0));
-        loadAsset(new Asset(ResMan.BIN4, 696, 1024, 0, 0));
-        loadAsset(new Asset(ResMan.FACE_BOX_TILED, 696, 1024, 0, 0, 2, 1));
-
+        loadAssets(game.getAssets());
         Log.d(TAG, "loadGraphic - Finished loading background texture.");
+    }
+
+    private void loadAssets(List<Asset> assets) {
+        for (Asset asset : assets) {
+            loadAsset(asset);
+        }
     }
 
     private void loadAsset(Asset asset) {
@@ -180,6 +187,7 @@ public class GameActivity extends BaseGameActivity {
     private void setScoreText(CharSequence text) {
         gameScoreText.setText("Score: " + text);
     }
+
     private void setLivesText(CharSequence text) {
         gameLivesText.setText("Lives: " + text);
     }
@@ -272,7 +280,7 @@ public class GameActivity extends BaseGameActivity {
         };
     }
 
-    private void onLose() {
+    private void onWin() {
     }
 
 }

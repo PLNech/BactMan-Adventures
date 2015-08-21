@@ -56,13 +56,6 @@
                     android:name="android.support.PARENT_ACTIVITY"
                     android:value=".ui.GameMenuActivity" />
         </activity>
-        <activity android:name=".ui.GameLevelsActivity"
-                android:label="@string/title_activity_game_levels"
-                android:parentActivityName=".ui.GameMenuActivity" >
-            <meta-data
-                    android:name="android.support.PARENT_ACTIVITY"
-                    android:value=".ui.GameMenuActivity" />
-        </activity>
         <activity android:name=".ui.GameSettingsActivity"
                 android:label="@string/title_activity_game_settings"
                 android:parentActivityName=".ui.GameMenuActivity">
