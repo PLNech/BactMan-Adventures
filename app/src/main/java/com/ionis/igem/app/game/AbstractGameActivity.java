@@ -12,7 +12,7 @@ import org.andengine.ui.activity.SimpleBaseGameActivity;
 /**
  * Created by PLN on 11/08/2015.
  */
-public abstract class BaseGameActivity extends SimpleBaseGameActivity {
+public abstract class AbstractGameActivity extends SimpleBaseGameActivity {
 
     private static final String TAG = "BaseGameActivity";
 

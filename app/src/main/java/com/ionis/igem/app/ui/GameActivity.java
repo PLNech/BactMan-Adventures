@@ -4,7 +4,7 @@ import android.content.res.AssetManager;
 import android.os.Bundle;
 import android.util.Log;
 import com.ionis.igem.app.BinGame;
-import com.ionis.igem.app.game.BaseGameActivity;
+import com.ionis.igem.app.game.AbstractGameActivity;
 import com.ionis.igem.app.game.model.BaseGame;
 import com.ionis.igem.app.game.model.FontAsset;
 import com.ionis.igem.app.game.model.GFXAsset;
@@ -33,7 +33,7 @@ import org.andengine.opengl.vbo.VertexBufferObjectManager;
 import java.util.HashMap;
 import java.util.List;
 
-public class GameActivity extends BaseGameActivity {
+public class GameActivity extends AbstractGameActivity {
     private static final String TAG = "GameActivity";
     private VertexBufferObjectManager vertexBufferObjectManager;
 
