@@ -3,8 +3,7 @@ package com.ionis.igem.app.game.model;
 /**
  * Created by PLN on 21/08/2015.
  */
-public class Asset {
-    String filename;
+public class GFXAsset extends Asset {
     int width;
     int height;
     int textureX;
@@ -14,8 +13,8 @@ public class Asset {
     int tileColumns;
     int tileRows;
 
-    public Asset(String filename, int width, int height, int textureX, int textureY, int tileColumns, int tileRows) {
-        this.filename = filename;
+    public GFXAsset(String filename, int width, int height, int textureX, int textureY, int tileColumns, int tileRows) {
+        super(filename);
         this.width = width;
         this.height = height;
         this.textureX = textureX;
@@ -25,13 +24,9 @@ public class Asset {
         this.tileRows = tileRows;
     }
 
-    public Asset(String filename, int width, int height, int textureX, int textureY) {
+    public GFXAsset(String filename, int width, int height, int textureX, int textureY) {
         this(filename, width, height, textureX, textureY, 0, 0);
         this.tiled = false;
-    }
-
-    public String getFilename() {
-        return filename;
     }
 
     public int getHeight() {

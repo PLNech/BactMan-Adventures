@@ -1,5 +1,6 @@
 package com.ionis.igem.app.ui;
 
+import android.content.res.AssetManager;
 import android.graphics.Color;
 import android.hardware.SensorManager;
 import android.opengl.GLES20;
@@ -7,13 +8,14 @@ import android.os.Bundle;
 import android.util.Log;
 import android.util.Pair;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.physics.box2d.*;
+import com.badlogic.gdx.physics.box2d.ContactListener;
 import com.ionis.igem.app.BinGame;
 import com.ionis.igem.app.game.BaseGameActivity;
 import com.ionis.igem.app.game.bins.Bin;
 import com.ionis.igem.app.game.bins.Item;
 import com.ionis.igem.app.game.managers.ResMan;
-import com.ionis.igem.app.game.model.Asset;
+import com.ionis.igem.app.game.model.FontAsset;
+import com.ionis.igem.app.game.model.GFXAsset;
 import com.ionis.igem.app.game.model.BaseGame;
 import org.andengine.engine.camera.SmoothCamera;
 import org.andengine.engine.options.EngineOptions;
@@ -26,6 +28,8 @@ import org.andengine.entity.text.Text;
 import org.andengine.extension.physics.box2d.PhysicsWorld;
 import org.andengine.opengl.font.Font;
 import org.andengine.opengl.font.FontFactory;
+import org.andengine.opengl.font.FontManager;
+import org.andengine.opengl.font.IFont;
 import org.andengine.opengl.texture.ITexture;
 import org.andengine.opengl.texture.TextureManager;
 import org.andengine.opengl.texture.TextureOptions;
@@ -37,7 +41,6 @@ import org.andengine.opengl.texture.region.TextureRegion;
 import org.andengine.opengl.texture.region.TiledTextureRegion;
 
 import java.util.HashMap;
-import java.util.List;
 
 public class GameActivity extends BaseGameActivity {
     private static final String TAG = "GameActivity";
@@ -47,15 +50,15 @@ public class GameActivity extends BaseGameActivity {
 
     private Text gameScoreText;
     private Text gameLivesText;
-    private Font fontRoboto;
-
-    private int gameScore = 0;
-    private int gameLives = 3;
 
     private HashMap<CharSequence, ITextureRegion> textureMap = new HashMap<>();
+    private HashMap<CharSequence, IFont> fontMap = new HashMap<>();
+
     private TextureManager textureManager;
 
     private BinGame gameBin;
+    private FontManager fontManager;
+    private AssetManager assetManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -76,48 +79,64 @@ public class GameActivity extends BaseGameActivity {
     @Override
     public void onCreateResources() {
         Log.d(TAG, "onCreateResources - Beginning resource creation.");
-        loadGraphics(gameBin);
-        loadFonts();
+        loadGFXAssets(gameBin);
+        loadFonts(gameBin);
 //        loadSounds();
     }
 
-    private void loadGraphics(BaseGame game) {
+    private void loadGFXAssets(BaseGame game) {
         BitmapTextureAtlasTextureRegionFactory.setAssetBasePath("gfx/");
-        loadAssets(game.getAssets());
-        Log.d(TAG, "loadGraphic - Finished loading background texture.");
-    }
-
-    private void loadAssets(List<Asset> assets) {
-        for (Asset asset : assets) {
-            loadAsset(asset);
+        for (GFXAsset asset : game.getGraphicalAssets()) {
+            loadGFXAsset(asset);
         }
+        Log.d(TAG, "loadGraphic - Finished loading game assets.");
     }
 
-    private void loadAsset(Asset asset) {
+    private void loadGFXAsset(GFXAsset asset) {
         if (textureManager == null) {
             textureManager = getTextureManager();
         }
 
         BitmapTextureAtlas textureAtlas = new BitmapTextureAtlas(textureManager, asset.getWidth(), asset.getHeight(), TextureOptions.BILINEAR);
+        final String filename = asset.getFilename();
+        final int textureX = asset.getTextureX();
+        final int textureY = asset.getTextureY();
         if (asset.isTiled()) {
-            TiledTextureRegion tiledTextureRegion = BitmapTextureAtlasTextureRegionFactory.createTiledFromAsset(
-                    textureAtlas, this, asset.getFilename(), asset.getTextureX(), asset.getTextureY(), asset.getTileColumns(), asset.getTileRows());
-            textureMap.put(asset.getFilename(), tiledTextureRegion);
+            final int tileC = asset.getTileColumns();
+            final int tileR = asset.getTileRows();
+            TiledTextureRegion tiledTextureRegion = BitmapTextureAtlasTextureRegionFactory.createTiledFromAsset(textureAtlas, this, filename, textureX, textureY, tileC, tileR);
+            textureMap.put(filename, tiledTextureRegion);
         } else {
-            TextureRegion textureRegion = BitmapTextureAtlasTextureRegionFactory.createFromAsset(textureAtlas, this,
-                    asset.getFilename(), asset.getTextureX(), asset.getTextureY());
-            textureMap.put(asset.getFilename(), textureRegion);
+            TextureRegion textureRegion = BitmapTextureAtlasTextureRegionFactory.createFromAsset(textureAtlas, this, filename, textureX, textureY);
+            textureMap.put(filename, textureRegion);
         }
 
         textureAtlas.load();
     }
 
-    private void loadFonts() {
+    private void loadFonts(BaseGame game) {
         FontFactory.setAssetBasePath("fonts/");
-        final ITexture fontTexture = new BitmapTextureAtlas(getTextureManager(), 256, 256, TextureOptions.BILINEAR_PREMULTIPLYALPHA);
-        fontRoboto = FontFactory.createFromAsset(getFontManager(), fontTexture, getAssets(), "Roboto-Thin.ttf", 40, true, Color.BLACK);
-        fontRoboto.load();
+
+        if (fontManager == null) {
+            fontManager = getFontManager();
+        }
+        if (assetManager == null) {
+            assetManager = getAssets();
+        }
+
+        for (FontAsset asset : game.getFontAssets()) {
+            Font font = loadFont(asset);
+            font.load();
+            fontMap.put(asset.toString(), font);
+        }
+
         Log.d(TAG, "loadFonts - Finished loading fonts.");
+    }
+
+    private Font loadFont(FontAsset asset) {
+        final ITexture fontTexture = new BitmapTextureAtlas(getTextureManager(), 256, 256, TextureOptions.BILINEAR_PREMULTIPLYALPHA);
+        return FontFactory.createFromAsset(fontManager, fontTexture, assetManager,
+                asset.getFilename(), asset.getSize(), asset.isAntialised(), asset.getColor());
     }
 
 //    private void loadSounds() {
