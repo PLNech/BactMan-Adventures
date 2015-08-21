@@ -2,8 +2,8 @@ package com.ionis.igem.app.game.model;
 
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.ContactListener;
+import com.ionis.igem.app.ui.GameActivity;
 import org.andengine.entity.scene.Scene;
-import org.andengine.opengl.font.IFont;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,14 +15,24 @@ public abstract class BaseGame {
     protected ArrayList<GFXAsset> graphicalAssets = new ArrayList<>();
     protected ArrayList<FontAsset> fontAssets = new ArrayList<>();
 
+    protected ArrayList<HUDElement> elements = new ArrayList<>();
+
+    protected GameActivity activity;
+
     public abstract List<GFXAsset> getGraphicalAssets();
+
     public abstract List<FontAsset> getFontAssets();
 
-    public abstract Scene prepareScene(Scene scene);
+    public abstract Scene prepareScene();
 
     public abstract ContactListener getContactListener();
 
     public abstract Vector2 getPhysicsVector();
-//    public abstract List<HUD> getHudParts();
+
+    public abstract List<HUDElement> getHudElements();
+
+    public BaseGame(GameActivity pActivity) {
+        activity = pActivity;
+    }
 
 }

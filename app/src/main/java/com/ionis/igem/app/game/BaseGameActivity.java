@@ -23,9 +23,10 @@ public abstract class BaseGameActivity extends SimpleBaseGameActivity {
 
     protected Scene gameScene;
 
-    protected static final int LAYER_COUNT = 2;
-    protected static final int LAYER_BACKGROUND = 0;
-    protected static final int LAYER_FOREGROUND = LAYER_BACKGROUND + 1;
+    protected static final int LAYER_COUNT = 3;
+    public static final int LAYER_BACKGROUND = 0;
+    public static final int LAYER_FOREGROUND = LAYER_BACKGROUND + 1;
+    protected static final int LAYER_HUD = LAYER_FOREGROUND + 1;
 
     protected static final float MAX_SPEED_X = 200.0f;
     protected static final float MAX_SPEED_Y = 200.0f;
@@ -65,21 +66,21 @@ public abstract class BaseGameActivity extends SimpleBaseGameActivity {
         return null;
     }
 
-    protected Pair<Float, Float> spriteCenter(ITextureRegion textureRegion) {
+    public Pair<Float, Float> spriteCenter(ITextureRegion textureRegion) {
         /**
          * Returns the appropriate coordinates to center the given textureRegion in the game camera.
          */
         return spritePosition(textureRegion, 0.5f, 0.5f);
     }
 
-    protected Pair<Float, Float> spritePosition(ITextureRegion textureRegion,
-                                                float positionRatioX, float positionRatioY,
-                                                float ratio) {
+    public Pair<Float, Float> spritePosition(ITextureRegion textureRegion,
+                                             float positionRatioX, float positionRatioY,
+                                             float ratio) {
         final float widthToRatio = textureRegion.getWidth() * ratio;
         final float heightToRatio = textureRegion.getHeight() * ratio;
         return spritePosition(new Pair<>(widthToRatio, heightToRatio), new Pair<>(positionRatioX, positionRatioY));
     }
-    protected Pair<Float, Float> spritePosition(ITextureRegion textureRegion, float positionRatioX, float positionRatioY) {
+    public Pair<Float, Float> spritePosition(ITextureRegion textureRegion, float positionRatioX, float positionRatioY) {
         final Pair<Float, Float> textureDimensions = new Pair<>(textureRegion.getWidth(), textureRegion.getHeight());
         return spritePosition(textureDimensions, new Pair<>(positionRatioX, positionRatioY));
     }
@@ -88,7 +89,7 @@ public abstract class BaseGameActivity extends SimpleBaseGameActivity {
         return spritePosition(new Pair<>(textureRegion.getWidth(), textureRegion.getHeight()), positionRatio);
     }
 
-    protected Pair<Float,Float> spritePosition(float textureDimX, float textureDimY, float posRatioX, float posRatioY) {
+    public Pair<Float,Float> spritePosition(float textureDimX, float textureDimY, float posRatioX, float posRatioY) {
         return spritePosition(new Pair<>(textureDimX, textureDimY),new Pair<>(posRatioX, posRatioY));
     }
 
