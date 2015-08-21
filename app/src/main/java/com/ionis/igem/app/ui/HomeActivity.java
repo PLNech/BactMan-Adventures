@@ -14,6 +14,8 @@ import android.widget.Toast;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 import butterknife.OnClick;
+import com.crashlytics.android.core.CrashlyticsCore;
+import com.ionis.igem.app.BuildConfig;
 import com.ionis.igem.app.R;
 import com.crashlytics.android.Crashlytics;
 import io.fabric.sdk.android.Fabric;
@@ -29,7 +31,8 @@ public class HomeActivity extends AppCompatActivity implements SurfaceHolder.Cal
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Fabric.with(this, new Crashlytics());
+        final CrashlyticsCore crashlyticsCore = new CrashlyticsCore.Builder().disabled(BuildConfig.DEBUG).build();
+        Fabric.with(this, new Crashlytics.Builder().core(crashlyticsCore).build());
         setContentView(R.layout.activity_home);
         ButterKnife.inject(this);
 
