@@ -28,7 +28,6 @@ import org.andengine.opengl.texture.atlas.bitmap.BitmapTextureAtlas;
 import org.andengine.opengl.texture.atlas.bitmap.BitmapTextureAtlasTextureRegionFactory;
 import org.andengine.opengl.texture.region.TextureRegion;
 import org.andengine.opengl.texture.region.TiledTextureRegion;
-import org.andengine.opengl.vbo.VertexBufferObjectManager;
 
 public class GameActivity extends BaseGameActivity {
     private static final String TAG = "GameActivity";
@@ -42,7 +41,8 @@ public class GameActivity extends BaseGameActivity {
     private SmoothCamera gameCamera;
     private PhysicsWorld physicsWorld;
 
-    private Text scoreText;
+    private Text gameScoreText;
+    private Text gameLivesText;
     private Font fontRoboto;
 
     private int gameScore = 0;
@@ -131,7 +131,7 @@ public class GameActivity extends BaseGameActivity {
             gameScene.attachChild(layer);
         }
 
-        createScoreText();
+        createHUD();
 
         createBins();
         createItem(spriteCenter(smileyTextureRegion));
@@ -149,17 +149,28 @@ public class GameActivity extends BaseGameActivity {
         gameScene.registerUpdateHandler(physicsWorld);
     }
 
-    private void createScoreText() {
-        Pair<Float, Float> posScore = spritePosition(20f, 20f, 0.1f, 0.1f);
-        Log.d(TAG, "createScoreText - Score text positioned at " + posScore.first + ", " + posScore.second);
-        scoreText = new Text(posScore.first, posScore.second, fontRoboto, "State: ", "State: Long state being here.".length(), this.getVertexBufferObjectManager());
-        scoreText.setBlendFunction(GLES20.GL_SRC_ALPHA, GLES20.GL_ONE_MINUS_SRC_ALPHA);
-        scoreText.setAlpha(0.5f);
-        gameScene.getChildByIndex(LAYER_FOREGROUND).attachChild(scoreText);
+    private void createHUD() {
+        final float textY = 0.05f;
+        Pair<Float, Float> posScore = spritePosition(20f, 20f, 0.1f, textY);
+        Log.d(TAG, "createHUD - Score text positioned at " + posScore.first + ", " + posScore.second);
+        gameScoreText = new Text(posScore.first, posScore.second, fontRoboto, "Score: ", "Score: Over 9000.".length(), this.getVertexBufferObjectManager());
+        gameScoreText.setBlendFunction(GLES20.GL_SRC_ALPHA, GLES20.GL_ONE_MINUS_SRC_ALPHA);
+        gameScoreText.setAlpha(0.5f);
+        gameScene.getChildByIndex(LAYER_FOREGROUND).attachChild(gameScoreText);
+
+        Pair<Float, Float> posLives = spritePosition(20f, 20f, 0.6f, textY);
+        Log.d(TAG, "createHUD - Lives text positioned at " + posLives.first + ", " + posLives.second);
+        gameLivesText = new Text(posLives.first, posLives.second, fontRoboto, "Lives: ", "Lives: GAME OVER".length(), this.getVertexBufferObjectManager());
+        gameLivesText.setBlendFunction(GLES20.GL_SRC_ALPHA, GLES20.GL_ONE_MINUS_SRC_ALPHA);
+        gameLivesText.setAlpha(0.5f);
+        gameScene.getChildByIndex(LAYER_FOREGROUND).attachChild(gameLivesText);
     }
 
     private void setScoreText(CharSequence text) {
-        scoreText.setText("State: " + text);
+        gameScoreText.setText("Score: " + text);
+    }
+    private void setLivesText(CharSequence text) {
+        gameLivesText.setText("Lives: " + text);
     }
 
     private void createItem(Pair<Float, Float> pos) {
@@ -219,6 +230,7 @@ public class GameActivity extends BaseGameActivity {
                     } else {
                         gameLives--;
                         Log.d(TAG, "beginContact - Decreasing lives to " + gameLives + ".");
+                        setLivesText("" + gameLives);
                         if (gameLives == 0) {
                             gameOver();
                         }
