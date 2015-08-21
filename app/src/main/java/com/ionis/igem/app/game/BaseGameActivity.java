@@ -1,7 +1,7 @@
 package com.ionis.igem.app.game;
 
 import android.util.Log;
-import android.util.Pair;
+import com.badlogic.gdx.math.Vector2;
 import org.andengine.engine.Engine;
 import org.andengine.engine.options.EngineOptions;
 import org.andengine.entity.scene.Scene;
@@ -66,37 +66,38 @@ public abstract class BaseGameActivity extends SimpleBaseGameActivity {
         return null;
     }
 
-    public Pair<Float, Float> spriteCenter(ITextureRegion textureRegion) {
+    public Vector2 spriteCenter(ITextureRegion textureRegion) {
         /**
          * Returns the appropriate coordinates to center the given textureRegion in the game camera.
          */
         return spritePosition(textureRegion, 0.5f, 0.5f);
     }
 
-    public Pair<Float, Float> spritePosition(ITextureRegion textureRegion,
-                                             float positionRatioX, float positionRatioY,
-                                             float ratio) {
+    public Vector2 spritePosition(ITextureRegion textureRegion,
+                                  float positionRatioX, float positionRatioY,
+                                  float ratio) {
         final float widthToRatio = textureRegion.getWidth() * ratio;
         final float heightToRatio = textureRegion.getHeight() * ratio;
-        return spritePosition(new Pair<>(widthToRatio, heightToRatio), new Pair<>(positionRatioX, positionRatioY));
-    }
-    public Pair<Float, Float> spritePosition(ITextureRegion textureRegion, float positionRatioX, float positionRatioY) {
-        final Pair<Float, Float> textureDimensions = new Pair<>(textureRegion.getWidth(), textureRegion.getHeight());
-        return spritePosition(textureDimensions, new Pair<>(positionRatioX, positionRatioY));
+        return spritePosition(new Vector2(widthToRatio, heightToRatio), new Vector2(positionRatioX, positionRatioY));
     }
 
-    protected Pair<Float, Float> spritePosition(ITextureRegion textureRegion, Pair<Float, Float> positionRatio) {
-        return spritePosition(new Pair<>(textureRegion.getWidth(), textureRegion.getHeight()), positionRatio);
+    public Vector2 spritePosition(ITextureRegion textureRegion, float positionRatioX, float positionRatioY) {
+        final Vector2 textureDimensions = new Vector2(textureRegion.getWidth(), textureRegion.getHeight());
+        return spritePosition(textureDimensions, new Vector2(positionRatioX, positionRatioY));
     }
 
-    public Pair<Float,Float> spritePosition(float textureDimX, float textureDimY, float posRatioX, float posRatioY) {
-        return spritePosition(new Pair<>(textureDimX, textureDimY),new Pair<>(posRatioX, posRatioY));
+    protected Vector2 spritePosition(ITextureRegion textureRegion, Vector2 positionRatio) {
+        return spritePosition(new Vector2(textureRegion.getWidth(), textureRegion.getHeight()), positionRatio);
     }
 
-    protected Pair<Float, Float> spritePosition(Pair<Float, Float> textureDims, Pair<Float, Float> positionRatio) {
-        final Pair<Float, Float> res = new Pair<>(CAMERA_WIDTH  * positionRatio.first - textureDims.first / 2,
-                CAMERA_HEIGHT * positionRatio.second - - textureDims.second / 2);
-        Log.v(TAG, "spritePosition - Returning " + res.first + ", " + res.second);
+    public Vector2 spritePosition(float textureDimX, float textureDimY, float posRatioX, float posRatioY) {
+        return spritePosition(new Vector2(textureDimX, textureDimY), new Vector2(posRatioX, posRatioY));
+    }
+
+    protected Vector2 spritePosition(Vector2 textureDims, Vector2 positionRatio) {
+        final Vector2 res = new Vector2(CAMERA_WIDTH * positionRatio.x - textureDims.x / 2,
+                CAMERA_HEIGHT * positionRatio.y - -textureDims.y / 2);
+        Log.v(TAG, "spritePosition - Returning " + res.x + ", " + res.y);
         return res;
     }
 

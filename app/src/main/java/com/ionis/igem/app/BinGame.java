@@ -2,7 +2,6 @@ package com.ionis.igem.app;
 
 import android.hardware.SensorManager;
 import android.util.Log;
-import android.util.Pair;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
 import com.ionis.igem.app.game.bins.Bin;
@@ -69,16 +68,16 @@ public class BinGame extends BaseGame {
     @Override
     public List<HUDElement> getHudElements() {
         if (elements.isEmpty()) {
-            Pair<Float, Float> posS = activity.spritePosition(20f, 20f, 0.1f, 0.05f);
-            Pair<Float, Float> posL = activity.spritePosition(20f, 20f, 0.6f, 0.05f);
+            Vector2 posS = activity.spritePosition(20f, 20f, 0.1f, 0.05f);
+            Vector2 posL = activity.spritePosition(20f, 20f, 0.6f, 0.05f);
 
             IFont fontRoboto = activity.getFont(FontAsset.name(ResMan.F_HUD_BIN, ResMan.F_HUD_BIN_SIZE, ResMan.F_HUD_BIN_COLOR, ResMan.F_HUD_BIN_ANTI));
             final VertexBufferObjectManager vertexBufferObjectManager = activity.getVBOM();
 
             HUDScore = new HUDElement().buildText("Score: ", "Score: Over 9000.".length(),
-                    posS.first, posS.second, fontRoboto, vertexBufferObjectManager);
+                    posS.x, posS.y, fontRoboto, vertexBufferObjectManager);
             HUDLives = new HUDElement().buildText("Lives: ", "Lives: GAME OVER".length(),
-                    posL.first, posS.second, fontRoboto, vertexBufferObjectManager);
+                    posL.x, posS.y, fontRoboto, vertexBufferObjectManager);
 
             elements.add(HUDScore);
             elements.add(HUDLives);
@@ -173,8 +172,8 @@ public class BinGame extends BaseGame {
     }
 
 
-    private void createItem(Pair<Float, Float> pos) {
-        createItem(pos.first, pos.second);
+    private void createItem(Vector2 pos) {
+        createItem(pos.x, pos.y);
     }
 
     private void createItem(float posX, float posY) {
@@ -198,15 +197,15 @@ public class BinGame extends BaseGame {
         final ITextureRegion bin3TextureRegion = activity.getTextureRegion(ResMan.BIN3);
         final ITextureRegion bin4TextureRegion = activity.getTextureRegion(ResMan.BIN4);
 
-        Pair<Float, Float> bin1Pos = activity.spritePosition(bin1TextureRegion, 0.30f, binY, Bin.SCALE_DEFAULT);
-        Pair<Float, Float> bin2Pos = activity.spritePosition(bin2TextureRegion, 0.50f, binY, Bin.SCALE_DEFAULT);
-        Pair<Float, Float> bin3Pos = activity.spritePosition(bin3TextureRegion, 0.70f, binY, Bin.SCALE_DEFAULT);
-        Pair<Float, Float> bin4Pos = activity.spritePosition(bin4TextureRegion, 0.90f, binY, Bin.SCALE_DEFAULT);
+        Vector2 bin1Pos = activity.spritePosition(bin1TextureRegion, 0.30f, binY, Bin.SCALE_DEFAULT);
+        Vector2 bin2Pos = activity.spritePosition(bin2TextureRegion, 0.50f, binY, Bin.SCALE_DEFAULT);
+        Vector2 bin3Pos = activity.spritePosition(bin3TextureRegion, 0.70f, binY, Bin.SCALE_DEFAULT);
+        Vector2 bin4Pos = activity.spritePosition(bin4TextureRegion, 0.90f, binY, Bin.SCALE_DEFAULT);
 
-        createBin(Bin.Type.GLASS, bin1TextureRegion, bin1Pos.first, bin1Pos.second);
-        createBin(Bin.Type.LIQUIDS, bin2TextureRegion, bin2Pos.first, bin2Pos.second);
-        createBin(Bin.Type.NORMAL, bin3TextureRegion, bin3Pos.first, bin3Pos.second);
-        createBin(Bin.Type.BIO, bin4TextureRegion, bin4Pos.first, bin4Pos.second);
+        createBin(Bin.Type.GLASS, bin1TextureRegion, bin1Pos.x, bin1Pos.y);
+        createBin(Bin.Type.LIQUIDS, bin2TextureRegion, bin2Pos.x, bin2Pos.y);
+        createBin(Bin.Type.NORMAL, bin3TextureRegion, bin3Pos.x, bin3Pos.y);
+        createBin(Bin.Type.BIO, bin4TextureRegion, bin4Pos.x, bin4Pos.y);
     }
 
 }
