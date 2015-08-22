@@ -17,6 +17,10 @@ import org.andengine.opengl.vbo.VertexBufferObjectManager;
  */
 public class Item extends AnimatedSprite {
 
+    public Body getBody() {
+        return body;
+    }
+
     public enum Type {
         PAPER(Bin.Type.NORMAL),
         MICROSCOPE_SLIDE(Bin.Type.GLASS),

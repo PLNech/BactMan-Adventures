@@ -5,12 +5,9 @@ import android.opengl.GLES20;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.KeyEvent;
-import android.view.Menu;
-import android.view.MenuItem;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.ContactListener;
 import com.ionis.igem.app.BinGame;
-import com.ionis.igem.app.R;
 import com.ionis.igem.app.game.AbstractGameActivity;
 import com.ionis.igem.app.game.managers.ResMan;
 import com.ionis.igem.app.game.model.BaseGame;
@@ -154,40 +151,13 @@ public class GameActivity extends AbstractGameActivity implements MenuScene.IOnM
     }
 
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_game, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_reset) {
-            currentGame.reset();
-            return true;
-        }
-        if (id == R.id.action_quit) {
-            onQuit();
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
-    }
-
-    @Override
     public boolean onMenuItemClicked(MenuScene pMenuScene, IMenuItem pMenuItem, float pMenuItemLocalX, float pMenuItemLocalY) {
         switch (pMenuItem.getID()) {
             case OPTION_QUIT:
                 onQuit();
                 return true;
             case OPTION_RESET:
-                currentGame.reset();
+                currentGame.resetGame();
                 return true;
         }
         return false;
@@ -323,6 +293,10 @@ public class GameActivity extends AbstractGameActivity implements MenuScene.IOnM
         menuScene.buildAnimations();
         menuScene.setBackgroundEnabled(false);
         menuScene.setOnMenuItemClickListener(this);
+    }
+
+    public void resetMenuPause() {
+        menuScene.reset();
     }
 
     private void initGameScene() {

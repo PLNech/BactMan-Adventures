@@ -2,7 +2,6 @@ package com.ionis.igem.app;
 
 import android.hardware.SensorManager;
 import android.util.Log;
-import android.widget.Toast;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
 import com.ionis.igem.app.game.bins.Bin;
@@ -13,20 +12,24 @@ import com.ionis.igem.app.game.model.FontAsset;
 import com.ionis.igem.app.game.model.GFXAsset;
 import com.ionis.igem.app.game.model.HUDElement;
 import com.ionis.igem.app.ui.GameActivity;
-import com.ionis.igem.app.utils.ThreadUtils;
 import org.andengine.entity.scene.Scene;
 import org.andengine.entity.scene.background.Background;
+import org.andengine.extension.physics.box2d.PhysicsConnector;
+import org.andengine.extension.physics.box2d.PhysicsWorld;
 import org.andengine.opengl.font.IFont;
 import org.andengine.opengl.texture.region.ITextureRegion;
 import org.andengine.opengl.texture.region.ITiledTextureRegion;
 import org.andengine.opengl.vbo.VertexBufferObjectManager;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
  * Created by PLN on 21/08/2015.
  */
 public class BinGame extends BaseGame {
+
+    private ArrayList<Item> items = new ArrayList<>();
 
     private static final String TAG = "BinGame";
 
@@ -141,7 +144,7 @@ public class BinGame extends BaseGame {
                         }
 
                         Log.d(TAG, "beginContact - Decreasing lives to " + gameLives + ".");
-                        setLives("" + gameLives);
+                        setLives(gameLives);
                     }
                 }
             }
@@ -171,22 +174,50 @@ public class BinGame extends BaseGame {
         scene.setBackground(backgroundColor);
 
         createBins();
-
-        final ITextureRegion smileyTextureRegion = activity.getTexture(ResMan.FACE_BOX_TILED);
-        createItem(activity.spriteCenter(smileyTextureRegion));
-        createItem(activity.spritePosition(smileyTextureRegion, 0.2f, 0.5f));
+        createItems();
 
         scene.setTouchAreaBindingOnActionDownEnabled(true);
 
         return scene;
     }
 
+    private void createItems() {
+        final ITextureRegion smileyTextureRegion = activity.getTexture(ResMan.FACE_BOX_TILED);
+        createItem(activity.spriteCenter(smileyTextureRegion));
+        createItem(activity.spritePosition(smileyTextureRegion, 0.2f, 0.5f));
+    }
+
     @Override
-    public void reset() {
-        setScore(0);
-        setScore(3);
-        activity.getScene().getChildByIndex(GameActivity.LAYER_FOREGROUND).reset();
-        ThreadUtils.toastOnUiThread(activity, "Reset!", Toast.LENGTH_SHORT);
+    public void resetGame() {
+        gameScore = 0;
+        gameLives = 3;
+        setScore(gameScore);
+        setLives(gameLives);
+        final Scene gameScene = activity.getScene();
+        for (final Item item : items) {
+            final PhysicsWorld physicsWorld = activity.getPhysicsWorld();
+            final PhysicsConnector physicsConnector = physicsWorld
+                    .getPhysicsConnectorManager().findPhysicsConnectorByShape(item);
+
+            activity.getEngine().runOnUpdateThread(new Runnable() {
+                @Override
+                public void run() {
+                    if (physicsConnector != null) {
+                        final Body body = item.getBody();
+                        physicsWorld.unregisterPhysicsConnector(physicsConnector);
+                        body.setActive(false);
+                        physicsWorld.destroyBody(body);
+                        gameScene.getChildByIndex(GameActivity.LAYER_BACKGROUND).detachChild(item);
+                    }
+                }
+            });
+        }
+        items.clear();
+
+        gameScene.clearChildScene();
+        activity.resetMenuPause();
+
+        createItems();
     }
 
     private void setScore(int score) {
@@ -201,6 +232,10 @@ public class BinGame extends BaseGame {
         HUDScore.getText().setText(text);
     }
 
+    private void setLives(int value) {
+        setLives("" + value);
+    }
+
     private void setLives(CharSequence text) {
         HUDLives.getText().setText(text);
     }
@@ -213,7 +248,7 @@ public class BinGame extends BaseGame {
     private void createItem(float posX, float posY) {
         final ITiledTextureRegion smileyTextureRegion = (ITiledTextureRegion) activity.getTexture(ResMan.FACE_BOX_TILED);
         Item item = new Item(Item.Type.PAPER, smileyTextureRegion, posX, posY, activity.getVBOM(), activity.getPhysicsWorld());
-
+        items.add(item);
         final Scene gameScene = activity.getScene();
         gameScene.getChildByIndex(GameActivity.LAYER_BACKGROUND).attachChild(item);
         gameScene.registerTouchArea(item);

@@ -35,5 +35,5 @@ public abstract class BaseGame {
         activity = pActivity;
     }
 
-    public abstract void reset();
+    public abstract void resetGame();
 }
