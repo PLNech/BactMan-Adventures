@@ -31,8 +31,9 @@ public class HomeActivity extends AppCompatActivity implements SurfaceHolder.Cal
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        final CrashlyticsCore crashlyticsCore = new CrashlyticsCore.Builder().disabled(BuildConfig.DEBUG).build();
-        Fabric.with(this, new Crashlytics.Builder().core(crashlyticsCore).build());
+//        final CrashlyticsCore crashlyticsCore = new CrashlyticsCore.Builder().disabled(BuildConfig.DEBUG).build();
+//        Fabric.with(this, new Crashlytics.Builder().core(crashlyticsCore).build());
+        Fabric.with(this, new Crashlytics());
         setContentView(R.layout.activity_home);
         ButterKnife.inject(this);
 
