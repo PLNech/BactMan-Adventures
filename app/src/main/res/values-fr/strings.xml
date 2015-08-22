@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">Appli IONIS iGEM 2015</string>
+    <string name="action_quit">Quitter</string>
+    <string name="action_reset">Recommencer</string>
+
     <string name="action_settings">Réglages</string>
     <string name="label_home_game">Le Jeu</string>
     <string name="label_home_credits">Crédits</string>

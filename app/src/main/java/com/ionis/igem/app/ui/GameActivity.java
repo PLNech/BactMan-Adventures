@@ -1,11 +1,16 @@
 package com.ionis.igem.app.ui;
 
 import android.content.res.AssetManager;
+import android.opengl.GLES20;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.KeyEvent;
+import android.view.Menu;
+import android.view.MenuItem;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.ContactListener;
 import com.ionis.igem.app.BinGame;
+import com.ionis.igem.app.R;
 import com.ionis.igem.app.game.AbstractGameActivity;
 import com.ionis.igem.app.game.managers.ResMan;
 import com.ionis.igem.app.game.model.BaseGame;
@@ -23,6 +28,9 @@ import org.andengine.entity.Entity;
 import org.andengine.entity.IEntity;
 import org.andengine.entity.scene.Scene;
 import org.andengine.entity.scene.background.Background;
+import org.andengine.entity.scene.menu.MenuScene;
+import org.andengine.entity.scene.menu.item.IMenuItem;
+import org.andengine.entity.scene.menu.item.SpriteMenuItem;
 import org.andengine.extension.physics.box2d.PhysicsWorld;
 import org.andengine.opengl.font.Font;
 import org.andengine.opengl.font.FontFactory;
@@ -41,9 +49,13 @@ import org.andengine.opengl.vbo.VertexBufferObjectManager;
 import java.util.HashMap;
 import java.util.List;
 
-public class GameActivity extends AbstractGameActivity {
+public class GameActivity extends AbstractGameActivity implements MenuScene.IOnMenuItemClickListener {
     private static final String TAG = "GameActivity";
     public static final float SPLASH_TIME = 3f;
+
+    private static final int OPTION_RESET = 0;
+    private static final int OPTION_QUIT = OPTION_RESET + 1;
+
     private VertexBufferObjectManager vertexBufferObjectManager;
 
     private SmoothCamera gameCamera;
@@ -58,7 +70,9 @@ public class GameActivity extends AbstractGameActivity {
 
     private FontManager fontManager;
     private AssetManager assetManager;
+
     private Scene splashScene;
+    private MenuScene menuScene;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -96,7 +110,91 @@ public class GameActivity extends AbstractGameActivity {
     @Override
     public void onCreateResources() {
         Log.d(TAG, "onCreateResources - Beginning resource creation.");
-        loadSplash();
+        loadSplashScene();
+    }
+
+    @Override
+    protected Scene onCreateScene() {
+        super.onCreateScene();
+
+        initSplashScene();
+
+        loadMenuPause();
+        initMenuPause();
+
+        Log.d(TAG, "onCreateScene - Splash Scene created.");
+
+        mEngine.registerUpdateHandler(new TimerHandler(SPLASH_TIME, new ITimerCallback() {
+            public void onTimePassed(final TimerHandler pTimerHandler) {
+                mEngine.unregisterUpdateHandler(pTimerHandler);
+
+                initGameScene();
+                Log.d(TAG, "onTimePassed - Game Scene created.");
+            }
+        }));
+
+        return splashScene;
+    }
+
+    @Override
+    public boolean onKeyDown(final int pKeyCode, final KeyEvent pEvent) {
+        if (gameScene != null && menuScene != null &&
+                pKeyCode == KeyEvent.KEYCODE_MENU && pEvent.getAction() == KeyEvent.ACTION_DOWN) {
+            if (gameScene.hasChildScene()) {
+                /* Remove the menu and reset it. */
+                menuScene.back();
+            } else {
+                /* Attach the menu. */
+                gameScene.setChildScene(menuScene, false, true, true);
+            }
+            return true;
+        } else {
+            return super.onKeyDown(pKeyCode, pEvent);
+        }
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.menu_game, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        int id = item.getItemId();
+
+        //noinspection SimplifiableIfStatement
+        if (id == R.id.action_reset) {
+            currentGame.reset();
+            return true;
+        }
+        if (id == R.id.action_quit) {
+            onQuit();
+            return true;
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public boolean onMenuItemClicked(MenuScene pMenuScene, IMenuItem pMenuItem, float pMenuItemLocalX, float pMenuItemLocalY) {
+        switch (pMenuItem.getID()) {
+            case OPTION_QUIT:
+                onQuit();
+                return true;
+            case OPTION_RESET:
+                currentGame.reset();
+                return true;
+        }
+        return false;
+    }
+
+    private void onQuit() {
+        this.finish();
     }
 
     private void loadGFXAssets(BaseGame game) {
@@ -151,40 +249,14 @@ public class GameActivity extends AbstractGameActivity {
 //        }
 //    }
 
-    @Override
-    protected Scene onCreateScene() {
-        super.onCreateScene();
-
-        initSplashScene();
-        Log.d(TAG, "onCreateScene - Splash Scene created.");
-
-        mEngine.registerUpdateHandler(new TimerHandler(SPLASH_TIME, new ITimerCallback() {
-            public void onTimePassed(final TimerHandler pTimerHandler) {
-                mEngine.unregisterUpdateHandler(pTimerHandler);
-
-                loadGFXAssets(currentGame);
-                loadFonts(currentGame);
-                //loadSounds(currentGame);
-
-                gameScene = new Scene();
-                gameScene.setOnAreaTouchTraversalFrontToBack();
-                loadPhysics(currentGame);
-
-                for (int i = 0; i < LAYER_COUNT; i++) {
-                    final Entity layer = new Entity();
-                    layer.setZIndex(i);
-                    gameScene.attachChild(layer);
-                }
-
-                loadScene(currentGame);
-                loadHUD(currentGame);
-                mEngine.setScene(gameScene);
-                Log.d(TAG, "onTimePassed - Game Scene created");
-
-            }
-        }));
-
-        return splashScene;
+    private void loadHUD(BaseGame game) {
+        List<HUDElement> elements = game.getHudElements();
+        final IEntity layerHUD = gameScene.getChildByIndex(LAYER_HUD);
+        final IEntity layerText = gameScene.getChildByIndex(LAYER_HUD_TEXT);
+        for (HUDElement element : elements) {
+            layerHUD.attachChild(element.getSprite());
+            layerText.attachChild(element.getText());
+        }
     }
 
     private void loadPhysics(BaseGame game) {
@@ -198,7 +270,7 @@ public class GameActivity extends AbstractGameActivity {
         gameScene.registerUpdateHandler(physicsWorld);
     }
 
-    private void loadSplash() {
+    private void loadSplashScene() {
         BitmapTextureAtlas splashTextureAtlas = new BitmapTextureAtlas(textureManager, 349, 512, TextureOptions.DEFAULT);
         TextureRegion splashTextureRegion = BitmapTextureAtlasTextureRegionFactory.
                 createFromAsset(splashTextureAtlas, this, ResMan.SPLASH, 0, 0);
@@ -207,11 +279,11 @@ public class GameActivity extends AbstractGameActivity {
     }
 
     private void initSplashScene() {
+        splashScene = new Scene();
+
         final ITextureRegion splashTexture = getTexture(ResMan.SPLASH);
         final Vector2 center = new Vector2(75, 120);
         Log.d(TAG, "initSplashScene - Center: " + center.x + ", " + center.y);
-
-        splashScene = new Scene();
 
         final Background backgroundColor = new Background(0.78431f, 0.77254f, 0.76862f);
         splashScene.setBackground(backgroundColor);
@@ -222,14 +294,58 @@ public class GameActivity extends AbstractGameActivity {
         splashScene.attachChild(splash);
     }
 
-    private void loadHUD(BaseGame game) {
-        List<HUDElement> elements = game.getHudElements();
-        final IEntity layerHUD = gameScene.getChildByIndex(LAYER_HUD);
-        final IEntity layerText = gameScene.getChildByIndex(LAYER_HUD_TEXT);
-        for (HUDElement element : elements) {
-            layerHUD.attachChild(element.getSprite());
-            layerText.attachChild(element.getText());
+    private void loadMenuPause() {
+        BitmapTextureAtlas menuAtlas = new BitmapTextureAtlas(this.getTextureManager(), 200, 100, TextureOptions.BILINEAR);
+
+        TextureRegion menuBG = BitmapTextureAtlasTextureRegionFactory.createFromAsset(menuAtlas, this, ResMan.MENU_BG, 0, 0);
+        TextureRegion menuReset = BitmapTextureAtlasTextureRegionFactory.createFromAsset(menuAtlas, this, ResMan.MENU_RESET, 0, 0);
+        TextureRegion menuQuit = BitmapTextureAtlasTextureRegionFactory.createFromAsset(menuAtlas, this, ResMan.MENU_QUIT, 0, 50);
+        putTexture(ResMan.MENU_BG, menuBG);
+        putTexture(ResMan.MENU_RESET, menuReset);
+        putTexture(ResMan.MENU_QUIT, menuQuit);
+
+        menuAtlas.load();
+    }
+
+    private void initMenuPause() {
+        menuScene = new MenuScene(gameCamera, this);
+        final ITextureRegion textureReset = getTexture(ResMan.MENU_RESET);
+        final ITextureRegion textureQuit = getTexture(ResMan.MENU_QUIT);
+
+        final SpriteMenuItem resetMenuItem = new SpriteMenuItem(OPTION_RESET, textureReset, getVBOM());
+        resetMenuItem.setBlendFunction(GLES20.GL_SRC_ALPHA, GLES20.GL_ONE_MINUS_SRC_ALPHA);
+        menuScene.addMenuItem(resetMenuItem);
+
+        final SpriteMenuItem quitMenuItem = new SpriteMenuItem(OPTION_QUIT, textureQuit, getVBOM());
+        quitMenuItem.setBlendFunction(GLES20.GL_SRC_ALPHA, GLES20.GL_ONE_MINUS_SRC_ALPHA);
+        menuScene.addMenuItem(quitMenuItem);
+
+        menuScene.buildAnimations();
+        menuScene.setBackgroundEnabled(false);
+        menuScene.setOnMenuItemClickListener(this);
+    }
+
+    private void initGameScene() {
+
+
+        loadGFXAssets(currentGame);
+        loadFonts(currentGame);
+        //loadSounds(currentGame);
+
+        gameScene = new Scene();
+        gameScene.setOnAreaTouchTraversalFrontToBack();
+        loadPhysics(currentGame);
+
+        for (int i = 0; i < LAYER_COUNT; i++) {
+            final Entity layer = new Entity();
+            layer.setZIndex(i);
+            gameScene.attachChild(layer);
         }
+
+
+        loadScene(currentGame);
+        loadHUD(currentGame);
+        mEngine.setScene(gameScene);
     }
 
     private void loadScene(BaseGame game) {
@@ -263,7 +379,7 @@ public class GameActivity extends AbstractGameActivity {
 
     void putTexture(String textureName, ITextureRegion texture) {
         textureMap.put(textureName, texture);
-        Log.v(TAG, "putFont - Added font " + textureName);
+        Log.v(TAG, "putTexture - Added texture " + textureName);
     }
 
     public void onLose() {
@@ -283,4 +399,5 @@ public class GameActivity extends AbstractGameActivity {
     public VertexBufferObjectManager getVBOM() {
         return vertexBufferObjectManager;
     }
+
 }

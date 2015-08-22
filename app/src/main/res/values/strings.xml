@@ -3,7 +3,8 @@
 
     <!-- Main texts -->
     <string name="app_name">IONIS iGEM 2015</string>
-    <string name="action_settings">Settings</string>
+    <string name="action_quit">Quit</string>
+    <string name="action_reset">Reset</string>
 
     <string name="lorem" translatable="false">
         Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec a diam lectus. Sed sit amet

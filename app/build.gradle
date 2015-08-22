@@ -21,8 +21,8 @@ android {
 
     defaultConfig {
         applicationId "com.ionis.igem.app"
-        minSdkVersion 16
-        targetSdkVersion 22
+        minSdkVersion 10
+        targetSdkVersion 10
         versionCode 1
         versionName "1.0"
     }

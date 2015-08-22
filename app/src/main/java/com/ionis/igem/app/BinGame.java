@@ -2,6 +2,7 @@ package com.ionis.igem.app;
 
 import android.hardware.SensorManager;
 import android.util.Log;
+import android.widget.Toast;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
 import com.ionis.igem.app.game.bins.Bin;
@@ -12,6 +13,7 @@ import com.ionis.igem.app.game.model.FontAsset;
 import com.ionis.igem.app.game.model.GFXAsset;
 import com.ionis.igem.app.game.model.HUDElement;
 import com.ionis.igem.app.ui.GameActivity;
+import com.ionis.igem.app.utils.ThreadUtils;
 import org.andengine.entity.scene.Scene;
 import org.andengine.entity.scene.background.Background;
 import org.andengine.opengl.font.IFont;
@@ -132,14 +134,14 @@ public class BinGame extends BaseGame {
                         }
 
                         Log.d(TAG, "beginContact - Increasing score to " + gameScore + ".");
-                        setScoreText(gameScore);
+                        setScore(gameScore);
                     } else {
                         if (--gameLives == 0) {
                             activity.onLose();
                         }
 
                         Log.d(TAG, "beginContact - Decreasing lives to " + gameLives + ".");
-                        setLivesText("" + gameLives);
+                        setLives("" + gameLives);
                     }
                 }
             }
@@ -179,19 +181,27 @@ public class BinGame extends BaseGame {
         return scene;
     }
 
-    private void setScoreText(int score) {
+    @Override
+    public void reset() {
+        setScore(0);
+        setScore(3);
+        activity.getScene().getChildByIndex(GameActivity.LAYER_FOREGROUND).reset();
+        ThreadUtils.toastOnUiThread(activity, "Reset!", Toast.LENGTH_SHORT);
+    }
+
+    private void setScore(int score) {
         String padding = "";
         if (score < 10) {
             padding += " ";
         }
-        setScoreText(padding + score);
+        setScore(padding + score);
     }
 
-    private void setScoreText(CharSequence text) {
+    private void setScore(CharSequence text) {
         HUDScore.getText().setText(text);
     }
 
-    private void setLivesText(CharSequence text) {
+    private void setLives(CharSequence text) {
         HUDLives.getText().setText(text);
     }
 
