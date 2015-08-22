@@ -23,10 +23,11 @@ public abstract class AbstractGameActivity extends SimpleBaseGameActivity {
 
     protected Scene gameScene;
 
-    protected static final int LAYER_COUNT = 3;
+    protected static final int LAYER_COUNT = 4;
     public static final int LAYER_BACKGROUND = 0;
     public static final int LAYER_FOREGROUND = LAYER_BACKGROUND + 1;
     protected static final int LAYER_HUD = LAYER_FOREGROUND + 1;
+    protected static final int LAYER_HUD_TEXT = LAYER_HUD + 1;
 
     protected static final float MAX_SPEED_X = 200.0f;
     protected static final float MAX_SPEED_Y = 200.0f;

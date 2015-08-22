@@ -61,7 +61,7 @@ public class Item extends AnimatedSprite {
         id = ID++;
         type = pType;
         body = createBody(physicsWorld);
-        physicsWorld.registerPhysicsConnector(new PhysicsConnector(this, body, true, false));
+        physicsWorld.registerPhysicsConnector(new PhysicsConnector(this, body, true, true));
         Log.v(TAG, "Item - Body at " + body.getPosition().x + ", " + body.getPosition().y);
     }
 
@@ -108,7 +108,7 @@ public class Item extends AnimatedSprite {
 
     @Override
     public String toString() {
-        String typeString = "type=";
+        String typeString = ", type=";
         switch (type) {
             case PAPER:
                 typeString += "Papier";

@@ -42,11 +42,18 @@ public class BinGame extends BaseGame {
     @Override
     public List<GFXAsset> getGraphicalAssets() {
         if (graphicalAssets.isEmpty()) {
+            /* Bins */
             graphicalAssets.add(new GFXAsset(ResMan.BIN1, 696, 1024, 0, 0));
             graphicalAssets.add(new GFXAsset(ResMan.BIN2, 696, 1024, 0, 0));
             graphicalAssets.add(new GFXAsset(ResMan.BIN3, 696, 1024, 0, 0));
             graphicalAssets.add(new GFXAsset(ResMan.BIN4, 696, 1024, 0, 0));
+
+            /* Items */
             graphicalAssets.add(new GFXAsset(ResMan.FACE_BOX_TILED, 696, 1024, 0, 0, 2, 1));
+
+            /* HUD */
+            graphicalAssets.add(new GFXAsset(ResMan.HUD_LIVES, 1479, 1024, 0, 0));
+            graphicalAssets.add(new GFXAsset(ResMan.HUD_SCORE, 1885, 1024, 0, 0));
         }
 
         return graphicalAssets;
@@ -68,16 +75,26 @@ public class BinGame extends BaseGame {
     @Override
     public List<HUDElement> getHudElements() {
         if (elements.isEmpty()) {
-            Vector2 posS = activity.spritePosition(20f, 20f, 0.1f, 0.05f);
-            Vector2 posL = activity.spritePosition(20f, 20f, 0.6f, 0.05f);
+            final ITextureRegion textureScore = activity.getTexture(ResMan.HUD_SCORE);
+            final ITextureRegion textureLives = activity.getTexture(ResMan.HUD_LIVES);
+
+            final float scale = 0.120f;
+
+            Vector2 posS = new Vector2(5, 0); //activity.spritePosition(textureScore, 0.1f, 0.05f, HUDElement.SCALE_DEFAULT);
+            Vector2 posL = new Vector2(155, 0); //activity.spritePosition(textureLives, 0.6f, 0.05f, HUDElement.SCALE_DEFAULT);
+
+            Vector2 offS = new Vector2(120, 45);
+            Vector2 offL = new Vector2(170, 45);
 
             IFont fontRoboto = activity.getFont(FontAsset.name(ResMan.F_HUD_BIN, ResMan.F_HUD_BIN_SIZE, ResMan.F_HUD_BIN_COLOR, ResMan.F_HUD_BIN_ANTI));
-            final VertexBufferObjectManager vertexBufferObjectManager = activity.getVBOM();
+            final VertexBufferObjectManager vbom = activity.getVBOM();
 
-            HUDScore = new HUDElement().buildText("Score: ", "Score: Over 9000.".length(),
-                    posS.x, posS.y, fontRoboto, vertexBufferObjectManager);
-            HUDLives = new HUDElement().buildText("Lives: ", "Lives: GAME OVER".length(),
-                    posL.x, posS.y, fontRoboto, vertexBufferObjectManager);
+            HUDScore = new HUDElement()
+                    .buildSprite(posS, textureScore, vbom, scale)
+                    .buildText("", "31337".length(), posS.add(offS), fontRoboto, vbom);
+            HUDLives = new HUDElement()
+                    .buildSprite(posL, textureLives, vbom, scale)
+                    .buildText("", "999".length(), posL.add(offL), fontRoboto, vbom);
 
             elements.add(HUDScore);
             elements.add(HUDLives);
@@ -111,19 +128,19 @@ public class BinGame extends BaseGame {
                     }
                     Log.d(TAG, "beginContact - Item " + item.toString() + " went in bin " + bin.toString() + ".");
                     if (bin.accepts(item)) {
-                        gameScore++;
-                        Log.d(TAG, "beginContact - Increasing score to " + gameScore + ".");
                         if (gameScore >= 100) {
                             activity.onWin();
                         }
-                        setScoreText("" + gameScore);
+
+                        Log.d(TAG, "beginContact - Increasing score to " + ++gameScore + ".");
+                        setScoreText(gameScore);
                     } else {
-                        gameLives--;
-                        Log.d(TAG, "beginContact - Decreasing lives to " + gameLives + ".");
-                        setLivesText("" + gameLives);
                         if (gameLives == 0) {
                             activity.onLose();
                         }
+
+                        Log.d(TAG, "beginContact - Decreasing lives to " + --gameLives + ".");
+                        setLivesText("" + gameLives);
                     }
                 }
             }
@@ -154,7 +171,7 @@ public class BinGame extends BaseGame {
 
         createBins();
 
-        final ITextureRegion smileyTextureRegion = activity.getTextureRegion(ResMan.FACE_BOX_TILED);
+        final ITextureRegion smileyTextureRegion = activity.getTexture(ResMan.FACE_BOX_TILED);
         createItem(activity.spriteCenter(smileyTextureRegion));
         createItem(activity.spritePosition(smileyTextureRegion, 0.2f, 0.5f));
 
@@ -163,12 +180,20 @@ public class BinGame extends BaseGame {
         return scene;
     }
 
+    private void setScoreText(int score) {
+        String padding = "";
+        if (score < 10) {
+            padding += " ";
+        }
+        setScoreText(padding + score);
+    }
+
     private void setScoreText(CharSequence text) {
-        HUDScore.getText().setText("Score: " + text);
+        HUDScore.getText().setText(text);
     }
 
     private void setLivesText(CharSequence text) {
-        HUDLives.getText().setText("Lives: " + text);
+        HUDLives.getText().setText(text);
     }
 
 
@@ -177,7 +202,7 @@ public class BinGame extends BaseGame {
     }
 
     private void createItem(float posX, float posY) {
-        final ITiledTextureRegion smileyTextureRegion = (ITiledTextureRegion) activity.getTextureRegion(ResMan.FACE_BOX_TILED);
+        final ITiledTextureRegion smileyTextureRegion = (ITiledTextureRegion) activity.getTexture(ResMan.FACE_BOX_TILED);
         Item item = new Item(Item.Type.PAPER, smileyTextureRegion, posX, posY, activity.getVBOM(), activity.getPhysicsWorld());
 
         final Scene gameScene = activity.getScene();
@@ -192,10 +217,10 @@ public class BinGame extends BaseGame {
 
     private void createBins() {
         final float binY = 0.85f;
-        final ITextureRegion bin1TextureRegion = activity.getTextureRegion(ResMan.BIN1);
-        final ITextureRegion bin2TextureRegion = activity.getTextureRegion(ResMan.BIN2);
-        final ITextureRegion bin3TextureRegion = activity.getTextureRegion(ResMan.BIN3);
-        final ITextureRegion bin4TextureRegion = activity.getTextureRegion(ResMan.BIN4);
+        final ITextureRegion bin1TextureRegion = activity.getTexture(ResMan.BIN1);
+        final ITextureRegion bin2TextureRegion = activity.getTexture(ResMan.BIN2);
+        final ITextureRegion bin3TextureRegion = activity.getTexture(ResMan.BIN3);
+        final ITextureRegion bin4TextureRegion = activity.getTexture(ResMan.BIN4);
 
         Vector2 bin1Pos = activity.spritePosition(bin1TextureRegion, 0.30f, binY, Bin.SCALE_DEFAULT);
         Vector2 bin2Pos = activity.spritePosition(bin2TextureRegion, 0.50f, binY, Bin.SCALE_DEFAULT);

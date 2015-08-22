@@ -15,6 +15,7 @@ import org.andengine.engine.options.EngineOptions;
 import org.andengine.engine.options.ScreenOrientation;
 import org.andengine.engine.options.resolutionpolicy.RatioResolutionPolicy;
 import org.andengine.entity.Entity;
+import org.andengine.entity.IEntity;
 import org.andengine.entity.scene.Scene;
 import org.andengine.extension.physics.box2d.PhysicsWorld;
 import org.andengine.opengl.font.Font;
@@ -100,10 +101,10 @@ public class GameActivity extends AbstractGameActivity {
             final int tileC = asset.getTileColumns();
             final int tileR = asset.getTileRows();
             TiledTextureRegion tiledTextureRegion = BitmapTextureAtlasTextureRegionFactory.createTiledFromAsset(textureAtlas, this, filename, textureX, textureY, tileC, tileR);
-            textureMap.put(filename, tiledTextureRegion);
+            putTexture(filename, tiledTextureRegion);
         } else {
             TextureRegion textureRegion = BitmapTextureAtlasTextureRegionFactory.createFromAsset(textureAtlas, this, filename, textureX, textureY);
-            textureMap.put(filename, textureRegion);
+            putTexture(filename, textureRegion);
         }
 
         textureAtlas.load();
@@ -129,7 +130,7 @@ public class GameActivity extends AbstractGameActivity {
     }
 
     private Font loadFont(FontAsset asset) {
-        final ITexture fontTexture = new BitmapTextureAtlas(getTextureManager(), 256, 256, TextureOptions.BILINEAR_PREMULTIPLYALPHA);
+        final ITexture fontTexture = new BitmapTextureAtlas(textureManager, 256, 256, TextureOptions.BILINEAR_PREMULTIPLYALPHA);
         return FontFactory.createFromAsset(fontManager, fontTexture, assetManager,
                 asset.getFilename(), asset.getSize(), asset.isAntialised(), asset.getColor());
     }
@@ -177,8 +178,11 @@ public class GameActivity extends AbstractGameActivity {
 
     private void loadHUD(BaseGame game) {
         List<HUDElement> elements = game.getHudElements();
+        final IEntity layerHUD = gameScene.getChildByIndex(LAYER_HUD);
+        final IEntity layerText = gameScene.getChildByIndex(LAYER_HUD_TEXT);
         for (HUDElement element : elements) {
-            gameScene.getChildByIndex(LAYER_HUD).attachChild(element.getText());
+            layerHUD.attachChild(element.getSprite());
+            layerText.attachChild(element.getText());
         }
     }
 
@@ -189,20 +193,31 @@ public class GameActivity extends AbstractGameActivity {
     public IFont getFont(String fontName) {
         final IFont font = fontMap.get(fontName);
         if (font != null) {
-            Log.d(TAG, "getFont - returning font " + fontName);
+            Log.v(TAG, "getFont - returning font " + fontName);
         } else {
-            Log.d(TAG, "getFont - missing font " + fontName);
+            Log.v(TAG, "getFont - missing font " + fontName);
         }
         return font;
     }
 
     void putFont(String fontName, IFont font) {
         fontMap.put(fontName, font);
-        Log.d(TAG, "putFont - Added font " + fontName);
+        Log.v(TAG, "putFont - Added font " + fontName);
     }
 
-    public ITextureRegion getTextureRegion(String filename) {
-        return textureMap.get(filename);
+    public ITextureRegion getTexture(String textureName) {
+        final ITextureRegion texture = textureMap.get(textureName);
+        if (texture != null) {
+            Log.v(TAG, "getTexture - returning texture " + textureName);
+        } else {
+            Log.v(TAG, "getTexture - missing texture " + textureName);
+        }
+        return texture;
+    }
+
+    void putTexture(String textureName, ITextureRegion texture) {
+        textureMap.put(textureName, texture);
+        Log.v(TAG, "putFont - Added font " + textureName);
     }
 
     public void onLose() {
