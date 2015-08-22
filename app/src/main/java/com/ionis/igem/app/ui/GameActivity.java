@@ -3,6 +3,7 @@ package com.ionis.igem.app.ui;
 import android.content.res.AssetManager;
 import android.os.Bundle;
 import android.util.Log;
+import com.badlogic.gdx.physics.box2d.ContactListener;
 import com.ionis.igem.app.BinGame;
 import com.ionis.igem.app.game.AbstractGameActivity;
 import com.ionis.igem.app.game.model.BaseGame;
@@ -164,8 +165,13 @@ public class GameActivity extends AbstractGameActivity {
     }
 
     private void loadPhysics(BaseGame game) {
+        final ContactListener contactListener = game.getContactListener();
+        if (contactListener == null) {
+            return;
+        }
+
         physicsWorld = new PhysicsWorld(game.getPhysicsVector(), false);
-        physicsWorld.setContactListener(game.getContactListener());
+        physicsWorld.setContactListener(contactListener);
         gameScene.registerUpdateHandler(physicsWorld);
     }
 
