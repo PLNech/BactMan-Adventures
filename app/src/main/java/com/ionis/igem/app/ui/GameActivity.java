@@ -3,20 +3,26 @@ package com.ionis.igem.app.ui;
 import android.content.res.AssetManager;
 import android.os.Bundle;
 import android.util.Log;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.ContactListener;
 import com.ionis.igem.app.BinGame;
 import com.ionis.igem.app.game.AbstractGameActivity;
+import com.ionis.igem.app.game.managers.ResMan;
 import com.ionis.igem.app.game.model.BaseGame;
 import com.ionis.igem.app.game.model.FontAsset;
 import com.ionis.igem.app.game.model.GFXAsset;
 import com.ionis.igem.app.game.model.HUDElement;
+import com.ionis.igem.app.game.ui.DitheredSprite;
 import org.andengine.engine.camera.SmoothCamera;
+import org.andengine.engine.handler.timer.ITimerCallback;
+import org.andengine.engine.handler.timer.TimerHandler;
 import org.andengine.engine.options.EngineOptions;
 import org.andengine.engine.options.ScreenOrientation;
 import org.andengine.engine.options.resolutionpolicy.RatioResolutionPolicy;
 import org.andengine.entity.Entity;
 import org.andengine.entity.IEntity;
 import org.andengine.entity.scene.Scene;
+import org.andengine.entity.scene.background.Background;
 import org.andengine.extension.physics.box2d.PhysicsWorld;
 import org.andengine.opengl.font.Font;
 import org.andengine.opengl.font.FontFactory;
@@ -37,6 +43,7 @@ import java.util.List;
 
 public class GameActivity extends AbstractGameActivity {
     private static final String TAG = "GameActivity";
+    public static final float SPLASH_TIME = 3f;
     private VertexBufferObjectManager vertexBufferObjectManager;
 
     private SmoothCamera gameCamera;
@@ -47,21 +54,35 @@ public class GameActivity extends AbstractGameActivity {
     private HashMap<CharSequence, IFont> fontMap = new HashMap<>();
     private TextureManager textureManager;
 
-    private BinGame gameBin;
+    private BaseGame currentGame;
 
     private FontManager fontManager;
     private AssetManager assetManager;
+    private Scene splashScene;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Log.d(TAG, "onCreate - Created Activity.");
-        gameBin = new BinGame(this);
-        vertexBufferObjectManager = super.getVertexBufferObjectManager();
-    }
+        currentGame = new BinGame(this);
 
-    public VertexBufferObjectManager getVBOM() {
-        return vertexBufferObjectManager;
+        BitmapTextureAtlasTextureRegionFactory.setAssetBasePath("gfx/");
+        FontFactory.setAssetBasePath("fonts/");
+
+        if (vertexBufferObjectManager == null) {
+            vertexBufferObjectManager = super.getVertexBufferObjectManager();
+        }
+
+        if (textureManager == null) {
+            textureManager = getTextureManager();
+        }
+
+        if (fontManager == null) {
+            fontManager = getFontManager();
+        }
+        if (assetManager == null) {
+            assetManager = getAssets();
+        }
     }
 
     @Override
@@ -75,13 +96,10 @@ public class GameActivity extends AbstractGameActivity {
     @Override
     public void onCreateResources() {
         Log.d(TAG, "onCreateResources - Beginning resource creation.");
-        loadGFXAssets(gameBin);
-        loadFonts(gameBin);
-//        loadSounds();
+        loadSplash();
     }
 
     private void loadGFXAssets(BaseGame game) {
-        BitmapTextureAtlasTextureRegionFactory.setAssetBasePath("gfx/");
         for (GFXAsset asset : game.getGraphicalAssets()) {
             loadGFXAsset(asset);
         }
@@ -89,10 +107,6 @@ public class GameActivity extends AbstractGameActivity {
     }
 
     private void loadGFXAsset(GFXAsset asset) {
-        if (textureManager == null) {
-            textureManager = getTextureManager();
-        }
-
         BitmapTextureAtlas textureAtlas = new BitmapTextureAtlas(textureManager, asset.getWidth(), asset.getHeight(), TextureOptions.BILINEAR);
         final String filename = asset.getFilename();
         final int textureX = asset.getTextureX();
@@ -111,14 +125,6 @@ public class GameActivity extends AbstractGameActivity {
     }
 
     private void loadFonts(BaseGame game) {
-        FontFactory.setAssetBasePath("fonts/");
-
-        if (fontManager == null) {
-            fontManager = getFontManager();
-        }
-        if (assetManager == null) {
-            assetManager = getAssets();
-        }
 
         for (FontAsset asset : game.getFontAssets()) {
             Font font = loadFont(asset);
@@ -148,21 +154,37 @@ public class GameActivity extends AbstractGameActivity {
     @Override
     protected Scene onCreateScene() {
         super.onCreateScene();
-        gameScene = new Scene();
-        gameScene.setOnAreaTouchTraversalFrontToBack();
-        loadPhysics(gameBin);
 
-        for (int i = 0; i < LAYER_COUNT; i++) {
-            final Entity layer = new Entity();
-            layer.setZIndex(i);
-            gameScene.attachChild(layer);
-        }
+        initSplashScene();
+        Log.d(TAG, "onCreateScene - Splash Scene created.");
 
-        loadScene(gameBin);
-        loadHUD(gameBin);
+        mEngine.registerUpdateHandler(new TimerHandler(SPLASH_TIME, new ITimerCallback() {
+            public void onTimePassed(final TimerHandler pTimerHandler) {
+                mEngine.unregisterUpdateHandler(pTimerHandler);
 
-        Log.d(TAG, "onCreateScene - Scene created.");
-        return gameScene;
+                loadGFXAssets(currentGame);
+                loadFonts(currentGame);
+                //loadSounds(currentGame);
+
+                gameScene = new Scene();
+                gameScene.setOnAreaTouchTraversalFrontToBack();
+                loadPhysics(currentGame);
+
+                for (int i = 0; i < LAYER_COUNT; i++) {
+                    final Entity layer = new Entity();
+                    layer.setZIndex(i);
+                    gameScene.attachChild(layer);
+                }
+
+                loadScene(currentGame);
+                loadHUD(currentGame);
+                mEngine.setScene(gameScene);
+                Log.d(TAG, "onTimePassed - Game Scene created");
+
+            }
+        }));
+
+        return splashScene;
     }
 
     private void loadPhysics(BaseGame game) {
@@ -174,6 +196,30 @@ public class GameActivity extends AbstractGameActivity {
         physicsWorld = new PhysicsWorld(game.getPhysicsVector(), false);
         physicsWorld.setContactListener(contactListener);
         gameScene.registerUpdateHandler(physicsWorld);
+    }
+
+    private void loadSplash() {
+        BitmapTextureAtlas splashTextureAtlas = new BitmapTextureAtlas(textureManager, 349, 512, TextureOptions.DEFAULT);
+        TextureRegion splashTextureRegion = BitmapTextureAtlasTextureRegionFactory.
+                createFromAsset(splashTextureAtlas, this, ResMan.SPLASH, 0, 0);
+        splashTextureAtlas.load();
+        putTexture(ResMan.SPLASH, splashTextureRegion);
+    }
+
+    private void initSplashScene() {
+        final ITextureRegion splashTexture = getTexture(ResMan.SPLASH);
+        final Vector2 center = new Vector2(75, 120);
+        Log.d(TAG, "initSplashScene - Center: " + center.x + ", " + center.y);
+
+        splashScene = new Scene();
+
+        final Background backgroundColor = new Background(0.78431f, 0.77254f, 0.76862f);
+        splashScene.setBackground(backgroundColor);
+
+        DitheredSprite splash = new DitheredSprite(0, 0, splashTexture, getVBOM());
+        splash.setScale(1.5f);
+        splash.setPosition(center.x, center.y);
+        splashScene.attachChild(splash);
     }
 
     private void loadHUD(BaseGame game) {
@@ -232,5 +278,9 @@ public class GameActivity extends AbstractGameActivity {
 
     public PhysicsWorld getPhysicsWorld() {
         return physicsWorld;
+    }
+
+    public VertexBufferObjectManager getVBOM() {
+        return vertexBufferObjectManager;
     }
 }

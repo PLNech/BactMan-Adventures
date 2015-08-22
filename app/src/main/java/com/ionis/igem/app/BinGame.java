@@ -114,7 +114,6 @@ public class BinGame extends BaseGame {
 
                 Bin bin;
                 Item item;
-                Log.d(TAG, "beginContact - Contact!");
                 if (contact.isTouching()) {
                     if (Bin.isOne(x1)) {
                         bin = (Bin) x1.getBody().getUserData();
@@ -128,18 +127,18 @@ public class BinGame extends BaseGame {
                     }
                     Log.d(TAG, "beginContact - Item " + item.toString() + " went in bin " + bin.toString() + ".");
                     if (bin.accepts(item)) {
-                        if (gameScore >= 100) {
+                        if (++gameScore >= 100) {
                             activity.onWin();
                         }
 
-                        Log.d(TAG, "beginContact - Increasing score to " + ++gameScore + ".");
+                        Log.d(TAG, "beginContact - Increasing score to " + gameScore + ".");
                         setScoreText(gameScore);
                     } else {
-                        if (gameLives == 0) {
+                        if (--gameLives == 0) {
                             activity.onLose();
                         }
 
-                        Log.d(TAG, "beginContact - Decreasing lives to " + --gameLives + ".");
+                        Log.d(TAG, "beginContact - Decreasing lives to " + gameLives + ".");
                         setLivesText("" + gameLives);
                     }
                 }
