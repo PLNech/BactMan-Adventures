@@ -8,16 +8,15 @@ import com.ionis.igem.app.game.bins.Bin;
 import com.ionis.igem.app.game.bins.Item;
 import com.ionis.igem.app.game.managers.ResMan;
 import com.ionis.igem.app.game.model.BaseGame;
-import com.ionis.igem.app.game.model.FontAsset;
-import com.ionis.igem.app.game.model.GFXAsset;
 import com.ionis.igem.app.game.model.HUDElement;
+import com.ionis.igem.app.game.model.res.FontAsset;
+import com.ionis.igem.app.game.model.res.GFXAsset;
 import com.ionis.igem.app.ui.GameActivity;
 import org.andengine.entity.scene.Scene;
 import org.andengine.entity.scene.background.Background;
 import org.andengine.extension.physics.box2d.PhysicsConnector;
 import org.andengine.extension.physics.box2d.PhysicsWorld;
 import org.andengine.opengl.font.IFont;
-import org.andengine.opengl.texture.region.ITextureRegion;
 import org.andengine.opengl.texture.region.ITiledTextureRegion;
 import org.andengine.opengl.vbo.VertexBufferObjectManager;
 
@@ -56,6 +55,12 @@ public class BinGame extends BaseGame {
             /* Items */
             graphicalAssets.add(new GFXAsset(ResMan.FACE_BOX_TILED, 696, 1024, 0, 0, 2, 1));
 
+            graphicalAssets.add(new GFXAsset(ResMan.ITEM_TUBE, 99, 512, 0, 0));
+            graphicalAssets.add(new GFXAsset(ResMan.ITEM_CONE_BLUE, 59, 512, 0, 0));
+            graphicalAssets.add(new GFXAsset(ResMan.ITEM_PEN, 390, 2048, 0, 0));
+            graphicalAssets.add(new GFXAsset(ResMan.ITEM_CONE_WHITE, 235, 2048, 0, 0));
+            graphicalAssets.add(new GFXAsset(ResMan.ITEM_CONE_YELLOW, 235, 2048, 0, 0));
+
             /* HUD */
             graphicalAssets.add(new GFXAsset(ResMan.HUD_LIVES, 1479, 1024, 0, 0));
             graphicalAssets.add(new GFXAsset(ResMan.HUD_SCORE, 1885, 1024, 0, 0));
@@ -80,8 +85,8 @@ public class BinGame extends BaseGame {
     @Override
     public List<HUDElement> getHudElements() {
         if (elements.isEmpty()) {
-            final ITextureRegion textureScore = activity.getTexture(ResMan.HUD_SCORE);
-            final ITextureRegion textureLives = activity.getTexture(ResMan.HUD_LIVES);
+            final ITiledTextureRegion textureScore = activity.getTexture(ResMan.HUD_SCORE);
+            final ITiledTextureRegion textureLives = activity.getTexture(ResMan.HUD_LIVES);
 
             final float scale = 0.120f;
 
@@ -182,9 +187,9 @@ public class BinGame extends BaseGame {
     }
 
     private void createItems() {
-        final ITextureRegion smileyTextureRegion = activity.getTexture(ResMan.FACE_BOX_TILED);
-        createItem(activity.spriteCenter(smileyTextureRegion));
-        createItem(activity.spritePosition(smileyTextureRegion, 0.2f, 0.5f));
+        final ITiledTextureRegion smileyTextureRegion = activity.getTexture(ResMan.FACE_BOX_TILED);
+        createItem(activity.spriteCenter(smileyTextureRegion), Item.Type.TUBE);
+        createItem(activity.spritePosition(smileyTextureRegion, 0.2f, 0.5f), Item.Type.CONE_BLUE);
     }
 
     @Override
@@ -241,30 +246,62 @@ public class BinGame extends BaseGame {
     }
 
 
-    private void createItem(Vector2 pos) {
-        createItem(pos.x, pos.y);
+    private void createItem(Vector2 pos, Item.Type type) {
+        createItem(pos.x, pos.y, type);
     }
 
-    private void createItem(float posX, float posY) {
-        final ITiledTextureRegion smileyTextureRegion = (ITiledTextureRegion) activity.getTexture(ResMan.FACE_BOX_TILED);
-        Item item = new Item(Item.Type.PAPER, smileyTextureRegion, posX, posY, activity.getVBOM(), activity.getPhysicsWorld());
+    private void createItem(float posX, float posY, Item.Type type) {
+        ITiledTextureRegion textureRegion = activity.getTexture(ResMan.FACE_BOX_TILED);
+        switch (type) {
+            case PETRI_DISH:
+                break;
+            case SUBSTRATE_BOX:
+                break;
+            case SOLVENT:
+                break;
+            case PAPER:
+                break;
+            case MICROSCOPE_SLIDE:
+                break;
+            case PEN:
+                textureRegion = activity.getTexture(ResMan.ITEM_PEN);
+                break;
+            case TUBE:
+                textureRegion = activity.getTexture(ResMan.ITEM_TUBE);
+                break;
+            case CONE_BLUE:
+                textureRegion = activity.getTexture(ResMan.ITEM_CONE_BLUE);
+                break;
+            case CONE_YELLOW:
+                textureRegion = activity.getTexture(ResMan.ITEM_CONE_YELLOW);
+                break;
+            case CONE_WHITE:
+                textureRegion = activity.getTexture(ResMan.ITEM_CONE_WHITE);
+                break;
+        }
+        createItem(posX, posY, textureRegion, type);
+
+    }
+
+    private void createItem(float posX, float posY, ITiledTextureRegion textureRegion, Item.Type type) {
+        Item item = new Item(type, textureRegion, posX, posY, activity.getVBOM(), activity.getPhysicsWorld());
         items.add(item);
         final Scene gameScene = activity.getScene();
         gameScene.getChildByIndex(GameActivity.LAYER_BACKGROUND).attachChild(item);
         gameScene.registerTouchArea(item);
     }
 
-    private void createBin(Bin.Type type, ITextureRegion textureRegion, float posX, float posY) {
+    private void createBin(Bin.Type type, ITiledTextureRegion textureRegion, float posX, float posY) {
         Bin bin = new Bin(type, posX, posY, textureRegion, activity.getVBOM(), activity.getPhysicsWorld());
         activity.getScene().getChildByIndex(GameActivity.LAYER_FOREGROUND).attachChild(bin);
     }
 
     private void createBins() {
         final float binY = 0.85f;
-        final ITextureRegion bin1TextureRegion = activity.getTexture(ResMan.BIN1);
-        final ITextureRegion bin2TextureRegion = activity.getTexture(ResMan.BIN2);
-        final ITextureRegion bin3TextureRegion = activity.getTexture(ResMan.BIN3);
-        final ITextureRegion bin4TextureRegion = activity.getTexture(ResMan.BIN4);
+        final ITiledTextureRegion bin1TextureRegion = activity.getTexture(ResMan.BIN1);
+        final ITiledTextureRegion bin2TextureRegion = activity.getTexture(ResMan.BIN2);
+        final ITiledTextureRegion bin3TextureRegion = activity.getTexture(ResMan.BIN3);
+        final ITiledTextureRegion bin4TextureRegion = activity.getTexture(ResMan.BIN4);
 
         Vector2 bin1Pos = activity.spritePosition(bin1TextureRegion, 0.30f, binY, Bin.SCALE_DEFAULT);
         Vector2 bin2Pos = activity.spritePosition(bin2TextureRegion, 0.50f, binY, Bin.SCALE_DEFAULT);

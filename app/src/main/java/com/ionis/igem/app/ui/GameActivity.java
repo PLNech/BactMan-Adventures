@@ -11,8 +11,8 @@ import com.ionis.igem.app.BinGame;
 import com.ionis.igem.app.game.AbstractGameActivity;
 import com.ionis.igem.app.game.managers.ResMan;
 import com.ionis.igem.app.game.model.BaseGame;
-import com.ionis.igem.app.game.model.FontAsset;
-import com.ionis.igem.app.game.model.GFXAsset;
+import com.ionis.igem.app.game.model.res.FontAsset;
+import com.ionis.igem.app.game.model.res.GFXAsset;
 import com.ionis.igem.app.game.model.HUDElement;
 import com.ionis.igem.app.game.ui.DitheredSprite;
 import org.andengine.engine.camera.SmoothCamera;
@@ -39,6 +39,7 @@ import org.andengine.opengl.texture.TextureOptions;
 import org.andengine.opengl.texture.atlas.bitmap.BitmapTextureAtlas;
 import org.andengine.opengl.texture.atlas.bitmap.BitmapTextureAtlasTextureRegionFactory;
 import org.andengine.opengl.texture.region.ITextureRegion;
+import org.andengine.opengl.texture.region.ITiledTextureRegion;
 import org.andengine.opengl.texture.region.TextureRegion;
 import org.andengine.opengl.texture.region.TiledTextureRegion;
 import org.andengine.opengl.vbo.VertexBufferObjectManager;
@@ -48,7 +49,7 @@ import java.util.List;
 
 public class GameActivity extends AbstractGameActivity implements MenuScene.IOnMenuItemClickListener {
     private static final String TAG = "GameActivity";
-    public static final float SPLASH_TIME = 3f;
+    public static final float SPLASH_DURATION = 0.5f;
 
     private static final int OPTION_RESET = 0;
     private static final int OPTION_QUIT = OPTION_RESET + 1;
@@ -58,7 +59,7 @@ public class GameActivity extends AbstractGameActivity implements MenuScene.IOnM
     private SmoothCamera gameCamera;
 
     private PhysicsWorld physicsWorld;
-    private HashMap<CharSequence, ITextureRegion> textureMap = new HashMap<>();
+    private HashMap<CharSequence, ITiledTextureRegion> textureMap = new HashMap<>();
 
     private HashMap<CharSequence, IFont> fontMap = new HashMap<>();
     private TextureManager textureManager;
@@ -121,7 +122,7 @@ public class GameActivity extends AbstractGameActivity implements MenuScene.IOnM
 
         Log.d(TAG, "onCreateScene - Splash Scene created.");
 
-        mEngine.registerUpdateHandler(new TimerHandler(SPLASH_TIME, new ITimerCallback() {
+        mEngine.registerUpdateHandler(new TimerHandler(SPLASH_DURATION, new ITimerCallback() {
             public void onTimePassed(final TimerHandler pTimerHandler) {
                 mEngine.unregisterUpdateHandler(pTimerHandler);
 
@@ -179,15 +180,10 @@ public class GameActivity extends AbstractGameActivity implements MenuScene.IOnM
         final String filename = asset.getFilename();
         final int textureX = asset.getTextureX();
         final int textureY = asset.getTextureY();
-        if (asset.isTiled()) {
-            final int tileC = asset.getTileColumns();
-            final int tileR = asset.getTileRows();
-            TiledTextureRegion tiledTextureRegion = BitmapTextureAtlasTextureRegionFactory.createTiledFromAsset(textureAtlas, this, filename, textureX, textureY, tileC, tileR);
-            putTexture(filename, tiledTextureRegion);
-        } else {
-            TextureRegion textureRegion = BitmapTextureAtlasTextureRegionFactory.createFromAsset(textureAtlas, this, filename, textureX, textureY);
-            putTexture(filename, textureRegion);
-        }
+        final int tileC = asset.getTileColumns();
+        final int tileR = asset.getTileRows();
+        TiledTextureRegion tiledTextureRegion = BitmapTextureAtlasTextureRegionFactory.createTiledFromAsset(textureAtlas, this, filename, textureX, textureY, tileC, tileR);
+        putTexture(filename, tiledTextureRegion);
 
         textureAtlas.load();
     }
@@ -242,8 +238,8 @@ public class GameActivity extends AbstractGameActivity implements MenuScene.IOnM
 
     private void loadSplashScene() {
         BitmapTextureAtlas splashTextureAtlas = new BitmapTextureAtlas(textureManager, 349, 512, TextureOptions.DEFAULT);
-        TextureRegion splashTextureRegion = BitmapTextureAtlasTextureRegionFactory.
-                createFromAsset(splashTextureAtlas, this, ResMan.SPLASH, 0, 0);
+        TiledTextureRegion splashTextureRegion = BitmapTextureAtlasTextureRegionFactory.
+                createTiledFromAsset(splashTextureAtlas, this, ResMan.SPLASH, 0, 0, 1, 1);
         splashTextureAtlas.load();
         putTexture(ResMan.SPLASH, splashTextureRegion);
     }
@@ -267,9 +263,9 @@ public class GameActivity extends AbstractGameActivity implements MenuScene.IOnM
     private void loadMenuPause() {
         BitmapTextureAtlas menuAtlas = new BitmapTextureAtlas(this.getTextureManager(), 200, 100, TextureOptions.BILINEAR);
 
-        TextureRegion menuBG = BitmapTextureAtlasTextureRegionFactory.createFromAsset(menuAtlas, this, ResMan.MENU_BG, 0, 0);
-        TextureRegion menuReset = BitmapTextureAtlasTextureRegionFactory.createFromAsset(menuAtlas, this, ResMan.MENU_RESET, 0, 0);
-        TextureRegion menuQuit = BitmapTextureAtlasTextureRegionFactory.createFromAsset(menuAtlas, this, ResMan.MENU_QUIT, 0, 50);
+        TiledTextureRegion menuBG = BitmapTextureAtlasTextureRegionFactory.createTiledFromAsset(menuAtlas, this, ResMan.MENU_BG, 0, 0, 1, 1);
+        TiledTextureRegion menuReset = BitmapTextureAtlasTextureRegionFactory.createTiledFromAsset(menuAtlas, this, ResMan.MENU_RESET, 0, 0, 1, 1);
+        TiledTextureRegion menuQuit = BitmapTextureAtlasTextureRegionFactory.createTiledFromAsset(menuAtlas, this, ResMan.MENU_QUIT, 0, 50, 1, 1);
         putTexture(ResMan.MENU_BG, menuBG);
         putTexture(ResMan.MENU_RESET, menuReset);
         putTexture(ResMan.MENU_QUIT, menuQuit);
@@ -341,8 +337,8 @@ public class GameActivity extends AbstractGameActivity implements MenuScene.IOnM
         Log.v(TAG, "putFont - Added font " + fontName);
     }
 
-    public ITextureRegion getTexture(String textureName) {
-        final ITextureRegion texture = textureMap.get(textureName);
+    public ITiledTextureRegion getTexture(String textureName) {
+        final ITiledTextureRegion texture = textureMap.get(textureName);
         if (texture != null) {
             Log.v(TAG, "getTexture - returning texture " + textureName);
         } else {
@@ -351,7 +347,7 @@ public class GameActivity extends AbstractGameActivity implements MenuScene.IOnM
         return texture;
     }
 
-    void putTexture(String textureName, ITextureRegion texture) {
+    void putTexture(String textureName, ITiledTextureRegion texture) {
         textureMap.put(textureName, texture);
         Log.v(TAG, "putTexture - Added texture " + textureName);
     }
