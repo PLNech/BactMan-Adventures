@@ -39,6 +39,12 @@ public class Item extends PhysicalWorldObject {
             return validBinType;
         }
 
+        public static Type random() {
+            final Type[] values = Type.values();
+            final int randomIndex = (int) (values.length * Math.random());
+            return values[randomIndex];
+        }
+
     }
 
     private static final String TAG = "Item";

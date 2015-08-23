@@ -188,8 +188,8 @@ public class BinGame extends BaseGame {
 
     private void createItems() {
         final ITiledTextureRegion smileyTextureRegion = activity.getTexture(ResMan.FACE_BOX_TILED);
-        createItem(activity.spriteCenter(smileyTextureRegion), Item.Type.TUBE);
-        createItem(activity.spritePosition(smileyTextureRegion, 0.2f, 0.5f), Item.Type.CONE_BLUE);
+        createItem(activity.spriteCenter(smileyTextureRegion), Item.Type.random());
+        createItem(activity.spritePosition(smileyTextureRegion, 0.2f, 0.5f), Item.Type.random());
     }
 
     @Override
