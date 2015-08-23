@@ -2,6 +2,8 @@ package com.ionis.igem.app.game.model;
 
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.ContactListener;
+import com.ionis.igem.app.game.model.res.FontAsset;
+import com.ionis.igem.app.game.model.res.GFXAsset;
 import com.ionis.igem.app.ui.GameActivity;
 import org.andengine.entity.scene.Scene;
 

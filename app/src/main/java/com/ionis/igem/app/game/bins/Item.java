@@ -3,11 +3,10 @@ package com.ionis.igem.app.game.bins;
 import android.util.Log;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
-import com.badlogic.gdx.physics.box2d.FixtureDef;
-import org.andengine.entity.sprite.AnimatedSprite;
+import com.ionis.igem.app.game.model.PhysicalWorldObject;
 import org.andengine.extension.physics.box2d.PhysicsConnector;
-import org.andengine.extension.physics.box2d.PhysicsFactory;
 import org.andengine.extension.physics.box2d.PhysicsWorld;
+import org.andengine.extension.physics.box2d.util.constants.PhysicsConstants;
 import org.andengine.input.touch.TouchEvent;
 import org.andengine.opengl.texture.region.ITiledTextureRegion;
 import org.andengine.opengl.vbo.VertexBufferObjectManager;
@@ -15,19 +14,21 @@ import org.andengine.opengl.vbo.VertexBufferObjectManager;
 /**
  * Created by PLN on 19/08/2015.
  */
-public class Item extends AnimatedSprite {
+public class Item extends PhysicalWorldObject {
 
-    public Body getBody() {
-        return body;
-    }
 
     public enum Type {
         PAPER(Bin.Type.NORMAL),
+        CONE_BLUE(Bin.Type.BIO),
+        CONE_WHITE(Bin.Type.BIO),
+        CONE_YELLOW(Bin.Type.BIO),
+        TUBE(Bin.Type.GLASS),
         MICROSCOPE_SLIDE(Bin.Type.GLASS),
         PETRI_DISH(Bin.Type.BIO),
         PEN(Bin.Type.NORMAL),
         SUBSTRATE_BOX(Bin.Type.BIO),
         SOLVENT(Bin.Type.LIQUIDS);
+
         Bin.Type validBinType;
 
         Type(Bin.Type pType) {
@@ -42,38 +43,30 @@ public class Item extends AnimatedSprite {
 
     private static final String TAG = "Item";
 
-    public static final int DURATION_EACH_ANIM = 100;
-    public static final float SCALE_GRABBED = 1.5f;
-
-    public static final float SCALE_NORMAL = 1.0f;
     public static final int BODY_DENSITY = 1;
     public static final float BODY_ELASTICITY = 0.5f;
+    public static final float BODY_FRICTION = 0.125f;
 
-    public static final float BODY_FRICTION = 0.5f;
     public static short ID = 0;
     Boolean isGrabbed = false;
-
     Body body;
 
     Type type;
+
     int id;
+
     public Item(Type pType, ITiledTextureRegion texture, float posX, float posY, VertexBufferObjectManager manager, PhysicsWorld physicsWorld) {
         super(posX, posY, texture, manager);
         setCullingEnabled(true);
-        animate(DURATION_EACH_ANIM);
+        setScale(SCALE_DEFAULT);
         Log.d(TAG, "Item - Created at " + posX + ", " + posY);
         id = ID++;
         type = pType;
         body = createBody(physicsWorld);
+        body.setTransform(posX / PhysicsConstants.PIXEL_TO_METER_RATIO_DEFAULT, posY / PhysicsConstants.PIXEL_TO_METER_RATIO_DEFAULT, 0);
         physicsWorld.registerPhysicsConnector(new PhysicsConnector(this, body, true, true));
-        Log.v(TAG, "Item - Body at " + body.getPosition().x + ", " + body.getPosition().y);
-    }
-
-    private Body createBody(PhysicsWorld physicsWorld) {
-        final FixtureDef itemFixtureDef = PhysicsFactory.createFixtureDef(BODY_DENSITY, BODY_ELASTICITY, BODY_FRICTION);
-        final Body body = PhysicsFactory.createBoxBody(physicsWorld, this, BodyDef.BodyType.DynamicBody, itemFixtureDef);
-        body.setUserData(this);
-        return body;
+        Log.v(TAG, "Item - Body at " + body.getPosition().x * PhysicsConstants.PIXEL_TO_METER_RATIO_DEFAULT + ", "
+                + body.getPosition().y * PhysicsConstants.PIXEL_TO_METER_RATIO_DEFAULT);
     }
 
     @Override
@@ -87,15 +80,18 @@ public class Item extends AnimatedSprite {
                 if (isGrabbed) {
                     final float x = body.getPosition().x;
                     final float y = body.getPosition().y;
-                    float velocityX = pTouchAreaLocalX - x;
-                    float velocityY = pTouchAreaLocalY - y;
+                    float velocityX = pSceneTouchEvent.getX() - x * PhysicsConstants.PIXEL_TO_METER_RATIO_DEFAULT;
+                    float velocityY = pSceneTouchEvent.getY() - y * PhysicsConstants.PIXEL_TO_METER_RATIO_DEFAULT;
                     body.setLinearVelocity(velocityX, velocityY);
+
+                    Log.d(TAG, "onAreaTouched - pTX:" + pTouchAreaLocalX + ", pTY: " + pTouchAreaLocalY);
+                    Log.d(TAG, "onAreaTouched - bX:" + x + ", bY: " + y);
                 }
                 break;
             case TouchEvent.ACTION_UP:
                 if (isGrabbed) {
                     isGrabbed = false;
-                    setScale(SCALE_NORMAL);
+                    setScale(SCALE_DEFAULT);
                 }
                 break;
         }
@@ -108,6 +104,30 @@ public class Item extends AnimatedSprite {
 
     public int getId() {
         return id;
+    }
+
+    public Body getBody() {
+        return body;
+    }
+
+    @Override
+    protected int getDensity() {
+        return BODY_DENSITY;
+    }
+
+    @Override
+    protected float getElasticity() {
+        return BODY_ELASTICITY;
+    }
+
+    @Override
+    protected float getFriction() {
+        return BODY_FRICTION;
+    }
+
+    @Override
+    protected BodyDef.BodyType getBodyType() {
+        return BodyDef.BodyType.DynamicBody;
     }
 
     @Override

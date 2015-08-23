@@ -1,4 +1,4 @@
-package com.ionis.igem.app.game.model;
+package com.ionis.igem.app.game.model.res;
 
 /**
  * Created by PLN on 21/08/2015.
@@ -9,7 +9,6 @@ public class GFXAsset extends Asset {
     int textureX;
     int textureY;
 
-    boolean tiled;
     int tileColumns;
     int tileRows;
 
@@ -20,13 +19,13 @@ public class GFXAsset extends Asset {
         this.textureX = textureX;
         this.textureY = textureY;
         this.tileColumns = tileColumns;
-        this.tiled = true;
         this.tileRows = tileRows;
     }
 
     public GFXAsset(String filename, int width, int height, int textureX, int textureY) {
         this(filename, width, height, textureX, textureY, 0, 0);
-        this.tiled = false;
+        this.tileColumns = 1;
+        this.tileRows = 1;
     }
 
     public int getHeight() {
@@ -46,7 +45,7 @@ public class GFXAsset extends Asset {
     }
 
     public boolean isTiled() {
-        return tiled;
+        return tileColumns != 1 || tileRows != 1;
     }
 
     public int getTileRows() {

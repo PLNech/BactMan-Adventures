@@ -17,8 +17,14 @@ public class ResMan {
     public static final String BIN1 = "bin1.png";
     public static final String BIN2 = "bin2.png";
     public static final String BIN3 = "bin3.png";
-
     public static final String BIN4 = "bin4.png";
+
+    public static final String ITEM_PEN = "item_pen.png";
+    public static final String ITEM_TUBE = "item_tube.png";
+    public static final String ITEM_CONE_BLUE = "item_cone_blue.png";
+    public static final String ITEM_CONE_WHITE = "item_cone_white.png";
+    public static final String ITEM_CONE_YELLOW = "item_cone_yellow.png";
+
     public static final String HUD_LIVES = "hud_lives.png";
 
     public static final String HUD_SCORE = "hud_score.png";

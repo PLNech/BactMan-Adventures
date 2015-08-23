@@ -1,4 +1,4 @@
-package com.ionis.igem.app.game.model;
+package com.ionis.igem.app.game.model.res;
 
 /**
  * Created by PLN on 21/08/2015.
