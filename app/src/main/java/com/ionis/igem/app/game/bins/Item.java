@@ -11,6 +11,8 @@ import org.andengine.input.touch.TouchEvent;
 import org.andengine.opengl.texture.region.ITiledTextureRegion;
 import org.andengine.opengl.vbo.VertexBufferObjectManager;
 
+import java.util.Random;
+
 /**
  * Created by PLN on 19/08/2015.
  */
@@ -65,10 +67,12 @@ public class Item extends PhysicalWorldObject {
         super(posX, posY, texture, manager);
         setCullingEnabled(true);
         setScale(getIdealScale(SCALE_DEFAULT, texture));
+
         id = ID++;
         type = pType;
         body = createBody(physicsWorld);
-        body.setTransform(posX / PhysicsConstants.PIXEL_TO_METER_RATIO_DEFAULT, posY / PhysicsConstants.PIXEL_TO_METER_RATIO_DEFAULT, 0);
+        body.setTransform(posX / PhysicsConstants.PIXEL_TO_METER_RATIO_DEFAULT,
+                posY / PhysicsConstants.PIXEL_TO_METER_RATIO_DEFAULT, new Random().nextFloat());
         physicsWorld.registerPhysicsConnector(new PhysicsConnector(this, body, true, true));
 
         Log.v(TAG, "Item - Created " + type.toString() + " at " + posX + ", " + posY
@@ -91,9 +95,7 @@ public class Item extends PhysicalWorldObject {
                     float velocityX = pSceneTouchEvent.getX() - x * PhysicsConstants.PIXEL_TO_METER_RATIO_DEFAULT;
                     float velocityY = pSceneTouchEvent.getY() - y * PhysicsConstants.PIXEL_TO_METER_RATIO_DEFAULT;
                     body.setLinearVelocity(velocityX, velocityY);
-
-                    Log.d(TAG, "onAreaTouched - pTX:" + pTouchAreaLocalX + ", pTY: " + pTouchAreaLocalY);
-                    Log.d(TAG, "onAreaTouched - bX:" + x + ", bY: " + y);
+                    Log.v(TAG, "onAreaTouched - velocity set to " + velocityX + ", " + velocityY);
                 }
                 break;
             case TouchEvent.ACTION_UP:
@@ -104,13 +106,6 @@ public class Item extends PhysicalWorldObject {
                 break;
         }
         return true;
-    }
-
-    private float getIdealScale(float scale, ITiledTextureRegion textureRegion) {
-        if (textureRegion.getHeight() + textureRegion.getWidth() <= 256) {
-            return scale * 4;
-        }
-        return scale;
     }
 
     public Type getType() {

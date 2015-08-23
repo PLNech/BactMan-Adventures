@@ -14,4 +14,11 @@ public abstract class WorldObject extends AnimatedSprite {
     public WorldObject(float pX, float pY, ITiledTextureRegion pTiledTextureRegion, VertexBufferObjectManager pVertexBufferObjectManager) {
         super(pX, pY, pTiledTextureRegion, pVertexBufferObjectManager);
     }
+
+    protected float getIdealScale(float scale, ITiledTextureRegion textureRegion) {
+        if (textureRegion.getHeight() + textureRegion.getWidth() <= 256) {
+            return scale * 4;
+        }
+        return scale;
+    }
 }
