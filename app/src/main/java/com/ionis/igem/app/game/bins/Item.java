@@ -64,13 +64,15 @@ public class Item extends PhysicalWorldObject {
     public Item(Type pType, ITiledTextureRegion texture, float posX, float posY, VertexBufferObjectManager manager, PhysicsWorld physicsWorld) {
         super(posX, posY, texture, manager);
         setCullingEnabled(true);
-        setScale(SCALE_DEFAULT);
-        Log.d(TAG, "Item - Created at " + posX + ", " + posY);
+        setScale(getIdealScale(SCALE_DEFAULT, texture));
         id = ID++;
         type = pType;
         body = createBody(physicsWorld);
         body.setTransform(posX / PhysicsConstants.PIXEL_TO_METER_RATIO_DEFAULT, posY / PhysicsConstants.PIXEL_TO_METER_RATIO_DEFAULT, 0);
         physicsWorld.registerPhysicsConnector(new PhysicsConnector(this, body, true, true));
+
+        Log.v(TAG, "Item - Created " + type.toString() + " at " + posX + ", " + posY
+                + " with texture of w:" + texture.getWidth() + ", h:" + texture.getHeight());
         Log.v(TAG, "Item - Body at " + body.getPosition().x * PhysicsConstants.PIXEL_TO_METER_RATIO_DEFAULT + ", "
                 + body.getPosition().y * PhysicsConstants.PIXEL_TO_METER_RATIO_DEFAULT);
     }
@@ -79,7 +81,7 @@ public class Item extends PhysicalWorldObject {
     public boolean onAreaTouched(TouchEvent pSceneTouchEvent, float pTouchAreaLocalX, float pTouchAreaLocalY) {
         switch (pSceneTouchEvent.getAction()) {
             case TouchEvent.ACTION_DOWN:
-                setScale(SCALE_GRABBED);
+                setScale(getIdealScale(SCALE_GRABBED, this.getTiledTextureRegion()));
                 isGrabbed = true;
                 break;
             case TouchEvent.ACTION_MOVE:
@@ -97,11 +99,18 @@ public class Item extends PhysicalWorldObject {
             case TouchEvent.ACTION_UP:
                 if (isGrabbed) {
                     isGrabbed = false;
-                    setScale(SCALE_DEFAULT);
+                    setScale(getIdealScale(SCALE_DEFAULT, this.getTiledTextureRegion()));
                 }
                 break;
         }
         return true;
+    }
+
+    private float getIdealScale(float scale, ITiledTextureRegion textureRegion) {
+        if (textureRegion.getHeight() + textureRegion.getWidth() <= 256) {
+            return scale * 4;
+        }
+        return scale;
     }
 
     public Type getType() {

@@ -8,7 +8,7 @@ import org.andengine.opengl.vbo.VertexBufferObjectManager;
  * Created by PLN on 23/08/2015.
  */
 public abstract class WorldObject extends AnimatedSprite {
-    public static final float SCALE_DEFAULT = 0.125f;
+    public static final float SCALE_DEFAULT = 0.150f;
     public static final float SCALE_GRABBED = 0.250f;
 
     public WorldObject(float pX, float pY, ITiledTextureRegion pTiledTextureRegion, VertexBufferObjectManager pVertexBufferObjectManager) {
