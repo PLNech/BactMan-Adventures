@@ -1,13 +1,10 @@
 package com.ionis.igem.app.game.bins;
 
 import android.util.Log;
-import com.badlogic.gdx.physics.box2d.Body;
-import com.badlogic.gdx.physics.box2d.BodyDef;
+import android.util.Pair;
 import com.badlogic.gdx.physics.box2d.Fixture;
 import com.ionis.igem.app.game.model.PhysicalWorldObject;
-import org.andengine.extension.physics.box2d.PhysicsConnector;
 import org.andengine.extension.physics.box2d.PhysicsWorld;
-import org.andengine.extension.physics.box2d.util.constants.PhysicsConstants;
 import org.andengine.opengl.texture.region.ITiledTextureRegion;
 import org.andengine.opengl.vbo.VertexBufferObjectManager;
 
@@ -23,22 +20,18 @@ public class Bin extends PhysicalWorldObject {
     }
 
     public static short ID = 0;
+    public static final float SCALE_DEFAULT = 0.125f;
 
     int id;
-    Body body;
     Type type;
 
     public Bin(Type binType, float pX, float pY, ITiledTextureRegion pTextureRegion,
                VertexBufferObjectManager pVertexBufferObject, PhysicsWorld physicsWorld) {
-        super(pX, pY, pTextureRegion, pVertexBufferObject);
-        setScale(SCALE_DEFAULT);
+        super(pX, pY, 0, SCALE_DEFAULT, pTextureRegion, pVertexBufferObject, physicsWorld);
         Log.v(TAG, "Bin - Created at " + pX + ", " + pY);
 
         id = ID++;
         this.type = binType;
-        body = createBody(physicsWorld);
-        body.setTransform(pX / PhysicsConstants.PIXEL_TO_METER_RATIO_DEFAULT, pY / PhysicsConstants.PIXEL_TO_METER_RATIO_DEFAULT, 0);
-        physicsWorld.registerPhysicsConnector(new PhysicsConnector(this, body, true, false));
     }
 
 
@@ -48,6 +41,11 @@ public class Bin extends PhysicalWorldObject {
 
     public boolean accepts(Item item) {
         return item.getType().getValid().equals(type);
+    }
+
+    @Override
+    protected Pair<Boolean, Boolean> getBodyUpdates() {
+        return new Pair<>(true, false);
     }
 
     @Override

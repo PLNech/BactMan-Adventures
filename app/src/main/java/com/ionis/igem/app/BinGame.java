@@ -12,16 +12,19 @@ import com.ionis.igem.app.game.model.HUDElement;
 import com.ionis.igem.app.game.model.res.FontAsset;
 import com.ionis.igem.app.game.model.res.GFXAsset;
 import com.ionis.igem.app.ui.GameActivity;
+import org.andengine.entity.IEntity;
+import org.andengine.entity.modifier.*;
 import org.andengine.entity.scene.Scene;
 import org.andengine.entity.scene.background.Background;
-import org.andengine.extension.physics.box2d.PhysicsConnector;
-import org.andengine.extension.physics.box2d.PhysicsWorld;
 import org.andengine.opengl.font.IFont;
 import org.andengine.opengl.texture.region.ITiledTextureRegion;
 import org.andengine.opengl.vbo.VertexBufferObjectManager;
+import org.andengine.util.color.Color;
+import org.andengine.util.modifier.IModifier;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 /**
  * Created by PLN on 21/08/2015.
@@ -135,20 +138,25 @@ public class BinGame extends BaseGame {
                         /* Two items are touching. */
                         return;
                     }
-                    Log.d(TAG, "beginContact - Item " + item.toString() + " went in bin " + bin.toString() + ".");
-                    if (bin.accepts(item)) {
+
+                    final boolean validMove = bin.accepts(item);
+                    Log.v(TAG, "beginContact - Item " + item + " went in bin " + bin + (validMove ? " :)" : " :("));
+
+                    recycleItem(item);
+                    animateBin(bin, validMove);
+                    if (validMove) {
                         if (++gameScore >= 100) {
                             activity.onWin();
                         }
 
-                        Log.d(TAG, "beginContact - Increasing score to " + gameScore + ".");
+                        Log.v(TAG, "beginContact - Increasing score to " + gameScore + ".");
                         setScore(gameScore);
                     } else {
                         if (--gameLives == 0) {
                             activity.onLose();
                         }
 
-                        Log.d(TAG, "beginContact - Decreasing lives to " + gameLives + ".");
+                        Log.v(TAG, "beginContact - Decreasing lives to " + gameLives + ".");
                         setLives(gameLives);
                     }
                 }
@@ -188,34 +196,17 @@ public class BinGame extends BaseGame {
 
     private void createItems() {
         final ITiledTextureRegion smileyTextureRegion = activity.getTexture(ResMan.FACE_BOX_TILED);
-        createItem(activity.spriteCenter(smileyTextureRegion), Item.Type.random());
+//        createItem(Item.Type.random());
         createItem(activity.spritePosition(smileyTextureRegion, 0.2f, 0.5f), Item.Type.random());
     }
 
     @Override
     public void resetGame() {
-        gameScore = 0;
-        gameLives = 3;
-        setScore(gameScore);
-        setLives(gameLives);
+        resetGamePoints();
+
         final Scene gameScene = activity.getScene();
         for (final Item item : items) {
-            final PhysicsWorld physicsWorld = activity.getPhysicsWorld();
-            final PhysicsConnector physicsConnector = physicsWorld
-                    .getPhysicsConnectorManager().findPhysicsConnectorByShape(item);
-
-            activity.getEngine().runOnUpdateThread(new Runnable() {
-                @Override
-                public void run() {
-                    if (physicsConnector != null) {
-                        final Body body = item.getBody();
-                        physicsWorld.unregisterPhysicsConnector(physicsConnector);
-                        body.setActive(false);
-                        physicsWorld.destroyBody(body);
-                        gameScene.getChildByIndex(GameActivity.LAYER_BACKGROUND).detachChild(item);
-                    }
-                }
-            });
+            deleteItem(item);
         }
         items.clear();
 
@@ -223,6 +214,19 @@ public class BinGame extends BaseGame {
         activity.resetMenuPause();
 
         createItems();
+    }
+
+    private void resetGamePoints() {
+        gameScore = 0;
+        gameLives = 3;
+        setScore(gameScore);
+        setLives(gameLives);
+    }
+
+    private void deleteItem(final Item item) {
+        item.setVisible(false);
+        activity.getScene().getChildByIndex(GameActivity.LAYER_BACKGROUND).detachChild(item);
+        activity.markForDeletion(item);
     }
 
     private void setScore(int score) {
@@ -245,6 +249,14 @@ public class BinGame extends BaseGame {
         HUDLives.getText().setText(text);
     }
 
+
+    private void createItem(Item.Type type) {
+        float posRatioX = 0.1f + new Random().nextFloat() * 0.9f;
+        float posRatioY = new Random().nextFloat() * 0.2f;
+        Vector2 itemPos = activity.spritePosition(32, 32, posRatioX, posRatioY);
+        Log.d(TAG, "createItem - New item created at " + itemPos.x + ", " + itemPos.y);
+        createItem(itemPos, type);
+    }
 
     private void createItem(Vector2 pos, Item.Type type) {
         createItem(pos.x, pos.y, type);
@@ -312,6 +324,60 @@ public class BinGame extends BaseGame {
         createBin(Bin.Type.LIQUIDS, bin2TextureRegion, bin2Pos.x, bin2Pos.y);
         createBin(Bin.Type.NORMAL, bin3TextureRegion, bin3Pos.x, bin3Pos.y);
         createBin(Bin.Type.BIO, bin4TextureRegion, bin4Pos.x, bin4Pos.y);
+    }
+
+    private void createFloor() {
+
+    }
+
+    private void animateBin(final Bin bin, boolean validMove) {
+        final IEntityModifier.IEntityModifierListener logListener = new IEntityModifier.IEntityModifierListener() {
+            @Override
+            public void onModifierStarted(final IModifier<IEntity> pModifier, final IEntity pItem) {
+                activity.runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        final String text = "Animation started.";
+                        Log.v(TAG, "run - " + text);
+                    }
+                });
+            }
+
+            @Override
+            public void onModifierFinished(final IModifier<IEntity> pEntityModifier, final IEntity pEntity) {
+                activity.runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        final String text = "Animation finished.";
+                        Log.v(TAG, "run - " + text);
+                    }
+                });
+            }
+        };
+        Color initialColor = bin.getDefaultColor();
+        Color toColor = validMove ? Color.GREEN : Color.RED;
+
+        final float pDuration = 0.25f;
+
+        final SequenceEntityModifier entityModifier = new SequenceEntityModifier(
+                new ColorModifier(pDuration, initialColor, toColor),
+                new ColorModifier(pDuration, toColor, initialColor),
+                new DelayModifier(pDuration * 2)
+        );
+
+        bin.registerEntityModifier(new LoopEntityModifier(entityModifier, 1, logListener));
+    }
+
+    private void recycleItem(Item item) {
+        //TODO: Really recycle something
+        deleteItem(item);
+        items.remove(item);
+        activity.runOnUpdateThread(new Runnable() {
+            @Override
+            public void run() {
+                createItem(Item.Type.random());
+            }
+        });
     }
 
 }

@@ -1,10 +1,9 @@
 package com.ionis.igem.app.game.bins;
 
 import android.util.Log;
-import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.ionis.igem.app.game.model.PhysicalWorldObject;
-import org.andengine.extension.physics.box2d.PhysicsConnector;
+import com.ionis.igem.app.game.model.WorldObject;
 import org.andengine.extension.physics.box2d.PhysicsWorld;
 import org.andengine.extension.physics.box2d.util.constants.PhysicsConstants;
 import org.andengine.input.touch.TouchEvent;
@@ -57,28 +56,19 @@ public class Item extends PhysicalWorldObject {
 
     public static short ID = 0;
     Boolean isGrabbed = false;
-    Body body;
 
     Type type;
 
     int id;
 
     public Item(Type pType, ITiledTextureRegion texture, float posX, float posY, VertexBufferObjectManager manager, PhysicsWorld physicsWorld) {
-        super(posX, posY, texture, manager);
+        super(posX, posY, new Random().nextFloat(), WorldObject.getIdealScale(SCALE_DEFAULT, texture), texture, manager, physicsWorld);
         setCullingEnabled(true);
-        setScale(getIdealScale(SCALE_DEFAULT, texture));
 
         id = ID++;
         type = pType;
-        body = createBody(physicsWorld);
-        body.setTransform(posX / PhysicsConstants.PIXEL_TO_METER_RATIO_DEFAULT,
-                posY / PhysicsConstants.PIXEL_TO_METER_RATIO_DEFAULT, new Random().nextFloat());
-        physicsWorld.registerPhysicsConnector(new PhysicsConnector(this, body, true, true));
-
         Log.v(TAG, "Item - Created " + type.toString() + " at " + posX + ", " + posY
                 + " with texture of w:" + texture.getWidth() + ", h:" + texture.getHeight());
-        Log.v(TAG, "Item - Body at " + body.getPosition().x * PhysicsConstants.PIXEL_TO_METER_RATIO_DEFAULT + ", "
-                + body.getPosition().y * PhysicsConstants.PIXEL_TO_METER_RATIO_DEFAULT);
     }
 
     @Override
@@ -114,10 +104,6 @@ public class Item extends PhysicalWorldObject {
 
     public int getId() {
         return id;
-    }
-
-    public Body getBody() {
-        return body;
     }
 
     @Override

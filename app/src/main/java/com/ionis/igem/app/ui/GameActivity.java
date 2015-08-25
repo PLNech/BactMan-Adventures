@@ -6,14 +6,16 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.KeyEvent;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.ContactListener;
 import com.ionis.igem.app.BinGame;
 import com.ionis.igem.app.game.AbstractGameActivity;
 import com.ionis.igem.app.game.managers.ResMan;
 import com.ionis.igem.app.game.model.BaseGame;
+import com.ionis.igem.app.game.model.HUDElement;
+import com.ionis.igem.app.game.model.PhysicalWorldObject;
 import com.ionis.igem.app.game.model.res.FontAsset;
 import com.ionis.igem.app.game.model.res.GFXAsset;
-import com.ionis.igem.app.game.model.HUDElement;
 import com.ionis.igem.app.game.ui.DitheredSprite;
 import org.andengine.engine.camera.SmoothCamera;
 import org.andengine.engine.handler.timer.ITimerCallback;
@@ -28,6 +30,7 @@ import org.andengine.entity.scene.background.Background;
 import org.andengine.entity.scene.menu.MenuScene;
 import org.andengine.entity.scene.menu.item.IMenuItem;
 import org.andengine.entity.scene.menu.item.SpriteMenuItem;
+import org.andengine.entity.shape.IShape;
 import org.andengine.extension.physics.box2d.PhysicsWorld;
 import org.andengine.opengl.font.Font;
 import org.andengine.opengl.font.FontFactory;
@@ -40,10 +43,10 @@ import org.andengine.opengl.texture.atlas.bitmap.BitmapTextureAtlas;
 import org.andengine.opengl.texture.atlas.bitmap.BitmapTextureAtlasTextureRegionFactory;
 import org.andengine.opengl.texture.region.ITextureRegion;
 import org.andengine.opengl.texture.region.ITiledTextureRegion;
-import org.andengine.opengl.texture.region.TextureRegion;
 import org.andengine.opengl.texture.region.TiledTextureRegion;
 import org.andengine.opengl.vbo.VertexBufferObjectManager;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -54,23 +57,24 @@ public class GameActivity extends AbstractGameActivity implements MenuScene.IOnM
     private static final int OPTION_RESET = 0;
     private static final int OPTION_QUIT = OPTION_RESET + 1;
 
+
     private VertexBufferObjectManager vertexBufferObjectManager;
-
-    private SmoothCamera gameCamera;
-
-    private PhysicsWorld physicsWorld;
-    private HashMap<CharSequence, ITiledTextureRegion> textureMap = new HashMap<>();
-
-    private HashMap<CharSequence, IFont> fontMap = new HashMap<>();
     private TextureManager textureManager;
-
-    private BaseGame currentGame;
-
     private FontManager fontManager;
     private AssetManager assetManager;
 
+    private SmoothCamera gameCamera;
+    private PhysicsWorld physicsWorld;
+
+    private HashMap<CharSequence, ITiledTextureRegion> textureMap = new HashMap<>();
+    private HashMap<CharSequence, IFont> fontMap = new HashMap<>();
+
+    private BaseGame currentGame;
+
     private Scene splashScene;
     private MenuScene menuScene;
+
+    private ArrayList<PhysicalWorldObject> objectsToDelete = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -231,7 +235,24 @@ public class GameActivity extends AbstractGameActivity implements MenuScene.IOnM
             return;
         }
 
-        physicsWorld = new PhysicsWorld(game.getPhysicsVector(), false);
+        physicsWorld = new PhysicsWorld(game.getPhysicsVector(), false) {
+            @Override
+            public void onUpdate(float pSecondsElapsed) {
+                super.onUpdate(pSecondsElapsed);
+                if (!physicsWorld.isLocked()) {
+                    for (PhysicalWorldObject object : objectsToDelete) {
+                        destroyBody(object.getBody(), object);
+                    }
+                    objectsToDelete.clear();
+                }
+            }
+
+            private void destroyBody(final Body body, final IShape mask) {
+                unregisterPhysicsConnector(physicsWorld.getPhysicsConnectorManager().findPhysicsConnectorByShape(mask));
+                body.setActive(false);
+                destroyBody(body);
+            }
+        };
         physicsWorld.setContactListener(contactListener);
         gameScene.registerUpdateHandler(physicsWorld);
     }
@@ -313,8 +334,8 @@ public class GameActivity extends AbstractGameActivity implements MenuScene.IOnM
         }
 
 
-        loadScene(currentGame);
         loadHUD(currentGame);
+        loadScene(currentGame);
         mEngine.setScene(gameScene);
     }
 
@@ -368,6 +389,12 @@ public class GameActivity extends AbstractGameActivity implements MenuScene.IOnM
 
     public VertexBufferObjectManager getVBOM() {
         return vertexBufferObjectManager;
+    }
+
+    public void markForDeletion(PhysicalWorldObject object) {
+        if (!objectsToDelete.contains(object)) {
+            objectsToDelete.add(object);
+        }
     }
 
 }

@@ -4,7 +4,6 @@
     <string name="action_quit">Quitter</string>
     <string name="action_reset">Recommencer</string>
 
-    <string name="action_settings">Réglages</string>
     <string name="label_home_game">Le Jeu</string>
     <string name="label_home_credits">Crédits</string>
     <string name="label_home_team">Nous</string>
