@@ -397,4 +397,7 @@ public class GameActivity extends AbstractGameActivity implements MenuScene.IOnM
         }
     }
 
+    public SmoothCamera getCamera() {
+        return gameCamera;
+    }
 }

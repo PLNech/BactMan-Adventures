@@ -61,6 +61,7 @@ public class Item extends PhysicalWorldObject {
     public Item(Type pType, ITiledTextureRegion texture, float posX, float posY, VertexBufferObjectManager manager, PhysicsWorld physicsWorld) {
         super(posX, posY, new Random().nextFloat(), WorldObject.getIdealScale(SCALE_DEFAULT, texture), true, texture, manager, physicsWorld);
         sprite.setCullingEnabled(true);
+        body.setBullet(true);
 
         id = ID++;
         type = pType;
@@ -77,17 +78,17 @@ public class Item extends PhysicalWorldObject {
     }
 
     @Override
-    protected int getDensity() {
+    public int getDensity() {
         return BODY_DENSITY;
     }
 
     @Override
-    protected float getElasticity() {
+    public float getElasticity() {
         return BODY_ELASTICITY;
     }
 
     @Override
-    protected float getFriction() {
+    public float getFriction() {
         return BODY_FRICTION;
     }
 
@@ -98,28 +99,7 @@ public class Item extends PhysicalWorldObject {
 
     @Override
     public String toString() {
-        String typeString = ", type=";
-        switch (type) {
-            case PAPER:
-                typeString += "Papier";
-                break;
-            case MICROSCOPE_SLIDE:
-                typeString += "Lame";
-                break;
-            case PEN:
-                typeString += "Marqueur";
-                break;
-            case SOLVENT:
-                typeString += "Solvant";
-                break;
-            case SUBSTRATE_BOX:
-                typeString += "Boite de substrat";
-                break;
-            case PETRI_DISH:
-                typeString += "Boite de Petri";
-                break;
-        }
-
+        String typeString = ", type=" + type.toString();
         return "Item{" +
                 "id=" + id +
                 typeString +

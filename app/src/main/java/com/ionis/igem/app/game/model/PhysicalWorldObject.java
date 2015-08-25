@@ -1,6 +1,5 @@
 package com.ionis.igem.app.game.model;
 
-import android.util.Log;
 import android.util.Pair;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
@@ -16,7 +15,6 @@ import org.andengine.opengl.vbo.VertexBufferObjectManager;
  * Created by PLN on 23/08/2015.
  */
 public abstract class PhysicalWorldObject extends WorldObject {
-    private static final String TAG = "PhysicalWorldObject";
 
     public static final int BODY_DENSITY = 1000;
     public static final float BODY_ELASTICITY = 0;
@@ -36,11 +34,11 @@ public abstract class PhysicalWorldObject extends WorldObject {
         physicsWorld.registerPhysicsConnector(new PhysicsConnector(sprite, body, updates.first, updates.second));
     }
 
+    @SuppressWarnings("AccessStaticViaInstance")
     protected void initBody(PhysicsWorld physicsWorld) {
         final FixtureDef itemFixtureDef = PhysicsFactory.createFixtureDef(this.getDensity(), this.getElasticity(), this.getFriction());
         body = PhysicsFactory.createBoxBody(physicsWorld, sprite, this.getBodyType(), itemFixtureDef);
         body.setUserData(this);
-        Log.d(TAG, "initBody - Body initialised: " + body);
     }
 
     protected BodyDef.BodyType getBodyType() {
@@ -54,15 +52,15 @@ public abstract class PhysicalWorldObject extends WorldObject {
         return new Pair<>(true, true);
     }
 
-    protected float getElasticity() {
+    public float getElasticity() {
         return BODY_ELASTICITY;
     }
 
-    protected float getFriction() {
+    public float getFriction() {
         return BODY_FRICTION;
     }
 
-    protected int getDensity() {
+    public int getDensity() {
         return BODY_DENSITY;
     }
 

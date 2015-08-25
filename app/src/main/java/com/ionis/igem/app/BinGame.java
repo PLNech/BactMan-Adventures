@@ -9,9 +9,11 @@ import com.ionis.igem.app.game.bins.Item;
 import com.ionis.igem.app.game.managers.ResMan;
 import com.ionis.igem.app.game.model.BaseGame;
 import com.ionis.igem.app.game.model.HUDElement;
+import com.ionis.igem.app.game.model.Wall;
 import com.ionis.igem.app.game.model.res.FontAsset;
 import com.ionis.igem.app.game.model.res.GFXAsset;
 import com.ionis.igem.app.ui.GameActivity;
+import org.andengine.engine.camera.Camera;
 import org.andengine.entity.IEntity;
 import org.andengine.entity.modifier.*;
 import org.andengine.entity.scene.Scene;
@@ -33,6 +35,8 @@ import java.util.Random;
 public class BinGame extends BaseGame {
 
     private ArrayList<Item> items = new ArrayList<>();
+    private ArrayList<Integer> deadItems = new ArrayList<>();
+    private ArrayList<Bin> bins = new ArrayList<>();
 
     private static final String TAG = "BinGame";
 
@@ -132,34 +136,44 @@ public class BinGame extends BaseGame {
                     if (Bin.isOne(x1)) {
                         bin = (Bin) x1.getBody().getUserData();
                         item = (Item) x2.getBody().getUserData();
+                        handleBinItemContact(bin, item);
                     } else if (Bin.isOne(x2)) {
                         bin = (Bin) x2.getBody().getUserData();
                         item = (Item) x1.getBody().getUserData();
-                    } else {
-                        /* Two items are touching. */
-                        return;
+                        handleBinItemContact(bin, item);
+                    } else if (Wall.isOne(x1)) {
+                        item = (Item) x2.getBody().getUserData();
+                        handleFloorItemContact(item, (Wall.Type) x1.getBody().getUserData());
+                    } else if (Wall.isOne(x2)) {
+                        item = (Item) x1.getBody().getUserData();
+                        handleFloorItemContact(item, (Wall.Type) x2.getBody().getUserData());
                     }
+                }
+            }
 
-                    final boolean validMove = bin.accepts(item);
-                    Log.v(TAG, "beginContact - Item " + item + " went in bin " + bin + (validMove ? " :)" : " :("));
+            private void handleBinItemContact(Bin bin, Item item) {
+                final boolean validMove = bin.accepts(item);
+                Log.v(TAG, "beginContact - Item " + item + " went in bin " + bin + (validMove ? " :)" : " :("));
 
+                if (deadItems.contains(item.getId())) {
+                    return; // TODO: investigate the item's deletion
+                }
+
+                recycleItem(item);
+                animateBin(bin, validMove);
+                if (validMove) {
+                    incrementScore();
+                } else {
+                    decrementLives();
+                }
+            }
+
+            private void handleFloorItemContact(Item item, Wall.Type wallType) {
+                Log.d(TAG, "handleFloorItemContact - Item " + item + " did collide wall " + wallType);
+                if (wallType == Wall.Type.BOTTOM) {
                     recycleItem(item);
-                    animateBin(bin, validMove);
-                    if (validMove) {
-                        if (++gameScore >= 100) {
-                            activity.onWin();
-                        }
-
-                        Log.v(TAG, "beginContact - Increasing score to " + gameScore + ".");
-                        setScore(gameScore);
-                    } else {
-                        if (--gameLives == 0) {
-                            activity.onLose();
-                        }
-
-                        Log.v(TAG, "beginContact - Decreasing lives to " + gameLives + ".");
-                        setLives(gameLives);
-                    }
+                    decrementLives();
+                    animateBins(false);
                 }
             }
 
@@ -180,6 +194,24 @@ public class BinGame extends BaseGame {
         };
     }
 
+    private void decrementLives() {
+        if (--gameLives == 0) {
+            activity.onLose();
+        }
+
+        Log.v(TAG, "beginContact - Decreasing lives to " + gameLives + ".");
+        setLives(gameLives);
+    }
+
+    private void incrementScore() {
+        if (++gameScore >= 100) {
+            activity.onWin();
+        }
+
+        Log.v(TAG, "beginContact - Increasing score to " + gameScore + ".");
+        setScore(gameScore);
+    }
+
     @Override
     public Scene prepareScene() {
         Scene scene = activity.getScene();
@@ -188,7 +220,7 @@ public class BinGame extends BaseGame {
         scene.setBackground(backgroundColor);
 
         resetGamePoints();
-        createFloor();
+        createWalls();
         createBins();
         createItems();
 
@@ -309,6 +341,7 @@ public class BinGame extends BaseGame {
 
     private void createBin(Bin.Type type, ITiledTextureRegion textureRegion, float posX, float posY) {
         Bin bin = new Bin(type, posX, posY, textureRegion, activity.getVBOM(), activity.getPhysicsWorld());
+        bins.add(bin);
         activity.getScene().getChildByIndex(GameActivity.LAYER_FOREGROUND).attachChild(bin.getSprite());
     }
 
@@ -330,7 +363,30 @@ public class BinGame extends BaseGame {
         createBin(Bin.Type.BIO, bin4TextureRegion, bin4Pos.x, bin4Pos.y);
     }
 
-    private void createFloor() {
+    private void createWalls() {
+        final Camera camera = activity.getCamera();
+        final float camWidth = camera.getWidth();
+        final float camHeight = camera.getHeight();
+        final float wallDepth = 10;
+
+        final float centerX = camWidth / 2;
+        final float centerY = camHeight / 2;
+
+        createWall(centerX, camHeight + wallDepth / 2, camWidth, wallDepth, Wall.Type.BOTTOM);
+        createWall(centerX, - wallDepth / 2, camWidth, wallDepth, Wall.Type.TOP);
+        createWall(- wallDepth / 2, centerY, wallDepth, camHeight, Wall.Type.LEFT);
+        createWall(camWidth + wallDepth / 2, centerY, wallDepth, camHeight, Wall.Type.RIGHT);
+    }
+
+    private void createWall(float x, float y, float width, float height, Wall.Type type) {
+        Wall wall = new Wall(x, y, width, height, type, activity.getVBOM(), activity.getPhysicsWorld());
+        activity.getScene().getChildByIndex(GameActivity.LAYER_BACKGROUND).attachChild(wall);
+    }
+
+    private void animateBins(boolean validMove) {
+        for (Bin bin : bins) {
+            animateBin(bin, validMove);
+        }
     }
 
     private void animateBin(final Bin bin, boolean validMove) {
@@ -375,6 +431,7 @@ public class BinGame extends BaseGame {
         //TODO: Really recycle something
         deleteItem(item);
         items.remove(item);
+        deadItems.add(item.getId());
         activity.runOnUpdateThread(new Runnable() {
             @Override
             public void run() {
