@@ -230,9 +230,7 @@ public class BinGame extends BaseGame {
     }
 
     private void createItems() {
-        final ITiledTextureRegion smileyTextureRegion = activity.getTexture(ResMan.FACE_BOX_TILED);
-//        createItem(Item.Type.random());
-        createItem(activity.spritePosition(smileyTextureRegion, 0.2f, 0.5f), Item.Type.random());
+        createItem(Item.Type.random());
     }
 
     @Override
@@ -261,8 +259,10 @@ public class BinGame extends BaseGame {
     private void deleteItem(final Item item) {
         final AnimatedSprite sprite = item.getSprite();
         sprite.setVisible(false);
+        activity.getScene().unregisterTouchArea(sprite);
         activity.getScene().getChildByIndex(GameActivity.LAYER_BACKGROUND).detachChild(sprite);
         activity.markForDeletion(item);
+        item.getSprite().stopDragging();
     }
 
     private void setScore(int score) {
@@ -352,10 +352,10 @@ public class BinGame extends BaseGame {
         final ITiledTextureRegion bin3TextureRegion = activity.getTexture(ResMan.BIN3);
         final ITiledTextureRegion bin4TextureRegion = activity.getTexture(ResMan.BIN4);
 
-        Vector2 bin1Pos = activity.spritePosition(bin1TextureRegion, 0.30f, binY, Bin.SCALE_DEFAULT);
-        Vector2 bin2Pos = activity.spritePosition(bin2TextureRegion, 0.50f, binY, Bin.SCALE_DEFAULT);
-        Vector2 bin3Pos = activity.spritePosition(bin3TextureRegion, 0.70f, binY, Bin.SCALE_DEFAULT);
-        Vector2 bin4Pos = activity.spritePosition(bin4TextureRegion, 0.90f, binY, Bin.SCALE_DEFAULT);
+        Vector2 bin1Pos = activity.spritePosition(bin1TextureRegion, 0.20f, binY, Bin.SCALE_DEFAULT);
+        Vector2 bin2Pos = activity.spritePosition(bin2TextureRegion, 0.46f, binY, Bin.SCALE_DEFAULT);
+        Vector2 bin3Pos = activity.spritePosition(bin3TextureRegion, 0.72f, binY, Bin.SCALE_DEFAULT);
+        Vector2 bin4Pos = activity.spritePosition(bin4TextureRegion, 0.98f, binY, Bin.SCALE_DEFAULT);
 
         createBin(Bin.Type.GLASS, bin1TextureRegion, bin1Pos.x, bin1Pos.y);
         createBin(Bin.Type.LIQUIDS, bin2TextureRegion, bin2Pos.x, bin2Pos.y);

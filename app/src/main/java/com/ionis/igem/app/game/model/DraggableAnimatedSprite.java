@@ -15,7 +15,7 @@ public class DraggableAnimatedSprite extends AnimatedSprite {
 
     private static final String TAG = "DraggableAnimatedSprite";
 
-    private final PhysicalWorldObject object; //TODO: Handle objects without bodies
+    private PhysicalWorldObject object; //TODO: Handle objects without bodies
     private boolean isGrabbed;
 
     public DraggableAnimatedSprite(float pX, float pY, ITiledTextureRegion pTiledTextureRegion, VertexBufferObjectManager pVertexBufferObjectManager, WorldObject pObject) {
@@ -42,7 +42,6 @@ public class DraggableAnimatedSprite extends AnimatedSprite {
                     float velocityX = pSceneTouchEvent.getX() - x * PhysicsConstants.PIXEL_TO_METER_RATIO_DEFAULT;
                     float velocityY = pSceneTouchEvent.getY() - y * PhysicsConstants.PIXEL_TO_METER_RATIO_DEFAULT;
                     body.setLinearVelocity(velocityX, velocityY);
-                    Log.v(TAG, "onAreaTouched - velocity set to " + velocityX + ", " + velocityY);
                 }
                 break;
             case TouchEvent.ACTION_UP:
@@ -55,4 +54,7 @@ public class DraggableAnimatedSprite extends AnimatedSprite {
         return true;
     }
 
+    public void stopDragging() {
+        object = null;
+    }
 }
