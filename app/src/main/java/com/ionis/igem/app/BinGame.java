@@ -16,6 +16,7 @@ import org.andengine.entity.IEntity;
 import org.andengine.entity.modifier.*;
 import org.andengine.entity.scene.Scene;
 import org.andengine.entity.scene.background.Background;
+import org.andengine.entity.sprite.AnimatedSprite;
 import org.andengine.opengl.font.IFont;
 import org.andengine.opengl.texture.region.ITiledTextureRegion;
 import org.andengine.opengl.vbo.VertexBufferObjectManager;
@@ -186,6 +187,8 @@ public class BinGame extends BaseGame {
         final Background backgroundColor = new Background(0.96862f, 0.77647f, 0.37647f);
         scene.setBackground(backgroundColor);
 
+        resetGamePoints();
+        createFloor();
         createBins();
         createItems();
 
@@ -224,8 +227,9 @@ public class BinGame extends BaseGame {
     }
 
     private void deleteItem(final Item item) {
-        item.setVisible(false);
-        activity.getScene().getChildByIndex(GameActivity.LAYER_BACKGROUND).detachChild(item);
+        final AnimatedSprite sprite = item.getSprite();
+        sprite.setVisible(false);
+        activity.getScene().getChildByIndex(GameActivity.LAYER_BACKGROUND).detachChild(sprite);
         activity.markForDeletion(item);
     }
 
@@ -299,13 +303,13 @@ public class BinGame extends BaseGame {
         Item item = new Item(type, textureRegion, posX, posY, activity.getVBOM(), activity.getPhysicsWorld());
         items.add(item);
         final Scene gameScene = activity.getScene();
-        gameScene.getChildByIndex(GameActivity.LAYER_BACKGROUND).attachChild(item);
-        gameScene.registerTouchArea(item);
+        gameScene.getChildByIndex(GameActivity.LAYER_BACKGROUND).attachChild(item.getSprite());
+        gameScene.registerTouchArea(item.getSprite());
     }
 
     private void createBin(Bin.Type type, ITiledTextureRegion textureRegion, float posX, float posY) {
         Bin bin = new Bin(type, posX, posY, textureRegion, activity.getVBOM(), activity.getPhysicsWorld());
-        activity.getScene().getChildByIndex(GameActivity.LAYER_FOREGROUND).attachChild(bin);
+        activity.getScene().getChildByIndex(GameActivity.LAYER_FOREGROUND).attachChild(bin.getSprite());
     }
 
     private void createBins() {
@@ -327,7 +331,6 @@ public class BinGame extends BaseGame {
     }
 
     private void createFloor() {
-
     }
 
     private void animateBin(final Bin bin, boolean validMove) {

@@ -5,8 +5,6 @@ import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.ionis.igem.app.game.model.PhysicalWorldObject;
 import com.ionis.igem.app.game.model.WorldObject;
 import org.andengine.extension.physics.box2d.PhysicsWorld;
-import org.andengine.extension.physics.box2d.util.constants.PhysicsConstants;
-import org.andengine.input.touch.TouchEvent;
 import org.andengine.opengl.texture.region.ITiledTextureRegion;
 import org.andengine.opengl.vbo.VertexBufferObjectManager;
 
@@ -55,47 +53,19 @@ public class Item extends PhysicalWorldObject {
     public static final float BODY_FRICTION = 0.125f;
 
     public static short ID = 0;
-    Boolean isGrabbed = false;
 
     Type type;
 
     int id;
 
     public Item(Type pType, ITiledTextureRegion texture, float posX, float posY, VertexBufferObjectManager manager, PhysicsWorld physicsWorld) {
-        super(posX, posY, new Random().nextFloat(), WorldObject.getIdealScale(SCALE_DEFAULT, texture), texture, manager, physicsWorld);
-        setCullingEnabled(true);
+        super(posX, posY, new Random().nextFloat(), WorldObject.getIdealScale(SCALE_DEFAULT, texture), true, texture, manager, physicsWorld);
+        sprite.setCullingEnabled(true);
 
         id = ID++;
         type = pType;
         Log.v(TAG, "Item - Created " + type.toString() + " at " + posX + ", " + posY
                 + " with texture of w:" + texture.getWidth() + ", h:" + texture.getHeight());
-    }
-
-    @Override
-    public boolean onAreaTouched(TouchEvent pSceneTouchEvent, float pTouchAreaLocalX, float pTouchAreaLocalY) {
-        switch (pSceneTouchEvent.getAction()) {
-            case TouchEvent.ACTION_DOWN:
-                setScale(getIdealScale(SCALE_GRABBED, this.getTiledTextureRegion()));
-                isGrabbed = true;
-                break;
-            case TouchEvent.ACTION_MOVE:
-                if (isGrabbed) {
-                    final float x = body.getPosition().x;
-                    final float y = body.getPosition().y;
-                    float velocityX = pSceneTouchEvent.getX() - x * PhysicsConstants.PIXEL_TO_METER_RATIO_DEFAULT;
-                    float velocityY = pSceneTouchEvent.getY() - y * PhysicsConstants.PIXEL_TO_METER_RATIO_DEFAULT;
-                    body.setLinearVelocity(velocityX, velocityY);
-                    Log.v(TAG, "onAreaTouched - velocity set to " + velocityX + ", " + velocityY);
-                }
-                break;
-            case TouchEvent.ACTION_UP:
-                if (isGrabbed) {
-                    isGrabbed = false;
-                    setScale(getIdealScale(SCALE_DEFAULT, this.getTiledTextureRegion()));
-                }
-                break;
-        }
-        return true;
     }
 
     public Type getType() {

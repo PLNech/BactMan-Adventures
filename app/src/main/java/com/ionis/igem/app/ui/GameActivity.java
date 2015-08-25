@@ -241,7 +241,7 @@ public class GameActivity extends AbstractGameActivity implements MenuScene.IOnM
                 super.onUpdate(pSecondsElapsed);
                 if (!physicsWorld.isLocked()) {
                     for (PhysicalWorldObject object : objectsToDelete) {
-                        destroyBody(object.getBody(), object);
+                        destroyBody(object.getBody(), object.getSprite());
                     }
                     objectsToDelete.clear();
                 }

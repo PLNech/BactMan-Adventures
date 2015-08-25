@@ -12,7 +12,7 @@ import java.util.Random;
 public class Wall extends PhysicalWorldObject {
     public Wall(float pX, float pY, ITiledTextureRegion pTiledTextureRegion, VertexBufferObjectManager pVertexBufferObjectManager,
                 PhysicsWorld physicsWorld) {
-        super(pX, pY, new Random().nextFloat(), SCALE_DEFAULT, pTiledTextureRegion, pVertexBufferObjectManager, physicsWorld);
+        super(pX, pY, new Random().nextFloat(), SCALE_DEFAULT, false, pTiledTextureRegion, pVertexBufferObjectManager, physicsWorld);
     }
 
 }

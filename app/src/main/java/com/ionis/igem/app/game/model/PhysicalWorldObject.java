@@ -24,21 +24,21 @@ public abstract class PhysicalWorldObject extends WorldObject {
 
     protected Body body;
 
-    public PhysicalWorldObject(float pX, float pY, float pAngle, float pScale, ITiledTextureRegion pTiledTextureRegion, VertexBufferObjectManager pVertexBufferObjectManager,
+    public PhysicalWorldObject(float pX, float pY, float pAngle, float pScale, boolean draggable, ITiledTextureRegion pTiledTextureRegion, VertexBufferObjectManager pVertexBufferObjectManager,
                                PhysicsWorld physicsWorld) {
-        super(pX, pY, pTiledTextureRegion, pVertexBufferObjectManager);
-        setScale(pScale);
+        super(pX, pY, draggable, pTiledTextureRegion, pVertexBufferObjectManager);
+        sprite.setScale(pScale);
         initBody(physicsWorld);
         body.setTransform(pX / PhysicsConstants.PIXEL_TO_METER_RATIO_DEFAULT,
                 pY / PhysicsConstants.PIXEL_TO_METER_RATIO_DEFAULT, pAngle);
 
         Pair<Boolean, Boolean> updates = getBodyUpdates();
-        physicsWorld.registerPhysicsConnector(new PhysicsConnector(this, body, updates.first, updates.second));
+        physicsWorld.registerPhysicsConnector(new PhysicsConnector(sprite, body, updates.first, updates.second));
     }
 
     protected void initBody(PhysicsWorld physicsWorld) {
         final FixtureDef itemFixtureDef = PhysicsFactory.createFixtureDef(this.getDensity(), this.getElasticity(), this.getFriction());
-        body = PhysicsFactory.createBoxBody(physicsWorld, this, this.getBodyType(), itemFixtureDef);
+        body = PhysicsFactory.createBoxBody(physicsWorld, sprite, this.getBodyType(), itemFixtureDef);
         body.setUserData(this);
         Log.d(TAG, "initBody - Body initialised: " + body);
     }
