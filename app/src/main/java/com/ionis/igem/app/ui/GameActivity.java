@@ -400,4 +400,14 @@ public class GameActivity extends AbstractGameActivity implements MenuScene.IOnM
     public SmoothCamera getCamera() {
         return gameCamera;
     }
+
+    public void setPhysicsCoeff(float coeff) {
+        final Vector2 gravity = physicsWorld.getGravity();
+        final Vector2 physicsVector = currentGame.getPhysicsVector();
+        final float minCoeff = 0.5f;
+        if (gravity.x < physicsVector.x * minCoeff || gravity.y < physicsVector.y * minCoeff) {
+            return;
+        }
+        physicsWorld.setGravity(gravity.mul(coeff));
+    }
 }

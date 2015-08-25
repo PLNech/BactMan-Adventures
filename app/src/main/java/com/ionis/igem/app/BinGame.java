@@ -199,8 +199,10 @@ public class BinGame extends BaseGame {
             activity.onLose();
         }
 
-        Log.v(TAG, "beginContact - Decreasing lives to " + gameLives + ".");
+        activity.setPhysicsCoeff(0.8f);
         setLives(gameLives);
+        Log.v(TAG, "beginContact - Decreasing lives to " + gameLives + ".");
+        Log.v(TAG, "beginContact - Decreasing speed to " + activity.getPhysicsWorld().getGravity() + ".");
     }
 
     private void incrementScore() {
@@ -208,8 +210,10 @@ public class BinGame extends BaseGame {
             activity.onWin();
         }
 
-        Log.v(TAG, "beginContact - Increasing score to " + gameScore + ".");
+        activity.setPhysicsCoeff(1.05f);
         setScore(gameScore);
+        Log.v(TAG, "beginContact - Increasing score to " + gameScore + ".");
+        Log.v(TAG, "beginContact - Increasing gravity to " + activity.getPhysicsWorld().getGravity() + ".");
     }
 
     @Override
@@ -229,28 +233,30 @@ public class BinGame extends BaseGame {
         return scene;
     }
 
-    private void createItems() {
-        createItem(Item.Type.random());
-    }
-
     @Override
     public void resetGame() {
-        resetGamePoints();
+        activity.runOnUpdateThread(new Runnable() {
+            @Override
+            public void run() {
+                resetGamePoints();
+                activity.getPhysicsWorld().setGravity(getPhysicsVector());
 
-        final Scene gameScene = activity.getScene();
-        for (final Item item : items) {
-            deleteItem(item);
-        }
-        items.clear();
+                final Scene gameScene = activity.getScene();
+                for (final Item item : items) {
+                    deleteItem(item);
+                }
+                items.clear();
 
-        gameScene.clearChildScene();
-        activity.resetMenuPause();
+                gameScene.clearChildScene();
+                activity.resetMenuPause();
 
-        createItems();
+                createItems();
+            }
+        });
     }
 
     private void resetGamePoints() {
-        gameScore = 0;
+        gameScore = 30;
         gameLives = 3;
         setScore(gameScore);
         setLives(gameLives);
@@ -285,6 +291,18 @@ public class BinGame extends BaseGame {
         HUDLives.getText().setText(text);
     }
 
+    private void createItems() {
+        createItem(Item.Type.random());
+    }
+
+    private void createItemOnUpdate() {
+        activity.runOnUpdateThread(new Runnable() {
+            @Override
+            public void run() {
+                createItem(Item.Type.random());
+            }
+        });
+    }
 
     private void createItem(Item.Type type) {
         float posRatioX = 0.1f + new Random().nextFloat() * 0.9f;
@@ -328,7 +346,6 @@ public class BinGame extends BaseGame {
                 break;
         }
         createItem(posX, posY, textureRegion, type);
-
     }
 
     private void createItem(float posX, float posY, ITiledTextureRegion textureRegion, Item.Type type) {
@@ -373,8 +390,8 @@ public class BinGame extends BaseGame {
         final float centerY = camHeight / 2;
 
         createWall(centerX, camHeight + wallDepth / 2, camWidth, wallDepth, Wall.Type.BOTTOM);
-        createWall(centerX, - wallDepth / 2, camWidth, wallDepth, Wall.Type.TOP);
-        createWall(- wallDepth / 2, centerY, wallDepth, camHeight, Wall.Type.LEFT);
+        createWall(centerX, -wallDepth / 2, camWidth, wallDepth, Wall.Type.TOP);
+        createWall(-wallDepth / 2, centerY, wallDepth, camHeight, Wall.Type.LEFT);
         createWall(camWidth + wallDepth / 2, centerY, wallDepth, camHeight, Wall.Type.RIGHT);
     }
 
@@ -427,15 +444,15 @@ public class BinGame extends BaseGame {
         bin.registerEntityModifier(new LoopEntityModifier(entityModifier, 1, logListener));
     }
 
-    private void recycleItem(Item item) {
+    private void recycleItem(final Item item) {
         //TODO: Really recycle something
         deleteItem(item);
-        items.remove(item);
         deadItems.add(item.getId());
         activity.runOnUpdateThread(new Runnable() {
             @Override
             public void run() {
                 createItem(Item.Type.random());
+                items.remove(item);
             }
         });
     }
