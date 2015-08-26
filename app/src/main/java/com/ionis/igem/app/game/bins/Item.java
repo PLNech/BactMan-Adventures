@@ -19,6 +19,8 @@ import java.util.Random;
 public class Item extends PhysicalWorldObject {
 
 
+    public static final float BIGGER_SHAPE_FACTOR = 3f;
+
     public enum Type {
         PAPER(Bin.Type.NORMAL),
         CONE_BLUE(Bin.Type.BIO),
@@ -71,9 +73,10 @@ public class Item extends PhysicalWorldObject {
             protected void onManagedUpdate(float pSecondsElapsed) {
                 super.onManagedUpdate(pSecondsElapsed);
                 setPosition(sprite.getX(), sprite.getY());
+                setRotation(sprite.getRotation());
             }
         };
-        biggerSprite.setInitialScale(2f * sprite.getScaleX());
+        biggerSprite.setInitialScale(BIGGER_SHAPE_FACTOR * sprite.getScaleX());
         biggerSprite.setColor(Color.TRANSPARENT);
         biggerSprite.setRotation(sprite.getRotation());
         body.setBullet(true);

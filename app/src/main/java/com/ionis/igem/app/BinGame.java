@@ -162,13 +162,13 @@ public class BinGame extends BaseGame {
                     return; // TODO: investigate the item's deletion
                 }
 
-                recycleItem(item);
                 animateBin(bin, validMove);
                 if (validMove) {
                     incrementScore();
                 } else {
                     decrementLives();
                 }
+                recycleItem(item);
             }
 
             private void handleFloorItemContact(Item item, Wall.Type wallType) {
@@ -310,10 +310,9 @@ public class BinGame extends BaseGame {
     }
 
     private void createItem(Item.Type type) {
-        float posRatioX = 0.1f + new Random().nextFloat() * 0.9f;
+        float posRatioX = 0.15f + new Random().nextFloat() * 0.85f;
         float posRatioY = new Random().nextFloat() * 0.2f;
         Vector2 itemPos = activity.spritePosition(32, 32, posRatioX, posRatioY);
-        Log.d(TAG, "createItem - New item created at " + itemPos.x + ", " + itemPos.y);
         createItem(itemPos, type);
     }
 

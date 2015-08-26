@@ -382,7 +382,7 @@ public class GameActivity extends AbstractGameActivity implements MenuScene.IOnM
         gameOverText = new Text(0, 0, getFont(ResMan.F_HUD_BIN),
                 "GAME OVER\nScore: " + score, "Game Over\nScore: 9999999".length(),
                 new TextOptions(HorizontalAlign.CENTER), this.getVBOM());
-        final Vector2 textPosition = spritePosition(gameOverText.getWidth(), gameOverText.getHeight(), 0.5f, 0.25f);
+        final Vector2 textPosition = spritePosition(gameOverText.getWidth(), gameOverText.getHeight(), 0.5f, 0.2f);
         gameOverText.setPosition(textPosition.x, textPosition.y);
         menuScene.attachChild(gameOverText);
         gameScene.setChildScene(menuScene, false, true, true);

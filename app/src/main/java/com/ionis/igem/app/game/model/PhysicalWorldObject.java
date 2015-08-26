@@ -42,12 +42,6 @@ public abstract class PhysicalWorldObject extends WorldObject {
         body.setUserData(this);
     }
 
-    protected void initBody(PhysicsWorld physicsWorld, IAreaShape shape) {
-        final FixtureDef itemFixtureDef = PhysicsFactory.createFixtureDef(this.getDensity(), this.getElasticity(), this.getFriction());
-        body = PhysicsFactory.createBoxBody(physicsWorld, shape, this.getBodyType(), itemFixtureDef);
-        body.setUserData(this);
-    }
-
     protected BodyDef.BodyType getBodyType() {
         return BodyDef.BodyType.StaticBody;
     }
