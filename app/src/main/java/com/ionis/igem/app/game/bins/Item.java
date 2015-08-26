@@ -5,7 +5,6 @@ import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.ionis.igem.app.game.model.DraggableAnimatedSprite;
 import com.ionis.igem.app.game.model.PhysicalWorldObject;
 import com.ionis.igem.app.game.model.WorldObject;
-import org.andengine.entity.sprite.Sprite;
 import org.andengine.extension.physics.box2d.PhysicsWorld;
 import org.andengine.opengl.texture.region.ITiledTextureRegion;
 import org.andengine.opengl.vbo.VertexBufferObjectManager;
@@ -30,8 +29,10 @@ public class Item extends PhysicalWorldObject {
         MICROSCOPE_SLIDE(Bin.Type.GLASS),
         PETRI_DISH(Bin.Type.BIO),
         PEN(Bin.Type.NORMAL),
-        SUBSTRATE_BOX(Bin.Type.BIO),
-        SOLVENT(Bin.Type.LIQUIDS);
+        BECHER(Bin.Type.LIQUIDS),
+        BECHER_BROKEN(Bin.Type.GLASS),
+        ERLEN(Bin.Type.LIQUIDS),
+        ERLEN_BROKEN(Bin.Type.GLASS);
 
         Bin.Type validBinType;
 
@@ -60,14 +61,14 @@ public class Item extends PhysicalWorldObject {
     public static short ID = 0;
 
     Type type;
-    DraggableAnimatedSprite biggerSprite;
+    DraggableAnimatedSprite shape;
 
     int id;
 
     public Item(Type pType, ITiledTextureRegion texture, float posX, float posY, VertexBufferObjectManager manager, PhysicsWorld physicsWorld) {
         super(posX, posY, new Random().nextFloat(), WorldObject.getIdealScale(SCALE_DEFAULT, texture), true, texture, manager, physicsWorld);
         sprite.setCullingEnabled(true);
-        biggerSprite = new DraggableAnimatedSprite(posX, posY, getIdealScale(SCALE_DEFAULT, texture), sprite.getTiledTextureRegion(), manager, this) {
+        shape = new DraggableAnimatedSprite(posX, posY, getIdealScale(SCALE_DEFAULT, texture), sprite.getTiledTextureRegion(), manager, this) {
             //TODO: Move Draggability to own interface
             @Override
             protected void onManagedUpdate(float pSecondsElapsed) {
@@ -76,9 +77,9 @@ public class Item extends PhysicalWorldObject {
                 setRotation(sprite.getRotation());
             }
         };
-        biggerSprite.setInitialScale(BIGGER_SHAPE_FACTOR * sprite.getScaleX());
-        biggerSprite.setColor(Color.TRANSPARENT);
-        biggerSprite.setRotation(sprite.getRotation());
+        shape.setInitialScale(BIGGER_SHAPE_FACTOR * sprite.getScaleX());
+        shape.setColor(Color.TRANSPARENT);
+        shape.setRotation(sprite.getRotation());
         body.setBullet(true);
 
         id = ID++;
@@ -95,8 +96,8 @@ public class Item extends PhysicalWorldObject {
         return id;
     }
 
-    public Sprite getBiggerSprite() {
-        return biggerSprite;
+    public DraggableAnimatedSprite getShape() {
+        return shape;
     }
 
     @Override

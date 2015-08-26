@@ -25,6 +25,14 @@ public class ResMan {
     public static final String ITEM_CONE_WHITE = "item_cone_white.png";
     public static final String ITEM_CONE_YELLOW = "item_cone_yellow.png";
 
+    public static final String ITEM_BECHER = "item_becher.png";
+    public static final String ITEM_BECHER_BROKEN = "item_becher_broken.png";
+    public static final String ITEM_ERLEN = "item_becher.png";
+    public static final String ITEM_ERLEN_BROKEN = "item_becher_broken.png";
+    public static final String ITEM_PAPER = "item_paper.png";
+    public static final String ITEM_PETRI = "item_petri.png";
+    public static final String ITEM_SLIDE = "item_slide.png";
+
     public static final String HUD_LIVES = "hud_lives.png";
 
     public static final String HUD_SCORE = "hud_score.png";

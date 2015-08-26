@@ -69,6 +69,13 @@ public class BinGame extends BaseGame {
             graphicalAssets.add(new GFXAsset(ResMan.ITEM_PEN, 390, 2048, 0, 0));
             graphicalAssets.add(new GFXAsset(ResMan.ITEM_CONE_WHITE, 235, 2048, 0, 0));
             graphicalAssets.add(new GFXAsset(ResMan.ITEM_CONE_YELLOW, 235, 2048, 0, 0));
+            graphicalAssets.add(new GFXAsset(ResMan.ITEM_BECHER, 512, 569, 0, 0));
+            graphicalAssets.add(new GFXAsset(ResMan.ITEM_BECHER_BROKEN, 512, 568, 0, 0));
+            graphicalAssets.add(new GFXAsset(ResMan.ITEM_ERLEN, 512, 705, 0, 0));
+            graphicalAssets.add(new GFXAsset(ResMan.ITEM_ERLEN_BROKEN, 512, 704, 0, 0));
+            graphicalAssets.add(new GFXAsset(ResMan.ITEM_SLIDE, 512, 1024, 0, 0));
+            graphicalAssets.add(new GFXAsset(ResMan.ITEM_PETRI, 512, 323, 0, 0));
+            graphicalAssets.add(new GFXAsset(ResMan.ITEM_PAPER, 512, 560, 0, 0));
 
             /* HUD */
             graphicalAssets.add(new GFXAsset(ResMan.HUD_LIVES, 1479, 1024, 0, 0));
@@ -267,13 +274,13 @@ public class BinGame extends BaseGame {
 
     private void deleteItem(final Item item) {
         final AnimatedSprite sprite = item.getSprite();
-        final Sprite biggerSprite = item.getBiggerSprite();
+        final Sprite biggerSprite = item.getShape();
         sprite.setVisible(false);
         activity.getScene().unregisterTouchArea(biggerSprite);
         activity.getScene().getChildByIndex(GameActivity.LAYER_BACKGROUND).detachChild(biggerSprite);
         activity.getScene().getChildByIndex(GameActivity.LAYER_BACKGROUND).detachChild(sprite);
         activity.markForDeletion(item);
-        item.getSprite().stopDragging();
+        item.getShape().stopDragging();
     }
 
     private void setScore(int score) {
@@ -322,22 +329,10 @@ public class BinGame extends BaseGame {
 
     private void createItem(float posX, float posY, Item.Type type) {
         ITiledTextureRegion textureRegion = activity.getTexture(ResMan.FACE_BOX_TILED);
+
         switch (type) {
-            case PETRI_DISH:
-                break;
-            case SUBSTRATE_BOX:
-                break;
-            case SOLVENT:
-                break;
             case PAPER:
-                break;
-            case MICROSCOPE_SLIDE:
-                break;
-            case PEN:
-                textureRegion = activity.getTexture(ResMan.ITEM_PEN);
-                break;
-            case TUBE:
-                textureRegion = activity.getTexture(ResMan.ITEM_TUBE);
+                textureRegion = activity.getTexture(ResMan.ITEM_PAPER);
                 break;
             case CONE_BLUE:
                 textureRegion = activity.getTexture(ResMan.ITEM_CONE_BLUE);
@@ -348,6 +343,30 @@ public class BinGame extends BaseGame {
             case CONE_WHITE:
                 textureRegion = activity.getTexture(ResMan.ITEM_CONE_WHITE);
                 break;
+            case TUBE:
+                textureRegion = activity.getTexture(ResMan.ITEM_TUBE);
+                break;
+            case MICROSCOPE_SLIDE:
+                textureRegion = activity.getTexture(ResMan.ITEM_SLIDE);
+                break;
+            case PETRI_DISH:
+                textureRegion = activity.getTexture(ResMan.ITEM_PETRI);
+                break;
+            case PEN:
+                textureRegion = activity.getTexture(ResMan.ITEM_PEN);
+                break;
+            case BECHER:
+                textureRegion = activity.getTexture(ResMan.ITEM_BECHER);
+                break;
+            case BECHER_BROKEN:
+                textureRegion = activity.getTexture(ResMan.ITEM_BECHER_BROKEN);
+                break;
+            case ERLEN:
+                textureRegion = activity.getTexture(ResMan.ITEM_ERLEN);
+                break;
+            case ERLEN_BROKEN:
+                textureRegion = activity.getTexture(ResMan.ITEM_ERLEN_BROKEN);
+                break;
         }
         createItem(posX, posY, textureRegion, type);
     }
@@ -357,8 +376,8 @@ public class BinGame extends BaseGame {
         items.add(item);
         final Scene gameScene = activity.getScene();
         gameScene.getChildByIndex(GameActivity.LAYER_BACKGROUND).attachChild(item.getSprite());
-        gameScene.getChildByIndex(GameActivity.LAYER_BACKGROUND).attachChild(item.getBiggerSprite());
-        gameScene.registerTouchArea(item.getBiggerSprite());
+        gameScene.getChildByIndex(GameActivity.LAYER_BACKGROUND).attachChild(item.getShape());
+        gameScene.registerTouchArea(item.getShape());
     }
 
     private void createBin(Bin.Type type, ITiledTextureRegion textureRegion, float posX, float posY) {
