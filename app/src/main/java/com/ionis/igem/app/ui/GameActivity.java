@@ -3,12 +3,16 @@ package com.ionis.igem.app.ui;
 import android.content.res.AssetManager;
 import android.opengl.GLES20;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.v4.app.NavUtils;
 import android.util.Log;
 import android.view.KeyEvent;
+import android.widget.Toast;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.ContactListener;
 import com.ionis.igem.app.BinGame;
+import com.ionis.igem.app.R;
 import com.ionis.igem.app.game.AbstractGameActivity;
 import com.ionis.igem.app.game.managers.ResMan;
 import com.ionis.igem.app.game.model.BaseGame;
@@ -58,7 +62,8 @@ public class GameActivity extends AbstractGameActivity implements MenuScene.IOnM
     public static final float SPLASH_DURATION = 0.5f;
 
     private static final int OPTION_RESET = 0;
-    private static final int OPTION_QUIT = OPTION_RESET + 1;
+    private static final int OPTION_NEXT = OPTION_RESET + 1;
+    private static final int OPTION_QUIT = OPTION_NEXT + 1;
 
 
     private VertexBufferObjectManager vertexBufferObjectManager;
@@ -76,9 +81,12 @@ public class GameActivity extends AbstractGameActivity implements MenuScene.IOnM
 
     private Scene splashScene;
     private MenuScene menuScene;
+    private MenuScene winScene;
+
+    private Text gameOverText;
+    private Text winText;
 
     private ArrayList<PhysicalWorldObject> objectsToDelete = new ArrayList<>();
-    private Text gameOverText;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -125,8 +133,9 @@ public class GameActivity extends AbstractGameActivity implements MenuScene.IOnM
 
         initSplashScene();
 
-        loadMenuPause();
+        loadMenus();
         initMenuPause();
+        initMenuWin();
 
         Log.d(TAG, "onCreateScene - Splash Scene created.");
 
@@ -143,7 +152,7 @@ public class GameActivity extends AbstractGameActivity implements MenuScene.IOnM
     }
 
     @Override
-    public boolean onKeyDown(final int pKeyCode, final KeyEvent pEvent) {
+    public boolean onKeyDown(final int pKeyCode, @NonNull final KeyEvent pEvent) {
         if (gameScene != null && menuScene != null &&
                 pKeyCode == KeyEvent.KEYCODE_MENU && pEvent.getAction() == KeyEvent.ACTION_DOWN) {
             if (gameScene.hasChildScene()) {
@@ -167,6 +176,15 @@ public class GameActivity extends AbstractGameActivity implements MenuScene.IOnM
                 return true;
             case OPTION_RESET:
                 currentGame.resetGame();
+                return true;
+            case OPTION_NEXT:
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        Toast.makeText(getApplicationContext(), getResources().getString(R.string.msg_next_game_soon), Toast.LENGTH_SHORT).show();
+                    }
+                });
+                NavUtils.navigateUpFromSameTask(GameActivity.this);
                 return true;
         }
         return false;
@@ -285,14 +303,15 @@ public class GameActivity extends AbstractGameActivity implements MenuScene.IOnM
         splashScene.attachChild(splash);
     }
 
-    private void loadMenuPause() {
-        BitmapTextureAtlas menuAtlas = new BitmapTextureAtlas(this.getTextureManager(), 200, 100, TextureOptions.BILINEAR);
-
+    private void loadMenus() {
+        BitmapTextureAtlas menuAtlas = new BitmapTextureAtlas(this.getTextureManager(), 200, 150, TextureOptions.BILINEAR);
         TiledTextureRegion menuBG = BitmapTextureAtlasTextureRegionFactory.createTiledFromAsset(menuAtlas, this, ResMan.MENU_BG, 0, 0, 1, 1);
-        TiledTextureRegion menuReset = BitmapTextureAtlasTextureRegionFactory.createTiledFromAsset(menuAtlas, this, ResMan.MENU_RESET, 0, 0, 1, 1);
-        TiledTextureRegion menuQuit = BitmapTextureAtlasTextureRegionFactory.createTiledFromAsset(menuAtlas, this, ResMan.MENU_QUIT, 0, 50, 1, 1);
+        TiledTextureRegion menuNext = BitmapTextureAtlasTextureRegionFactory.createTiledFromAsset(menuAtlas, this, ResMan.MENU_NEXT, 0, 0, 1, 1);
+        TiledTextureRegion menuReset = BitmapTextureAtlasTextureRegionFactory.createTiledFromAsset(menuAtlas, this, ResMan.MENU_RESET, 0, 50, 1, 1);
+        TiledTextureRegion menuQuit = BitmapTextureAtlasTextureRegionFactory.createTiledFromAsset(menuAtlas, this, ResMan.MENU_QUIT, 0, 100, 1, 1);
         putTexture(ResMan.MENU_BG, menuBG);
         putTexture(ResMan.MENU_RESET, menuReset);
+        putTexture(ResMan.MENU_NEXT, menuNext);
         putTexture(ResMan.MENU_QUIT, menuQuit);
 
         menuAtlas.load();
@@ -314,6 +333,29 @@ public class GameActivity extends AbstractGameActivity implements MenuScene.IOnM
         menuScene.buildAnimations();
         menuScene.setBackgroundEnabled(false);
         menuScene.setOnMenuItemClickListener(this);
+    }
+
+    private void initMenuWin() {
+        winScene = new MenuScene(gameCamera, this);
+        final ITextureRegion textureNext = getTexture(ResMan.MENU_NEXT);
+        final ITextureRegion textureReset = getTexture(ResMan.MENU_RESET);
+        final ITextureRegion textureQuit = getTexture(ResMan.MENU_QUIT);
+
+        final SpriteMenuItem nextMenuItem = new SpriteMenuItem(OPTION_NEXT, textureNext, getVBOM());
+        nextMenuItem.setBlendFunction(GLES20.GL_SRC_ALPHA, GLES20.GL_ONE_MINUS_SRC_ALPHA);
+        winScene.addMenuItem(nextMenuItem);
+
+        final SpriteMenuItem resetMenuItem = new SpriteMenuItem(OPTION_RESET, textureReset, getVBOM());
+        resetMenuItem.setBlendFunction(GLES20.GL_SRC_ALPHA, GLES20.GL_ONE_MINUS_SRC_ALPHA);
+        winScene.addMenuItem(resetMenuItem);
+
+        final SpriteMenuItem quitMenuItem = new SpriteMenuItem(OPTION_QUIT, textureQuit, getVBOM());
+        quitMenuItem.setBlendFunction(GLES20.GL_SRC_ALPHA, GLES20.GL_ONE_MINUS_SRC_ALPHA);
+        winScene.addMenuItem(quitMenuItem);
+
+        winScene.buildAnimations();
+        winScene.setBackgroundEnabled(false);
+        winScene.setOnMenuItemClickListener(this);
     }
 
     public void resetMenuPause() {
@@ -379,16 +421,21 @@ public class GameActivity extends AbstractGameActivity implements MenuScene.IOnM
     }
 
     public void onLose(int score) {
-        gameOverText = new Text(0, 0, getFont(ResMan.F_HUD_BIN),
-                "GAME OVER\nScore: " + score, "Game Over\nScore: 9999999".length(),
-                new TextOptions(HorizontalAlign.CENTER), this.getVBOM());
-        final Vector2 textPosition = spritePosition(gameOverText.getWidth(), gameOverText.getHeight(), 0.5f, 0.2f);
+        gameOverText = new Text(0, 0, getFont(ResMan.F_HUD_BIN), "GAME OVER",
+                16, new TextOptions(HorizontalAlign.CENTER), this.getVBOM());
+        final Vector2 textPosition = spritePosition(gameOverText.getWidth(), gameOverText.getHeight(), 0.5f, 0.25f);
         gameOverText.setPosition(textPosition.x, textPosition.y);
         menuScene.attachChild(gameOverText);
         gameScene.setChildScene(menuScene, false, true, true);
     }
 
     public void onWin() {
+        winText = new Text(0, 0, getFont(ResMan.F_HUD_BIN), "VICTORY!",
+                16, new TextOptions(HorizontalAlign.CENTER), getVBOM());
+        final Vector2 textPosition = spritePosition(winText.getWidth(), winText.getHeight(), 0.5f, 0.2f);
+        winText.setPosition(textPosition.x, textPosition.y);
+        winScene.attachChild(winText);
+        gameScene.setChildScene(winScene, false, true, true);
     }
 
     public Scene getScene() {

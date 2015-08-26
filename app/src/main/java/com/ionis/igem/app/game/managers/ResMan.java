@@ -11,6 +11,7 @@ public class ResMan {
     public static final String FACE_BOX_TILED = "face_box_tiled.png";
     public static final String MENU_BG = "menu_background.png";
     public static final String MENU_RESET = "menu_reset.png";
+    public static final String MENU_NEXT = "menu_next.png";
     public static final String MENU_QUIT = "menu_quit.png";
 
     /* BinGame */

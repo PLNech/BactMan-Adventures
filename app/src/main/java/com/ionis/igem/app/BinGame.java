@@ -31,7 +31,7 @@ import java.util.List;
 import java.util.Random;
 
 /**
- * Created by PLN on 21/08/2015.
+ * Created by PLNech on 21/08/2015.
  */
 public class BinGame extends BaseGame {
 
@@ -216,7 +216,7 @@ public class BinGame extends BaseGame {
     }
 
     private void incrementScore() {
-        if (++gameScore >= 100) {
+        if (++gameScore >= 50) {
             activity.onWin();
         }
 
@@ -305,15 +305,6 @@ public class BinGame extends BaseGame {
 
     private void createItems() {
         createItem(Item.Type.random());
-    }
-
-    private void createItemOnUpdate() {
-        activity.runOnUpdateThread(new Runnable() {
-            @Override
-            public void run() {
-                createItem(Item.Type.random());
-            }
-        });
     }
 
     private void createItem(Item.Type type) {
