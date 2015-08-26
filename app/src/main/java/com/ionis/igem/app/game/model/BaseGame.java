@@ -19,7 +19,13 @@ public abstract class BaseGame {
 
     protected ArrayList<HUDElement> elements = new ArrayList<>();
 
+    protected boolean playing = false;
+
     protected GameActivity activity;
+
+    public BaseGame(GameActivity pActivity) {
+        activity = pActivity;
+    }
 
     public abstract List<GFXAsset> getGraphicalAssets();
 
@@ -33,8 +39,12 @@ public abstract class BaseGame {
 
     public abstract List<HUDElement> getHudElements();
 
-    public BaseGame(GameActivity pActivity) {
-        activity = pActivity;
+    public boolean isPlaying() {
+        return playing;
+    }
+
+    public void setPlaying(boolean isPlaying) {
+        this.playing = isPlaying;
     }
 
     public abstract void resetGame();

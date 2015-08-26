@@ -22,17 +22,21 @@ public class Item extends PhysicalWorldObject {
 
     public enum Type {
         PAPER(Bin.Type.NORMAL),
-        CONE_BLUE(Bin.Type.BIO),
-        CONE_WHITE(Bin.Type.BIO),
-        CONE_YELLOW(Bin.Type.BIO),
-        TUBE(Bin.Type.GLASS),
-        MICROSCOPE_SLIDE(Bin.Type.GLASS),
+        CONE(Bin.Type.BIO),
+        TUBE(Bin.Type.BIO),
+        SLIDE(Bin.Type.BIO),
+        SLIDE_BROKEN(Bin.Type.GLASS),
         PETRI_DISH(Bin.Type.BIO),
+        GEL(Bin.Type.BIO),
         PEN(Bin.Type.NORMAL),
+        GLOVES(Bin.Type.NORMAL),
         BECHER(Bin.Type.LIQUIDS),
         BECHER_BROKEN(Bin.Type.GLASS),
         ERLEN(Bin.Type.LIQUIDS),
-        ERLEN_BROKEN(Bin.Type.GLASS);
+        ERLEN_BROKEN(Bin.Type.GLASS),
+        ROUNDFLASK(Bin.Type.LIQUIDS),
+        ROUNDFLASK_BROKEN(Bin.Type.GLASS),
+        MICROTUBE(Bin.Type.LIQUIDS);
 
         Bin.Type validBinType;
 

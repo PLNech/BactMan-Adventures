@@ -46,10 +46,12 @@ public class BinGame extends BaseGame {
 
     private HUDElement HUDScore;
     private HUDElement HUDLives;
+    private Random random;
 
     public BinGame(GameActivity pActivity) {
         super(pActivity);
         activity = pActivity;
+        random = new Random();
     }
 
     @Override
@@ -69,13 +71,27 @@ public class BinGame extends BaseGame {
             graphicalAssets.add(new GFXAsset(ResMan.ITEM_PEN, 390, 2048, 0, 0));
             graphicalAssets.add(new GFXAsset(ResMan.ITEM_CONE_WHITE, 235, 2048, 0, 0));
             graphicalAssets.add(new GFXAsset(ResMan.ITEM_CONE_YELLOW, 235, 2048, 0, 0));
-            graphicalAssets.add(new GFXAsset(ResMan.ITEM_BECHER, 512, 569, 0, 0));
+            graphicalAssets.add(new GFXAsset(ResMan.ITEM_BECHER_GREEN, 512, 568, 0, 0));
+            graphicalAssets.add(new GFXAsset(ResMan.ITEM_BECHER_ORANGE, 512, 569, 0, 0));
+            graphicalAssets.add(new GFXAsset(ResMan.ITEM_BECHER_RED, 512, 568, 0, 0));
             graphicalAssets.add(new GFXAsset(ResMan.ITEM_BECHER_BROKEN, 512, 568, 0, 0));
-            graphicalAssets.add(new GFXAsset(ResMan.ITEM_ERLEN, 512, 705, 0, 0));
+            graphicalAssets.add(new GFXAsset(ResMan.ITEM_ERLEN_GREEN, 512, 705, 0, 0));
+            graphicalAssets.add(new GFXAsset(ResMan.ITEM_ERLEN_ORANGE, 512, 705, 0, 0));
+            graphicalAssets.add(new GFXAsset(ResMan.ITEM_ERLEN_RED, 512, 705, 0, 0));
             graphicalAssets.add(new GFXAsset(ResMan.ITEM_ERLEN_BROKEN, 512, 704, 0, 0));
-            graphicalAssets.add(new GFXAsset(ResMan.ITEM_SLIDE, 512, 1024, 0, 0));
+            graphicalAssets.add(new GFXAsset(ResMan.ITEM_SLIDE, 301, 1024, 0, 0));
+            graphicalAssets.add(new GFXAsset(ResMan.ITEM_SLIDE_BROKEN, 304, 1024, 0, 0));
             graphicalAssets.add(new GFXAsset(ResMan.ITEM_PETRI, 512, 323, 0, 0));
             graphicalAssets.add(new GFXAsset(ResMan.ITEM_PAPER, 512, 560, 0, 0));
+            graphicalAssets.add(new GFXAsset(ResMan.ITEM_GLOVES, 512, 541, 0, 0));
+            graphicalAssets.add(new GFXAsset(ResMan.ITEM_GEL, 512, 394, 0, 0));
+            graphicalAssets.add(new GFXAsset(ResMan.ITEM_MICROTUBE_GREEN, 512, 923, 0, 0));
+            graphicalAssets.add(new GFXAsset(ResMan.ITEM_MICROTUBE_ORANGE, 512, 923, 0, 0));
+            graphicalAssets.add(new GFXAsset(ResMan.ITEM_MICROTUBE_RED, 512, 923, 0, 0));
+            graphicalAssets.add(new GFXAsset(ResMan.ITEM_ROUNDFLASK_GREEN, 512, 782, 0, 0));
+            graphicalAssets.add(new GFXAsset(ResMan.ITEM_ROUNDFLASK_ORANGE, 512, 782, 0, 0));
+            graphicalAssets.add(new GFXAsset(ResMan.ITEM_ROUNDFLASK_RED, 512, 782, 0, 0));
+            graphicalAssets.add(new GFXAsset(ResMan.ITEM_ROUNDFLASK_BROKEN, 512, 782, 0, 0));
 
             /* HUD */
             graphicalAssets.add(new GFXAsset(ResMan.HUD_LIVES, 1479, 1024, 0, 0));
@@ -206,6 +222,7 @@ public class BinGame extends BaseGame {
 
     private void decrementLives() {
         if (--gameLives == 0) {
+            setPlaying(false);
             activity.onLose(gameScore);
         }
 
@@ -256,7 +273,7 @@ public class BinGame extends BaseGame {
                     deleteItem(item);
                 }
                 items.clear();
-
+                Log.d(TAG, "resetGame - Cleared game items.");
                 gameScene.clearChildScene();
                 activity.resetMenuPause();
 
@@ -308,8 +325,8 @@ public class BinGame extends BaseGame {
     }
 
     private void createItem(Item.Type type) {
-        float posRatioX = 0.15f + new Random().nextFloat() * 0.85f;
-        float posRatioY = new Random().nextFloat() * 0.2f;
+        float posRatioX = 0.15f + random.nextFloat() * 0.85f;
+        float posRatioY = random.nextFloat() * 0.2f;
         Vector2 itemPos = activity.spritePosition(32, 32, posRatioX, posRatioY);
         createItem(itemPos, type);
     }
@@ -325,20 +342,27 @@ public class BinGame extends BaseGame {
             case PAPER:
                 textureRegion = activity.getTexture(ResMan.ITEM_PAPER);
                 break;
-            case CONE_BLUE:
-                textureRegion = activity.getTexture(ResMan.ITEM_CONE_BLUE);
-                break;
-            case CONE_YELLOW:
-                textureRegion = activity.getTexture(ResMan.ITEM_CONE_YELLOW);
-                break;
-            case CONE_WHITE:
-                textureRegion = activity.getTexture(ResMan.ITEM_CONE_WHITE);
+            case CONE:
+                switch (randomOf(3)) {
+                    case 0:
+                        textureRegion = activity.getTexture(ResMan.ITEM_CONE_BLUE);
+                        break;
+                    case 1:
+                        textureRegion = activity.getTexture(ResMan.ITEM_CONE_YELLOW);
+                        break;
+                    case 2:
+                        textureRegion = activity.getTexture(ResMan.ITEM_CONE_WHITE);
+                        break;
+                }
                 break;
             case TUBE:
                 textureRegion = activity.getTexture(ResMan.ITEM_TUBE);
                 break;
-            case MICROSCOPE_SLIDE:
+            case SLIDE:
                 textureRegion = activity.getTexture(ResMan.ITEM_SLIDE);
+                break;
+            case SLIDE_BROKEN:
+                textureRegion = activity.getTexture(ResMan.ITEM_SLIDE_BROKEN);
                 break;
             case PETRI_DISH:
                 textureRegion = activity.getTexture(ResMan.ITEM_PETRI);
@@ -346,20 +370,79 @@ public class BinGame extends BaseGame {
             case PEN:
                 textureRegion = activity.getTexture(ResMan.ITEM_PEN);
                 break;
+            case GLOVES:
+                textureRegion = activity.getTexture(ResMan.ITEM_GLOVES);
+                break;
+            case GEL:
+                textureRegion = activity.getTexture(ResMan.ITEM_GEL);
+                break;
             case BECHER:
-                textureRegion = activity.getTexture(ResMan.ITEM_BECHER);
+                switch (randomOf(3)) {
+                    case 0:
+                        textureRegion = activity.getTexture(ResMan.ITEM_BECHER_GREEN);
+                        break;
+                    case 1:
+                        textureRegion = activity.getTexture(ResMan.ITEM_BECHER_ORANGE);
+                        break;
+                    case 2:
+                        textureRegion = activity.getTexture(ResMan.ITEM_BECHER_RED);
+                        break;
+                }
                 break;
             case BECHER_BROKEN:
                 textureRegion = activity.getTexture(ResMan.ITEM_BECHER_BROKEN);
                 break;
             case ERLEN:
-                textureRegion = activity.getTexture(ResMan.ITEM_ERLEN);
+                switch (randomOf(3)) {
+                    case 0:
+                        textureRegion = activity.getTexture(ResMan.ITEM_ERLEN_GREEN);
+                        break;
+                    case 1:
+                        textureRegion = activity.getTexture(ResMan.ITEM_ERLEN_ORANGE);
+                        break;
+                    case 2:
+                        textureRegion = activity.getTexture(ResMan.ITEM_ERLEN_RED);
+                        break;
+                }
                 break;
             case ERLEN_BROKEN:
                 textureRegion = activity.getTexture(ResMan.ITEM_ERLEN_BROKEN);
                 break;
+            case ROUNDFLASK:
+                switch (randomOf(3)) {
+                    case 0:
+                        textureRegion = activity.getTexture(ResMan.ITEM_ROUNDFLASK_GREEN);
+                        break;
+                    case 1:
+                        textureRegion = activity.getTexture(ResMan.ITEM_ROUNDFLASK_ORANGE);
+                        break;
+                    case 2:
+                        textureRegion = activity.getTexture(ResMan.ITEM_ROUNDFLASK_RED);
+                        break;
+                }
+                break;
+            case ROUNDFLASK_BROKEN:
+                textureRegion = activity.getTexture(ResMan.ITEM_ROUNDFLASK_BROKEN);
+                break;
+            case MICROTUBE:
+                switch (randomOf(3)) {
+                    case 0:
+                        textureRegion = activity.getTexture(ResMan.ITEM_MICROTUBE_GREEN);
+                        break;
+                    case 1:
+                        textureRegion = activity.getTexture(ResMan.ITEM_MICROTUBE_ORANGE);
+                        break;
+                    case 2:
+                        textureRegion = activity.getTexture(ResMan.ITEM_MICROTUBE_RED);
+                        break;
+                }
+                break;
         }
         createItem(posX, posY, textureRegion, type);
+    }
+
+    private int randomOf(int max) {
+        return Math.abs(random.nextInt() % max);
     }
 
     private void createItem(float posX, float posY, ITiledTextureRegion textureRegion, Item.Type type) {
@@ -425,24 +508,24 @@ public class BinGame extends BaseGame {
         final IEntityModifier.IEntityModifierListener logListener = new IEntityModifier.IEntityModifierListener() {
             @Override
             public void onModifierStarted(final IModifier<IEntity> pModifier, final IEntity pItem) {
-                activity.runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        final String text = "Animation started.";
-                        Log.v(TAG, "run - " + text);
-                    }
-                });
+//                activity.runOnUiThread(new Runnable() {
+//                    @Override
+//                    public void run() {
+//                        final String text = "Animation started.";
+//                        Log.v(TAG, "onModifierStarted - " + text);
+//                    }
+//                });
             }
 
             @Override
             public void onModifierFinished(final IModifier<IEntity> pEntityModifier, final IEntity pEntity) {
-                activity.runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        final String text = "Animation finished.";
-                        Log.v(TAG, "run - " + text);
-                    }
-                });
+//                activity.runOnUiThread(new Runnable() {
+//                    @Override
+//                    public void run() {
+//                        final String text = "Animation finished.";
+//                        Log.v(TAG, "onModifierFinished - " + text);
+//                    }
+//                });
             }
         };
         Color initialColor = bin.getDefaultColor();
@@ -466,8 +549,10 @@ public class BinGame extends BaseGame {
         activity.runOnUpdateThread(new Runnable() {
             @Override
             public void run() {
-                createItem(Item.Type.random());
                 items.remove(item);
+                if (isPlaying()) {
+                    createItem(Item.Type.random());
+                }
             }
         });
     }

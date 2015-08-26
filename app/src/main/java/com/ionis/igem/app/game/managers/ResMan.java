@@ -26,13 +26,27 @@ public class ResMan {
     public static final String ITEM_CONE_WHITE = "item_cone_white.png";
     public static final String ITEM_CONE_YELLOW = "item_cone_yellow.png";
 
-    public static final String ITEM_BECHER = "item_becher.png";
+    public static final String ITEM_BECHER_ORANGE = "item_becher_orange.png";
+    public static final String ITEM_BECHER_RED = "item_becher_red.png";
+    public static final String ITEM_BECHER_GREEN = "item_becher_green.png";
     public static final String ITEM_BECHER_BROKEN = "item_becher_broken.png";
-    public static final String ITEM_ERLEN = "item_becher.png";
-    public static final String ITEM_ERLEN_BROKEN = "item_becher_broken.png";
+    public static final String ITEM_ERLEN_ORANGE = "item_erlenmeyer_orange.png";
+    public static final String ITEM_ERLEN_RED = "item_erlenmeyer_red.png";
+    public static final String ITEM_ERLEN_GREEN = "item_erlenmeyer_green.png";
+    public static final String ITEM_ERLEN_BROKEN = "item_erlenmeyer_broken.png";
     public static final String ITEM_PAPER = "item_paper.png";
     public static final String ITEM_PETRI = "item_petri.png";
     public static final String ITEM_SLIDE = "item_slide.png";
+    public static final String ITEM_SLIDE_BROKEN = "item_slide_broken.png";
+    public static final String ITEM_GLOVES = "item_gloves.png";
+    public static final String ITEM_GEL = "item_gel.png";
+    public static final String ITEM_ROUNDFLASK_ORANGE = "item_roundflask_orange.png";
+    public static final String ITEM_ROUNDFLASK_RED = "item_roundflask_red.png";
+    public static final String ITEM_ROUNDFLASK_GREEN = "item_roundflask_green.png";
+    public static final String ITEM_ROUNDFLASK_BROKEN = "item_roundflask_broken.png";
+    public static final String ITEM_MICROTUBE_ORANGE = "item_microtube_orange.png";
+    public static final String ITEM_MICROTUBE_RED = "item_microtube_red.png";
+    public static final String ITEM_MICROTUBE_GREEN = "item_microtube_green.png";
 
     public static final String HUD_LIVES = "hud_lives.png";
 

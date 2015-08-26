@@ -175,6 +175,7 @@ public class GameActivity extends AbstractGameActivity implements MenuScene.IOnM
                 onQuit();
                 return true;
             case OPTION_RESET:
+                currentGame.setPlaying(true);
                 currentGame.resetGame();
                 return true;
             case OPTION_NEXT:
@@ -387,6 +388,7 @@ public class GameActivity extends AbstractGameActivity implements MenuScene.IOnM
     }
 
     private void loadScene(BaseGame game) {
+        currentGame.setPlaying(true);
         gameScene = game.prepareScene();
     }
 
