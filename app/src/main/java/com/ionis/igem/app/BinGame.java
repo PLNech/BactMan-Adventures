@@ -223,7 +223,11 @@ public class BinGame extends BaseGame {
     private void decrementLives() {
         if (--gameLives == 0) {
             setPlaying(false);
-            activity.onLose(gameScore);
+            if (gameScore >= 50) {
+                activity.onWin();
+            } else {
+                activity.onLose(gameScore);
+            }
         }
 
         activity.setPhysicsCoeff(0.8f);
@@ -233,12 +237,8 @@ public class BinGame extends BaseGame {
     }
 
     private void incrementScore() {
-        if (++gameScore >= 50) {
-            activity.onWin();
-        }
-
+        setScore(++gameScore);
         activity.setPhysicsCoeff(1.05f);
-        setScore(gameScore);
         Log.v(TAG, "beginContact - Increasing score to " + gameScore + ".");
         Log.v(TAG, "beginContact - Increasing gravity to " + activity.getPhysicsWorld().getGravity() + ".");
     }
