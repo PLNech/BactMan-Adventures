@@ -1,5 +1,6 @@
 package com.ionis.igem.app.ui;
 
+import android.content.SharedPreferences;
 import android.content.res.AssetManager;
 import android.opengl.GLES20;
 import android.os.Bundle;
@@ -70,6 +71,7 @@ public class GameActivity extends AbstractGameActivity implements MenuScene.IOnM
     private TextureManager textureManager;
     private FontManager fontManager;
     private AssetManager assetManager;
+    private SharedPreferences preferences;
 
     private SmoothCamera gameCamera;
     private PhysicsWorld physicsWorld;
@@ -93,6 +95,7 @@ public class GameActivity extends AbstractGameActivity implements MenuScene.IOnM
         super.onCreate(savedInstanceState);
         Log.d(TAG, "onCreate - Created Activity.");
         currentGame = new BinGame(this);
+        preferences = getSharedPreferences(getString(R.string.app_name), MODE_PRIVATE);
 
         BitmapTextureAtlasTextureRegionFactory.setAssetBasePath("gfx/");
         FontFactory.setAssetBasePath("fonts/");
@@ -359,14 +362,15 @@ public class GameActivity extends AbstractGameActivity implements MenuScene.IOnM
         winScene.setOnMenuItemClickListener(this);
     }
 
-    public void resetMenuPause() {
+    public void resetMenus() {
         menuScene.detachChild(gameOverText);
         menuScene.reset();
+
+        winScene.detachChild(winText);
+        winScene.reset();
     }
 
     private void initGameScene() {
-
-
         loadGFXAssets(currentGame);
         loadFonts(currentGame);
         //loadSounds(currentGame);
@@ -380,7 +384,6 @@ public class GameActivity extends AbstractGameActivity implements MenuScene.IOnM
             layer.setZIndex(i);
             gameScene.attachChild(layer);
         }
-
 
         loadHUD(currentGame);
         loadScene(currentGame);
@@ -422,22 +425,41 @@ public class GameActivity extends AbstractGameActivity implements MenuScene.IOnM
         Log.v(TAG, "putTexture - Added texture " + textureName);
     }
 
-    public void onLose(int score) {
-        gameOverText = new Text(0, 0, getFont(ResMan.F_HUD_BIN), "GAME OVER",
-                16, new TextOptions(HorizontalAlign.CENTER), this.getVBOM());
+    public void onLose(int highScore, boolean best) {
+        gameOverText = new Text(0, 0, getFont(ResMan.F_HUD_BIN), getEndText(false, highScore, best),
+                32, new TextOptions(HorizontalAlign.CENTER), this.getVBOM());
         final Vector2 textPosition = spritePosition(gameOverText.getWidth(), gameOverText.getHeight(), 0.5f, 0.25f);
+
         gameOverText.setPosition(textPosition.x, textPosition.y);
         menuScene.attachChild(gameOverText);
         gameScene.setChildScene(menuScene, false, true, true);
     }
 
-    public void onWin() {
-        winText = new Text(0, 0, getFont(ResMan.F_HUD_BIN), "VICTORY!",
-                16, new TextOptions(HorizontalAlign.CENTER), getVBOM());
+    public void onWin(int highScore, boolean best) {
+        winText = new Text(0, 0, getFont(ResMan.F_HUD_BIN), getEndText(true, highScore, best),
+                32, new TextOptions(HorizontalAlign.CENTER), getVBOM());
         final Vector2 textPosition = spritePosition(winText.getWidth(), winText.getHeight(), 0.5f, 0.2f);
+
         winText.setPosition(textPosition.x, textPosition.y);
         winScene.attachChild(winText);
         gameScene.setChildScene(winScene, false, true, true);
+    }
+
+    @NonNull
+    private String getEndText(boolean win, int highScore, boolean best) {
+        final StringBuilder winBuilder = new StringBuilder();
+        if (win) {
+            winBuilder.append("VICTORY!");
+        } else {
+            winBuilder.append("GAME OVER");
+        }
+        if (best) {
+            winBuilder.append("\nNew high score: ");
+        } else {
+            winBuilder.append("\nHigh score: ");
+        }
+        winBuilder.append(highScore);
+        return winBuilder.toString();
     }
 
     public Scene getScene() {
@@ -470,5 +492,9 @@ public class GameActivity extends AbstractGameActivity implements MenuScene.IOnM
             return;
         }
         physicsWorld.setGravity(gravity.mul(coeff));
+    }
+
+    public SharedPreferences getPreferences() {
+        return preferences;
     }
 }

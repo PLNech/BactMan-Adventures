@@ -1,5 +1,6 @@
 package com.ionis.igem.app;
 
+import android.content.SharedPreferences;
 import android.hardware.SensorManager;
 import android.util.Log;
 import com.badlogic.gdx.math.Vector2;
@@ -40,6 +41,7 @@ public class BinGame extends BaseGame {
     private ArrayList<Bin> bins = new ArrayList<>();
 
     private static final String TAG = "BinGame";
+    public static final String KEY_HIGHSCORE = TAG + "_highscore";
 
     private int gameScore = 0;
     private int gameLives = 3;
@@ -223,10 +225,17 @@ public class BinGame extends BaseGame {
     private void decrementLives() {
         if (--gameLives == 0) {
             setPlaying(false);
+            final SharedPreferences preferences = activity.getPreferences();
+            final int highScore = preferences.getInt(KEY_HIGHSCORE, 0);
+            final boolean best = gameScore > highScore;
+            if (best) {
+                preferences.edit().putInt(KEY_HIGHSCORE, gameScore).apply();
+            }
+
             if (gameScore >= 50) {
-                activity.onWin();
+                activity.onWin(best ? gameScore : highScore, best);
             } else {
-                activity.onLose(gameScore);
+                activity.onLose(best ? gameScore : highScore, best);
             }
         }
 
@@ -275,7 +284,7 @@ public class BinGame extends BaseGame {
                 items.clear();
                 Log.d(TAG, "resetGame - Cleared game items.");
                 gameScene.clearChildScene();
-                activity.resetMenuPause();
+                activity.resetMenus();
 
                 createItems();
             }
