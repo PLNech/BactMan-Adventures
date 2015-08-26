@@ -28,6 +28,7 @@ import org.andengine.util.color.Color;
 import org.andengine.util.modifier.IModifier;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Random;
 
@@ -39,6 +40,7 @@ public class BinGame extends BaseGame {
     private ArrayList<Item> items = new ArrayList<>();
     private ArrayList<Integer> deadItems = new ArrayList<>();
     private ArrayList<Bin> bins = new ArrayList<>();
+    private HashMap<Bin.Type, Bin> binMap = new HashMap<>();
 
     private static final String TAG = "BinGame";
     public static final String KEY_HIGHSCORE = TAG + "_highscore";
@@ -191,6 +193,7 @@ public class BinGame extends BaseGame {
                 if (validMove) {
                     incrementScore();
                 } else {
+                    animateBin(binMap.get(item.getType().getValid()), !validMove);
                     decrementLives();
                 }
                 recycleItem(item);
@@ -466,6 +469,7 @@ public class BinGame extends BaseGame {
     private void createBin(Bin.Type type, ITiledTextureRegion textureRegion, float posX, float posY) {
         Bin bin = new Bin(type, posX, posY, textureRegion, activity.getVBOM(), activity.getPhysicsWorld());
         bins.add(bin);
+        binMap.put(type, bin);
         activity.getScene().getChildByIndex(GameActivity.LAYER_FOREGROUND).attachChild(bin.getSprite());
     }
 

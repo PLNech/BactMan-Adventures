@@ -44,7 +44,7 @@ public class Item extends PhysicalWorldObject {
             validBinType = pType;
         }
 
-        Bin.Type getValid() {
+        public Bin.Type getValid() {
             return validBinType;
         }
 
