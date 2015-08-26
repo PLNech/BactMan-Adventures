@@ -2,11 +2,14 @@ package com.ionis.igem.app.game.bins;
 
 import android.util.Log;
 import com.badlogic.gdx.physics.box2d.BodyDef;
+import com.ionis.igem.app.game.model.DraggableAnimatedSprite;
 import com.ionis.igem.app.game.model.PhysicalWorldObject;
 import com.ionis.igem.app.game.model.WorldObject;
+import org.andengine.entity.sprite.Sprite;
 import org.andengine.extension.physics.box2d.PhysicsWorld;
 import org.andengine.opengl.texture.region.ITiledTextureRegion;
 import org.andengine.opengl.vbo.VertexBufferObjectManager;
+import org.andengine.util.color.Color;
 
 import java.util.Random;
 
@@ -55,12 +58,24 @@ public class Item extends PhysicalWorldObject {
     public static short ID = 0;
 
     Type type;
+    DraggableAnimatedSprite biggerSprite;
 
     int id;
 
     public Item(Type pType, ITiledTextureRegion texture, float posX, float posY, VertexBufferObjectManager manager, PhysicsWorld physicsWorld) {
         super(posX, posY, new Random().nextFloat(), WorldObject.getIdealScale(SCALE_DEFAULT, texture), true, texture, manager, physicsWorld);
         sprite.setCullingEnabled(true);
+        biggerSprite = new DraggableAnimatedSprite(posX, posY, getIdealScale(SCALE_DEFAULT, texture), sprite.getTiledTextureRegion(), manager, this) {
+            //TODO: Move Draggability to own interface
+            @Override
+            protected void onManagedUpdate(float pSecondsElapsed) {
+                super.onManagedUpdate(pSecondsElapsed);
+                setPosition(sprite.getX(), sprite.getY());
+            }
+        };
+        biggerSprite.setInitialScale(2f * sprite.getScaleX());
+        biggerSprite.setColor(Color.TRANSPARENT);
+        biggerSprite.setRotation(sprite.getRotation());
         body.setBullet(true);
 
         id = ID++;
@@ -75,6 +90,10 @@ public class Item extends PhysicalWorldObject {
 
     public int getId() {
         return id;
+    }
+
+    public Sprite getBiggerSprite() {
+        return biggerSprite;
     }
 
     @Override

@@ -4,6 +4,7 @@ import android.util.Pair;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
+import org.andengine.entity.shape.IAreaShape;
 import org.andengine.extension.physics.box2d.PhysicsConnector;
 import org.andengine.extension.physics.box2d.PhysicsFactory;
 import org.andengine.extension.physics.box2d.PhysicsWorld;
@@ -38,6 +39,12 @@ public abstract class PhysicalWorldObject extends WorldObject {
     protected void initBody(PhysicsWorld physicsWorld) {
         final FixtureDef itemFixtureDef = PhysicsFactory.createFixtureDef(this.getDensity(), this.getElasticity(), this.getFriction());
         body = PhysicsFactory.createBoxBody(physicsWorld, sprite, this.getBodyType(), itemFixtureDef);
+        body.setUserData(this);
+    }
+
+    protected void initBody(PhysicsWorld physicsWorld, IAreaShape shape) {
+        final FixtureDef itemFixtureDef = PhysicsFactory.createFixtureDef(this.getDensity(), this.getElasticity(), this.getFriction());
+        body = PhysicsFactory.createBoxBody(physicsWorld, shape, this.getBodyType(), itemFixtureDef);
         body.setUserData(this);
     }
 

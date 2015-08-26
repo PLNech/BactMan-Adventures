@@ -1,6 +1,5 @@
 package com.ionis.igem.app.game.model;
 
-import android.util.Log;
 import com.badlogic.gdx.physics.box2d.Body;
 import org.andengine.entity.sprite.AnimatedSprite;
 import org.andengine.extension.physics.box2d.util.constants.PhysicsConstants;
@@ -17,10 +16,14 @@ public class DraggableAnimatedSprite extends AnimatedSprite {
 
     private PhysicalWorldObject object; //TODO: Handle objects without bodies
     private boolean isGrabbed;
+    private float scaleGrabbed;
+    private float initScale;
 
-    public DraggableAnimatedSprite(float pX, float pY, ITiledTextureRegion pTiledTextureRegion, VertexBufferObjectManager pVertexBufferObjectManager, WorldObject pObject) {
+    public DraggableAnimatedSprite(float pX, float pY, float pScaleGrabbed, ITiledTextureRegion pTiledTextureRegion,
+                                   VertexBufferObjectManager pVertexBufferObjectManager, WorldObject pObject) {
         super(pX, pY, pTiledTextureRegion, pVertexBufferObjectManager);
         object = (PhysicalWorldObject) pObject;
+        scaleGrabbed = pScaleGrabbed;
     }
 
     @Override
@@ -31,7 +34,7 @@ public class DraggableAnimatedSprite extends AnimatedSprite {
 
         switch (pSceneTouchEvent.getAction()) {
             case TouchEvent.ACTION_DOWN:
-                setScale(WorldObject.getIdealScale(object.getScaleGrabbed(), getTiledTextureRegion()));
+                setScale(scaleGrabbed);
                 isGrabbed = true;
                 break;
             case TouchEvent.ACTION_MOVE:
@@ -47,7 +50,7 @@ public class DraggableAnimatedSprite extends AnimatedSprite {
             case TouchEvent.ACTION_UP:
                 if (isGrabbed) {
                     isGrabbed = false;
-                    setScale(WorldObject.getIdealScale(object.getScaleDefault(), getTiledTextureRegion()));
+                    setScale(initScale);
                 }
                 break;
         }
@@ -56,5 +59,10 @@ public class DraggableAnimatedSprite extends AnimatedSprite {
 
     public void stopDragging() {
         object = null;
+    }
+
+    public void setInitialScale(float scale) {
+        initScale = scale;
+        setScale(initScale);
     }
 }

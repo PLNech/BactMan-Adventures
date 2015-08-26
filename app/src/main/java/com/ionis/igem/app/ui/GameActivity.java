@@ -31,6 +31,8 @@ import org.andengine.entity.scene.menu.MenuScene;
 import org.andengine.entity.scene.menu.item.IMenuItem;
 import org.andengine.entity.scene.menu.item.SpriteMenuItem;
 import org.andengine.entity.shape.IShape;
+import org.andengine.entity.text.Text;
+import org.andengine.entity.text.TextOptions;
 import org.andengine.extension.physics.box2d.PhysicsWorld;
 import org.andengine.opengl.font.Font;
 import org.andengine.opengl.font.FontFactory;
@@ -45,6 +47,7 @@ import org.andengine.opengl.texture.region.ITextureRegion;
 import org.andengine.opengl.texture.region.ITiledTextureRegion;
 import org.andengine.opengl.texture.region.TiledTextureRegion;
 import org.andengine.opengl.vbo.VertexBufferObjectManager;
+import org.andengine.util.HorizontalAlign;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -75,6 +78,7 @@ public class GameActivity extends AbstractGameActivity implements MenuScene.IOnM
     private MenuScene menuScene;
 
     private ArrayList<PhysicalWorldObject> objectsToDelete = new ArrayList<>();
+    private Text gameOverText;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -313,6 +317,7 @@ public class GameActivity extends AbstractGameActivity implements MenuScene.IOnM
     }
 
     public void resetMenuPause() {
+        menuScene.detachChild(gameOverText);
         menuScene.reset();
     }
 
@@ -353,7 +358,7 @@ public class GameActivity extends AbstractGameActivity implements MenuScene.IOnM
         return font;
     }
 
-    void putFont(String fontName, IFont font) {
+    public void putFont(String fontName, IFont font) {
         fontMap.put(fontName, font);
         Log.v(TAG, "putFont - Added font " + fontName);
     }
@@ -373,7 +378,14 @@ public class GameActivity extends AbstractGameActivity implements MenuScene.IOnM
         Log.v(TAG, "putTexture - Added texture " + textureName);
     }
 
-    public void onLose() {
+    public void onLose(int score) {
+        gameOverText = new Text(0, 0, getFont(ResMan.F_HUD_BIN),
+                "GAME OVER\nScore: " + score, "Game Over\nScore: 9999999".length(),
+                new TextOptions(HorizontalAlign.CENTER), this.getVBOM());
+        final Vector2 textPosition = spritePosition(gameOverText.getWidth(), gameOverText.getHeight(), 0.5f, 0.25f);
+        gameOverText.setPosition(textPosition.x, textPosition.y);
+        menuScene.attachChild(gameOverText);
+        gameScene.setChildScene(menuScene, false, true, true);
     }
 
     public void onWin() {

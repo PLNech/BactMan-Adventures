@@ -19,6 +19,7 @@ import org.andengine.entity.modifier.*;
 import org.andengine.entity.scene.Scene;
 import org.andengine.entity.scene.background.Background;
 import org.andengine.entity.sprite.AnimatedSprite;
+import org.andengine.entity.sprite.Sprite;
 import org.andengine.opengl.font.IFont;
 import org.andengine.opengl.texture.region.ITiledTextureRegion;
 import org.andengine.opengl.vbo.VertexBufferObjectManager;
@@ -105,6 +106,8 @@ public class BinGame extends BaseGame {
             Vector2 offL = new Vector2(170, 45);
 
             IFont fontRoboto = activity.getFont(FontAsset.name(ResMan.F_HUD_BIN, ResMan.F_HUD_BIN_SIZE, ResMan.F_HUD_BIN_COLOR, ResMan.F_HUD_BIN_ANTI));
+            activity.putFont(ResMan.F_HUD_BIN, fontRoboto);
+
             final VertexBufferObjectManager vbom = activity.getVBOM();
 
             HUDScore = new HUDElement()
@@ -196,7 +199,7 @@ public class BinGame extends BaseGame {
 
     private void decrementLives() {
         if (--gameLives == 0) {
-            activity.onLose();
+            activity.onLose(gameScore);
         }
 
         activity.setPhysicsCoeff(0.8f);
@@ -256,7 +259,7 @@ public class BinGame extends BaseGame {
     }
 
     private void resetGamePoints() {
-        gameScore = 30;
+        gameScore = 0;
         gameLives = 3;
         setScore(gameScore);
         setLives(gameLives);
@@ -264,8 +267,10 @@ public class BinGame extends BaseGame {
 
     private void deleteItem(final Item item) {
         final AnimatedSprite sprite = item.getSprite();
+        final Sprite biggerSprite = item.getBiggerSprite();
         sprite.setVisible(false);
-        activity.getScene().unregisterTouchArea(sprite);
+        activity.getScene().unregisterTouchArea(biggerSprite);
+        activity.getScene().getChildByIndex(GameActivity.LAYER_BACKGROUND).detachChild(biggerSprite);
         activity.getScene().getChildByIndex(GameActivity.LAYER_BACKGROUND).detachChild(sprite);
         activity.markForDeletion(item);
         item.getSprite().stopDragging();
@@ -353,7 +358,8 @@ public class BinGame extends BaseGame {
         items.add(item);
         final Scene gameScene = activity.getScene();
         gameScene.getChildByIndex(GameActivity.LAYER_BACKGROUND).attachChild(item.getSprite());
-        gameScene.registerTouchArea(item.getSprite());
+        gameScene.getChildByIndex(GameActivity.LAYER_BACKGROUND).attachChild(item.getBiggerSprite());
+        gameScene.registerTouchArea(item.getBiggerSprite());
     }
 
     private void createBin(Bin.Type type, ITiledTextureRegion textureRegion, float posX, float posY) {

@@ -19,9 +19,9 @@ public abstract class WorldObject {
 
     public WorldObject(float pX, float pY, boolean draggable, ITiledTextureRegion pTiledTextureRegion, VertexBufferObjectManager pVertexBufferObjectManager) {
         if (draggable) {
-            sprite = new DraggableAnimatedSprite(pX, pY, pTiledTextureRegion, pVertexBufferObjectManager, this);
+            sprite = new DraggableAnimatedSprite(pX, pY, SCALE_DEFAULT, pTiledTextureRegion, pVertexBufferObjectManager, this);
         } else {
-            sprite = new DraggableAnimatedSprite(pX, pY, pTiledTextureRegion, pVertexBufferObjectManager, null);
+            sprite = new DraggableAnimatedSprite(pX, pY, SCALE_DEFAULT, pTiledTextureRegion, pVertexBufferObjectManager, null);
         }
         sprite.setBlendFunction(GLES20.GL_SRC_ALPHA, GLES20.GL_ONE_MINUS_SRC_ALPHA);
         defaultColor = new Color(sprite.getColor());
