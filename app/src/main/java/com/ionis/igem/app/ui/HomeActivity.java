@@ -72,7 +72,7 @@ public class HomeActivity extends AppCompatActivity implements SurfaceHolder.Cal
         lp.height = (int) (((float) videoView.getHeight() / (float) videoView.getWidth()) * (float) screenWidth);
         videoView.setLayoutParams(lp);
 
-        Uri uri = Uri.parse("android.resource://" + getPackageName() + "/" + R.raw.drop);
+        Uri uri = Uri.parse("android.resource://" + getPackageName() + "/" + R.raw.testfile);
         mPlayer = MediaPlayer.create(getApplicationContext(), uri, holder);
         mPlayer.setLooping(true);
         mPlayer.start();
