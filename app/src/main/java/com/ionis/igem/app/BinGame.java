@@ -51,6 +51,7 @@ public class BinGame extends BaseGame {
     private HUDElement HUDScore;
     private HUDElement HUDLives;
     private Random random;
+    private boolean playingAnimation;
 
     public BinGame(GameActivity pActivity) {
         super(pActivity);
@@ -173,38 +174,39 @@ public class BinGame extends BaseGame {
                         handleBinItemContact(bin, item);
                     } else if (Wall.isOne(x1)) {
                         item = (Item) x2.getBody().getUserData();
-                        handleFloorItemContact(item, (Wall.Type) x1.getBody().getUserData());
+                        handleWallItemContact(item, (Wall.Type) x1.getBody().getUserData());
                     } else if (Wall.isOne(x2)) {
                         item = (Item) x1.getBody().getUserData();
-                        handleFloorItemContact(item, (Wall.Type) x2.getBody().getUserData());
+                        handleWallItemContact(item, (Wall.Type) x2.getBody().getUserData());
                     }
                 }
             }
 
-            private void handleBinItemContact(Bin bin, Item item) {
+            private void handleBinItemContact(final Bin bin, final Item item) {
                 final boolean validMove = bin.accepts(item);
                 Log.v(TAG, "beginContact - Item " + item + " went in bin " + bin + (validMove ? " :)" : " :("));
 
                 if (deadItems.contains(item.getId())) {
                     return; // TODO: investigate the item's deletion
                 }
+                final Bin.Animation animation = validMove ? Bin.Animation.VALID_HIT : Bin.Animation.INVALID_HIT;
 
-                animateBin(bin, validMove);
+                animateBin(bin, animation);
                 if (validMove) {
                     incrementScore();
                 } else {
-                    animateBin(binMap.get(item.getType().getValid()), !validMove);
+                    animateBin(binMap.get(item.getType().getValid()), Bin.Animation.VALID_MISS);
                     decrementLives();
                 }
                 recycleItem(item);
             }
 
-            private void handleFloorItemContact(Item item, Wall.Type wallType) {
-                Log.d(TAG, "handleFloorItemContact - Item " + item + " did collide wall " + wallType);
+            private void handleWallItemContact(Item item, Wall.Type wallType) {
+                Log.d(TAG, "handleWallItemContact - Item " + item + " did collide wall " + wallType);
                 if (wallType == Wall.Type.BOTTOM) {
+                    animateBins(Bin.Animation.INVALID_HIT);
                     recycleItem(item);
                     decrementLives();
-                    animateBins(false);
                 }
             }
 
@@ -511,13 +513,13 @@ public class BinGame extends BaseGame {
         activity.getScene().getChildByIndex(GameActivity.LAYER_BACKGROUND).attachChild(wall);
     }
 
-    private void animateBins(boolean validMove) {
+    private void animateBins(Bin.Animation animation) {
         for (Bin bin : bins) {
-            animateBin(bin, validMove);
+            animateBin(bin, animation);
         }
     }
 
-    private void animateBin(final Bin bin, boolean validMove) {
+    private void animateBin(final Bin bin, Bin.Animation animation) {
         final IEntityModifier.IEntityModifierListener logListener = new IEntityModifier.IEntityModifierListener() {
             @Override
             public void onModifierStarted(final IModifier<IEntity> pModifier, final IEntity pItem) {
@@ -541,8 +543,22 @@ public class BinGame extends BaseGame {
 //                });
             }
         };
-        Color initialColor = bin.getDefaultColor();
-        Color toColor = validMove ? Color.GREEN : Color.RED;
+        final Color initialColor = bin.getDefaultColor();
+        final Color toColor;
+
+        switch (animation) {
+            case VALID_HIT:
+                toColor = Color.GREEN;
+                break;
+            case INVALID_HIT:
+                toColor = Color.RED;
+                break;
+            case VALID_MISS:
+                toColor = Color.GREEN;
+                break;
+            default:
+                throw new IllegalStateException("THERE IS NO DEFAULT");
+        }
 
         final float pDuration = 0.25f;
 

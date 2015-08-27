@@ -19,6 +19,10 @@ public class Bin extends PhysicalWorldObject {
         NORMAL, GLASS, BIO, LIQUIDS
     }
 
+    public enum Animation {
+        VALID_HIT, INVALID_HIT, VALID_MISS
+    }
+
     public static short ID = 0;
     public static final float SCALE_DEFAULT = 0.125f;
 
