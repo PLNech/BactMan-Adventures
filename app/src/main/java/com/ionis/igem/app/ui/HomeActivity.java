@@ -4,9 +4,11 @@ import android.content.Intent;
 import android.graphics.Point;
 import android.media.MediaPlayer;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.Display;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.view.ViewGroup;
@@ -64,9 +66,17 @@ public class HomeActivity extends AppCompatActivity implements SurfaceHolder.Cal
 
     @Override
     public void surfaceCreated(SurfaceHolder holder) {
-        Point screenSize = new Point();
-        getWindowManager().getDefaultDisplay().getSize(screenSize);
-        int screenWidth = screenSize.x;
+        final Display defaultDisplay = getWindowManager().getDefaultDisplay();
+        int screenWidth;
+
+        if (Build.VERSION.SDK_INT >= 13) {
+            Point screenSize = new Point();
+            defaultDisplay.getSize(screenSize);
+            screenWidth = screenSize.x;
+        } else {
+            screenWidth = defaultDisplay.getWidth();
+        }
+
         ViewGroup.LayoutParams lp = videoView.getLayoutParams();
         lp.width = screenWidth;
         lp.height = (int) (((float) videoView.getHeight() / (float) videoView.getWidth()) * (float) screenWidth);
