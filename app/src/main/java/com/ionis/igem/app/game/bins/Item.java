@@ -29,7 +29,7 @@ public class Item extends PhysicalWorldObject {
         PETRI_DISH(Bin.Type.BIO),
         GEL(Bin.Type.BIO),
         PEN(Bin.Type.NORMAL),
-        GLOVES(Bin.Type.NORMAL),
+        GLOVES(Bin.Type.BIO),
         BECHER(Bin.Type.LIQUIDS),
         BECHER_BROKEN(Bin.Type.GLASS),
         ERLEN(Bin.Type.LIQUIDS),
