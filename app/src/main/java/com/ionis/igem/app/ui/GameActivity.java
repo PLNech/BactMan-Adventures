@@ -12,7 +12,7 @@ import android.widget.Toast;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.ContactListener;
-import com.ionis.igem.app.BinGame;
+import com.ionis.igem.app.game.BinGame;
 import com.ionis.igem.app.R;
 import com.ionis.igem.app.game.AbstractGameActivity;
 import com.ionis.igem.app.game.managers.ResMan;

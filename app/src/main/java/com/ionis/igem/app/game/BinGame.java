@@ -1,4 +1,4 @@
-package com.ionis.igem.app;
+package com.ionis.igem.app.game;
 
 import android.content.SharedPreferences;
 import android.hardware.SensorManager;

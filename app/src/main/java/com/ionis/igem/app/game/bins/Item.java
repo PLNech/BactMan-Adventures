@@ -36,7 +36,7 @@ public class Item extends PhysicalWorldObject {
         ERLEN_BROKEN(Bin.Type.GLASS),
         ROUNDFLASK(Bin.Type.LIQUIDS),
         ROUNDFLASK_BROKEN(Bin.Type.GLASS),
-        MICROTUBE(Bin.Type.LIQUIDS);
+        MICROTUBE(Bin.Type.BIO);
 
         Bin.Type validBinType;
 
