@@ -428,8 +428,8 @@ public class GameActivity extends AbstractGameActivity implements MenuScene.IOnM
     }
 
     public void onLose(int highScore, boolean best) {
-        gameOverText = new Text(0, 0, getFont(ResMan.F_HUD_BIN), getEndText(false, highScore, best),
-                32, new TextOptions(HorizontalAlign.CENTER), this.getVBOM());
+        final IFont menuFont = getFont(FontAsset.name(ResMan.F_HUD_BIN, ResMan.F_HUD_BIN_SIZE, ResMan.F_HUD_BIN_COLOR, ResMan.F_HUD_BIN_ANTI));
+        gameOverText = new Text(0, 0, menuFont, getEndText(false, highScore, best), 32, new TextOptions(HorizontalAlign.CENTER), getVBOM());
         final Vector2 textPosition = spritePosition(gameOverText.getWidth(), gameOverText.getHeight(), 0.5f, 0.25f);
         gameOverText.setPosition(textPosition.x, textPosition.y);
         menuScene.attachChild(gameOverText);
@@ -437,8 +437,8 @@ public class GameActivity extends AbstractGameActivity implements MenuScene.IOnM
     }
 
     public void onWin(int highScore, boolean best) {
-        winText = new Text(0, 0, getFont(ResMan.F_HUD_BIN), getEndText(true, highScore, best),
-                32, new TextOptions(HorizontalAlign.CENTER), getVBOM());
+        final IFont menuFont = getFont(FontAsset.name(ResMan.F_HUD_BIN, ResMan.F_HUD_BIN_SIZE, ResMan.F_HUD_BIN_COLOR, ResMan.F_HUD_BIN_ANTI));
+        winText = new Text(0, 0, menuFont, getEndText(true, highScore, best), 32, new TextOptions(HorizontalAlign.CENTER), getVBOM());
         final Vector2 textPosition = spritePosition(winText.getWidth(), winText.getHeight(), 0.5f, 0.2f);
         winText.setPosition(textPosition.x, textPosition.y);
         winScene.attachChild(winText);

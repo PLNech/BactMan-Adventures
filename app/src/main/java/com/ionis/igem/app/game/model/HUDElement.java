@@ -1,21 +1,27 @@
 package com.ionis.igem.app.game.model;
 
 import android.opengl.GLES20;
-import android.util.Log;
 import com.badlogic.gdx.math.Vector2;
 import org.andengine.entity.sprite.Sprite;
 import org.andengine.entity.text.Text;
 import org.andengine.opengl.font.IFont;
 import org.andengine.opengl.texture.region.ITextureRegion;
 import org.andengine.opengl.vbo.VertexBufferObjectManager;
+import org.andengine.util.color.Color;
 
 /**
  * Created by PLN on 21w/08/2015.
  */
 public class HUDElement {
+
+    public enum State {
+        UNDEFINED, NORMAL, URGENT
+    }
+
     public static final float SCALE_DEFAULT = 0.125f;
     Text text;
     Sprite sprite;
+    State state = State.UNDEFINED;
 
     public HUDElement() {
     }
@@ -53,6 +59,15 @@ public class HUDElement {
 
     public HUDElement buildSprite(float pX, float pY, ITextureRegion textureRegion, VertexBufferObjectManager vbom) {
         return buildSprite(pX, pY, textureRegion, vbom, SCALE_DEFAULT);
+    }
+
+    public HUDElement setUrgent(boolean urgent) {
+        State urgentState = urgent ? State.URGENT : State.NORMAL;
+        if (state != urgentState) {
+            state = urgentState;
+            text.setColor(urgent ? Color.RED : Color.BLACK);
+        }
+        return this;
     }
 
     public Sprite getSprite() {

@@ -78,6 +78,7 @@ public class PictoGame extends BaseGame {
     public List<FontAsset> getFontAssets() {
         if (fontAssets.isEmpty()) {
             fontAssets.add(new FontAsset(ResMan.F_HUD_BIN, ResMan.F_HUD_BIN_SIZE, ResMan.F_HUD_BIN_COLOR, ResMan.F_HUD_BIN_ANTI));
+            fontAssets.add(new FontAsset(ResMan.F_HUD_BIN, ResMan.F_HUD_BIN_SIZE, ResMan.F_HUD_PICTO_COLOR, ResMan.F_HUD_BIN_ANTI));
         }
         return fontAssets;
     }
@@ -95,17 +96,19 @@ public class PictoGame extends BaseGame {
         Vector2 offS = new Vector2(90, 45);
         Vector2 offT = new Vector2(185, 45);
 
-        IFont fontRoboto = activity.getFont(FontAsset.name(ResMan.F_HUD_BIN, ResMan.F_HUD_BIN_SIZE, ResMan.F_HUD_BIN_COLOR, ResMan.F_HUD_BIN_ANTI));
+        IFont fontRoboto = activity.getFont(FontAsset.name(ResMan.F_HUD_BIN, ResMan.F_HUD_BIN_SIZE, ResMan.F_HUD_PICTO_COLOR, ResMan.F_HUD_BIN_ANTI));
         activity.putFont(ResMan.F_HUD_BIN, fontRoboto);
 
         final VertexBufferObjectManager vbom = activity.getVBOM();
 
         HUDScore = new HUDElement()
                 .buildSprite(posS, textureScore, vbom, scale)
-                .buildText("", 8, posS.add(offS), fontRoboto, vbom);
+                .buildText("", 8, posS.add(offS), fontRoboto, vbom)
+                .setUrgent(false);
         HUDTime = new HUDElement()
                 .buildSprite(posT, textureTime, vbom, scale)
-                .buildText("", 8, posT.add(offT), fontRoboto, vbom);
+                .buildText("", 8, posT.add(offT), fontRoboto, vbom)
+                .setUrgent(false);
 
         elements.add(HUDScore);
         elements.add(HUDTime);
@@ -125,6 +128,12 @@ public class PictoGame extends BaseGame {
 
         scene.setTouchAreaBindingOnActionDownEnabled(true);
 
+        TimerHandler myTimer = new TimerHandler(1, true, new ITimerCallback() {
+            public void onTimePassed(TimerHandler pTimerHandler) {
+                decrementTime();
+            }
+        });
+        scene.registerUpdateHandler(myTimer);
         return scene;
     }
 
@@ -144,6 +153,13 @@ public class PictoGame extends BaseGame {
         setScore(scorePercent);
         if (scorePercent == 100) {
             activity.onWin(0, true);
+        }
+    }
+
+    private void decrementTime() {
+        setTime(--gameTime);
+        if (gameTime == 0) {
+            activity.onLose(gameScore, true);
         }
     }
 
@@ -191,21 +207,20 @@ public class PictoGame extends BaseGame {
             }
         }
 
-        Card debugCard = new Card(activity.getCamera().getWidth() / 2, baseY / 2, ResMan.CARD_BACK, activity.getTexture(ResMan.CARD_BACK), activity) {
-            @Override
-            public boolean onAreaTouched(TouchEvent pSceneTouchEvent, float pTouchAreaLocalX, float pTouchAreaLocalY) {
-                final int action = pSceneTouchEvent.getAction();
-                if (action == TouchEvent.ACTION_DOWN) {
-                    for (Card card : cards) {
-                        card.flip();
-                    }
-                    return true;
-                }
-                return false;
-            }
-        };
-        addCard(debugCard);
-
+//        Card debugCard = new Card(activity.getCamera().getWidth() / 2, baseY / 2, ResMan.CARD_BACK, activity.getTexture(ResMan.CARD_BACK), activity) {
+//            @Override
+//            public boolean onAreaTouched(TouchEvent pSceneTouchEvent, float pTouchAreaLocalX, float pTouchAreaLocalY) {
+//                final int action = pSceneTouchEvent.getAction();
+//                if (action == TouchEvent.ACTION_DOWN) {
+//                    for (Card card : cards) {
+//                        card.flip();
+//                    }
+//                    return true;
+//                }
+//                return false;
+//            }
+//        };
+//        addCard(debugCard);
     }
 
     @NonNull
@@ -277,8 +292,7 @@ public class PictoGame extends BaseGame {
             Log.d(TAG, "onTouchCard - Second card: " + card.getType());
             card.flip();
 
-            if (card.equals(currentCard))
-            {
+            if (card.equals(currentCard)) {
                 Log.d(TAG, "onTimePassed - Same card :O");
                 currentCard = null;
             } else if (card.getType().equals(currentCard.getType())) {
@@ -326,8 +340,14 @@ public class PictoGame extends BaseGame {
         HUDScore.getText().setText(text);
     }
 
-    private void setTime(int value) {
-        setTime("" + value);
+    private void setTime(int time) {
+        String padding = "";
+        if (time < 10) {
+            padding += " ";
+            HUDTime.setUrgent(true);
+        }
+        if (time < 100) padding += " ";
+        setTime(padding + time);
     }
 
     private void setTime(CharSequence text) {

@@ -1,5 +1,7 @@
 package com.ionis.igem.app.game.model.res;
 
+import android.graphics.Color;
+
 /**
  * Created by PLN on 21/08/2015.
  */
@@ -14,6 +16,10 @@ public class FontAsset extends Asset {
         this.size = size;
         this.color = color;
         this.antialised = antialised;
+    }
+
+    public FontAsset(String filename, int size, boolean antialised) {
+        this(filename, size, Color.WHITE, antialised);
     }
 
     public static String name(String filename, int size, int color, boolean antialised) {

@@ -72,4 +72,5 @@ public class ResMan {
 
     public static final String HUD_TIME = "hud_time.png";
 
+    public static final int F_HUD_PICTO_COLOR = Color.WHITE;
 }
