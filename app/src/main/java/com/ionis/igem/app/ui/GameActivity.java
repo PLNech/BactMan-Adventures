@@ -12,7 +12,6 @@ import android.widget.Toast;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.ContactListener;
-import com.ionis.igem.app.game.BinGame;
 import com.ionis.igem.app.R;
 import com.ionis.igem.app.game.AbstractGameActivity;
 import com.ionis.igem.app.game.PictoGame;
@@ -143,14 +142,14 @@ public class GameActivity extends AbstractGameActivity implements MenuScene.IOnM
 
         Log.d(TAG, "onCreateScene - Splash Scene created.");
 
-        mEngine.registerUpdateHandler(new TimerHandler(SPLASH_DURATION, new ITimerCallback() {
+        registerUpdateHandler(SPLASH_DURATION, new ITimerCallback() {
             public void onTimePassed(final TimerHandler pTimerHandler) {
                 mEngine.unregisterUpdateHandler(pTimerHandler);
 
                 initGameScene();
                 Log.d(TAG, "onTimePassed - Game Scene created.");
             }
-        }));
+        });
 
         return splashScene;
     }
@@ -479,6 +478,10 @@ public class GameActivity extends AbstractGameActivity implements MenuScene.IOnM
         }
     }
 
+    public void registerUpdateHandler(float duration, ITimerCallback pTimerCallback) {
+        mEngine.registerUpdateHandler(new TimerHandler(duration, pTimerCallback));
+    }
+
     public SmoothCamera getCamera() {
         return gameCamera;
     }
@@ -495,5 +498,9 @@ public class GameActivity extends AbstractGameActivity implements MenuScene.IOnM
 
     public SharedPreferences getPreferences() {
         return preferences;
+    }
+
+    public BaseGame getCurrentGame() {
+        return currentGame;
     }
 }

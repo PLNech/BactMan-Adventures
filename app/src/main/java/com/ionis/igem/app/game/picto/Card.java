@@ -1,8 +1,10 @@
 package com.ionis.igem.app.game.picto;
 
 import android.util.Log;
+import com.ionis.igem.app.game.PictoGame;
 import com.ionis.igem.app.game.managers.ResMan;
 import com.ionis.igem.app.ui.GameActivity;
+import com.ionis.igem.app.utils.WorldUtils;
 import org.andengine.entity.sprite.Sprite;
 import org.andengine.input.touch.TouchEvent;
 import org.andengine.opengl.texture.region.ITextureRegion;
@@ -20,9 +22,12 @@ public class Card extends Sprite {
     Sprite backSprite;
     boolean isVisible = false;
 
+    PictoGame game;
+
     public Card(float pX, float pY, String resCardName, ITextureRegion pTiledTextureRegion, GameActivity activity) {
         this(pX, pY, pTiledTextureRegion, activity.getVBOM());
-        type = resCardName;
+        type = WorldUtils.toUpperCase(resCardName.replace("card_", "").replace(".png", ""));
+        game = (PictoGame) activity.getCurrentGame();
         backSprite = new Sprite(pX, pY, activity.getTexture(ResMan.CARD_BACK), activity.getVBOM());
         setScaleAndPosition(this, pX, pY);
         setScaleAndPosition(backSprite, pX, pY);
@@ -41,7 +46,7 @@ public class Card extends Sprite {
         sprite.setPosition(pX, pY);
     }
 
-    private void flip() {
+    public void flip() {
         isVisible = !isVisible;
         setVisibility();
     }
@@ -50,7 +55,10 @@ public class Card extends Sprite {
     public boolean onAreaTouched(TouchEvent pSceneTouchEvent, float pTouchAreaLocalX, float pTouchAreaLocalY) {
         switch (pSceneTouchEvent.getAction()) {
             case TouchEvent.ACTION_DOWN:
-                flip();
+                if (game.isDisplayingCards()) {
+                    return false;
+                }
+                game.onTouchCard(this);
                 return true;
         }
         return false;
@@ -63,5 +71,9 @@ public class Card extends Sprite {
 
     public Sprite getBack() {
         return backSprite;
+    }
+
+    public String getType() {
+        return type;
     }
 }

@@ -11,8 +11,12 @@ import com.ionis.igem.app.game.model.res.GFXAsset;
 import com.ionis.igem.app.game.picto.Card;
 import com.ionis.igem.app.ui.GameActivity;
 import com.ionis.igem.app.utils.CalcUtils;
+import org.andengine.engine.handler.timer.ITimerCallback;
+import org.andengine.engine.handler.timer.TimerHandler;
 import org.andengine.entity.scene.Scene;
 import org.andengine.entity.scene.background.Background;
+import org.andengine.entity.sprite.Sprite;
+import org.andengine.input.touch.TouchEvent;
 import org.andengine.opengl.font.IFont;
 import org.andengine.opengl.texture.region.ITiledTextureRegion;
 import org.andengine.opengl.vbo.VertexBufferObjectManager;
@@ -27,15 +31,19 @@ import java.util.Stack;
  */
 public class PictoGame extends BaseGame {
     private static final String TAG = "PictoGame";
+    public static final float FAIL_DURATION = 1.0f;
 
     private int gameScore = 0;
     private int gameTime = 100;
 
+    private boolean isDisplayingCards = false;
+
     private ArrayList<Card> cards = new ArrayList<>();
 
+    private Card currentCard;
     private HUDElement HUDScore;
-    private HUDElement HUDTime;
 
+    private HUDElement HUDTime;
     public PictoGame(GameActivity pActivity) {
         super(pActivity);
     }
@@ -80,10 +88,10 @@ public class PictoGame extends BaseGame {
         final float scale = 0.120f;
 
         Vector2 posS = new Vector2(5, 0); //activity.spritePosition(textureScore, 0.1f, 0.05f, HUDElement.SCALE_DEFAULT);
-        Vector2 posL = new Vector2(155, 0); //activity.spritePosition(textureTime, 0.6f, 0.05f, HUDElement.SCALE_DEFAULT);
+        Vector2 posT = new Vector2(155, 0); //activity.spritePosition(textureTime, 0.6f, 0.05f, HUDElement.SCALE_DEFAULT);
 
         Vector2 offS = new Vector2(120, 45);
-        Vector2 offL = new Vector2(170, 45);
+        Vector2 offT = new Vector2(180, 45);
 
         IFont fontRoboto = activity.getFont(FontAsset.name(ResMan.F_HUD_BIN, ResMan.F_HUD_BIN_SIZE, ResMan.F_HUD_BIN_COLOR, ResMan.F_HUD_BIN_ANTI));
         activity.putFont(ResMan.F_HUD_BIN, fontRoboto);
@@ -94,8 +102,8 @@ public class PictoGame extends BaseGame {
                 .buildSprite(posS, textureScore, vbom, scale)
                 .buildText("", "31337".length(), posS.add(offS), fontRoboto, vbom);
         HUDTime = new HUDElement()
-                .buildSprite(posL, textureTime, vbom, scale)
-                .buildText("", "999".length(), posL.add(offL), fontRoboto, vbom);
+                .buildSprite(posT, textureTime, vbom, scale)
+                .buildText("", "999".length(), posT.add(offT), fontRoboto, vbom);
 
         elements.add(HUDScore);
         elements.add(HUDTime);
@@ -128,10 +136,14 @@ public class PictoGame extends BaseGame {
 
     private void deleteCard(Card card) {
         final Scene scene = activity.getScene();
+        final Sprite back = card.getBack();
 
         card.setVisible(false);
+        back.setVisible(false);
         scene.unregisterTouchArea(card);
         scene.getChildByIndex(GameActivity.LAYER_FOREGROUND).detachChild(card);
+        scene.getChildByIndex(GameActivity.LAYER_FOREGROUND).detachChild(back);
+        cards.remove(card);
     }
 
     private void createCards() {
@@ -156,8 +168,7 @@ public class PictoGame extends BaseGame {
         for (int i = 0; i < (nbCards / 2); i++) {
             cardList.add(randomCardName());
         }
-        //noinspection CollectionAddedToSelf
-        cardList.addAll(cardList);
+        cardStack.addAll(cardList);
         Collections.shuffle(cardList);
         cardStack.addAll(cardList);
 
@@ -166,11 +177,22 @@ public class PictoGame extends BaseGame {
                 createCard(cardStack.pop(), baseX + cardWidth * i, baseY + cardHeight * j);
             }
         }
-    }
 
-    private void createCard(float pX, float pY) {
-        String resName = randomCardName();
-        createCard(resName, pX, pY);
+        Card debugCard = new Card(activity.getCamera().getWidth() / 2, baseY / 2, ResMan.CARD_BACK, activity.getTexture(ResMan.CARD_BACK), activity) {
+            @Override
+            public boolean onAreaTouched(TouchEvent pSceneTouchEvent, float pTouchAreaLocalX, float pTouchAreaLocalY) {
+                final int action = pSceneTouchEvent.getAction();
+                if (action == TouchEvent.ACTION_DOWN) {
+                    for (Card card : cards) {
+                        card.flip();
+                    }
+                    return true;
+                }
+                return false;
+            }
+        };
+        addCard(debugCard);
+
     }
 
     @NonNull
@@ -213,14 +235,59 @@ public class PictoGame extends BaseGame {
         return resName;
     }
 
+    private void createCard(float pX, float pY) {
+        String resName = randomCardName();
+        createCard(resName, pX, pY);
+    }
+
     private void createCard(String resCardName, float pX, float pY) {
         Card card = new Card(pX, pY, resCardName, activity.getTexture(resCardName), activity);
-        cards.add(card);
+        addCard(card);
+    }
 
+    private void addCard(Card card) {
+        cards.add(card);
         final Scene gameScene = activity.getScene();
         gameScene.getChildByIndex(GameActivity.LAYER_FOREGROUND).attachChild(card);
         gameScene.getChildByIndex(GameActivity.LAYER_FOREGROUND).attachChild(card.getBack());
         gameScene.registerTouchArea(card);
+    }
+
+    public void onTouchCard(final Card card) {
+        if (currentCard == null) {
+            Log.d(TAG, "onTouchCard - First card: " + card.getType());
+            currentCard = card;
+            card.flip();
+        } else {
+            final String cardTypes = currentCard.getType() + " - " + card.getType();
+
+            Log.d(TAG, "onTouchCard - Second card: " + card.getType());
+            card.flip();
+
+            if (card.equals(currentCard))
+            {
+                Log.d(TAG, "onTimePassed - Same card :O");
+                currentCard = null;
+            } else if (card.getType().equals(currentCard.getType())) {
+                Log.d(TAG, "onTimePassed - Same types :)" + cardTypes);
+                deleteCard(card);
+                deleteCard(currentCard);
+                setScore(++gameScore);
+                currentCard = null;
+            } else {
+                isDisplayingCards = true;
+                activity.registerUpdateHandler(FAIL_DURATION, new ITimerCallback() {
+                    @Override
+                    public void onTimePassed(TimerHandler pTimerHandler) {
+                        Log.d(TAG, "onTimePassed - =/= types :( " + cardTypes);
+                        card.flip();
+                        currentCard.flip();
+                        currentCard = null;
+                        isDisplayingCards = false;
+                    }
+                });
+            }
+        }
     }
 
     private void resetGamePoints() {
@@ -248,6 +315,10 @@ public class PictoGame extends BaseGame {
 
     private void setTime(CharSequence text) {
         HUDTime.getText().setText(text);
+    }
+
+    public boolean isDisplayingCards() {
+        return isDisplayingCards;
     }
 
 }
