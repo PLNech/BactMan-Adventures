@@ -141,9 +141,9 @@ public class PictoGame extends BaseGame {
     public void resetGame() {
         resetGamePoints();
         for (final Card card : cards) {
-            deleteCard(card);
+            deleteCard(card, false);
         }
-
+        cards.clear();
         createCards();
     }
 
@@ -152,18 +152,18 @@ public class PictoGame extends BaseGame {
         Log.v(TAG, "beginContact - Increasing score to " + gameScore);
         setScore(scorePercent);
         if (scorePercent == 100) {
-            activity.onWin(0, true);
+            activity.onWin(0);
         }
     }
 
     private void decrementTime() {
         setTime(--gameTime);
         if (gameTime == 0) {
-            activity.onLose(gameScore, true);
+            activity.onLose(gameScore);
         }
     }
 
-    private void deleteCard(Card card) {
+    private void deleteCard(Card card, boolean shouldRemove) {
         final Scene scene = activity.getScene();
         final Sprite back = card.getBack();
 
@@ -172,7 +172,9 @@ public class PictoGame extends BaseGame {
         scene.unregisterTouchArea(card);
         scene.getChildByIndex(GameActivity.LAYER_FOREGROUND).detachChild(card);
         scene.getChildByIndex(GameActivity.LAYER_FOREGROUND).detachChild(back);
-        cards.remove(card);
+        if (shouldRemove) {
+            cards.remove(card);
+        }
     }
 
     private void createCards() {
@@ -207,7 +209,7 @@ public class PictoGame extends BaseGame {
             }
         }
 
-//        Card debugCard = new Card(activity.getCamera().getWidth() / 2, baseY / 2, ResMan.CARD_BACK, activity.getTexture(ResMan.CARD_BACK), activity) {
+//        Card debugCard = new Card(activity.getCamera().getWidth() / 2 - 40, baseY / 2 - 80, ResMan.CARD_BACK, activity.getTexture(ResMan.CARD_BACK), activity) {
 //            @Override
 //            public boolean onAreaTouched(TouchEvent pSceneTouchEvent, float pTouchAreaLocalX, float pTouchAreaLocalY) {
 //                final int action = pSceneTouchEvent.getAction();
@@ -297,8 +299,8 @@ public class PictoGame extends BaseGame {
                 currentCard = null;
             } else if (card.getType().equals(currentCard.getType())) {
                 Log.d(TAG, "onTimePassed - Same types :)" + cardTypes);
-                deleteCard(card);
-                deleteCard(currentCard);
+                deleteCard(card, true);
+                deleteCard(currentCard, true);
                 incrementScore();
                 currentCard = null;
             } else {
@@ -319,9 +321,10 @@ public class PictoGame extends BaseGame {
 
     private void resetGamePoints() {
         gameScore = 0;
-        gameTime = 100;
+        gameTime = 60;
         setScore(gameScore);
         setTime(gameTime);
+        HUDTime.setUrgent(false);
     }
 
     private void setScore(double score) {

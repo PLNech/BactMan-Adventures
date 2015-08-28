@@ -427,18 +427,18 @@ public class GameActivity extends AbstractGameActivity implements MenuScene.IOnM
         Log.v(TAG, "putTexture - Added texture " + textureName);
     }
 
-    public void onLose(int highScore, boolean best) {
+    public void onLose(int score) {
         final IFont menuFont = getFont(FontAsset.name(ResMan.F_HUD_BIN, ResMan.F_HUD_BIN_SIZE, ResMan.F_HUD_BIN_COLOR, ResMan.F_HUD_BIN_ANTI));
-        gameOverText = new Text(0, 0, menuFont, getEndText(false, highScore, best), 32, new TextOptions(HorizontalAlign.CENTER), getVBOM());
+        gameOverText = new Text(0, 0, menuFont, getEndText(false, score), 32, new TextOptions(HorizontalAlign.CENTER), getVBOM());
         final Vector2 textPosition = spritePosition(gameOverText.getWidth(), gameOverText.getHeight(), 0.5f, 0.25f);
         gameOverText.setPosition(textPosition.x, textPosition.y);
         menuScene.attachChild(gameOverText);
         gameScene.setChildScene(menuScene, false, true, true);
     }
 
-    public void onWin(int highScore, boolean best) {
+    public void onWin(int score) {
         final IFont menuFont = getFont(FontAsset.name(ResMan.F_HUD_BIN, ResMan.F_HUD_BIN_SIZE, ResMan.F_HUD_BIN_COLOR, ResMan.F_HUD_BIN_ANTI));
-        winText = new Text(0, 0, menuFont, getEndText(true, highScore, best), 32, new TextOptions(HorizontalAlign.CENTER), getVBOM());
+        winText = new Text(0, 0, menuFont, getEndText(true, score), 32, new TextOptions(HorizontalAlign.CENTER), getVBOM());
         final Vector2 textPosition = spritePosition(winText.getWidth(), winText.getHeight(), 0.5f, 0.2f);
         winText.setPosition(textPosition.x, textPosition.y);
         winScene.attachChild(winText);
@@ -446,19 +446,23 @@ public class GameActivity extends AbstractGameActivity implements MenuScene.IOnM
     }
 
     @NonNull
-    private String getEndText(boolean win, int highScore, boolean best) {
+    private String getEndText(boolean win, int score) {
         final StringBuilder winBuilder = new StringBuilder();
+        final SharedPreferences preferences = getPreferences();
+        final String keyHighScore = currentGame.getClass().getSimpleName() + "_highscore";
+        final int highScore = preferences.getInt(keyHighScore, 0);
+        final boolean best = score > highScore;
         if (win) {
             winBuilder.append("VICTORY!");
         } else {
             winBuilder.append("GAME OVER");
         }
         if (best) {
-            winBuilder.append("\nNew high score: ");
+            preferences.edit().putInt(keyHighScore, score).apply();
+            winBuilder.append("\nNew high score: ").append(score);
         } else {
-            winBuilder.append("\nHigh score: ");
+            winBuilder.append("\nHigh score: ").append(highScore);
         }
-        winBuilder.append(highScore);
         return winBuilder.toString();
     }
 

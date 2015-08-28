@@ -45,7 +45,6 @@ public class BinGame extends BaseGame {
     private HashMap<Bin.Type, Bin> binMap = new HashMap<>();
 
     private static final String TAG = "BinGame";
-    public static final String KEY_HIGHSCORE = TAG + "_highscore";
 
     private int gameScore = 0;
     private int gameLives = 3;
@@ -228,17 +227,10 @@ public class BinGame extends BaseGame {
     private void decrementLives() {
         if (--gameLives == 0) {
             setPlaying(false);
-            final SharedPreferences preferences = activity.getPreferences();
-            final int highScore = preferences.getInt(KEY_HIGHSCORE, 0);
-            final boolean best = gameScore > highScore;
-            if (best) {
-                preferences.edit().putInt(KEY_HIGHSCORE, gameScore).apply();
-            }
-
             if (gameScore >= 50) {
-                activity.onWin(best ? gameScore : highScore, best);
+                activity.onWin(gameScore);
             } else {
-                activity.onLose(best ? gameScore : highScore, best);
+                activity.onLose(gameScore);
             }
         }
 
