@@ -32,8 +32,10 @@ import java.util.Stack;
 public class PictoGame extends BaseGame {
     private static final String TAG = "PictoGame";
     public static final float FAIL_DURATION = 1.0f;
+    public static final int GAME_DURATION = 60;
 
     private int gameScore = 0;
+    private double gameScorePercent = 0;
     private int gameTime = 100;
 
     private boolean isDisplayingCards = false;
@@ -148,18 +150,18 @@ public class PictoGame extends BaseGame {
     }
 
     private void incrementScore() {
-        final double scorePercent = ++gameScore * 2 * 100f / cardCount;
+        gameScorePercent = ++gameScore * 2 * 100f / cardCount;
         Log.v(TAG, "beginContact - Increasing score to " + gameScore);
-        setScore(scorePercent);
-        if (scorePercent == 100) {
-            activity.onWin(0);
+        setScore(gameScorePercent);
+        if (gameScorePercent == 100) {
+            activity.onWin(50 + 50 * gameTime / GAME_DURATION);
         }
     }
 
     private void decrementTime() {
         setTime(--gameTime);
         if (gameTime == 0) {
-            activity.onLose(gameScore);
+            activity.onLose((int) (gameScorePercent * 0.5));
         }
     }
 
@@ -321,7 +323,7 @@ public class PictoGame extends BaseGame {
 
     private void resetGamePoints() {
         gameScore = 0;
-        gameTime = 60;
+        gameTime = GAME_DURATION;
         setScore(gameScore);
         setTime(gameTime);
         HUDTime.setUrgent(false);
