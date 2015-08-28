@@ -25,7 +25,7 @@ public abstract class PhysicalWorldObject extends WorldObject {
 
     public PhysicalWorldObject(float pX, float pY, float pAngle, float pScale, boolean draggable, ITiledTextureRegion pTiledTextureRegion, VertexBufferObjectManager pVertexBufferObjectManager,
                                PhysicsWorld physicsWorld) {
-        super(pX, pY, draggable, pTiledTextureRegion, pVertexBufferObjectManager);
+        super(pX, pY, draggable, pScale, pTiledTextureRegion, pVertexBufferObjectManager);
         sprite.setScale(pScale);
         initBody(physicsWorld);
         body.setTransform(pX / PhysicsConstants.PIXEL_TO_METER_RATIO_DEFAULT,

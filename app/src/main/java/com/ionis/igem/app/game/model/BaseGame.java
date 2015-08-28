@@ -14,7 +14,6 @@ import java.util.List;
  * Created by PLN on 21/08/2015.
  */
 public abstract class BaseGame {
-    private static final String TAG = "BaseGame";
     protected ArrayList<GFXAsset> graphicalAssets = new ArrayList<>();
     protected ArrayList<FontAsset> fontAssets = new ArrayList<>();
 
@@ -34,9 +33,13 @@ public abstract class BaseGame {
 
     public abstract Scene prepareScene();
 
-    public abstract ContactListener getContactListener();
+    public ContactListener getContactListener() {
+        return null;
+    }
 
-    public abstract Vector2 getPhysicsVector();
+    public Vector2 getPhysicsVector() {
+        return null;
+    }
 
     public abstract List<HUDElement> getHudElements();
 

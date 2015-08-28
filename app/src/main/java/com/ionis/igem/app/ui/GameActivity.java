@@ -15,6 +15,7 @@ import com.badlogic.gdx.physics.box2d.ContactListener;
 import com.ionis.igem.app.game.BinGame;
 import com.ionis.igem.app.R;
 import com.ionis.igem.app.game.AbstractGameActivity;
+import com.ionis.igem.app.game.PictoGame;
 import com.ionis.igem.app.game.managers.ResMan;
 import com.ionis.igem.app.game.model.BaseGame;
 import com.ionis.igem.app.game.model.HUDElement;

@@ -9,11 +9,13 @@ import com.ionis.igem.app.game.bins.Bin;
 import com.ionis.igem.app.game.bins.Item;
 import com.ionis.igem.app.game.managers.ResMan;
 import com.ionis.igem.app.game.model.BaseGame;
+import com.ionis.igem.app.game.model.DraggableAnimatedSprite;
 import com.ionis.igem.app.game.model.HUDElement;
 import com.ionis.igem.app.game.model.Wall;
 import com.ionis.igem.app.game.model.res.FontAsset;
 import com.ionis.igem.app.game.model.res.GFXAsset;
 import com.ionis.igem.app.ui.GameActivity;
+import com.ionis.igem.app.utils.CalcUtils;
 import org.andengine.engine.camera.Camera;
 import org.andengine.entity.IEntity;
 import org.andengine.entity.modifier.*;
@@ -51,11 +53,9 @@ public class BinGame extends BaseGame {
     private HUDElement HUDScore;
     private HUDElement HUDLives;
     private Random random;
-    private boolean playingAnimation;
 
     public BinGame(GameActivity pActivity) {
         super(pActivity);
-        activity = pActivity;
         random = new Random();
     }
 
@@ -303,17 +303,6 @@ public class BinGame extends BaseGame {
         setLives(gameLives);
     }
 
-    private void deleteItem(final Item item) {
-        final AnimatedSprite sprite = item.getSprite();
-        final Sprite biggerSprite = item.getShape();
-        sprite.setVisible(false);
-        activity.getScene().unregisterTouchArea(biggerSprite);
-        activity.getScene().getChildByIndex(GameActivity.LAYER_BACKGROUND).detachChild(biggerSprite);
-        activity.getScene().getChildByIndex(GameActivity.LAYER_BACKGROUND).detachChild(sprite);
-        activity.markForDeletion(item);
-        item.getShape().stopDragging();
-    }
-
     private void setScore(int score) {
         String padding = "";
         if (score < 10) {
@@ -357,7 +346,7 @@ public class BinGame extends BaseGame {
                 textureRegion = activity.getTexture(ResMan.ITEM_PAPER);
                 break;
             case CONE:
-                switch (randomOf(3)) {
+                switch (CalcUtils.randomOf(3)) {
                     case 0:
                         textureRegion = activity.getTexture(ResMan.ITEM_CONE_BLUE);
                         break;
@@ -391,7 +380,7 @@ public class BinGame extends BaseGame {
                 textureRegion = activity.getTexture(ResMan.ITEM_GEL);
                 break;
             case BECHER:
-                switch (randomOf(3)) {
+                switch (CalcUtils.randomOf(3)) {
                     case 0:
                         textureRegion = activity.getTexture(ResMan.ITEM_BECHER_GREEN);
                         break;
@@ -407,7 +396,7 @@ public class BinGame extends BaseGame {
                 textureRegion = activity.getTexture(ResMan.ITEM_BECHER_BROKEN);
                 break;
             case ERLEN:
-                switch (randomOf(3)) {
+                switch (CalcUtils.randomOf(3)) {
                     case 0:
                         textureRegion = activity.getTexture(ResMan.ITEM_ERLEN_GREEN);
                         break;
@@ -423,7 +412,7 @@ public class BinGame extends BaseGame {
                 textureRegion = activity.getTexture(ResMan.ITEM_ERLEN_BROKEN);
                 break;
             case ROUNDFLASK:
-                switch (randomOf(3)) {
+                switch (CalcUtils.randomOf(3)) {
                     case 0:
                         textureRegion = activity.getTexture(ResMan.ITEM_ROUNDFLASK_GREEN);
                         break;
@@ -439,7 +428,7 @@ public class BinGame extends BaseGame {
                 textureRegion = activity.getTexture(ResMan.ITEM_ROUNDFLASK_BROKEN);
                 break;
             case MICROTUBE:
-                switch (randomOf(3)) {
+                switch (CalcUtils.randomOf(3)) {
                     case 0:
                         textureRegion = activity.getTexture(ResMan.ITEM_MICROTUBE_GREEN);
                         break;
@@ -455,17 +444,28 @@ public class BinGame extends BaseGame {
         createItem(posX, posY, textureRegion, type);
     }
 
-    private int randomOf(int max) {
-        return Math.abs(random.nextInt() % max);
-    }
-
     private void createItem(float posX, float posY, ITiledTextureRegion textureRegion, Item.Type type) {
         Item item = new Item(type, textureRegion, posX, posY, activity.getVBOM(), activity.getPhysicsWorld());
         items.add(item);
         final Scene gameScene = activity.getScene();
-        gameScene.getChildByIndex(GameActivity.LAYER_BACKGROUND).attachChild(item.getSprite());
-        gameScene.getChildByIndex(GameActivity.LAYER_BACKGROUND).attachChild(item.getShape());
+        final IEntity layerBG = gameScene.getChildByIndex(GameActivity.LAYER_BACKGROUND);
+        layerBG.attachChild(item.getSprite());
+        layerBG.attachChild(item.getShape());
         gameScene.registerTouchArea(item.getShape());
+    }
+
+    private void deleteItem(final Item item) {
+        final AnimatedSprite sprite = item.getSprite();
+        final DraggableAnimatedSprite biggerSprite = item.getShape();
+        final Scene scene = activity.getScene();
+        final IEntity layerBG = scene.getChildByIndex(GameActivity.LAYER_BACKGROUND);
+
+        sprite.setVisible(false);
+        scene.unregisterTouchArea(biggerSprite);
+        layerBG.detachChild(biggerSprite);
+        layerBG.detachChild(sprite);
+        activity.markForDeletion(item);
+        biggerSprite.stopDragging();
     }
 
     private void createBin(Bin.Type type, ITiledTextureRegion textureRegion, float posX, float posY) {

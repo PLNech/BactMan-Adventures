@@ -49,10 +49,27 @@ public class ResMan {
     public static final String ITEM_MICROTUBE_GREEN = "item_microtube_green.png";
 
     public static final String HUD_LIVES = "hud_lives.png";
-
     public static final String HUD_SCORE = "hud_score.png";
+
     public static final String F_HUD_BIN = "Roboto-Black.ttf";
     public static final int F_HUD_BIN_SIZE = 40;
     public static final int F_HUD_BIN_COLOR = Color.BLACK;
     public static final boolean F_HUD_BIN_ANTI = true;
+
+    /* PictoGame */
+    public static final String CARD_BACK = "card_back.png";
+    public static final String CARD_BIOHAZARD = "card_biohazard.png";
+    public static final String CARD_CMR = "card_CMR.png";
+    public static final String CARD_ENVIRONMENT = "card_environment.png";
+    public static final String CARD_FACE = "card_face.png";
+    public static final String CARD_FLAMMABLE = "card_flammable.png";
+    public static final String CARD_GLOVES = "card_gloves.png";
+    public static final String CARD_MASK = "card_mask.png";
+    public static final String CARD_OXIDISING = "card_oxidising.png";
+    public static final String CARD_RADIOACTIVE = "card_radioactive.png";
+    public static final String CARD_TOXIC = "card_toxic.png";
+    public static final int CARD_COUNT = 10;
+
+    public static final String HUD_TIME = "hud_time.png";
+
 }

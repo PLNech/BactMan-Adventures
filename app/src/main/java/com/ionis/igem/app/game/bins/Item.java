@@ -72,7 +72,7 @@ public class Item extends PhysicalWorldObject {
     public Item(Type pType, ITiledTextureRegion texture, float posX, float posY, VertexBufferObjectManager manager, PhysicsWorld physicsWorld) {
         super(posX, posY, new Random().nextFloat(), WorldObject.getIdealScale(SCALE_DEFAULT, texture), true, texture, manager, physicsWorld);
         sprite.setCullingEnabled(true);
-        shape = new DraggableAnimatedSprite(posX, posY, getIdealScale(SCALE_DEFAULT, texture), sprite.getTiledTextureRegion(), manager, this) {
+        shape = new DraggableAnimatedSprite(posX, posY, getIdealScale(SCALE_GRABBED, texture), sprite.getTiledTextureRegion(), manager, this) {
             //TODO: Move Draggability to own interface
             @Override
             protected void onManagedUpdate(float pSecondsElapsed) {
