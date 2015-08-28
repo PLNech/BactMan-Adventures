@@ -180,6 +180,8 @@ public class GameActivity extends AbstractGameActivity implements MenuScene.IOnM
             case OPTION_RESET:
                 currentGame.setPlaying(true);
                 currentGame.resetGame();
+                gameScene.clearChildScene();
+                resetMenus();
                 return true;
             case OPTION_NEXT:
                 runOnUiThread(new Runnable() {

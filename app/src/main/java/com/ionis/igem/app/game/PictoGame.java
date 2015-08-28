@@ -44,6 +44,8 @@ public class PictoGame extends BaseGame {
     private HUDElement HUDScore;
 
     private HUDElement HUDTime;
+    private double cardCount;
+
     public PictoGame(GameActivity pActivity) {
         super(pActivity);
     }
@@ -90,8 +92,8 @@ public class PictoGame extends BaseGame {
         Vector2 posS = new Vector2(5, 0); //activity.spritePosition(textureScore, 0.1f, 0.05f, HUDElement.SCALE_DEFAULT);
         Vector2 posT = new Vector2(155, 0); //activity.spritePosition(textureTime, 0.6f, 0.05f, HUDElement.SCALE_DEFAULT);
 
-        Vector2 offS = new Vector2(120, 45);
-        Vector2 offT = new Vector2(180, 45);
+        Vector2 offS = new Vector2(90, 45);
+        Vector2 offT = new Vector2(185, 45);
 
         IFont fontRoboto = activity.getFont(FontAsset.name(ResMan.F_HUD_BIN, ResMan.F_HUD_BIN_SIZE, ResMan.F_HUD_BIN_COLOR, ResMan.F_HUD_BIN_ANTI));
         activity.putFont(ResMan.F_HUD_BIN, fontRoboto);
@@ -100,10 +102,10 @@ public class PictoGame extends BaseGame {
 
         HUDScore = new HUDElement()
                 .buildSprite(posS, textureScore, vbom, scale)
-                .buildText("", "31337".length(), posS.add(offS), fontRoboto, vbom);
+                .buildText("", 8, posS.add(offS), fontRoboto, vbom);
         HUDTime = new HUDElement()
                 .buildSprite(posT, textureTime, vbom, scale)
-                .buildText("", "999".length(), posT.add(offT), fontRoboto, vbom);
+                .buildText("", 8, posT.add(offT), fontRoboto, vbom);
 
         elements.add(HUDScore);
         elements.add(HUDTime);
@@ -132,6 +134,17 @@ public class PictoGame extends BaseGame {
         for (final Card card : cards) {
             deleteCard(card);
         }
+
+        createCards();
+    }
+
+    private void incrementScore() {
+        final double scorePercent = ++gameScore * 2 * 100f / cardCount;
+        Log.v(TAG, "beginContact - Increasing score to " + gameScore);
+        setScore(scorePercent);
+        if (scorePercent == 100) {
+            activity.onWin(0, true);
+        }
     }
 
     private void deleteCard(Card card) {
@@ -149,7 +162,7 @@ public class PictoGame extends BaseGame {
     private void createCards() {
         final double marginCoeff = 1.02;
         final float rows = 6;
-        final double nbCards = Math.pow(rows, 2);
+        cardCount = Math.pow(rows, 2);
         final Stack<String> cardStack = new Stack<>();
 
         final float cardWidth = (int) Math.ceil(512f * Card.SCALE_DEFAULT * marginCoeff);
@@ -165,7 +178,7 @@ public class PictoGame extends BaseGame {
 //        Log.d(TAG, "createCards - stepX:" + stepX + ", stepY:" + stepY);
 
         ArrayList<String> cardList = new ArrayList<>();
-        for (int i = 0; i < (nbCards / 2); i++) {
+        for (int i = 0; i < (cardCount / 2); i++) {
             cardList.add(randomCardName());
         }
         cardStack.addAll(cardList);
@@ -272,7 +285,7 @@ public class PictoGame extends BaseGame {
                 Log.d(TAG, "onTimePassed - Same types :)" + cardTypes);
                 deleteCard(card);
                 deleteCard(currentCard);
-                setScore(++gameScore);
+                incrementScore();
                 currentCard = null;
             } else {
                 isDisplayingCards = true;
@@ -297,12 +310,16 @@ public class PictoGame extends BaseGame {
         setTime(gameTime);
     }
 
-    private void setScore(int score) {
+    private void setScore(double score) {
+        final boolean isInteger = score == Math.floor(score);
         String padding = "";
-        if (score < 10) {
-            padding += " ";
-        }
-        setScore(padding + score);
+        if (score == 0) padding += " ";
+        if (score < 10) padding += " ";
+        if (isInteger) padding += " ";
+        final String formatStr = isInteger ? "%.0f%%" : "%.1f%%";
+        final String scoreStr = padding + String.format(formatStr, score);
+        Log.d(TAG, "setScore - Setting score to _" + scoreStr + "_");
+        setScore(scoreStr);
     }
 
     private void setScore(CharSequence text) {

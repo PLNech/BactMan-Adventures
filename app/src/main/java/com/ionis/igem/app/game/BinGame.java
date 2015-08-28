@@ -286,8 +286,6 @@ public class BinGame extends BaseGame {
                 }
                 items.clear();
                 Log.d(TAG, "resetGame - Cleared game items.");
-                gameScene.clearChildScene();
-                activity.resetMenus();
 
                 createItems();
             }
