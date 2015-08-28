@@ -1,5 +1,6 @@
 package com.ionis.igem.app.game;
 
+import android.support.annotation.NonNull;
 import android.util.Log;
 import com.badlogic.gdx.math.Vector2;
 import com.ionis.igem.app.game.managers.ResMan;
@@ -17,7 +18,9 @@ import org.andengine.opengl.texture.region.ITiledTextureRegion;
 import org.andengine.opengl.vbo.VertexBufferObjectManager;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+import java.util.Stack;
 
 /**
  * Created by PLNech on 28/08/2015.
@@ -133,7 +136,10 @@ public class PictoGame extends BaseGame {
 
     private void createCards() {
         final double marginCoeff = 1.02;
-        final float maxStep = 6;
+        final float rows = 6;
+        final double nbCards = Math.pow(rows, 2);
+        final Stack<String> cardStack = new Stack<>();
+
         final float cardWidth = (int) Math.ceil(512f * Card.SCALE_DEFAULT * marginCoeff);
         final float cardHeight = (int) Math.ceil(785f * Card.SCALE_DEFAULT * marginCoeff);
         final float baseX = 15; /*(GameActivity.CAMERA_WIDTH - 5 * cardWidth) / 2; TODO: Investigate camera madness */
@@ -143,19 +149,35 @@ public class PictoGame extends BaseGame {
         Log.d(TAG, "createCards - baseX:" + baseX + ", Y:" + baseY);
 //        final float stepX = (GameActivity.CAMERA_WIDTH - baseX) / cardWidth;
 //        final float stepY = (GameActivity.CAMERA_HEIGHT - baseY) / cardHeight;
-//        final float maxStep = Math.min(stepX, stepY);
+//        final float rows = Math.min(stepX, stepY);
 //        Log.d(TAG, "createCards - stepX:" + stepX + ", stepY:" + stepY);
-        for (int i = 0; i < maxStep; i++) {
-            for (int j = 0; j < maxStep; j++) {
-                createCard(baseX + cardWidth * i, baseY + cardHeight * j);
+
+        ArrayList<String> cardList = new ArrayList<>();
+        for (int i = 0; i < (nbCards / 2); i++) {
+            cardList.add(randomCardName());
+        }
+        //noinspection CollectionAddedToSelf
+        cardList.addAll(cardList);
+        Collections.shuffle(cardList);
+        cardStack.addAll(cardList);
+
+        for (int i = 0; i < rows; i++) {
+            for (int j = 0; j < rows; j++) {
+                createCard(cardStack.pop(), baseX + cardWidth * i, baseY + cardHeight * j);
             }
         }
     }
 
     private void createCard(float pX, float pY) {
+        String resName = randomCardName();
+        createCard(resName, pX, pY);
+    }
+
+    @NonNull
+    private String randomCardName() {
         String resName = ResMan.CARD_BACK;
 
-        int randCardIndex = CalcUtils.randomOf(ResMan.CARD_COUNT);
+        int randCardIndex = CalcUtils.randomOf(random, ResMan.CARD_COUNT);
         switch (randCardIndex) {
             case 0:
                 resName = ResMan.CARD_BIOHAZARD;
@@ -188,7 +210,7 @@ public class PictoGame extends BaseGame {
                 resName = ResMan.CARD_TOXIC;
                 break;
         }
-        createCard(resName, pX, pY);
+        return resName;
     }
 
     private void createCard(String resCardName, float pX, float pY) {

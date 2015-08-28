@@ -9,6 +9,7 @@ import org.andengine.entity.scene.Scene;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 /**
  * Created by PLN on 21/08/2015.
@@ -16,15 +17,16 @@ import java.util.List;
 public abstract class BaseGame {
     protected ArrayList<GFXAsset> graphicalAssets = new ArrayList<>();
     protected ArrayList<FontAsset> fontAssets = new ArrayList<>();
-
     protected ArrayList<HUDElement> elements = new ArrayList<>();
 
     protected boolean playing = false;
 
     protected GameActivity activity;
+    protected Random random;
 
     public BaseGame(GameActivity pActivity) {
         activity = pActivity;
+        random = new Random();
     }
 
     public abstract List<GFXAsset> getGraphicalAssets();

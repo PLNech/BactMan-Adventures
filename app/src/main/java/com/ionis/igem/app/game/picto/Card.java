@@ -1,6 +1,5 @@
 package com.ionis.igem.app.game.picto;
 
-import android.support.annotation.Nullable;
 import android.util.Log;
 import com.ionis.igem.app.game.managers.ResMan;
 import com.ionis.igem.app.ui.GameActivity;

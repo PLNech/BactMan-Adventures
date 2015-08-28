@@ -52,11 +52,9 @@ public class BinGame extends BaseGame {
 
     private HUDElement HUDScore;
     private HUDElement HUDLives;
-    private Random random;
 
     public BinGame(GameActivity pActivity) {
         super(pActivity);
-        random = new Random();
     }
 
     @Override

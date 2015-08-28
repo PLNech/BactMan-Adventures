@@ -95,7 +95,7 @@ public class GameActivity extends AbstractGameActivity implements MenuScene.IOnM
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Log.d(TAG, "onCreate - Created Activity.");
-        currentGame = new BinGame(this);
+        currentGame = new PictoGame(this);
         preferences = getSharedPreferences(getString(R.string.app_name), MODE_PRIVATE);
 
         BitmapTextureAtlasTextureRegionFactory.setAssetBasePath("gfx/");
