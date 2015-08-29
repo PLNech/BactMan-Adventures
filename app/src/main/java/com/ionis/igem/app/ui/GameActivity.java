@@ -325,7 +325,7 @@ public class GameActivity extends AbstractGameActivity implements MenuScene.IOnM
     }
 
     private void loadSplashScene() {
-        BitmapTextureAtlas splashTextureAtlas = new BitmapTextureAtlas(textureManager, 349, 512, TextureOptions.DEFAULT);
+        BitmapTextureAtlas splashTextureAtlas = new BitmapTextureAtlas(textureManager, 699, 985, TextureOptions.DEFAULT);
         TiledTextureRegion splashTextureRegion = BitmapTextureAtlasTextureRegionFactory.
                 createTiledFromAsset(splashTextureAtlas, this, ResMan.SPLASH, 0, 0, 1, 1);
         splashTextureAtlas.load();
@@ -336,15 +336,15 @@ public class GameActivity extends AbstractGameActivity implements MenuScene.IOnM
         splashScene = new Scene();
 
         final ITextureRegion splashTexture = getTexture(ResMan.SPLASH);
-        final Vector2 center = new Vector2(75, 120);
-        Log.d(TAG, "initSplashScene - Center: " + center.x + ", " + center.y);
+        final Vector2 posS = new Vector2(-100, -80);
+        Log.d(TAG, "initSplashScene - Center: " + posS.x + ", " + posS.y);
 
         final Background backgroundColor = new Background(0.78431f, 0.77254f, 0.76862f);
         splashScene.setBackground(backgroundColor);
 
         DitheredSprite splash = new DitheredSprite(0, 0, splashTexture, getVBOM());
-        splash.setScale(1.5f);
-        splash.setPosition(center.x, center.y);
+        splash.setScale(0.75f);
+        splash.setPosition(posS.x, posS.y);
         splashScene.attachChild(splash);
     }
 
