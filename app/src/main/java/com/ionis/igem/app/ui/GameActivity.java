@@ -14,7 +14,6 @@ import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.ContactListener;
 import com.ionis.igem.app.R;
 import com.ionis.igem.app.game.AbstractGameActivity;
-import com.ionis.igem.app.game.BinGame;
 import com.ionis.igem.app.game.PictoGame;
 import com.ionis.igem.app.game.managers.ResMan;
 import com.ionis.igem.app.game.model.BaseGame;
@@ -83,7 +82,7 @@ public class GameActivity extends AbstractGameActivity implements MenuScene.IOnM
     private BaseGame currentGame;
 
     private Scene splashScene;
-    private MenuScene menuScene;
+    private MenuScene pauseScene;
     private MenuScene winScene;
 
     private Text gameOverText;
@@ -157,14 +156,14 @@ public class GameActivity extends AbstractGameActivity implements MenuScene.IOnM
 
     @Override
     public boolean onKeyDown(final int pKeyCode, @NonNull final KeyEvent pEvent) {
-        if (gameScene != null && menuScene != null &&
+        if (gameScene != null && pauseScene != null &&
                 pKeyCode == KeyEvent.KEYCODE_MENU && pEvent.getAction() == KeyEvent.ACTION_DOWN) {
             if (gameScene.hasChildScene()) {
                 /* Remove the menu and reset it. */
-                menuScene.back();
+                pauseScene.back();
             } else {
                 /* Attach the menu. */
-                gameScene.setChildScene(menuScene, false, true, true);
+                gameScene.setChildScene(pauseScene, false, true, true);
             }
             return true;
         } else {
@@ -324,22 +323,29 @@ public class GameActivity extends AbstractGameActivity implements MenuScene.IOnM
         menuAtlas.load();
     }
 
-    private void initMenuPause() {
-        menuScene = new MenuScene(gameCamera, this);
+    private void initMenuPause() { //TODO: Merge both menus into one TO RULE THEM ALL
+        pauseScene = new MenuScene(gameCamera, this);
+        final ITextureRegion textureNext = getTexture(ResMan.MENU_NEXT);
         final ITextureRegion textureReset = getTexture(ResMan.MENU_RESET);
         final ITextureRegion textureQuit = getTexture(ResMan.MENU_QUIT);
 
+        if (getHighScore(currentGame) >= 50) {
+            final SpriteMenuItem nextMenuItem = new SpriteMenuItem(OPTION_NEXT, textureNext, getVBOM());
+            nextMenuItem.setBlendFunction(GLES20.GL_SRC_ALPHA, GLES20.GL_ONE_MINUS_SRC_ALPHA);
+            pauseScene.addMenuItem(nextMenuItem);
+        }
+
         final SpriteMenuItem resetMenuItem = new SpriteMenuItem(OPTION_RESET, textureReset, getVBOM());
         resetMenuItem.setBlendFunction(GLES20.GL_SRC_ALPHA, GLES20.GL_ONE_MINUS_SRC_ALPHA);
-        menuScene.addMenuItem(resetMenuItem);
+        pauseScene.addMenuItem(resetMenuItem);
 
         final SpriteMenuItem quitMenuItem = new SpriteMenuItem(OPTION_QUIT, textureQuit, getVBOM());
         quitMenuItem.setBlendFunction(GLES20.GL_SRC_ALPHA, GLES20.GL_ONE_MINUS_SRC_ALPHA);
-        menuScene.addMenuItem(quitMenuItem);
+        pauseScene.addMenuItem(quitMenuItem);
 
-        menuScene.buildAnimations();
-        menuScene.setBackgroundEnabled(false);
-        menuScene.setOnMenuItemClickListener(this);
+        pauseScene.buildAnimations();
+        pauseScene.setBackgroundEnabled(false);
+        pauseScene.setOnMenuItemClickListener(this);
     }
 
     private void initMenuWin() {
@@ -366,8 +372,8 @@ public class GameActivity extends AbstractGameActivity implements MenuScene.IOnM
     }
 
     public void resetMenus() {
-        menuScene.detachChild(gameOverText);
-        menuScene.reset();
+        pauseScene.detachChild(gameOverText);
+        pauseScene.reset();
 
         winScene.detachChild(winText);
         winScene.reset();
@@ -433,8 +439,8 @@ public class GameActivity extends AbstractGameActivity implements MenuScene.IOnM
         gameOverText = new Text(0, 0, menuFont, getEndText(false, score), 32, new TextOptions(HorizontalAlign.CENTER), getVBOM());
         final Vector2 textPosition = spritePosition(gameOverText.getWidth(), gameOverText.getHeight(), 0.5f, 0.25f);
         gameOverText.setPosition(textPosition.x, textPosition.y);
-        menuScene.attachChild(gameOverText);
-        gameScene.setChildScene(menuScene, false, true, true);
+        pauseScene.attachChild(gameOverText);
+        gameScene.setChildScene(pauseScene, false, true, true);
     }
 
     public void onWin(int score) {
@@ -467,16 +473,9 @@ public class GameActivity extends AbstractGameActivity implements MenuScene.IOnM
         return winBuilder.toString();
     }
 
-    public Scene getScene() {
-        return gameScene;
-    }
-
-    public PhysicsWorld getPhysicsWorld() {
-        return physicsWorld;
-    }
-
-    public VertexBufferObjectManager getVBOM() {
-        return vertexBufferObjectManager;
+    public int getHighScore(BaseGame game) {
+        final String keyHighScore = game.getClass().getSimpleName() + "_highscore";
+        return preferences.getInt(keyHighScore, 0);
     }
 
     public void markForDeletion(PhysicalWorldObject object) {
@@ -510,4 +509,17 @@ public class GameActivity extends AbstractGameActivity implements MenuScene.IOnM
     public BaseGame getCurrentGame() {
         return currentGame;
     }
+
+    public Scene getScene() {
+        return gameScene;
+    }
+
+    public PhysicsWorld getPhysicsWorld() {
+        return physicsWorld;
+    }
+
+    public VertexBufferObjectManager getVBOM() {
+        return vertexBufferObjectManager;
+    }
+
 }
