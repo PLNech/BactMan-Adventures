@@ -89,6 +89,7 @@ public class GameActivity extends AbstractGameActivity implements MenuScene.IOnM
     private Text winText;
 
     private ArrayList<PhysicalWorldObject> objectsToDelete = new ArrayList<>();
+    private SpriteMenuItem nextMenuItem;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -158,16 +159,24 @@ public class GameActivity extends AbstractGameActivity implements MenuScene.IOnM
     public boolean onKeyDown(final int pKeyCode, @NonNull final KeyEvent pEvent) {
         if (gameScene != null && pauseScene != null &&
                 pKeyCode == KeyEvent.KEYCODE_MENU && pEvent.getAction() == KeyEvent.ACTION_DOWN) {
-            if (gameScene.hasChildScene()) {
-                /* Remove the menu and reset it. */
+            if (gameScene.hasChildScene()) { // The game is paused
                 pauseScene.back();
             } else {
-                /* Attach the menu. */
                 gameScene.setChildScene(pauseScene, false, true, true);
             }
             return true;
         } else {
             return super.onKeyDown(pKeyCode, pEvent);
+        }
+    }
+
+    private void updateNextStatus() {
+        if (getHighScore(currentGame) >= 50) {
+            nextMenuItem.setVisible(true);
+            pauseScene.registerTouchArea(nextMenuItem);
+        } else {
+            nextMenuItem.setVisible(false);
+            pauseScene.unregisterTouchArea(nextMenuItem);
         }
     }
 
@@ -323,17 +332,16 @@ public class GameActivity extends AbstractGameActivity implements MenuScene.IOnM
         menuAtlas.load();
     }
 
-    private void initMenuPause() { //TODO: Merge both menus into one TO RULE THEM ALL
+    private void initMenuPause() {
         pauseScene = new MenuScene(gameCamera, this);
         final ITextureRegion textureNext = getTexture(ResMan.MENU_NEXT);
         final ITextureRegion textureReset = getTexture(ResMan.MENU_RESET);
         final ITextureRegion textureQuit = getTexture(ResMan.MENU_QUIT);
 
-        if (getHighScore(currentGame) >= 50) {
-            final SpriteMenuItem nextMenuItem = new SpriteMenuItem(OPTION_NEXT, textureNext, getVBOM());
-            nextMenuItem.setBlendFunction(GLES20.GL_SRC_ALPHA, GLES20.GL_ONE_MINUS_SRC_ALPHA);
-            pauseScene.addMenuItem(nextMenuItem);
-        }
+        nextMenuItem = new SpriteMenuItem(OPTION_NEXT, textureNext, getVBOM());
+        nextMenuItem.setBlendFunction(GLES20.GL_SRC_ALPHA, GLES20.GL_ONE_MINUS_SRC_ALPHA);
+        pauseScene.addMenuItem(nextMenuItem);
+        updateNextStatus();
 
         final SpriteMenuItem resetMenuItem = new SpriteMenuItem(OPTION_RESET, textureReset, getVBOM());
         resetMenuItem.setBlendFunction(GLES20.GL_SRC_ALPHA, GLES20.GL_ONE_MINUS_SRC_ALPHA);
@@ -374,6 +382,7 @@ public class GameActivity extends AbstractGameActivity implements MenuScene.IOnM
     public void resetMenus() {
         pauseScene.detachChild(gameOverText);
         pauseScene.reset();
+        updateNextStatus();
 
         winScene.detachChild(winText);
         winScene.reset();
@@ -437,7 +446,7 @@ public class GameActivity extends AbstractGameActivity implements MenuScene.IOnM
     public void onLose(int score) {
         final IFont menuFont = getFont(FontAsset.name(ResMan.F_HUD_BIN, ResMan.F_HUD_BIN_SIZE, ResMan.F_HUD_BIN_COLOR, ResMan.F_HUD_BIN_ANTI));
         gameOverText = new Text(0, 0, menuFont, getEndText(false, score), 32, new TextOptions(HorizontalAlign.CENTER), getVBOM());
-        final Vector2 textPosition = spritePosition(gameOverText.getWidth(), gameOverText.getHeight(), 0.5f, 0.25f);
+        final Vector2 textPosition = spritePosition(gameOverText.getWidth(), gameOverText.getHeight(), 0.5f, 0.2f);
         gameOverText.setPosition(textPosition.x, textPosition.y);
         pauseScene.attachChild(gameOverText);
         gameScene.setChildScene(pauseScene, false, true, true);
