@@ -14,6 +14,7 @@ import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.ContactListener;
 import com.ionis.igem.app.R;
 import com.ionis.igem.app.game.AbstractGameActivity;
+import com.ionis.igem.app.game.BinGame;
 import com.ionis.igem.app.game.PictoGame;
 import com.ionis.igem.app.game.managers.ResMan;
 import com.ionis.igem.app.game.model.BaseGame;
@@ -80,23 +81,24 @@ public class GameActivity extends AbstractGameActivity implements MenuScene.IOnM
     private HashMap<CharSequence, IFont> fontMap = new HashMap<>();
 
     private BaseGame currentGame;
+    private ArrayList<BaseGame> games = new ArrayList<>();
+    private int currentGameId = 0;
 
     private Scene splashScene;
     private MenuScene pauseScene;
     private MenuScene winScene;
 
+    private SpriteMenuItem nextMenuItem;
+
     private Text gameOverText;
     private Text winText;
 
     private ArrayList<PhysicalWorldObject> objectsToDelete = new ArrayList<>();
-    private SpriteMenuItem nextMenuItem;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Log.d(TAG, "onCreate - Created Activity.");
-        currentGame = new PictoGame(this);
-        preferences = getSharedPreferences(getString(R.string.app_name), MODE_PRIVATE);
 
         BitmapTextureAtlasTextureRegionFactory.setAssetBasePath("gfx/");
         FontFactory.setAssetBasePath("fonts/");
@@ -114,6 +116,24 @@ public class GameActivity extends AbstractGameActivity implements MenuScene.IOnM
         }
         if (assetManager == null) {
             assetManager = getAssets();
+        }
+
+        if (preferences == null) {
+            preferences = getSharedPreferences(getString(R.string.app_name), MODE_PRIVATE);
+        }
+
+        addGame(BinGame.class);
+        addGame(PictoGame.class);
+        currentGame = games.get(currentGameId);
+    }
+
+    private void addGame(Class<? extends BaseGame> c) {
+        try {
+            final BaseGame game = c.getConstructor(GameActivity.class).newInstance(this);
+            game.setPosition(games.size());
+            games.add(game);
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 
@@ -143,6 +163,11 @@ public class GameActivity extends AbstractGameActivity implements MenuScene.IOnM
 
         Log.d(TAG, "onCreateScene - Splash Scene created.");
 
+        loadGameAsync();
+        return splashScene;
+    }
+
+    private void loadGameAsync() {
         registerUpdateHandler(SPLASH_DURATION, new ITimerCallback() {
             public void onTimePassed(final TimerHandler pTimerHandler) {
                 mEngine.unregisterUpdateHandler(pTimerHandler);
@@ -151,8 +176,6 @@ public class GameActivity extends AbstractGameActivity implements MenuScene.IOnM
                 Log.d(TAG, "onTimePassed - Game Scene created.");
             }
         });
-
-        return splashScene;
     }
 
     @Override
@@ -193,13 +216,20 @@ public class GameActivity extends AbstractGameActivity implements MenuScene.IOnM
                 resetMenus();
                 return true;
             case OPTION_NEXT:
-                runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        Toast.makeText(getApplicationContext(), getResources().getString(R.string.msg_next_game_soon), Toast.LENGTH_SHORT).show();
-                    }
-                });
-                NavUtils.navigateUpFromSameTask(GameActivity.this);
+                if (currentGame.getPosition() < games.size() - 1) {
+                    currentGame = games.get(++currentGameId);
+                    resetMenus();
+                    loadGameAsync();
+                    mEngine.setScene(splashScene);
+                } else {
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            Toast.makeText(getApplicationContext(), getResources().getString(R.string.msg_next_game_soon), Toast.LENGTH_SHORT).show();
+                        }
+                    });
+                    NavUtils.navigateUpFromSameTask(GameActivity.this);
+                }
                 return true;
         }
         return false;

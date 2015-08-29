@@ -23,6 +23,7 @@ public abstract class BaseGame {
 
     protected GameActivity activity;
     protected Random random;
+    private int position;
 
     public BaseGame(GameActivity pActivity) {
         activity = pActivity;
@@ -54,4 +55,12 @@ public abstract class BaseGame {
     }
 
     public abstract void resetGame();
+
+    public void setPosition(int position) {
+        this.position = position;
+    }
+
+    public int getPosition() {
+        return position;
+    }
 }
