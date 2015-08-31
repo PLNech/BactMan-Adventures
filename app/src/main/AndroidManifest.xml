@@ -26,6 +26,7 @@
         <activity
             android:name=".ui.GameMenuActivity"
             android:label="@string/title_activity_game"
+            android:screenOrientation="portrait"
             android:parentActivityName=".ui.HomeActivity" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
@@ -34,6 +35,7 @@
         <activity
             android:name=".ui.UsActivity"
             android:label="@string/title_activity_us"
+            android:screenOrientation="portrait"
             android:parentActivityName=".ui.HomeActivity" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
@@ -42,6 +44,7 @@
         <activity
             android:name=".ui.iGEMActivity"
             android:label="@string/title_activity_igem"
+            android:screenOrientation="portrait"
             android:parentActivityName=".ui.HomeActivity" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
@@ -50,6 +53,7 @@
         <activity
             android:name=".ui.CreditsActivity"
             android:label="@string/title_activity_credits"
+            android:screenOrientation="portrait"
             android:parentActivityName=".ui.HomeActivity" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
@@ -60,6 +64,7 @@
         <activity
             android:name=".ui.GameActivity"
             android:label="@string/title_activity_game_menu"
+            android:screenOrientation="portrait"
             android:parentActivityName=".ui.GameMenuActivity" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
@@ -68,6 +73,7 @@
         <activity
             android:name=".ui.GameSettingsActivity"
             android:label="@string/title_activity_game_settings"
+            android:screenOrientation="portrait"
             android:parentActivityName=".ui.GameMenuActivity" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
@@ -76,6 +82,7 @@
         <activity
             android:name=".ui.GameHelpActivity"
             android:label="@string/title_activity_game_help"
+            android:screenOrientation="portrait"
             android:parentActivityName=".ui.GameMenuActivity" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
@@ -86,6 +93,7 @@
         <activity
             android:name=".ui.PresentationActivity"
             android:label="@string/title_activity_presentation"
+            android:screenOrientation="portrait"
             android:parentActivityName=".ui.UsActivity" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
@@ -94,6 +102,7 @@
         <activity
             android:name=".ui.TeamActivity"
             android:label="@string/title_activity_team"
+            android:screenOrientation="portrait"
             android:parentActivityName=".ui.UsActivity" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
@@ -102,6 +111,7 @@
         <activity
             android:name=".ui.SponsorsActivity"
             android:label="@string/title_activity_sponsors"
+            android:screenOrientation="portrait"
             android:parentActivityName=".ui.UsActivity" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
@@ -110,6 +120,7 @@
         <activity
             android:name=".ui.ContactUsActivity"
             android:label="@string/title_activity_contact_us"
+            android:screenOrientation="portrait"
             android:parentActivityName=".ui.UsActivity" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
@@ -120,6 +131,7 @@
         <activity
             android:name=".ui.WhatActivity"
             android:label="@string/title_activity_what"
+            android:screenOrientation="portrait"
             android:parentActivityName=".ui.iGEMActivity" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
@@ -128,6 +140,7 @@
         <activity
             android:name=".ui.SynBioActivity"
             android:label="@string/title_activity_bio"
+            android:screenOrientation="portrait"
             android:parentActivityName=".ui.iGEMActivity" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
@@ -136,6 +149,7 @@
         <activity
             android:name=".ui.BiobrickActivity"
             android:label="@string/title_activity_biobrick"
+            android:screenOrientation="portrait"
             android:parentActivityName=".ui.iGEMActivity" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
@@ -144,6 +158,7 @@
         <activity
             android:name=".ui.PartnersActivity"
             android:label="@string/title_activity_partners"
+            android:screenOrientation="portrait"
             android:parentActivityName=".ui.iGEMActivity" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
@@ -153,7 +168,6 @@
         <meta-data
             android:name="io.fabric.ApiKey"
             android:value="704f6f3270209fd9bbee18bb16a5c21f5a5e9d75" />
-
     </application>
 
 </manifest>

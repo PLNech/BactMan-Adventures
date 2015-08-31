@@ -125,6 +125,7 @@
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_alignParentTop">true</item>
         <item name="android:layout_alignParentLeft">true</item>
+        <item name="android:scaleType">fitXY</item>
         <item name="android:adjustViewBounds">true</item>
     </style>
 
