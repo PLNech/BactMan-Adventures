@@ -13,13 +13,15 @@ import com.ionis.igem.app.ui.GameActivity;
 import com.ionis.igem.app.utils.CalcUtils;
 import org.andengine.engine.handler.timer.ITimerCallback;
 import org.andengine.engine.handler.timer.TimerHandler;
+import org.andengine.entity.IEntity;
+import org.andengine.entity.modifier.*;
 import org.andengine.entity.scene.Scene;
 import org.andengine.entity.scene.background.Background;
 import org.andengine.entity.sprite.Sprite;
-import org.andengine.input.touch.TouchEvent;
 import org.andengine.opengl.font.IFont;
 import org.andengine.opengl.texture.region.ITiledTextureRegion;
 import org.andengine.opengl.vbo.VertexBufferObjectManager;
+import org.andengine.util.modifier.IModifier;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -32,6 +34,7 @@ import java.util.Stack;
 public class PictoGame extends BaseGame {
     private static final String TAG = "PictoGame";
     public static final float FAIL_DURATION = 1.0f;
+    public static final float WIN_DURATION = 1.0f;
     public static final int GAME_DURATION = 60;
 
     private int gameScore = 0;
@@ -143,7 +146,7 @@ public class PictoGame extends BaseGame {
     public void resetGame() {
         resetGamePoints();
         for (final Card card : cards) {
-            deleteCard(card, false);
+            deleteCard(card, false, false);
         }
         cards.clear();
         createCards();
@@ -165,18 +168,21 @@ public class PictoGame extends BaseGame {
         }
     }
 
-    private void deleteCard(Card card, boolean shouldRemove) {
+    private void deleteCard(Card card, boolean shouldRemove, boolean didUnregisteredTouchArea) {
         final Scene scene = activity.getScene();
         final Sprite back = card.getBack();
 
         card.setVisible(false);
         back.setVisible(false);
-        scene.unregisterTouchArea(card);
-        scene.getChildByIndex(GameActivity.LAYER_FOREGROUND).detachChild(card);
-        scene.getChildByIndex(GameActivity.LAYER_FOREGROUND).detachChild(back);
+        if (didUnregisteredTouchArea) {
+            scene.unregisterTouchArea(card);
+        }
         if (shouldRemove) {
             cards.remove(card);
         }
+
+        scene.getChildByIndex(GameActivity.LAYER_FOREGROUND).detachChild(card);
+        scene.getChildByIndex(GameActivity.LAYER_FOREGROUND).detachChild(back);
     }
 
     private void createCards() {
@@ -311,16 +317,18 @@ public class PictoGame extends BaseGame {
                 currentCard = null;
             } else if (card.getType().equals(currentCard.getType())) {
                 Log.d(TAG, "onTimePassed - Same types :)" + cardTypes);
-                deleteCard(card, true);
-                deleteCard(currentCard, true);
-                incrementScore();
+                final Card oldCard = currentCard;
                 currentCard = null;
+                incrementScore();
+
+                animateCardDeletion(card);
+                animateCardDeletion(oldCard);
             } else {
+                Log.d(TAG, "onTimePassed - =/= types :( " + cardTypes);
                 isDisplayingCards = true;
                 activity.registerUpdateHandler(FAIL_DURATION, new ITimerCallback() {
                     @Override
                     public void onTimePassed(TimerHandler pTimerHandler) {
-                        Log.d(TAG, "onTimePassed - =/= types :( " + cardTypes);
                         card.flip();
                         currentCard.flip();
                         currentCard = null;
@@ -373,4 +381,33 @@ public class PictoGame extends BaseGame {
         return isDisplayingCards;
     }
 
+    private void animateCardDeletion(final Card card) {
+        activity.getScene().unregisterTouchArea(card);
+
+        final IEntityModifier.IEntityModifierListener logListener = new IEntityModifier.IEntityModifierListener() {
+            @Override
+            public void onModifierStarted(IModifier<IEntity> pModifier, IEntity pItem) {
+            }
+
+            @Override
+            public void onModifierFinished(final IModifier<IEntity> pEntityModifier, final IEntity pEntity) {
+                activity.runOnUpdateThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        deleteCard(card, true, true);
+                        Log.d(TAG, "run - Animation finished, deleting card " + card.getType());
+                    }
+                });
+            }
+        };
+        final float fromAlpha = card.getAlpha();
+        final float toAlpha = 0;
+
+        final SequenceEntityModifier entityModifier = new SequenceEntityModifier(
+                new AlphaModifier(WIN_DURATION, fromAlpha, toAlpha),
+                new DelayModifier(WIN_DURATION)
+        );
+
+        card.registerEntityModifier(new LoopEntityModifier(entityModifier, 1, logListener));
+    }
 }
