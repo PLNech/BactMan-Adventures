@@ -44,7 +44,6 @@ public class ResMan {
     public static final String ITEM_ROUNDFLASK_RED = "item_roundflask_red.png";
     public static final String ITEM_ROUNDFLASK_GREEN = "item_roundflask_green.png";
     public static final String ITEM_ROUNDFLASK_BROKEN = "item_roundflask_broken.png";
-    public static final String ITEM_MICROTUBE_ORANGE = "item_microtube_orange.png";
     public static final String ITEM_MICROTUBE_RED = "item_microtube_red.png";
     public static final String ITEM_MICROTUBE_GREEN = "item_microtube_green.png";
 

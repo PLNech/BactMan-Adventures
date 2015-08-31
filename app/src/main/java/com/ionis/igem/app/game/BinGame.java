@@ -88,7 +88,6 @@ public class BinGame extends BaseGame {
             graphicalAssets.add(new GFXAsset(ResMan.ITEM_GLOVES, 512, 541, 0, 0));
             graphicalAssets.add(new GFXAsset(ResMan.ITEM_GEL, 512, 394, 0, 0));
             graphicalAssets.add(new GFXAsset(ResMan.ITEM_MICROTUBE_GREEN, 284, 512, 0, 0));
-            graphicalAssets.add(new GFXAsset(ResMan.ITEM_MICROTUBE_ORANGE, 284, 512, 0, 0));
             graphicalAssets.add(new GFXAsset(ResMan.ITEM_MICROTUBE_RED, 284, 512, 0, 0));
             graphicalAssets.add(new GFXAsset(ResMan.ITEM_ROUNDFLASK_GREEN, 512, 782, 0, 0));
             graphicalAssets.add(new GFXAsset(ResMan.ITEM_ROUNDFLASK_ORANGE, 512, 782, 0, 0));
@@ -416,14 +415,11 @@ public class BinGame extends BaseGame {
                 textureRegion = activity.getTexture(ResMan.ITEM_ROUNDFLASK_BROKEN);
                 break;
             case MICROTUBE:
-                switch (CalcUtils.randomOf(3)) {
+                switch (CalcUtils.randomOf(2)) {
                     case 0:
                         textureRegion = activity.getTexture(ResMan.ITEM_MICROTUBE_GREEN);
                         break;
                     case 1:
-                        textureRegion = activity.getTexture(ResMan.ITEM_MICROTUBE_ORANGE);
-                        break;
-                    case 2:
                         textureRegion = activity.getTexture(ResMan.ITEM_MICROTUBE_RED);
                         break;
                 }
