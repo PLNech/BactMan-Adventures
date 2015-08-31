@@ -15,6 +15,7 @@ import com.badlogic.gdx.physics.box2d.ContactListener;
 import com.ionis.igem.app.R;
 import com.ionis.igem.app.game.AbstractGameActivity;
 import com.ionis.igem.app.game.BinGame;
+import com.ionis.igem.app.game.GutGame;
 import com.ionis.igem.app.game.PictoGame;
 import com.ionis.igem.app.game.managers.ResMan;
 import com.ionis.igem.app.game.model.BaseGame;
@@ -31,6 +32,7 @@ import org.andengine.engine.options.ScreenOrientation;
 import org.andengine.engine.options.resolutionpolicy.RatioResolutionPolicy;
 import org.andengine.entity.Entity;
 import org.andengine.entity.IEntity;
+import org.andengine.entity.scene.IOnSceneTouchListener;
 import org.andengine.entity.scene.Scene;
 import org.andengine.entity.scene.background.Background;
 import org.andengine.entity.scene.menu.MenuScene;
@@ -40,6 +42,7 @@ import org.andengine.entity.shape.IShape;
 import org.andengine.entity.text.Text;
 import org.andengine.entity.text.TextOptions;
 import org.andengine.extension.physics.box2d.PhysicsWorld;
+import org.andengine.input.touch.TouchEvent;
 import org.andengine.opengl.font.Font;
 import org.andengine.opengl.font.FontFactory;
 import org.andengine.opengl.font.FontManager;
@@ -123,6 +126,7 @@ public class GameActivity extends AbstractGameActivity implements MenuScene.IOnM
             preferences = getSharedPreferences(getString(R.string.app_name), MODE_PRIVATE);
         }
 
+        addGame(GutGame.class);
         addGame(BinGame.class);
         addGame(PictoGame.class);
         currentGame = games.get(currentGameId);
@@ -432,6 +436,10 @@ public class GameActivity extends AbstractGameActivity implements MenuScene.IOnM
 
         gameScene = new Scene();
         gameScene.setOnAreaTouchTraversalFrontToBack();
+        final IOnSceneTouchListener sceneTouchListener = currentGame.getOnSceneTouchListener();
+        if (sceneTouchListener != null) {
+            gameScene.setOnSceneTouchListener(sceneTouchListener);
+        }
         loadPhysics(currentGame);
 
         for (int i = 0; i < LAYER_COUNT; i++) {

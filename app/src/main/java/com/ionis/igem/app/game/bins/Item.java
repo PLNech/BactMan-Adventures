@@ -53,7 +53,6 @@ public class Item extends PhysicalWorldObject {
             final int randomIndex = (int) (values.length * Math.random());
             return values[randomIndex];
         }
-
     }
 
     private static final String TAG = "Item";

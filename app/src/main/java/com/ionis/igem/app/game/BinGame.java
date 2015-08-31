@@ -229,6 +229,7 @@ public class BinGame extends BaseGame {
     }
 
     private void decrementLives() {
+        Log.v(TAG, "beginContact - Decreasing lives to " + gameLives + ".");
         if (--gameLives == 0) {
             setPlaying(false);
             if (gameScore >= 50) {
@@ -240,7 +241,6 @@ public class BinGame extends BaseGame {
 
         activity.setPhysicsCoeff(0.8f);
         setLives(gameLives);
-        Log.v(TAG, "beginContact - Decreasing lives to " + gameLives + ".");
         Log.v(TAG, "beginContact - Decreasing speed to " + activity.getPhysicsWorld().getGravity() + ".");
     }
 

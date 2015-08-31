@@ -5,7 +5,9 @@ import com.badlogic.gdx.physics.box2d.ContactListener;
 import com.ionis.igem.app.game.model.res.FontAsset;
 import com.ionis.igem.app.game.model.res.GFXAsset;
 import com.ionis.igem.app.ui.GameActivity;
+import org.andengine.entity.scene.IOnSceneTouchListener;
 import org.andengine.entity.scene.Scene;
+import org.andengine.input.touch.TouchEvent;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -40,6 +42,10 @@ public abstract class BaseGame {
         return null;
     }
 
+    public IOnSceneTouchListener getOnSceneTouchListener() {
+        return null;
+    };
+
     public Vector2 getPhysicsVector() {
         return null;
     }
@@ -62,5 +68,9 @@ public abstract class BaseGame {
 
     public int getPosition() {
         return position;
+    }
+
+    public boolean onSceneTouchEvent(Scene pScene, TouchEvent pSceneTouchEvent) {
+        return false;
     }
 }
