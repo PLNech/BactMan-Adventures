@@ -39,6 +39,9 @@ import java.util.Random;
  */
 public class BinGame extends BaseGame {
 
+    public static final int INIT_SCORE = 0;
+    public static final int INIT_LIVES = 3;
+
     private ArrayList<Item> items = new ArrayList<>();
     private ArrayList<Integer> deadItems = new ArrayList<>();
     private ArrayList<Bin> bins = new ArrayList<>();
@@ -46,8 +49,8 @@ public class BinGame extends BaseGame {
 
     private static final String TAG = "BinGame";
 
-    private int gameScore = 0;
-    private int gameLives = 3;
+    private int gameScore = INIT_SCORE;
+    private int gameLives = INIT_LIVES;
 
     private HUDElement HUDScore;
     private HUDElement HUDLives;
@@ -284,8 +287,8 @@ public class BinGame extends BaseGame {
     }
 
     private void resetGamePoints() {
-        gameScore = 0;
-        gameLives = 3;
+        gameScore = INIT_SCORE;
+        gameLives = INIT_LIVES;
         setScore(gameScore);
         setLives(gameLives);
     }

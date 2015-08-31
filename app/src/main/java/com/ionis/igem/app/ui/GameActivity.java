@@ -88,7 +88,8 @@ public class GameActivity extends AbstractGameActivity implements MenuScene.IOnM
     private MenuScene pauseScene;
     private MenuScene winScene;
 
-    private SpriteMenuItem nextMenuItem;
+    private SpriteMenuItem nextWinMenuItem;
+    private SpriteMenuItem nextPauseMenuItem;
 
     private Text gameOverText;
     private Text winText;
@@ -160,6 +161,7 @@ public class GameActivity extends AbstractGameActivity implements MenuScene.IOnM
         loadMenus();
         initMenuPause();
         initMenuWin();
+        updateNextStatus();
 
         Log.d(TAG, "onCreateScene - Splash Scene created.");
 
@@ -194,12 +196,18 @@ public class GameActivity extends AbstractGameActivity implements MenuScene.IOnM
     }
 
     private void updateNextStatus() {
-        if (getHighScore(currentGame) >= 50) {
-            nextMenuItem.setVisible(true);
-            pauseScene.registerTouchArea(nextMenuItem);
+        final boolean isUnlocked = getHighScore(currentGame) >= 50;
+        Log.d(TAG, "updateNextStatus: " + isUnlocked);
+        updateNextStatus(nextPauseMenuItem, pauseScene, isUnlocked);
+        updateNextStatus(nextWinMenuItem, winScene, isUnlocked);
+    }
+
+    private void updateNextStatus(SpriteMenuItem item, Scene scene, boolean isUnlocking) {
+        item.setVisible(isUnlocking);
+        if (isUnlocking) {
+            scene.registerTouchArea(item);
         } else {
-            nextMenuItem.setVisible(false);
-            pauseScene.unregisterTouchArea(nextMenuItem);
+            scene.unregisterTouchArea(item);
         }
     }
 
@@ -218,6 +226,7 @@ public class GameActivity extends AbstractGameActivity implements MenuScene.IOnM
             case OPTION_NEXT:
                 if (currentGame.getPosition() < games.size() - 1) {
                     currentGame = games.get(++currentGameId);
+                    updateNextStatus();
                     resetMenus();
                     loadGameAsync();
                     mEngine.setScene(splashScene);
@@ -368,10 +377,9 @@ public class GameActivity extends AbstractGameActivity implements MenuScene.IOnM
         final ITextureRegion textureReset = getTexture(ResMan.MENU_RESET);
         final ITextureRegion textureQuit = getTexture(ResMan.MENU_QUIT);
 
-        nextMenuItem = new SpriteMenuItem(OPTION_NEXT, textureNext, getVBOM());
-        nextMenuItem.setBlendFunction(GLES20.GL_SRC_ALPHA, GLES20.GL_ONE_MINUS_SRC_ALPHA);
-        pauseScene.addMenuItem(nextMenuItem);
-        updateNextStatus();
+        nextPauseMenuItem = new SpriteMenuItem(OPTION_NEXT, textureNext, getVBOM());
+        nextPauseMenuItem.setBlendFunction(GLES20.GL_SRC_ALPHA, GLES20.GL_ONE_MINUS_SRC_ALPHA);
+        pauseScene.addMenuItem(nextPauseMenuItem);
 
         final SpriteMenuItem resetMenuItem = new SpriteMenuItem(OPTION_RESET, textureReset, getVBOM());
         resetMenuItem.setBlendFunction(GLES20.GL_SRC_ALPHA, GLES20.GL_ONE_MINUS_SRC_ALPHA);
@@ -392,9 +400,9 @@ public class GameActivity extends AbstractGameActivity implements MenuScene.IOnM
         final ITextureRegion textureReset = getTexture(ResMan.MENU_RESET);
         final ITextureRegion textureQuit = getTexture(ResMan.MENU_QUIT);
 
-        final SpriteMenuItem nextMenuItem = new SpriteMenuItem(OPTION_NEXT, textureNext, getVBOM());
-        nextMenuItem.setBlendFunction(GLES20.GL_SRC_ALPHA, GLES20.GL_ONE_MINUS_SRC_ALPHA);
-        winScene.addMenuItem(nextMenuItem);
+        nextWinMenuItem = new SpriteMenuItem(OPTION_NEXT, textureNext, getVBOM());
+        nextWinMenuItem.setBlendFunction(GLES20.GL_SRC_ALPHA, GLES20.GL_ONE_MINUS_SRC_ALPHA);
+        winScene.addMenuItem(nextWinMenuItem);
 
         final SpriteMenuItem resetMenuItem = new SpriteMenuItem(OPTION_RESET, textureReset, getVBOM());
         resetMenuItem.setBlendFunction(GLES20.GL_SRC_ALPHA, GLES20.GL_ONE_MINUS_SRC_ALPHA);
@@ -412,7 +420,6 @@ public class GameActivity extends AbstractGameActivity implements MenuScene.IOnM
     public void resetMenus() {
         pauseScene.detachChild(gameOverText);
         pauseScene.reset();
-        updateNextStatus();
 
         winScene.detachChild(winText);
         winScene.reset();
@@ -475,7 +482,7 @@ public class GameActivity extends AbstractGameActivity implements MenuScene.IOnM
 
     public void onLose(int score) {
         final IFont menuFont = getFont(FontAsset.name(ResMan.F_HUD_BIN, ResMan.F_HUD_BIN_SIZE, ResMan.F_HUD_BIN_COLOR, ResMan.F_HUD_BIN_ANTI));
-        gameOverText = new Text(0, 0, menuFont, getEndText(false, score), 32, new TextOptions(HorizontalAlign.CENTER), getVBOM());
+        gameOverText = new Text(0, 0, menuFont, getEndTextAndUpdateHighScore(false, score), 32, new TextOptions(HorizontalAlign.CENTER), getVBOM());
         final Vector2 textPosition = spritePosition(gameOverText.getWidth(), gameOverText.getHeight(), 0.5f, 0.2f);
         gameOverText.setPosition(textPosition.x, textPosition.y);
         pauseScene.attachChild(gameOverText);
@@ -484,7 +491,7 @@ public class GameActivity extends AbstractGameActivity implements MenuScene.IOnM
 
     public void onWin(int score) {
         final IFont menuFont = getFont(FontAsset.name(ResMan.F_HUD_BIN, ResMan.F_HUD_BIN_SIZE, ResMan.F_HUD_BIN_COLOR, ResMan.F_HUD_BIN_ANTI));
-        winText = new Text(0, 0, menuFont, getEndText(true, score), 32, new TextOptions(HorizontalAlign.CENTER), getVBOM());
+        winText = new Text(0, 0, menuFont, getEndTextAndUpdateHighScore(true, score), 32, new TextOptions(HorizontalAlign.CENTER), getVBOM());
         final Vector2 textPosition = spritePosition(winText.getWidth(), winText.getHeight(), 0.5f, 0.2f);
         winText.setPosition(textPosition.x, textPosition.y);
         winScene.attachChild(winText);
@@ -492,7 +499,7 @@ public class GameActivity extends AbstractGameActivity implements MenuScene.IOnM
     }
 
     @NonNull
-    private String getEndText(boolean win, int score) {
+    private String getEndTextAndUpdateHighScore(boolean win, int score) {
         final StringBuilder winBuilder = new StringBuilder();
         final SharedPreferences preferences = getPreferences();
         final String keyHighScore = currentGame.getClass().getSimpleName() + "_highscore";
@@ -506,6 +513,7 @@ public class GameActivity extends AbstractGameActivity implements MenuScene.IOnM
         if (best) {
             preferences.edit().putInt(keyHighScore, score).apply();
             winBuilder.append("\nNew high score: ").append(score);
+            updateNextStatus();
         } else {
             winBuilder.append("\nHigh score: ").append(highScore);
         }
