@@ -89,7 +89,7 @@ public class PictoGame extends BaseGame {
     }
 
     @Override
-    public List<HUDElement> getHudElements() { //TODO: Factorise, DRY!
+    public List<HUDElement> getHudElements() {
         final ITiledTextureRegion textureScore = activity.getTexture(ResMan.HUD_SCORE);
         final ITiledTextureRegion textureTime = activity.getTexture(ResMan.HUD_TIME);
 
@@ -198,7 +198,7 @@ public class PictoGame extends BaseGame {
 
         final float cardWidth = (int) Math.ceil(512f * Card.SCALE_DEFAULT * marginCoeff);
         final float cardHeight = (int) Math.ceil(785f * Card.SCALE_DEFAULT * marginCoeff);
-        final float baseX = 15; /*(GameActivity.CAMERA_WIDTH - 5 * cardWidth) / 2; TODO: Investigate camera madness */
+        final float baseX = 15;
         final float baseY = 110;
 
         Log.d(TAG, "createCards - cardW:" + cardWidth + ", H:" + cardHeight);

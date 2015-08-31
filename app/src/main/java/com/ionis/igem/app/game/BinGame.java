@@ -186,7 +186,9 @@ public class BinGame extends BaseGame {
                 Log.v(TAG, "beginContact - Item " + item + " went in bin " + bin + (validMove ? " :)" : " :("));
 
                 if (deadItems.contains(item.getId())) {
-                    return; // TODO: investigate the item's deletion
+                    final String msg = "Contacts a deleted item!";
+                    Log.e(TAG, "handleBinItemContact - " + msg);
+                    throw new IllegalStateException(msg);
                 }
                 final Bin.Animation animation = validMove ? Bin.Animation.VALID_HIT : Bin.Animation.INVALID_HIT;
 
@@ -559,7 +561,6 @@ public class BinGame extends BaseGame {
     }
 
     private void recycleItem(final Item item) {
-        //TODO: Really recycle something
         deleteItem(item);
         deadItems.add(item.getId());
         activity.runOnUpdateThread(new Runnable() {
