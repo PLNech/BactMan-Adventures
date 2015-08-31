@@ -16,7 +16,7 @@ import org.andengine.opengl.vbo.VertexBufferObjectManager;
 public class Card extends Sprite {
     private static final String TAG = "Card";
 
-    public static final float SCALE_DEFAULT = 0.13f;
+    public static final float SCALE_DEFAULT = 0.15f;
 
     String type;
     Sprite backSprite;

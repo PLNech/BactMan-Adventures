@@ -16,6 +16,7 @@ import org.andengine.engine.handler.timer.TimerHandler;
 import org.andengine.entity.scene.Scene;
 import org.andengine.entity.scene.background.Background;
 import org.andengine.entity.sprite.Sprite;
+import org.andengine.input.touch.TouchEvent;
 import org.andengine.opengl.font.IFont;
 import org.andengine.opengl.texture.region.ITiledTextureRegion;
 import org.andengine.opengl.vbo.VertexBufferObjectManager;
@@ -180,9 +181,14 @@ public class PictoGame extends BaseGame {
 
     private void createCards() {
         final double marginCoeff = 1.02;
-        final float rows = 6;
-        cardCount = Math.pow(rows, 2);
+        final float rows = 5;
+        final float cols = 5;
+        cardCount = rows * cols;
         final Stack<String> cardStack = new Stack<>();
+        final boolean countIsEven = cardCount % 2 != 0;
+        if (countIsEven) {
+            cardCount--; //We will remove a card.
+        }
 
         final float cardWidth = (int) Math.ceil(512f * Card.SCALE_DEFAULT * marginCoeff);
         final float cardHeight = (int) Math.ceil(785f * Card.SCALE_DEFAULT * marginCoeff);
@@ -197,16 +203,21 @@ public class PictoGame extends BaseGame {
 //        Log.d(TAG, "createCards - stepX:" + stepX + ", stepY:" + stepY);
 
         ArrayList<String> cardList = new ArrayList<>();
-        for (int i = 0; i < (cardCount / 2); i++) {
+        for (int i = 0; i < cardCount / 2; i++) {
             cardList.add(randomCardName());
         }
         cardStack.addAll(cardList);
         Collections.shuffle(cardList);
         cardStack.addAll(cardList);
 
-        for (int i = 0; i < rows; i++) {
+        for (int i = 0; i < cols; i++) {
             for (int j = 0; j < rows; j++) {
-                createCard(cardStack.pop(), baseX + cardWidth * i, baseY + cardHeight * j);
+                final boolean isMiddleCard = i == Math.floor(cols / 2) && j == Math.floor(rows / 2);
+                if (countIsEven && isMiddleCard) {
+                    Log.d(TAG, "createCards - Skipping card " + i + "," + j + " to preserve evenness");
+                } else {
+                    createCard(cardStack.pop(), baseX + cardWidth * i, baseY + cardHeight * j);
+                }
             }
         }
 
