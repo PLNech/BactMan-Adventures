@@ -19,7 +19,6 @@ import com.ionis.igem.app.game.model.HUDElement;
 import com.ionis.igem.app.game.model.PhysicalWorldObject;
 import com.ionis.igem.app.game.model.res.FontAsset;
 import com.ionis.igem.app.game.model.res.GFXAsset;
-import com.ionis.igem.app.ui.GameActivity;
 import org.andengine.engine.Engine;
 import org.andengine.engine.camera.SmoothCamera;
 import org.andengine.engine.handler.timer.ITimerCallback;
@@ -70,13 +69,13 @@ public abstract class AbstractGameActivity extends SimpleBaseGameActivity implem
     protected static final int CAMERA_HEIGHT = 800;
 
     public static final float SPLASH_DURATION = 0.5f;
+
     public static final String ASSET_PATH_GFX = "gfx/";
     public static final String ASSET_PATH_FONT = "fonts/";
 
     protected static final int OPTION_RESET = 0;
     protected static final int OPTION_NEXT = OPTION_RESET + 1;
     protected static final int OPTION_QUIT = OPTION_NEXT + 1;
-
 
     private HashMap<CharSequence, ITiledTextureRegion> textureMap = new HashMap<>();
     private HashMap<CharSequence, IFont> fontMap = new HashMap<>();
@@ -104,8 +103,8 @@ public abstract class AbstractGameActivity extends SimpleBaseGameActivity implem
     protected static final int LAYER_COUNT = 4;
     public static final int LAYER_BACKGROUND = 0;
     public static final int LAYER_FOREGROUND = LAYER_BACKGROUND + 1;
-    protected static final int LAYER_HUD = LAYER_FOREGROUND + 1;
-    protected static final int LAYER_HUD_TEXT = LAYER_HUD + 1;
+    public static final int LAYER_HUD = LAYER_FOREGROUND + 1;
+    public static final int LAYER_HUD_TEXT = LAYER_HUD + 1;
 
     protected static final float MAX_SPEED_X = 200.0f;
     protected static final float MAX_SPEED_Y = 200.0f;
@@ -351,7 +350,6 @@ public abstract class AbstractGameActivity extends SimpleBaseGameActivity implem
         gameScene.registerUpdateHandler(physicsWorld);
     }
 
-
     protected void initGameScene() {
         loadGFXAssets(currentGame);
         loadFonts(currentGame);
@@ -463,7 +461,6 @@ public abstract class AbstractGameActivity extends SimpleBaseGameActivity implem
         }
     }
 
-
     public void resetMenus() {
         pauseScene.detachChild(gameOverText);
         pauseScene.reset();
@@ -493,7 +490,6 @@ public abstract class AbstractGameActivity extends SimpleBaseGameActivity implem
     private void onQuit() {
         this.finish();
     }
-
 
     @NonNull
     private String getEndTextAndUpdateHighScore(boolean win, int score) {
@@ -532,7 +528,6 @@ public abstract class AbstractGameActivity extends SimpleBaseGameActivity implem
             scene.unregisterTouchArea(item);
         }
     }
-
 
     public Vector2 spriteCenter(ITextureRegion textureRegion) {
         /**
@@ -592,6 +587,4 @@ public abstract class AbstractGameActivity extends SimpleBaseGameActivity implem
     public VertexBufferObjectManager getVBOM() {
         return vertexBufferObjectManager;
     }
-
-
 }
