@@ -42,7 +42,6 @@ import org.andengine.entity.shape.IShape;
 import org.andengine.entity.text.Text;
 import org.andengine.entity.text.TextOptions;
 import org.andengine.extension.physics.box2d.PhysicsWorld;
-import org.andengine.input.touch.TouchEvent;
 import org.andengine.opengl.font.Font;
 import org.andengine.opengl.font.FontFactory;
 import org.andengine.opengl.font.FontManager;
@@ -69,6 +68,8 @@ public class GameActivity extends AbstractGameActivity implements MenuScene.IOnM
     private static final int OPTION_RESET = 0;
     private static final int OPTION_NEXT = OPTION_RESET + 1;
     private static final int OPTION_QUIT = OPTION_NEXT + 1;
+    public static final String ASSET_PATH_GFX = "gfx/";
+    public static final String ASSET_PATH_FONT = "fonts/";
 
 
     private VertexBufferObjectManager vertexBufferObjectManager;
@@ -273,6 +274,7 @@ public class GameActivity extends AbstractGameActivity implements MenuScene.IOnM
     }
 
     private void loadFonts(BaseGame game) {
+        checkSetFontPath();
 
         for (FontAsset asset : game.getFontAssets()) {
             Font font = loadFont(asset);
@@ -287,6 +289,18 @@ public class GameActivity extends AbstractGameActivity implements MenuScene.IOnM
         final ITexture fontTexture = new BitmapTextureAtlas(textureManager, 256, 256, TextureOptions.BILINEAR_PREMULTIPLYALPHA);
         return FontFactory.createFromAsset(fontManager, fontTexture, assetManager,
                 asset.getFilename(), asset.getSize(), asset.isAntialised(), asset.getColor());
+    }
+
+    private void checkSetGFXPath() {
+        if (!BitmapTextureAtlasTextureRegionFactory.getAssetBasePath().equals(ASSET_PATH_GFX)) {
+            BitmapTextureAtlasTextureRegionFactory.setAssetBasePath(ASSET_PATH_GFX);
+        }
+    }
+
+    private void checkSetFontPath() {
+        if (!FontFactory.getAssetBasePath().equals(ASSET_PATH_FONT)) {
+            FontFactory.setAssetBasePath(ASSET_PATH_FONT);
+        }
     }
 
 //    private void loadSounds() {
@@ -338,6 +352,7 @@ public class GameActivity extends AbstractGameActivity implements MenuScene.IOnM
     }
 
     private void loadSplashScene() {
+        checkSetGFXPath();
         BitmapTextureAtlas splashTextureAtlas = new BitmapTextureAtlas(textureManager, 699, 985, TextureOptions.DEFAULT);
         TiledTextureRegion splashTextureRegion = BitmapTextureAtlasTextureRegionFactory.
                 createTiledFromAsset(splashTextureAtlas, this, ResMan.SPLASH, 0, 0, 1, 1);
@@ -362,6 +377,7 @@ public class GameActivity extends AbstractGameActivity implements MenuScene.IOnM
     }
 
     private void loadMenus() {
+        checkSetGFXPath();
         BitmapTextureAtlas menuAtlas = new BitmapTextureAtlas(this.getTextureManager(), 200, 150, TextureOptions.BILINEAR);
         TiledTextureRegion menuBG = BitmapTextureAtlasTextureRegionFactory.createTiledFromAsset(menuAtlas, this, ResMan.MENU_BG, 0, 0, 1, 1);
         TiledTextureRegion menuNext = BitmapTextureAtlasTextureRegionFactory.createTiledFromAsset(menuAtlas, this, ResMan.MENU_NEXT, 0, 0, 1, 1);
