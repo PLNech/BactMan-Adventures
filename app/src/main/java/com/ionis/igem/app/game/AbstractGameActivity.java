@@ -19,6 +19,8 @@ import com.ionis.igem.app.game.model.HUDElement;
 import com.ionis.igem.app.game.model.PhysicalWorldObject;
 import com.ionis.igem.app.game.model.res.FontAsset;
 import com.ionis.igem.app.game.model.res.GFXAsset;
+import com.ionis.igem.app.ui.GameActivity;
+import com.ionis.igem.app.utils.FontsOverride;
 import org.andengine.engine.Engine;
 import org.andengine.engine.camera.SmoothCamera;
 import org.andengine.engine.handler.timer.ITimerCallback;
@@ -119,6 +121,7 @@ public abstract class AbstractGameActivity extends SimpleBaseGameActivity implem
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        FontsOverride.setDefaultFont(this, "SANS_SERIF", "fonts/Roboto-Medium.ttf");
 
         if (vertexBufferObjectManager == null) {
             vertexBufferObjectManager = super.getVertexBufferObjectManager();
@@ -153,6 +156,13 @@ public abstract class AbstractGameActivity extends SimpleBaseGameActivity implem
         return engine;
     }
 
+    @Override
+    public void onCreateResources() {
+        Log.d(TAG, "onCreateResources - Beginning resource creation.");
+        loadSplashScene();
+    }
+
+    protected abstract void loadSplashScene();
 
     @Override
     public synchronized void onResumeGame() {
@@ -179,6 +189,7 @@ public abstract class AbstractGameActivity extends SimpleBaseGameActivity implem
                 pKeyCode == KeyEvent.KEYCODE_MENU && pEvent.getAction() == KeyEvent.ACTION_DOWN) {
             if (gameScene.hasChildScene()) { // The game is paused
                 pauseScene.back();
+                updateNextStatus();
             } else {
                 gameScene.setChildScene(pauseScene, false, true, true);
             }
@@ -387,6 +398,7 @@ public abstract class AbstractGameActivity extends SimpleBaseGameActivity implem
 
         nextPauseMenuItem = new SpriteMenuItem(OPTION_NEXT, textureNext, getVBOM());
         nextPauseMenuItem.setBlendFunction(GLES20.GL_SRC_ALPHA, GLES20.GL_ONE_MINUS_SRC_ALPHA);
+        nextPauseMenuItem.setVisible(false);
         pauseScene.addMenuItem(nextPauseMenuItem);
 
         final SpriteMenuItem resetMenuItem = new SpriteMenuItem(OPTION_RESET, textureReset, getVBOM());
@@ -410,6 +422,7 @@ public abstract class AbstractGameActivity extends SimpleBaseGameActivity implem
 
         nextWinMenuItem = new SpriteMenuItem(OPTION_NEXT, textureNext, getVBOM());
         nextWinMenuItem.setBlendFunction(GLES20.GL_SRC_ALPHA, GLES20.GL_ONE_MINUS_SRC_ALPHA);
+        nextWinMenuItem.setVisible(false);
         winScene.addMenuItem(nextWinMenuItem);
 
         final SpriteMenuItem resetMenuItem = new SpriteMenuItem(OPTION_RESET, textureReset, getVBOM());
@@ -467,6 +480,8 @@ public abstract class AbstractGameActivity extends SimpleBaseGameActivity implem
 
         winScene.detachChild(winText);
         winScene.reset();
+
+        updateNextStatus();
     }
 
     public void onLose(int score) {
@@ -526,6 +541,16 @@ public abstract class AbstractGameActivity extends SimpleBaseGameActivity implem
             scene.registerTouchArea(item);
         } else {
             scene.unregisterTouchArea(item);
+        }
+    }
+
+    protected void addGame(Class<? extends BaseGame> c) {
+        try {
+            final BaseGame game = c.getConstructor(GameActivity.class).newInstance(this);
+            game.setPosition(games.size());
+            games.add(game);
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 

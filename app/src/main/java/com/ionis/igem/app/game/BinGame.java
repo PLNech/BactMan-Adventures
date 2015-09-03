@@ -1,6 +1,5 @@
 package com.ionis.igem.app.game;
 
-import android.content.SharedPreferences;
 import android.hardware.SensorManager;
 import android.util.Log;
 import com.badlogic.gdx.math.Vector2;
@@ -22,7 +21,6 @@ import org.andengine.entity.modifier.*;
 import org.andengine.entity.scene.Scene;
 import org.andengine.entity.scene.background.Background;
 import org.andengine.entity.sprite.AnimatedSprite;
-import org.andengine.entity.sprite.Sprite;
 import org.andengine.opengl.font.IFont;
 import org.andengine.opengl.texture.region.ITiledTextureRegion;
 import org.andengine.opengl.vbo.VertexBufferObjectManager;
@@ -32,14 +30,13 @@ import org.andengine.util.modifier.IModifier;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Random;
 
 /**
  * Created by PLNech on 21/08/2015.
  */
 public class BinGame extends BaseGame {
 
-    public static final int INIT_SCORE = 0;
+    public static final int INIT_SCORE = 45;
     public static final int INIT_LIVES = 3;
 
     private ArrayList<Item> items = new ArrayList<>();

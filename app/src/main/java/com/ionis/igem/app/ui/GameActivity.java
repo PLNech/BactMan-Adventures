@@ -5,10 +5,8 @@ import android.util.Log;
 import com.badlogic.gdx.math.Vector2;
 import com.ionis.igem.app.game.AbstractGameActivity;
 import com.ionis.igem.app.game.BinGame;
-import com.ionis.igem.app.game.GutGame;
 import com.ionis.igem.app.game.PictoGame;
 import com.ionis.igem.app.game.managers.ResMan;
-import com.ionis.igem.app.game.model.BaseGame;
 import com.ionis.igem.app.game.ui.DitheredSprite;
 import org.andengine.engine.camera.SmoothCamera;
 import org.andengine.engine.options.EngineOptions;
@@ -36,28 +34,12 @@ public class GameActivity extends AbstractGameActivity {
         currentGame = games.get(currentGameId);
     }
 
-    private void addGame(Class<? extends BaseGame> c) {
-        try {
-            final BaseGame game = c.getConstructor(GameActivity.class).newInstance(this);
-            game.setPosition(games.size());
-            games.add(game);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
     @Override
     public EngineOptions onCreateEngineOptions() {
         gameCamera = new SmoothCamera(0, 0, CAMERA_WIDTH, CAMERA_HEIGHT, MAX_SPEED_X, MAX_SPEED_Y, MAX_ZOOM_CHANGE);
         final EngineOptions engineOptions = new EngineOptions(true, ScreenOrientation.PORTRAIT_FIXED, new RatioResolutionPolicy(CAMERA_WIDTH, CAMERA_HEIGHT), gameCamera);
         engineOptions.getTouchOptions().setNeedsMultiTouch(true);
         return engineOptions;
-    }
-
-    @Override
-    public void onCreateResources() {
-        Log.d(TAG, "onCreateResources - Beginning resource creation.");
-        loadSplashScene();
     }
 
     @Override
@@ -77,7 +59,7 @@ public class GameActivity extends AbstractGameActivity {
         return splashScene;
     }
 
-    private void loadSplashScene() {
+    protected void loadSplashScene() {
         checkSetGFXPath();
         BitmapTextureAtlas splashTextureAtlas = new BitmapTextureAtlas(textureManager, 699, 985, TextureOptions.DEFAULT);
         TiledTextureRegion splashTextureRegion = BitmapTextureAtlasTextureRegionFactory.
