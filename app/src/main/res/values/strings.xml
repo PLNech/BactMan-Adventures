@@ -2,7 +2,7 @@
     <!-- TODO: Review naming with team -->
 
     <!-- Main texts -->
-    <string name="app_name" translatable="false">IONIS iGEM 2015</string>
+    <string name="app_name" translatable="false">IONIS iGEM</string>
     <string name="action_quit">Quit</string>
     <string name="action_reset">Reset</string>
 
