@@ -38,13 +38,13 @@ public class Item extends PhysicalWorldObject {
         final ITiledTextureRegion texture;
         switch (type) {
             case ANTIBIO:
-                texture = activity.getTexture(ResMan.ITEM_GLOVES);
+                texture = activity.getTexture(ResMan.GUT_ANTIBIO);
                 break;
             case IMMUNO:
                 texture = activity.getTexture(ResMan.ITEM_PAPER);
                 break;
             case NUTRIENT:
-                texture = activity.getTexture(ResMan.ITEM_GEL);
+                texture = activity.getTexture(ResMan.GUT_ACID);
                 break;
             default:
                 throw new IllegalStateException("No default!");

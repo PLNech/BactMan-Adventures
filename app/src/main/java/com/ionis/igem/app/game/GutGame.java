@@ -50,9 +50,9 @@ public class GutGame extends BaseGame {
     @Override
     public List<GFXAsset> getGraphicalAssets() {
         if (graphicalAssets.isEmpty()) {
-            graphicalAssets.add(new GFXAsset(ResMan.ITEM_SLIDE, 151, 512, 0, 0));
-            graphicalAssets.add(new GFXAsset(ResMan.ITEM_PAPER, 512, 560, 0, 0));
-            graphicalAssets.add(new GFXAsset(ResMan.ITEM_GLOVES, 512, 541, 0, 0));
+            graphicalAssets.add(new GFXAsset(ResMan.GUT_BACTMAN, 512, 342, 0, 0));
+            graphicalAssets.add(new GFXAsset(ResMan.GUT_ACID, 512, 1077, 0, 0));
+            graphicalAssets.add(new GFXAsset(ResMan.GUT_ANTIBIO, 512, 508, 0, 0));
             graphicalAssets.add(new GFXAsset(ResMan.ITEM_GEL, 512, 394, 0, 0));
 
             /* HUD */
@@ -127,7 +127,7 @@ public class GutGame extends BaseGame {
     }
 
     private void createPlayer() {
-        player = new Player(240, 240, 0, activity.getTexture(ResMan.ITEM_SLIDE), activity);
+        player = new Player(240, 240, 0, activity.getTexture(ResMan.GUT_BACTMAN), activity);
         final Scene scene = activity.getScene();
         scene.getChildByIndex(AbstractGameActivity.LAYER_FOREGROUND).attachChild(player.getSprite());
     }
