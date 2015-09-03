@@ -4,7 +4,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.ContactListener;
 import com.ionis.igem.app.game.model.res.FontAsset;
 import com.ionis.igem.app.game.model.res.GFXAsset;
-import com.ionis.igem.app.ui.GameActivity;
+import com.ionis.igem.app.game.AbstractGameActivity;
 import org.andengine.entity.scene.IOnSceneTouchListener;
 import org.andengine.entity.scene.Scene;
 import org.andengine.input.touch.TouchEvent;
@@ -23,11 +23,11 @@ public abstract class BaseGame {
 
     protected boolean playing = false;
 
-    protected GameActivity activity;
+    protected AbstractGameActivity activity;
     protected Random random;
     private int position;
 
-    public BaseGame(GameActivity pActivity) {
+    public BaseGame(AbstractGameActivity pActivity) {
         activity = pActivity;
         random = new Random();
     }
@@ -68,6 +68,10 @@ public abstract class BaseGame {
 
     public int getPosition() {
         return position;
+    }
+
+    public boolean isPortrait() {
+        return true;
     }
 
     public boolean onSceneTouchEvent(Scene pScene, TouchEvent pSceneTouchEvent) {

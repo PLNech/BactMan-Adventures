@@ -9,7 +9,6 @@ import com.ionis.igem.app.game.model.HUDElement;
 import com.ionis.igem.app.game.model.res.FontAsset;
 import com.ionis.igem.app.game.model.res.GFXAsset;
 import com.ionis.igem.app.game.picto.Card;
-import com.ionis.igem.app.ui.GameActivity;
 import com.ionis.igem.app.utils.CalcUtils;
 import org.andengine.engine.handler.timer.ITimerCallback;
 import org.andengine.engine.handler.timer.TimerHandler;
@@ -51,7 +50,7 @@ public class PictoGame extends BaseGame {
     private HUDElement HUDTime;
     private double cardCount;
 
-    public PictoGame(GameActivity pActivity) {
+    public PictoGame(PortraitGameActivity pActivity) {
         super(pActivity);
     }
 
@@ -181,8 +180,8 @@ public class PictoGame extends BaseGame {
             cards.remove(card);
         }
 
-        scene.getChildByIndex(GameActivity.LAYER_FOREGROUND).detachChild(card);
-        scene.getChildByIndex(GameActivity.LAYER_FOREGROUND).detachChild(back);
+        scene.getChildByIndex(PortraitGameActivity.LAYER_FOREGROUND).detachChild(card);
+        scene.getChildByIndex(PortraitGameActivity.LAYER_FOREGROUND).detachChild(back);
     }
 
     private void createCards() {
@@ -296,8 +295,8 @@ public class PictoGame extends BaseGame {
     private void addCard(Card card) {
         cards.add(card);
         final Scene gameScene = activity.getScene();
-        gameScene.getChildByIndex(GameActivity.LAYER_FOREGROUND).attachChild(card);
-        gameScene.getChildByIndex(GameActivity.LAYER_FOREGROUND).attachChild(card.getBack());
+        gameScene.getChildByIndex(PortraitGameActivity.LAYER_FOREGROUND).attachChild(card);
+        gameScene.getChildByIndex(PortraitGameActivity.LAYER_FOREGROUND).attachChild(card.getBack());
         gameScene.registerTouchArea(card);
     }
 

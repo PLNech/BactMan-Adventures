@@ -4,7 +4,7 @@ import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.Fixture;
 import com.ionis.igem.app.game.managers.ResMan;
 import com.ionis.igem.app.game.model.PhysicalWorldObject;
-import com.ionis.igem.app.ui.GameActivity;
+import com.ionis.igem.app.game.AbstractGameActivity;
 import org.andengine.opengl.texture.region.ITiledTextureRegion;
 
 /**
@@ -25,7 +25,7 @@ public class Item extends PhysicalWorldObject {
 
     private Type type;
 
-    public Item(float pX, float pY, float pAngle, Type pType, GameActivity activity) {
+    public Item(float pX, float pY, float pAngle, Type pType, AbstractGameActivity activity) {
         super(pX, pY, pAngle, SCALE_DEFAULT, false, chooseTexture(activity, pType), activity.getVBOM(), activity.getPhysicsWorld());
         type = pType;
     }
@@ -34,7 +34,7 @@ public class Item extends PhysicalWorldObject {
         return BodyDef.BodyType.DynamicBody;
     }
 
-    private static ITiledTextureRegion chooseTexture(GameActivity activity, Type type) {
+    private static ITiledTextureRegion chooseTexture(AbstractGameActivity activity, Type type) {
         final ITiledTextureRegion texture;
         switch (type) {
             case ANTIBIO:

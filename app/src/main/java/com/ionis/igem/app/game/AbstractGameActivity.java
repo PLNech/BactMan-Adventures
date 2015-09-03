@@ -19,7 +19,6 @@ import com.ionis.igem.app.game.model.HUDElement;
 import com.ionis.igem.app.game.model.PhysicalWorldObject;
 import com.ionis.igem.app.game.model.res.FontAsset;
 import com.ionis.igem.app.game.model.res.GFXAsset;
-import com.ionis.igem.app.ui.GameActivity;
 import com.ionis.igem.app.utils.FontsOverride;
 import org.andengine.engine.Engine;
 import org.andengine.engine.camera.SmoothCamera;
@@ -546,7 +545,7 @@ public abstract class AbstractGameActivity extends SimpleBaseGameActivity implem
 
     protected void addGame(Class<? extends BaseGame> c) {
         try {
-            final BaseGame game = c.getConstructor(GameActivity.class).newInstance(this);
+            final BaseGame game = c.getConstructor(AbstractGameActivity.class).newInstance(this);
             game.setPosition(games.size());
             games.add(game);
         } catch (Exception e) {

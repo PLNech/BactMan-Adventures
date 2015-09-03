@@ -13,7 +13,6 @@ import com.ionis.igem.app.game.model.HUDElement;
 import com.ionis.igem.app.game.model.Wall;
 import com.ionis.igem.app.game.model.res.FontAsset;
 import com.ionis.igem.app.game.model.res.GFXAsset;
-import com.ionis.igem.app.ui.GameActivity;
 import com.ionis.igem.app.utils.CalcUtils;
 import org.andengine.engine.camera.Camera;
 import org.andengine.entity.IEntity;
@@ -52,7 +51,7 @@ public class BinGame extends BaseGame {
     private HUDElement HUDScore;
     private HUDElement HUDLives;
 
-    public BinGame(GameActivity pActivity) {
+    public BinGame(PortraitGameActivity pActivity) {
         super(pActivity);
     }
 
@@ -434,7 +433,7 @@ public class BinGame extends BaseGame {
         Item item = new Item(type, textureRegion, posX, posY, activity.getVBOM(), activity.getPhysicsWorld());
         items.add(item);
         final Scene gameScene = activity.getScene();
-        final IEntity layerBG = gameScene.getChildByIndex(GameActivity.LAYER_BACKGROUND);
+        final IEntity layerBG = gameScene.getChildByIndex(PortraitGameActivity.LAYER_BACKGROUND);
         layerBG.attachChild(item.getSprite());
         layerBG.attachChild(item.getShape());
         gameScene.registerTouchArea(item.getShape());
@@ -444,7 +443,7 @@ public class BinGame extends BaseGame {
         final AnimatedSprite sprite = item.getSprite();
         final DraggableAnimatedSprite biggerSprite = item.getShape();
         final Scene scene = activity.getScene();
-        final IEntity layerBG = scene.getChildByIndex(GameActivity.LAYER_BACKGROUND);
+        final IEntity layerBG = scene.getChildByIndex(PortraitGameActivity.LAYER_BACKGROUND);
 
         sprite.setVisible(false);
         scene.unregisterTouchArea(biggerSprite);
@@ -458,7 +457,7 @@ public class BinGame extends BaseGame {
         Bin bin = new Bin(type, posX, posY, textureRegion, activity.getVBOM(), activity.getPhysicsWorld());
         bins.add(bin);
         binMap.put(type, bin);
-        activity.getScene().getChildByIndex(GameActivity.LAYER_FOREGROUND).attachChild(bin.getSprite());
+        activity.getScene().getChildByIndex(PortraitGameActivity.LAYER_FOREGROUND).attachChild(bin.getSprite());
     }
 
     private void createBins() {
@@ -496,7 +495,7 @@ public class BinGame extends BaseGame {
 
     private void createWall(float x, float y, float width, float height, Wall.Type type) {
         Wall wall = new Wall(x, y, width, height, type, activity.getVBOM(), activity.getPhysicsWorld());
-        activity.getScene().getChildByIndex(GameActivity.LAYER_BACKGROUND).attachChild(wall);
+        activity.getScene().getChildByIndex(PortraitGameActivity.LAYER_BACKGROUND).attachChild(wall);
     }
 
     private void animateBins(Bin.Animation animation) {

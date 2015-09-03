@@ -1,11 +1,8 @@
-package com.ionis.igem.app.ui;
+package com.ionis.igem.app.game;
 
 import android.os.Bundle;
 import android.util.Log;
 import com.badlogic.gdx.math.Vector2;
-import com.ionis.igem.app.game.AbstractGameActivity;
-import com.ionis.igem.app.game.BinGame;
-import com.ionis.igem.app.game.PictoGame;
 import com.ionis.igem.app.game.managers.ResMan;
 import com.ionis.igem.app.game.ui.DitheredSprite;
 import org.andengine.engine.camera.SmoothCamera;
@@ -20,24 +17,25 @@ import org.andengine.opengl.texture.atlas.bitmap.BitmapTextureAtlasTextureRegion
 import org.andengine.opengl.texture.region.ITextureRegion;
 import org.andengine.opengl.texture.region.TiledTextureRegion;
 
-public class GameActivity extends AbstractGameActivity {
-    private static final String TAG = "GameActivity";
+public class LandscapeGameActivity extends AbstractGameActivity {
+    private static final String TAG = "LandscapeGameActivity";
+
+    protected static final int CAMERA_WIDTH = AbstractGameActivity.CAMERA_HEIGHT;
+    protected static final int CAMERA_HEIGHT = AbstractGameActivity.CAMERA_WIDTH;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Log.d(TAG, "onCreate - Created Activity.");
 
-//        addGame(GutGame.class);
-        addGame(BinGame.class);
-        addGame(PictoGame.class);
+        addGame(GutGame.class);
         currentGame = games.get(currentGameId);
     }
 
     @Override
     public EngineOptions onCreateEngineOptions() {
         gameCamera = new SmoothCamera(0, 0, CAMERA_WIDTH, CAMERA_HEIGHT, MAX_SPEED_X, MAX_SPEED_Y, MAX_ZOOM_CHANGE);
-        final EngineOptions engineOptions = new EngineOptions(true, ScreenOrientation.PORTRAIT_FIXED, new RatioResolutionPolicy(CAMERA_WIDTH, CAMERA_HEIGHT), gameCamera);
+        final EngineOptions engineOptions = new EngineOptions(true, ScreenOrientation.LANDSCAPE_FIXED, new RatioResolutionPolicy(CAMERA_WIDTH, CAMERA_HEIGHT), gameCamera);
         engineOptions.getTouchOptions().setNeedsMultiTouch(true);
         return engineOptions;
     }

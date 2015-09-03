@@ -12,7 +12,6 @@ import com.ionis.igem.app.game.model.HUDElement;
 import com.ionis.igem.app.game.model.Wall;
 import com.ionis.igem.app.game.model.res.FontAsset;
 import com.ionis.igem.app.game.model.res.GFXAsset;
-import com.ionis.igem.app.ui.GameActivity;
 import org.andengine.entity.scene.IOnSceneTouchListener;
 import org.andengine.entity.scene.Scene;
 import org.andengine.entity.scene.background.Background;
@@ -44,7 +43,7 @@ public class GutGame extends BaseGame {
     private ArrayList<Item> items = new ArrayList<>();
     private Player player;
 
-    public GutGame(GameActivity pActivity) {
+    public GutGame(AbstractGameActivity pActivity) {
         super(pActivity);
     }
 
@@ -129,7 +128,7 @@ public class GutGame extends BaseGame {
     private void createPlayer() {
         player = new Player(240, 240, 0, activity.getTexture(ResMan.ITEM_SLIDE), activity);
         final Scene scene = activity.getScene();
-        scene.getChildByIndex(GameActivity.LAYER_FOREGROUND).attachChild(player.getSprite());
+        scene.getChildByIndex(AbstractGameActivity.LAYER_FOREGROUND).attachChild(player.getSprite());
     }
 
     private void createItems() {
@@ -145,7 +144,7 @@ public class GutGame extends BaseGame {
     private void deleteItem(final Item item) {
         final AnimatedSprite sprite = item.getSprite();
         sprite.setVisible(false);
-        activity.getScene().getChildByIndex(GameActivity.LAYER_BACKGROUND).detachChild(sprite);
+        activity.getScene().getChildByIndex(AbstractGameActivity.LAYER_BACKGROUND).detachChild(sprite);
         activity.markForDeletion(item);
     }
 
@@ -309,6 +308,11 @@ public class GutGame extends BaseGame {
 
             }
         };
+    }
+
+    @Override
+    public boolean isPortrait() {
+        return false;
     }
 
 }
