@@ -84,12 +84,13 @@ public class GutGame extends BaseGame {
 
             final float scale = 0.120f;
 
-            Vector2 posS = new Vector2(5, 0); //activity.spritePosition(textureScore, 0.1f, 0.05f, HUDElement.SCALE_DEFAULT);
-            Vector2 posL = new Vector2(155, 0); //activity.spritePosition(textureLives, 0.6f, 0.05f, HUDElement.SCALE_DEFAULT);
+            Vector2 posS = new Vector2(5, 0);
+            Vector2 posL = new Vector2(325, 0);
 
             Vector2 offS = new Vector2(120, 45);
-            Vector2 offL = new Vector2(170, 45);
+            Vector2 offL = new Vector2(310, 45);
 
+            Log.d(TAG, "getHudElements - sprites: " + posS + ", " + posL + " - text:" + offS.add(posS) + ", " + offL.add(posL));
             IFont fontRoboto = activity.getFont(FontAsset.name(ResMan.F_HUD_BIN, ResMan.F_HUD_BIN_SIZE, ResMan.F_HUD_BIN_COLOR, ResMan.F_HUD_BIN_ANTI));
             activity.putFont(ResMan.F_HUD_BIN, fontRoboto);
 
@@ -97,10 +98,10 @@ public class GutGame extends BaseGame {
 
             HUDScore = new HUDElement()
                     .buildSprite(posS, textureScore, vbom, scale)
-                    .buildText("", "31337".length(), posS.add(offS), fontRoboto, vbom);
+                    .buildText("", "31337".length(), offS, fontRoboto, vbom);
             HUDLives = new HUDElement()
                     .buildSprite(posL, textureLives, vbom, scale)
-                    .buildText("", "999".length(), posL.add(offL), fontRoboto, vbom);
+                    .buildText("", "999".length(), offL, fontRoboto, vbom);
 
             elements.add(HUDScore);
             elements.add(HUDLives);
