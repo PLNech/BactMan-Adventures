@@ -483,19 +483,19 @@ public abstract class AbstractGameActivity extends SimpleBaseGameActivity implem
         updateNextStatus();
     }
 
-    public void onLose(int score) {
+    public void onLose(int score, float posRatioX, float posRatioY) {
         final IFont menuFont = getFont(FontAsset.name(ResMan.F_HUD_BIN, ResMan.F_HUD_BIN_SIZE, ResMan.F_HUD_BIN_COLOR, ResMan.F_HUD_BIN_ANTI));
         gameOverText = new Text(0, 0, menuFont, getEndTextAndUpdateHighScore(false, score), 32, new TextOptions(HorizontalAlign.CENTER), getVBOM());
-        final Vector2 textPosition = spritePosition(gameOverText.getWidth(), gameOverText.getHeight(), 0.5f, 0.2f);
+        final Vector2 textPosition = spritePosition(gameOverText.getWidth(), gameOverText.getHeight(), posRatioX, posRatioY);
         gameOverText.setPosition(textPosition.x, textPosition.y);
         pauseScene.attachChild(gameOverText);
         gameScene.setChildScene(pauseScene, false, true, true);
     }
 
-    public void onWin(int score) {
+    public void onWin(int score, float posRatioX, float posRatioY) {
         final IFont menuFont = getFont(FontAsset.name(ResMan.F_HUD_BIN, ResMan.F_HUD_BIN_SIZE, ResMan.F_HUD_BIN_COLOR, ResMan.F_HUD_BIN_ANTI));
         winText = new Text(0, 0, menuFont, getEndTextAndUpdateHighScore(true, score), 32, new TextOptions(HorizontalAlign.CENTER), getVBOM());
-        final Vector2 textPosition = spritePosition(winText.getWidth(), winText.getHeight(), 0.5f, 0.2f);
+        final Vector2 textPosition = spritePosition(winText.getWidth(), winText.getHeight(), posRatioX, posRatioY);
         winText.setPosition(textPosition.x, textPosition.y);
         winScene.attachChild(winText);
         gameScene.setChildScene(winScene, false, true, true);
@@ -582,8 +582,8 @@ public abstract class AbstractGameActivity extends SimpleBaseGameActivity implem
     }
 
     protected Vector2 spritePosition(Vector2 textureDims, Vector2 positionRatio) {
-        final Vector2 res = new Vector2(this.mEngine.getCamera().getWidth() * positionRatio.x - textureDims.x / 2,
-                CAMERA_HEIGHT * positionRatio.y - -textureDims.y / 2);
+        final Vector2 res = new Vector2(getCamera().getWidth() * positionRatio.x - textureDims.x / 2,
+                getCamera().getHeight() * positionRatio.y - -textureDims.y / 2);
         Log.v(TAG, "spritePosition - Returning " + res.x + ", " + res.y);
         return res;
     }

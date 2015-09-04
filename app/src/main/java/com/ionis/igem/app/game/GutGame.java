@@ -255,10 +255,12 @@ public class GutGame extends BaseGame {
         Log.v(TAG, "beginContact - Decreasing lives to " + gameLives + ".");
         if (--gameLives == 0) {
             setPlaying(false);
+            final float posRatioX = 0.5f;
+            final float posRatioY = 0.1f;
             if (gameScore >= 50) {
-                activity.onWin(gameScore);
+                activity.onWin(gameScore, posRatioX, posRatioY);
             } else {
-                activity.onLose(gameScore);
+                activity.onLose(gameScore, posRatioX, posRatioY);
             }
         }
 

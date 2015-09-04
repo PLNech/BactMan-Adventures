@@ -155,14 +155,14 @@ public class PictoGame extends BaseGame {
         Log.v(TAG, "beginContact - Increasing score to " + gameScore);
         setScore(gameScorePercent);
         if (gameScorePercent == 100) {
-            activity.onWin(50 + 50 * gameTime / GAME_DURATION);
+            activity.onWin(50 + 50 * gameTime / GAME_DURATION, 0.5f, 0.2f);
         }
     }
 
     private void decrementTime() {
         setTime(--gameTime);
         if (gameTime == 0) {
-            activity.onLose((int) (gameScorePercent * 0.5));
+            activity.onLose((int) (gameScorePercent * 0.5), 0.5f, 0.2f);
         }
     }
 

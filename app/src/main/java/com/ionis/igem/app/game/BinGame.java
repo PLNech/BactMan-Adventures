@@ -227,9 +227,9 @@ public class BinGame extends BaseGame {
         if (--gameLives == 0) {
             setPlaying(false);
             if (gameScore >= 50) {
-                activity.onWin(gameScore);
+                activity.onWin(gameScore, 0.5f, 0.2f);
             } else {
-                activity.onLose(gameScore);
+                activity.onLose(gameScore, 0.5f, 0.2f);
             }
         }
 
