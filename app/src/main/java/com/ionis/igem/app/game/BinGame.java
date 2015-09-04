@@ -506,7 +506,6 @@ public class BinGame extends BaseGame {
 //                });
             }
         };
-        final Color initialColor = bin.getDefaultColor();
         final Color toColor;
 
         switch (animation) {
@@ -526,8 +525,8 @@ public class BinGame extends BaseGame {
         final float pDuration = 0.25f;
 
         final SequenceEntityModifier entityModifier = new SequenceEntityModifier(
-                new ColorModifier(pDuration, initialColor, toColor),
-                new ColorModifier(pDuration, toColor, initialColor),
+                new ColorModifier(pDuration, Color.WHITE, toColor),
+                new ColorModifier(pDuration, toColor, Color.WHITE),
                 new DelayModifier(pDuration * 2)
         );
 

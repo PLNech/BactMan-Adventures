@@ -18,6 +18,9 @@ import org.andengine.engine.camera.SmoothCamera;
 import org.andengine.engine.handler.timer.ITimerCallback;
 import org.andengine.engine.handler.timer.TimerHandler;
 import org.andengine.entity.IEntity;
+import org.andengine.entity.modifier.ColorModifier;
+import org.andengine.entity.modifier.DelayModifier;
+import org.andengine.entity.modifier.SequenceEntityModifier;
 import org.andengine.entity.scene.IOnSceneTouchListener;
 import org.andengine.entity.scene.Scene;
 import org.andengine.entity.scene.background.SpriteBackground;
@@ -28,6 +31,7 @@ import org.andengine.input.touch.TouchEvent;
 import org.andengine.opengl.font.IFont;
 import org.andengine.opengl.texture.region.ITiledTextureRegion;
 import org.andengine.opengl.vbo.VertexBufferObjectManager;
+import org.andengine.util.color.Color;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -38,7 +42,7 @@ import java.util.List;
 public class GutGame extends BaseGame {
     private static final String TAG = "GutGame";
 
-    public static final int INIT_SCORE = 0;
+    public static final int INIT_SCORE = 50;
     public static final int INIT_LIVES = 3;
     public static final float POS_ITEM_X = 850; // Initial item abscissa
     public static final int SPEED_ITEM_PPS = -150; // Initial item horizontal velocity
@@ -216,7 +220,7 @@ public class GutGame extends BaseGame {
         final float laneHeight = POS_FLOW[1] - POS_FLOW[0];
         float itemY = lanePos + (laneHeight - texHeight) / 2;
 
-        Item item = new Item(POS_ITEM_X, itemY, (float) Math.toRadians(angleD), type, texture, activity);
+        Item item = new Item(POS_ITEM_X, itemY, (float) Math.toRadians(angleD), type, (float) ((50.0 + gameScore) / 50), texture, activity);
         items.add(item);
         activity.getScene().getChildByIndex(AbstractGameActivity.LAYER_FOREGROUND).attachChild(item.getSprite());
     }
@@ -318,9 +322,7 @@ public class GutGame extends BaseGame {
         return new IOnSceneTouchListener() {
             @Override
             public boolean onSceneTouchEvent(Scene pScene, TouchEvent pSceneTouchEvent) {
-                Log.d(TAG, "onSceneTouchEvent - Touched: " + pSceneTouchEvent.getAction());
                 if (pSceneTouchEvent.getAction() == TouchEvent.ACTION_MOVE) {
-                    Log.d(TAG, "onSceneTouchEvent - Moving: " + pSceneTouchEvent.getX() + ", " + pSceneTouchEvent.getY());
                     final Body body = player.getBody();
                     float ratio = PhysicsConstants.PIXEL_TO_METER_RATIO_DEFAULT;
                     body.setTransform(pSceneTouchEvent.getX() / ratio, pSceneTouchEvent.getY() / ratio, body.getAngle());
@@ -360,16 +362,27 @@ public class GutGame extends BaseGame {
             }
 
             private void handlePlayerItemContact(final Item item) {
+                final Color toColor;
                 switch (item.getType()) {
                     case NUTRIENT:
                         incrementScore();
+                        toColor = Color.GREEN;
                         break;
                     case IMMUNO:
                     case ANTIBIO:
+                        toColor = Color.RED;
                         decrementLives();
                         break;
-
+                    default: throw new IllegalStateException();
                 }
+
+                final float pDuration = 0.25f;
+
+                player.getSprite().registerEntityModifier(new SequenceEntityModifier(
+                        new ColorModifier(pDuration, Color.WHITE, toColor),
+                        new ColorModifier(pDuration, toColor, Color.WHITE),
+                        new DelayModifier(pDuration * 2)
+                ));
                 recycleItem(item);
             }
 
