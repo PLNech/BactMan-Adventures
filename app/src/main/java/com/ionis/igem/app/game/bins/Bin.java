@@ -31,7 +31,7 @@ public class Bin extends PhysicalWorldObject {
 
     public Bin(Type binType, float pX, float pY, ITiledTextureRegion pTextureRegion,
                VertexBufferObjectManager pVertexBufferObject, PhysicsWorld physicsWorld) {
-        super(pX, pY, 0, SCALE_DEFAULT, false, pTextureRegion, pVertexBufferObject, physicsWorld);
+        super(pX, pY, 0, false, SCALE_DEFAULT, pTextureRegion, pVertexBufferObject, physicsWorld);
         Log.v(TAG, "Bin - Created at " + pX + ", " + pY);
 
         id = ID++;

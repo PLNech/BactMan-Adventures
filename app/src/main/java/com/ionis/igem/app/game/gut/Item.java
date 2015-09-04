@@ -2,9 +2,11 @@ package com.ionis.igem.app.game.gut;
 
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.Fixture;
+import com.ionis.igem.app.game.AbstractGameActivity;
+import com.ionis.igem.app.game.GutGame;
 import com.ionis.igem.app.game.managers.ResMan;
 import com.ionis.igem.app.game.model.PhysicalWorldObject;
-import com.ionis.igem.app.game.AbstractGameActivity;
+import org.andengine.extension.physics.box2d.util.constants.PhysicsConstants;
 import org.andengine.opengl.texture.region.ITiledTextureRegion;
 
 /**
@@ -26,8 +28,9 @@ public class Item extends PhysicalWorldObject {
     private Type type;
 
     public Item(float pX, float pY, float pAngle, Type pType, ITiledTextureRegion textureRegion, AbstractGameActivity activity) {
-        super(pX, pY, pAngle, SCALE_DEFAULT, false, textureRegion, activity.getVBOM(), activity.getPhysicsWorld());
+        super(pX, pY, pAngle, false, SCALE_DEFAULT, textureRegion, activity.getVBOM(), activity.getPhysicsWorld());
         type = pType;
+        body.setLinearVelocity(GutGame.SPEED_ITEM_PPS / PhysicsConstants.PIXEL_TO_METER_RATIO_DEFAULT, 0);
     }
 
     @Override

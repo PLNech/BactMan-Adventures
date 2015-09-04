@@ -22,9 +22,11 @@ public class Wall extends Rectangle {
 
     private Type type;
 
-    public Wall(float pX, float pY, float pWidth, float pHeight, Type pType, VertexBufferObjectManager pVertexBufferObjectManager,
-                PhysicsWorld physicsWorld) {
+    public Wall(float pX, float pY, float pWidth, float pHeight, Type pType,
+                VertexBufferObjectManager pVertexBufferObjectManager, PhysicsWorld physicsWorld)
+    {
         super(pX, pY, pWidth, pHeight, pVertexBufferObjectManager);
+        setVisible(false);
         type = pType;
         final FixtureDef itemFD = PhysicsFactory.createFixtureDef(PhysicalWorldObject.BODY_DENSITY,
                 PhysicalWorldObject.BODY_ELASTICITY, PhysicalWorldObject.BODY_FRICTION);

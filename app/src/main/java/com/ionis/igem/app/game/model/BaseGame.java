@@ -57,6 +57,10 @@ public abstract class BaseGame {
     public abstract List<HUDElement> getHudElements();
 
     protected void createCameraWalls() {
+        createCameraWalls(true, true, true, true);
+    }
+
+    protected void createCameraWalls(boolean up, boolean right, boolean down, boolean left) {
         final Camera camera = activity.getCamera();
         final float camWidth = camera.getWidth();
         final float camHeight = camera.getHeight();
@@ -65,10 +69,10 @@ public abstract class BaseGame {
         final float centerX = camWidth / 2;
         final float centerY = camHeight / 2;
 
-        createWall(centerX, camHeight + wallDepth / 2, camWidth, wallDepth, Wall.Type.BOTTOM);
-        createWall(centerX, -wallDepth / 2, camWidth, wallDepth, Wall.Type.TOP);
-        createWall(-wallDepth / 2, centerY, wallDepth, camHeight, Wall.Type.LEFT);
-        createWall(camWidth + wallDepth / 2, centerY, wallDepth, camHeight, Wall.Type.RIGHT);
+        if (down) createWall(centerX, camHeight + wallDepth / 2, camWidth, wallDepth, Wall.Type.BOTTOM);
+        if (up) createWall(centerX, -wallDepth / 2, camWidth, wallDepth, Wall.Type.TOP);
+        if (left) createWall(-wallDepth / 2, centerY, wallDepth, camHeight, Wall.Type.LEFT);
+        if (right) createWall(camWidth + wallDepth / 2, centerY, wallDepth, camHeight, Wall.Type.RIGHT);
     }
 
     private void createWall(float x, float y, float width, float height, Wall.Type type) {

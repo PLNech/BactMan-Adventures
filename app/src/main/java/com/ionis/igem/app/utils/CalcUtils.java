@@ -9,9 +9,14 @@ import java.util.Random;
  */
 public class CalcUtils {
     private static final String TAG = "CalcUtils";
+
+    private static Random random;
     
     public static int randomOf(int max) {
-        return randomOf(max, new Random());
+        if (random == null) {
+            random = new Random();
+        }
+        return randomOf(max, random);
     }
     public static int randomOf(int max, Random random) {
         final int res = Math.abs(random.nextInt() % max);

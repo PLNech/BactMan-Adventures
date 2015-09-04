@@ -1,10 +1,10 @@
 package com.ionis.igem.app.game.model;
 
+import android.support.annotation.Nullable;
 import android.util.Pair;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
-import org.andengine.entity.shape.IAreaShape;
 import org.andengine.extension.physics.box2d.PhysicsConnector;
 import org.andengine.extension.physics.box2d.PhysicsFactory;
 import org.andengine.extension.physics.box2d.PhysicsWorld;
@@ -23,10 +23,19 @@ public abstract class PhysicalWorldObject extends WorldObject {
 
     protected Body body;
 
-    public PhysicalWorldObject(float pX, float pY, float pAngle, float pScale, boolean draggable, ITiledTextureRegion pTiledTextureRegion, VertexBufferObjectManager pVertexBufferObjectManager,
+    public PhysicalWorldObject(float pX, float pY, float pAngle, boolean draggable, float scaleDefault,
+                               ITiledTextureRegion pTextureRegion, VertexBufferObjectManager pVBOM, PhysicsWorld physicsWorld) {
+        this(pX, pY, pAngle, draggable, scaleDefault, SCALE_GRABBED, pTextureRegion, pVBOM, physicsWorld);
+    }
+
+    public PhysicalWorldObject(float pX, float pY, float pAngle, boolean draggable, @Nullable Float pScale, @Nullable Float pScaleGrabbed,
+                               ITiledTextureRegion pTiledTextureRegion, VertexBufferObjectManager pVertexBufferObjectManager,
                                PhysicsWorld physicsWorld) {
-        super(pX, pY, draggable, pScale, pTiledTextureRegion, pVertexBufferObjectManager);
-        sprite.setScale(pScale);
+        super(pX, pY, draggable, pScale, pScaleGrabbed, pTiledTextureRegion, pVertexBufferObjectManager);
+        if (pScale != null) {
+            sprite.setScale(pScale);
+        }
+
         initBody(physicsWorld);
         body.setTransform(pX / PhysicsConstants.PIXEL_TO_METER_RATIO_DEFAULT,
                 pY / PhysicsConstants.PIXEL_TO_METER_RATIO_DEFAULT, pAngle);

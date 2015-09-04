@@ -82,4 +82,7 @@ public class ResMan {
 
     public static final String GUT_BG = "gut_background.png";
     public static final String GUT_FLOW = "gut_flow.png";
+
+    public static final String F_HUD_GUT = "Roboto-Medium.ttf";
+    public static final int F_HUD_GUT_SIZE = 30;
 }
