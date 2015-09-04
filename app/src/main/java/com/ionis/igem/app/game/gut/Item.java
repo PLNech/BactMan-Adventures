@@ -4,7 +4,6 @@ import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.Fixture;
 import com.ionis.igem.app.game.AbstractGameActivity;
 import com.ionis.igem.app.game.GutGame;
-import com.ionis.igem.app.game.managers.ResMan;
 import com.ionis.igem.app.game.model.PhysicalWorldObject;
 import org.andengine.extension.physics.box2d.util.constants.PhysicsConstants;
 import org.andengine.opengl.texture.region.ITiledTextureRegion;
@@ -36,24 +35,6 @@ public class Item extends PhysicalWorldObject {
     @Override
     protected BodyDef.BodyType getBodyType() {
         return BodyDef.BodyType.DynamicBody;
-    }
-
-    public static ITiledTextureRegion getTexture(AbstractGameActivity activity, Type type) {
-        final ITiledTextureRegion texture;
-        switch (type) {
-            case ANTIBIO:
-                texture = activity.getTexture(ResMan.GUT_ANTIBIO);
-                break;
-            case IMMUNO:
-                texture = activity.getTexture(ResMan.GUT_PHAGE);
-                break;
-            case NUTRIENT:
-                texture = activity.getTexture(ResMan.GUT_VITAMIN);
-                break;
-            default:
-                throw new IllegalStateException("No default!");
-        }
-        return texture;
     }
 
     public static boolean isOne(Fixture x1) {
