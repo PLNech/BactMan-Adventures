@@ -42,7 +42,7 @@ import java.util.List;
 public class GutGame extends BaseGame {
     private static final String TAG = "GutGame";
 
-    public static final int INIT_SCORE = 50;
+    public static final int INIT_SCORE = 0;
     public static final int INIT_LIVES = 3;
     public static final float POS_ITEM_X = 850; // Initial item abscissa
     public static final int SPEED_ITEM_PPS = -150; // Initial item horizontal velocity
