@@ -15,6 +15,8 @@ import com.ionis.igem.app.game.model.res.FontAsset;
 import com.ionis.igem.app.game.model.res.GFXAsset;
 import com.ionis.igem.app.utils.CalcUtils;
 import org.andengine.engine.camera.SmoothCamera;
+import org.andengine.engine.handler.timer.ITimerCallback;
+import org.andengine.engine.handler.timer.TimerHandler;
 import org.andengine.entity.IEntity;
 import org.andengine.entity.scene.IOnSceneTouchListener;
 import org.andengine.entity.scene.Scene;
@@ -36,11 +38,12 @@ import java.util.List;
 public class GutGame extends BaseGame {
     private static final String TAG = "GutGame";
 
-    public static final int INIT_SCORE = 0;
+    public static final int INIT_SCORE = 40;
     public static final int INIT_LIVES = 3;
-    public static final float POS_ITEM_X = 800; // Initial item abscissa
+    public static final float POS_ITEM_X = 850; // Initial item abscissa
     public static final int SPEED_ITEM_PPS = -150; // Initial item horizontal velocity
     public static final int[] POS_FLOW = {110, 185, 260, 335};
+    public static final int NB_ITEMS = 4;
 
     private int gameScore = INIT_SCORE;
     private int gameLives = INIT_LIVES;
@@ -129,7 +132,7 @@ public class GutGame extends BaseGame {
         createBackground(scene);
         createCameraWalls(true, false, true, true);
         createPlayer();
-        createItems();
+        createItems(NB_ITEMS);
 
         scene.setTouchAreaBindingOnActionDownEnabled(true);
 
@@ -156,8 +159,16 @@ public class GutGame extends BaseGame {
         scene.getChildByIndex(AbstractGameActivity.LAYER_FOREGROUND).attachChild(player.getSprite());
     }
 
-    private void createItems() {
-        createItem();
+    private void createItems(final int count) {
+        if (count > 0) {
+            createItem();
+            activity.registerUpdateHandler(0.25f, new ITimerCallback() {
+                @Override
+                public void onTimePassed(TimerHandler pTimerHandler) {
+                    createItems(count - 1);
+                }
+            });
+        }
     }
 
     private void createItem() {
@@ -256,7 +267,7 @@ public class GutGame extends BaseGame {
         if (--gameLives == 0) {
             setPlaying(false);
             final float posRatioX = 0.5f;
-            final float posRatioY = 0.1f;
+            final float posRatioY = 0f;
             if (gameScore >= 50) {
                 activity.onWin(gameScore, posRatioX, posRatioY);
             } else {
@@ -287,7 +298,7 @@ public class GutGame extends BaseGame {
                 items.clear();
                 Log.d(TAG, "resetGame - Cleared game items.");
 
-                createItems();
+                createItems(NB_ITEMS);
             }
         });
     }
