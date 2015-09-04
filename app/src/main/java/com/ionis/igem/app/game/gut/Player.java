@@ -1,5 +1,6 @@
 package com.ionis.igem.app.game.gut;
 
+import android.util.Pair;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.Fixture;
 import com.ionis.igem.app.game.model.PhysicalWorldObject;
@@ -19,6 +20,14 @@ public class Player extends PhysicalWorldObject {
     @Override
     protected BodyDef.BodyType getBodyType() {
         return BodyDef.BodyType.KinematicBody;
+    }
+
+    @Override
+    protected Pair<Boolean, Boolean> getBodyUpdates() {
+        /**
+         *  Describes the updates to apply : position/rotation
+         */
+        return new Pair<>(true, false);
     }
 
     public static boolean isOne(Fixture x1) {

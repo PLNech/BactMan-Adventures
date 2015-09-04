@@ -25,26 +25,27 @@ public class Item extends PhysicalWorldObject {
 
     private Type type;
 
-    public Item(float pX, float pY, float pAngle, Type pType, AbstractGameActivity activity) {
-        super(pX, pY, pAngle, SCALE_DEFAULT, false, chooseTexture(activity, pType), activity.getVBOM(), activity.getPhysicsWorld());
+    public Item(float pX, float pY, float pAngle, Type pType, ITiledTextureRegion textureRegion, AbstractGameActivity activity) {
+        super(pX, pY, pAngle, SCALE_DEFAULT, false, textureRegion, activity.getVBOM(), activity.getPhysicsWorld());
         type = pType;
     }
+
     @Override
     protected BodyDef.BodyType getBodyType() {
         return BodyDef.BodyType.DynamicBody;
     }
 
-    private static ITiledTextureRegion chooseTexture(AbstractGameActivity activity, Type type) {
+    public static ITiledTextureRegion getTexture(AbstractGameActivity activity, Type type) {
         final ITiledTextureRegion texture;
         switch (type) {
             case ANTIBIO:
                 texture = activity.getTexture(ResMan.GUT_ANTIBIO);
                 break;
             case IMMUNO:
-                texture = activity.getTexture(ResMan.ITEM_PAPER);
+                texture = activity.getTexture(ResMan.GUT_PHAGE);
                 break;
             case NUTRIENT:
-                texture = activity.getTexture(ResMan.GUT_ACID);
+                texture = activity.getTexture(ResMan.GUT_VITAMIN);
                 break;
             default:
                 throw new IllegalStateException("No default!");

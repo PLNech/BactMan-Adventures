@@ -74,9 +74,12 @@ public class ResMan {
     public static final int F_HUD_PICTO_COLOR = Color.WHITE;
 
     /* GutGame */
-    public static final String GUT_ANTIBIO = "gut_antibiotic.png";
     public static final String GUT_BACTMAN = "gut_bactman.png";
+    public static final String GUT_ANTIBIO = "gut_antibiotic.png";
+    public static final String GUT_PHAGE = "gut_phage.png";
+    public static final String GUT_PROTEIN = "gut_protein.png";
+    public static final String GUT_VITAMIN = "gut_vitamine.png";
+
     public static final String GUT_BG = "gut_background.png";
     public static final String GUT_FLOW = "gut_flow.png";
-    public static final String GUT_ACID = "gut_fattyacid.png";
 }

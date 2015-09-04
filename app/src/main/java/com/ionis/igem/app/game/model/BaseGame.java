@@ -2,9 +2,11 @@ package com.ionis.igem.app.game.model;
 
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.ContactListener;
+import com.ionis.igem.app.game.AbstractGameActivity;
+import com.ionis.igem.app.game.PortraitGameActivity;
 import com.ionis.igem.app.game.model.res.FontAsset;
 import com.ionis.igem.app.game.model.res.GFXAsset;
-import com.ionis.igem.app.game.AbstractGameActivity;
+import org.andengine.engine.camera.Camera;
 import org.andengine.entity.scene.IOnSceneTouchListener;
 import org.andengine.entity.scene.Scene;
 import org.andengine.input.touch.TouchEvent;
@@ -44,13 +46,35 @@ public abstract class BaseGame {
 
     public IOnSceneTouchListener getOnSceneTouchListener() {
         return null;
-    };
+    }
+
+    ;
 
     public Vector2 getPhysicsVector() {
         return null;
     }
 
     public abstract List<HUDElement> getHudElements();
+
+    protected void createCameraWalls() {
+        final Camera camera = activity.getCamera();
+        final float camWidth = camera.getWidth();
+        final float camHeight = camera.getHeight();
+        final float wallDepth = 10;
+
+        final float centerX = camWidth / 2;
+        final float centerY = camHeight / 2;
+
+        createWall(centerX, camHeight + wallDepth / 2, camWidth, wallDepth, Wall.Type.BOTTOM);
+        createWall(centerX, -wallDepth / 2, camWidth, wallDepth, Wall.Type.TOP);
+        createWall(-wallDepth / 2, centerY, wallDepth, camHeight, Wall.Type.LEFT);
+        createWall(camWidth + wallDepth / 2, centerY, wallDepth, camHeight, Wall.Type.RIGHT);
+    }
+
+    private void createWall(float x, float y, float width, float height, Wall.Type type) {
+        Wall wall = new Wall(x, y, width, height, type, activity.getVBOM(), activity.getPhysicsWorld());
+        activity.getScene().getChildByIndex(PortraitGameActivity.LAYER_BACKGROUND).attachChild(wall);
+    }
 
     public boolean isPlaying() {
         return playing;

@@ -246,7 +246,7 @@ public class PictoGame extends BaseGame {
     private String randomCardName() {
         String resName = ResMan.CARD_BACK;
 
-        int randCardIndex = CalcUtils.randomOf(random, ResMan.CARD_COUNT);
+        int randCardIndex = CalcUtils.randomOf(ResMan.CARD_COUNT, random);
         switch (randCardIndex) {
             case 0:
                 resName = ResMan.CARD_BIOHAZARD;

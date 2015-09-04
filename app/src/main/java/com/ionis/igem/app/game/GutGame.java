@@ -12,6 +12,7 @@ import com.ionis.igem.app.game.model.HUDElement;
 import com.ionis.igem.app.game.model.Wall;
 import com.ionis.igem.app.game.model.res.FontAsset;
 import com.ionis.igem.app.game.model.res.GFXAsset;
+import com.ionis.igem.app.utils.CalcUtils;
 import org.andengine.entity.scene.IOnSceneTouchListener;
 import org.andengine.entity.scene.Scene;
 import org.andengine.entity.scene.background.Background;
@@ -51,9 +52,10 @@ public class GutGame extends BaseGame {
     public List<GFXAsset> getGraphicalAssets() {
         if (graphicalAssets.isEmpty()) {
             graphicalAssets.add(new GFXAsset(ResMan.GUT_BACTMAN, 512, 342, 0, 0));
-            graphicalAssets.add(new GFXAsset(ResMan.GUT_ACID, 512, 1077, 0, 0));
             graphicalAssets.add(new GFXAsset(ResMan.GUT_ANTIBIO, 512, 508, 0, 0));
-            graphicalAssets.add(new GFXAsset(ResMan.ITEM_GEL, 512, 394, 0, 0));
+            graphicalAssets.add(new GFXAsset(ResMan.GUT_VITAMIN, 512, 512, 0, 0));
+            graphicalAssets.add(new GFXAsset(ResMan.GUT_PROTEIN, 512, 512, 0, 0));
+            graphicalAssets.add(new GFXAsset(ResMan.GUT_PHAGE, 512, 663, 0, 0));
 
             /* HUD */
             graphicalAssets.add(new GFXAsset(ResMan.HUD_LIVES, 1479, 1024, 0, 0));
@@ -118,6 +120,7 @@ public class GutGame extends BaseGame {
         scene.setBackground(backgroundColor);
 
         resetGamePoints();
+        createCameraWalls();
         createPlayer();
         createItems();
 
@@ -133,11 +136,40 @@ public class GutGame extends BaseGame {
     }
 
     private void createItems() {
-        createItem(400, 400, Item.Type.ANTIBIO);
+        createItem(400, 400);
     }
 
-    private void createItem(int x, int y, Item.Type type) {
-        Item item = new Item(x, y, 0.5f, type, activity);
+    private void createItem(float x, float y) {
+        createItem(x, y, Item.Type.random());
+    }
+
+    private void createItem(float x, float y, Item.Type type) {
+        final ITiledTextureRegion texture;
+        float angleD;
+        switch (type) {
+            case NUTRIENT:
+                if (random.nextBoolean()) {
+                    texture = activity.getTexture(ResMan.GUT_VITAMIN);
+                    angleD = -45 + CalcUtils.randomOf(90, random);
+                Log.d(TAG, "createItem : angle = " + angleD);
+                } else {
+                    texture = activity.getTexture(ResMan.GUT_PROTEIN);
+                    angleD = CalcUtils.randomOf(360, random);
+                }
+                break;
+            case IMMUNO:
+                angleD = 90;
+                texture = activity.getTexture(ResMan.GUT_PHAGE);
+                break;
+            case ANTIBIO:
+                angleD = CalcUtils.randomOf(360, random);
+                texture = activity.getTexture(ResMan.GUT_ANTIBIO);
+                break;
+            default:
+                throw new IllegalStateException("No default!");
+        }
+
+        Item item = new Item(x, y, (float) Math.toRadians(angleD), type, texture, activity);
         items.add(item);
         activity.getScene().getChildByIndex(AbstractGameActivity.LAYER_FOREGROUND).attachChild(item.getSprite());
     }
@@ -238,11 +270,8 @@ public class GutGame extends BaseGame {
                 if (pSceneTouchEvent.getAction() == TouchEvent.ACTION_MOVE) {
                     Log.d(TAG, "onSceneTouchEvent - Moving: " + pSceneTouchEvent.getX() + ", " + pSceneTouchEvent.getY());
                     final Body body = player.getBody();
-                    final float x = body.getPosition().x;
-                    final float y = body.getPosition().y;
-                    float velocityX = pSceneTouchEvent.getX() - x * PhysicsConstants.PIXEL_TO_METER_RATIO_DEFAULT;
-                    float velocityY = pSceneTouchEvent.getY() - y * PhysicsConstants.PIXEL_TO_METER_RATIO_DEFAULT;
-                    body.setLinearVelocity(velocityX, velocityY);
+                    float ratio = PhysicsConstants.PIXEL_TO_METER_RATIO_DEFAULT;
+                    body.setTransform(pSceneTouchEvent.getX() / ratio, pSceneTouchEvent.getY() / ratio, body.getAngle());
                     return true;
                 }
                 return false;

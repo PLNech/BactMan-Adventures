@@ -14,7 +14,6 @@ import com.ionis.igem.app.game.model.Wall;
 import com.ionis.igem.app.game.model.res.FontAsset;
 import com.ionis.igem.app.game.model.res.GFXAsset;
 import com.ionis.igem.app.utils.CalcUtils;
-import org.andengine.engine.camera.Camera;
 import org.andengine.entity.IEntity;
 import org.andengine.entity.modifier.*;
 import org.andengine.entity.scene.Scene;
@@ -255,7 +254,7 @@ public class BinGame extends BaseGame {
         scene.setBackground(backgroundColor);
 
         resetGamePoints();
-        createWalls();
+        createCameraWalls();
         createBins();
         createItems();
 
@@ -476,26 +475,6 @@ public class BinGame extends BaseGame {
         createBin(Bin.Type.LIQUIDS, bin2TextureRegion, bin2Pos.x, bin2Pos.y);
         createBin(Bin.Type.NORMAL, bin3TextureRegion, bin3Pos.x, bin3Pos.y);
         createBin(Bin.Type.BIO, bin4TextureRegion, bin4Pos.x, bin4Pos.y);
-    }
-
-    private void createWalls() {
-        final Camera camera = activity.getCamera();
-        final float camWidth = camera.getWidth();
-        final float camHeight = camera.getHeight();
-        final float wallDepth = 10;
-
-        final float centerX = camWidth / 2;
-        final float centerY = camHeight / 2;
-
-        createWall(centerX, camHeight + wallDepth / 2, camWidth, wallDepth, Wall.Type.BOTTOM);
-        createWall(centerX, -wallDepth / 2, camWidth, wallDepth, Wall.Type.TOP);
-        createWall(-wallDepth / 2, centerY, wallDepth, camHeight, Wall.Type.LEFT);
-        createWall(camWidth + wallDepth / 2, centerY, wallDepth, camHeight, Wall.Type.RIGHT);
-    }
-
-    private void createWall(float x, float y, float width, float height, Wall.Type type) {
-        Wall wall = new Wall(x, y, width, height, type, activity.getVBOM(), activity.getPhysicsWorld());
-        activity.getScene().getChildByIndex(PortraitGameActivity.LAYER_BACKGROUND).attachChild(wall);
     }
 
     private void animateBins(Bin.Animation animation) {

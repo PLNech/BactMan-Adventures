@@ -11,9 +11,9 @@ public class CalcUtils {
     private static final String TAG = "CalcUtils";
     
     public static int randomOf(int max) {
-        return randomOf(new Random(), max);
+        return randomOf(max, new Random());
     }
-    public static int randomOf(Random random, int max) {
+    public static int randomOf(int max, Random random) {
         final int res = Math.abs(random.nextInt() % max);
         Log.d(TAG, "randomOf(" + max + ") -> " + res);
         return res;
