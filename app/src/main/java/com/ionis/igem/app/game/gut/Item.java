@@ -27,7 +27,9 @@ public class Item extends PhysicalWorldObject {
     private Type type;
 
     public Item(float pX, float pY, float pAngle, Type pType, ITiledTextureRegion textureRegion, AbstractGameActivity activity) {
-        super(pX, pY, pAngle, false, SCALE_DEFAULT, textureRegion, activity.getVBOM(), activity.getPhysicsWorld());
+        super(new PhysicalWorldObject.Builder(pX, pY, textureRegion, activity.getVBOM(), activity.getPhysicsWorld())
+                .angle(pAngle).draggable(false).scaleDefault(SCALE_DEFAULT)
+                .category(GutGame.CATEGORY_ITEM).mask(GutGame.MASK_ITEM).groupIndex(GutGame.GROUP_INDEX));
         type = pType;
         body.setLinearVelocity(GutGame.SPEED_ITEM_PPS / PhysicsConstants.PIXEL_TO_METER_RATIO_DEFAULT, 0);
     }

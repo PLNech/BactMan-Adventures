@@ -4,6 +4,7 @@ import android.util.Pair;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.Fixture;
 import com.ionis.igem.app.game.AbstractGameActivity;
+import com.ionis.igem.app.game.GutGame;
 import com.ionis.igem.app.game.model.PhysicalWorldObject;
 import org.andengine.opengl.texture.region.ITiledTextureRegion;
 
@@ -14,7 +15,9 @@ public class Player extends PhysicalWorldObject {
     public static float SCALE_DEFAULT = 0.3f;
 
     public Player(float pX, float pY, float pAngle, ITiledTextureRegion pTiledTextureRegion, AbstractGameActivity activity) {
-        super(pX, pY, pAngle, true, SCALE_DEFAULT, pTiledTextureRegion, activity.getVBOM(), activity.getPhysicsWorld());
+        super(new PhysicalWorldObject.Builder(pX, pY, pTiledTextureRegion, activity.getVBOM(), activity.getPhysicsWorld())
+                .angle(pAngle).draggable(true).scaleDefault(SCALE_DEFAULT)
+                .category(GutGame.CATEGORY_PLAYER).mask(GutGame.MASK_PLAYER).groupIndex(GutGame.GROUP_INDEX));
     }
 
     @Override

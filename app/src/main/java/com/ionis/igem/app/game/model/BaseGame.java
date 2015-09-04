@@ -57,10 +57,10 @@ public abstract class BaseGame {
     public abstract List<HUDElement> getHudElements();
 
     protected void createCameraWalls() {
-        createCameraWalls(true, true, true, true);
+        createCameraWalls(true, true, true, true, false);
     }
 
-    protected void createCameraWalls(boolean up, boolean right, boolean down, boolean left) {
+    protected void createCameraWalls(boolean up, boolean right, boolean down, boolean left, boolean masked) {
         final Camera camera = activity.getCamera();
         final float camWidth = camera.getWidth();
         final float camHeight = camera.getHeight();
@@ -69,14 +69,14 @@ public abstract class BaseGame {
         final float centerX = camWidth / 2;
         final float centerY = camHeight / 2;
 
-        if (down) createWall(centerX, camHeight + wallDepth / 2, camWidth, wallDepth, Wall.Type.BOTTOM);
-        if (up) createWall(centerX, -wallDepth / 2, camWidth, wallDepth, Wall.Type.TOP);
-        if (left) createWall(-wallDepth / 2, centerY, wallDepth, camHeight, Wall.Type.LEFT);
-        if (right) createWall(camWidth + wallDepth / 2, centerY, wallDepth, camHeight, Wall.Type.RIGHT);
+        if (down) createWall(centerX, camHeight + wallDepth / 2, camWidth, wallDepth, Wall.Type.BOTTOM, masked);
+        if (up) createWall(centerX, -wallDepth / 2, camWidth, wallDepth, Wall.Type.TOP, masked);
+        if (left) createWall(-wallDepth / 2, centerY, wallDepth, camHeight, Wall.Type.LEFT, masked);
+        if (right) createWall(camWidth + wallDepth / 2, centerY, wallDepth, camHeight, Wall.Type.RIGHT, masked);
     }
 
-    private void createWall(float x, float y, float width, float height, Wall.Type type) {
-        Wall wall = new Wall(x, y, width, height, type, activity.getVBOM(), activity.getPhysicsWorld());
+    private void createWall(float x, float y, float width, float height, Wall.Type type, boolean masked) {
+        Wall wall = new Wall(x, y, width, height, type, activity.getVBOM(), activity.getPhysicsWorld(), masked);
         activity.getScene().getChildByIndex(PortraitGameActivity.LAYER_BACKGROUND).attachChild(wall);
     }
 

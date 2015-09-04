@@ -57,7 +57,7 @@ public class Item extends PhysicalWorldObject {
 
     private static final String TAG = "Item";
 
-    public static final int BODY_DENSITY = 1;
+    public static final float BODY_DENSITY = 1;
     public static final float BODY_ELASTICITY = 0.5f;
     public static final float BODY_FRICTION = 0.125f;
 
@@ -69,8 +69,10 @@ public class Item extends PhysicalWorldObject {
     int id;
 
     public Item(Type pType, ITiledTextureRegion texture, float posX, float posY, VertexBufferObjectManager manager, PhysicsWorld physicsWorld) {
-        super(posX, posY, new Random().nextFloat(), true, WorldObject.getIdealScale(SCALE_DEFAULT, texture),
-                WorldObject.getIdealScale(SCALE_GRABBED, texture), texture, manager, physicsWorld);
+        super(new PhysicalWorldObject.Builder(posX, posY, texture, manager, physicsWorld)
+                .angle(new Random().nextFloat()).draggable(true)
+                .scaleDefault(WorldObject.getIdealScale(SCALE_DEFAULT, texture))
+                .scaleGrabbed(WorldObject.getIdealScale(SCALE_GRABBED, texture)));
         sprite.setCullingEnabled(true);
         shape = new DraggableAnimatedSprite(posX, posY, getIdealScale(SCALE_GRABBED, texture), sprite.getTiledTextureRegion(), manager, this) {
             //TODO: Move Draggability to own interface
@@ -105,7 +107,7 @@ public class Item extends PhysicalWorldObject {
     }
 
     @Override
-    public int getDensity() {
+    public float getDensity() {
         return BODY_DENSITY;
     }
 

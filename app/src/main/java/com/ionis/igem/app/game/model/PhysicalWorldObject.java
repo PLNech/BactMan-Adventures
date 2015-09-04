@@ -1,6 +1,5 @@
 package com.ionis.igem.app.game.model;
 
-import android.support.annotation.Nullable;
 import android.util.Pair;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
@@ -17,36 +16,97 @@ import org.andengine.opengl.vbo.VertexBufferObjectManager;
  */
 public abstract class PhysicalWorldObject extends WorldObject {
 
-    public static final int BODY_DENSITY = 1000;
+    public static final float BODY_DENSITY = 1000;
     public static final float BODY_ELASTICITY = 0;
     public static final float BODY_FRICTION = 0;
 
     protected Body body;
 
-    public PhysicalWorldObject(float pX, float pY, float pAngle, boolean draggable, float scaleDefault,
-                               ITiledTextureRegion pTextureRegion, VertexBufferObjectManager pVBOM, PhysicsWorld physicsWorld) {
-        this(pX, pY, pAngle, draggable, scaleDefault, SCALE_GRABBED, pTextureRegion, pVBOM, physicsWorld);
-    }
+    public static class Builder {
+        private final float pX;
+        private final float pY;
+        private final ITiledTextureRegion textureRegion;
+        private final VertexBufferObjectManager manager;
+        private final PhysicsWorld physicsWorld;
 
-    public PhysicalWorldObject(float pX, float pY, float pAngle, boolean draggable, @Nullable Float pScale, @Nullable Float pScaleGrabbed,
-                               ITiledTextureRegion pTiledTextureRegion, VertexBufferObjectManager pVertexBufferObjectManager,
-                               PhysicsWorld physicsWorld) {
-        super(pX, pY, draggable, pScale, pScaleGrabbed, pTiledTextureRegion, pVertexBufferObjectManager);
-        if (pScale != null) {
-            sprite.setScale(pScale);
+        private float angle = 0;
+        private boolean draggable = false;
+        private float scaleDefault = SCALE_DEFAULT;
+        private float scaleGrabbed = SCALE_GRABBED;
+
+        private Short category = null;
+        private Short mask = null;
+        private Short groupIndex = null;
+
+        public Builder(float pX, float pY, ITiledTextureRegion textureRegion, VertexBufferObjectManager manager, PhysicsWorld physicsWorld) {
+            this.pX = pX;
+            this.pY = pY;
+            this.textureRegion = textureRegion;
+            this.manager = manager;
+            this.physicsWorld = physicsWorld;
         }
 
-        initBody(physicsWorld);
-        body.setTransform(pX / PhysicsConstants.PIXEL_TO_METER_RATIO_DEFAULT,
-                pY / PhysicsConstants.PIXEL_TO_METER_RATIO_DEFAULT, pAngle);
+        public Builder angle(float pAngle) {
+            angle = pAngle;
+            return this;
+        }
+
+        public Builder scaleDefault(float pScale) {
+            scaleDefault = pScale;
+            return this;
+        }
+
+        public Builder scaleGrabbed(float pScale) {
+            scaleGrabbed = pScale;
+            return this;
+        }
+
+        public Builder draggable(boolean pDraggable) {
+            draggable = pDraggable;
+            return this;
+        }
+
+        public Builder category(short val) {
+            category = val;
+            return this;
+        }
+
+        public Builder mask(short val) {
+            mask = val;
+            return this;
+        }
+
+        public Builder groupIndex(short val) {
+            groupIndex = val;
+            return this;
+        }
+    }
+
+    protected PhysicalWorldObject(Builder b) {
+        super(b.pX, b.pY, b.draggable, b.scaleDefault, b.scaleGrabbed, b.textureRegion, b.manager);
+        sprite.setScale(b.scaleDefault);
+
+        initBody(b.physicsWorld, b.category, b.mask, b.groupIndex);
+        body.setTransform(b.pX / PhysicsConstants.PIXEL_TO_METER_RATIO_DEFAULT,
+                b.pY / PhysicsConstants.PIXEL_TO_METER_RATIO_DEFAULT, b.angle);
 
         Pair<Boolean, Boolean> updates = getBodyUpdates();
-        physicsWorld.registerPhysicsConnector(new PhysicsConnector(sprite, body, updates.first, updates.second));
+        b.physicsWorld.registerPhysicsConnector(new PhysicsConnector(sprite, body, updates.first, updates.second));
+    }
+
+    protected void initBody(PhysicsWorld physicsWorld) {
+        initBody(physicsWorld, null, null, null);
     }
 
     @SuppressWarnings("AccessStaticViaInstance")
-    protected void initBody(PhysicsWorld physicsWorld) {
-        final FixtureDef itemFixtureDef = PhysicsFactory.createFixtureDef(this.getDensity(), this.getElasticity(), this.getFriction());
+    protected void initBody(PhysicsWorld physicsWorld, Short category, Short mask, Short groupIndex) {
+        final FixtureDef itemFixtureDef;
+        if (category != null && mask != null && groupIndex != null) {
+            itemFixtureDef = PhysicsFactory.createFixtureDef(this.getDensity(), this.getElasticity(), this.getFriction(), false, category, mask, groupIndex);
+        } else {
+            itemFixtureDef = PhysicsFactory.createFixtureDef(this.getDensity(), this.getElasticity(), this.getFriction());
+        }
+
         body = PhysicsFactory.createBoxBody(physicsWorld, sprite, this.getBodyType(), itemFixtureDef);
         body.setUserData(this);
     }
@@ -70,7 +130,7 @@ public abstract class PhysicalWorldObject extends WorldObject {
         return BODY_FRICTION;
     }
 
-    public int getDensity() {
+    public float getDensity() {
         return BODY_DENSITY;
     }
 

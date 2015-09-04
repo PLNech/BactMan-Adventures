@@ -50,7 +50,7 @@ public class BinGame extends BaseGame {
     private HUDElement HUDScore;
     private HUDElement HUDLives;
 
-    public BinGame(PortraitGameActivity pActivity) {
+    public BinGame(AbstractGameActivity pActivity) {
         super(pActivity);
     }
 

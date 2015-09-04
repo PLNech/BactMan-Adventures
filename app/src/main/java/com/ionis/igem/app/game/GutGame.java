@@ -38,12 +38,22 @@ import java.util.List;
 public class GutGame extends BaseGame {
     private static final String TAG = "GutGame";
 
-    public static final int INIT_SCORE = 40;
+    public static final int INIT_SCORE = 0;
     public static final int INIT_LIVES = 3;
     public static final float POS_ITEM_X = 850; // Initial item abscissa
     public static final int SPEED_ITEM_PPS = -150; // Initial item horizontal velocity
     public static final int[] POS_FLOW = {110, 185, 260, 335};
     public static final int NB_ITEMS = 4;
+
+    public static final short CATEGORY_WALL = 1;
+    public static final short CATEGORY_PLAYER = 2;
+    public static final short CATEGORY_ITEM = 4;
+    public static final short MASK_WALL = CATEGORY_ITEM + CATEGORY_PLAYER;
+    public static final short MASK_PLAYER = CATEGORY_WALL + CATEGORY_ITEM;
+    public static final short MASK_ITEM = CATEGORY_WALL + CATEGORY_PLAYER;
+
+    public static final short GROUP_INDEX = 0;
+    public static final float ITEM_PERIOD = 0.25f;
 
     private int gameScore = INIT_SCORE;
     private int gameLives = INIT_LIVES;
@@ -130,7 +140,7 @@ public class GutGame extends BaseGame {
 
         resetGamePoints();
         createBackground(scene);
-        createCameraWalls(true, false, true, true);
+        createCameraWalls(true, false, true, true, true);
         createPlayer();
         createItems(NB_ITEMS);
 
@@ -162,7 +172,7 @@ public class GutGame extends BaseGame {
     private void createItems(final int count) {
         if (count > 0) {
             createItem();
-            activity.registerUpdateHandler(0.25f, new ITimerCallback() {
+            activity.registerUpdateHandler(ITEM_PERIOD, new ITimerCallback() {
                 @Override
                 public void onTimePassed(TimerHandler pTimerHandler) {
                     createItems(count - 1);
@@ -343,6 +353,8 @@ public class GutGame extends BaseGame {
                     } else if (Wall.isOne(x2) && Item.isOne(x1)) {
                         item = (Item) x1.getBody().getUserData();
                         handleWallItemContact(item);
+                    } else if (Item.isOne(x1) && Item.isOne(x2)) {
+                        x1.setSensor(true);
                     }
                 }
             }
