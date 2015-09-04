@@ -2,7 +2,6 @@ package com.ionis.igem.app.game;
 
 import android.os.Bundle;
 import android.util.Log;
-import com.badlogic.gdx.math.Vector2;
 import com.ionis.igem.app.game.managers.ResMan;
 import com.ionis.igem.app.game.ui.DitheredSprite;
 import org.andengine.engine.camera.SmoothCamera;
@@ -59,26 +58,23 @@ public class LandscapeGameActivity extends AbstractGameActivity {
 
     protected void loadSplashScene() {
         checkSetGFXPath();
-        BitmapTextureAtlas splashTextureAtlas = new BitmapTextureAtlas(textureManager, 699, 985, TextureOptions.DEFAULT);
+        BitmapTextureAtlas splashTextureAtlas = new BitmapTextureAtlas(textureManager, 800, 480, TextureOptions.BILINEAR);
         TiledTextureRegion splashTextureRegion = BitmapTextureAtlasTextureRegionFactory.
-                createTiledFromAsset(splashTextureAtlas, this, ResMan.SPLASH, 0, 0, 1, 1);
+                createTiledFromAsset(splashTextureAtlas, this, ResMan.SPLASH_LAND, 0, 0, 1, 1);
         splashTextureAtlas.load();
-        putTexture(ResMan.SPLASH, splashTextureRegion);
+        putTexture(ResMan.SPLASH_LAND, splashTextureRegion);
     }
 
     private void initSplashScene() {
         splashScene = new Scene();
 
-        final ITextureRegion splashTexture = getTexture(ResMan.SPLASH);
-        final Vector2 posS = new Vector2(-100, -80);
-        Log.d(TAG, "initSplashScene - Center: " + posS.x + ", " + posS.y);
+        final ITextureRegion splashTexture = getTexture(ResMan.SPLASH_LAND);
 
         final Background backgroundColor = new Background(0.78431f, 0.77254f, 0.76862f);
         splashScene.setBackground(backgroundColor);
 
         DitheredSprite splash = new DitheredSprite(0, 0, splashTexture, getVBOM());
         splash.setScale(0.75f);
-        splash.setPosition(posS.x, posS.y);
         splashScene.attachChild(splash);
     }
 

@@ -8,6 +8,7 @@ import android.graphics.Color;
 public class ResMan {
     /* Global */
     public static final String SPLASH = "splash.png";
+    public static final String SPLASH_LAND = "splash_land.png";
     public static final String FACE_BOX_TILED = "face_box_tiled.png";
     public static final String MENU_BG = "menu_background.png";
     public static final String MENU_RESET = "menu_reset.png";

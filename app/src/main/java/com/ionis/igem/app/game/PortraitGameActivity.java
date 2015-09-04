@@ -57,7 +57,7 @@ public class PortraitGameActivity extends AbstractGameActivity {
 
     protected void loadSplashScene() {
         checkSetGFXPath();
-        BitmapTextureAtlas splashTextureAtlas = new BitmapTextureAtlas(textureManager, 699, 985, TextureOptions.DEFAULT);
+        BitmapTextureAtlas splashTextureAtlas = new BitmapTextureAtlas(textureManager, 699, 985, TextureOptions.BILINEAR);
         TiledTextureRegion splashTextureRegion = BitmapTextureAtlasTextureRegionFactory.
                 createTiledFromAsset(splashTextureAtlas, this, ResMan.SPLASH, 0, 0, 1, 1);
         splashTextureAtlas.load();
