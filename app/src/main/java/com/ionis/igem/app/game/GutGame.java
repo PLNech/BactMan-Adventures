@@ -325,7 +325,7 @@ public class GutGame extends BaseGame {
                 if (pSceneTouchEvent.getAction() == TouchEvent.ACTION_MOVE) {
                     final Body body = player.getBody();
                     float ratio = PhysicsConstants.PIXEL_TO_METER_RATIO_DEFAULT;
-                    body.setTransform(pSceneTouchEvent.getX() / ratio, pSceneTouchEvent.getY() / ratio, body.getAngle());
+                    body.setTransform(body.getPosition().x, pSceneTouchEvent.getY() / ratio, body.getAngle());
                     return true;
                 }
                 return false;

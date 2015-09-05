@@ -39,6 +39,15 @@ public class Item extends PhysicalWorldObject {
         return BodyDef.BodyType.DynamicBody;
     }
 
+    public static int chooseLayer(Type type) {
+        switch (type) {
+            case ANTIBIO:
+            case IMMUNO:
+                return AbstractGameActivity.LAYER_OVERGROUND;
+        }
+        return AbstractGameActivity.LAYER_FOREGROUND;
+    }
+
     public static boolean isOne(Fixture x1) {
         return x1.getBody().getUserData() instanceof Item;
     }
