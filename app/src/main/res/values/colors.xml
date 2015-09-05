@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="darkGreen">@android:color/holo_green_dark</color>
-    <color name="lightGreen">@android:color/holo_green_light</color>
+    <color name="darkGreen">#ff669900</color>
+    <color name="lightGreen">#ff99cc00</color>
+
     <color name="softBlack">#1a1a1a</color>
     <color name="softWhite">#e6e6e6</color>
 

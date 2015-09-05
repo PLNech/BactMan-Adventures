@@ -7,7 +7,7 @@ import android.widget.Toast;
 /**
  * Created by PLN on 14/08/2015.
  */
-public class DevUtils {
+class DevUtils {
 
     public static void logToast(Context context, String message) {
         logToast(context, null, null, message);

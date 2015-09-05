@@ -12,14 +12,11 @@ import android.view.Display;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.view.ViewGroup;
-import android.widget.Toast;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 import butterknife.OnClick;
-import com.crashlytics.android.core.CrashlyticsCore;
-import com.ionis.igem.app.BuildConfig;
-import com.ionis.igem.app.R;
 import com.crashlytics.android.Crashlytics;
+import com.ionis.igem.app.R;
 import io.fabric.sdk.android.Fabric;
 
 public class HomeActivity extends AppCompatActivity implements SurfaceHolder.Callback {
@@ -74,6 +71,7 @@ public class HomeActivity extends AppCompatActivity implements SurfaceHolder.Cal
             defaultDisplay.getSize(screenSize);
             screenWidth = screenSize.x;
         } else {
+            //noinspection deprecation
             screenWidth = defaultDisplay.getWidth();
         }
 
