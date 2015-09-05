@@ -7,6 +7,7 @@ import android.widget.Toast;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import com.ionis.igem.app.R;
+import com.ionis.igem.app.game.LandscapeGameActivity;
 
 public class GameMenuActivity extends AppCompatActivity {
 
@@ -19,7 +20,7 @@ public class GameMenuActivity extends AppCompatActivity {
 
     @OnClick(R.id.button_game_new)
     protected void onClickNew() {
-        startActivity(new Intent(this, GameActivity.class));
+        startActivity(new Intent(this, LandscapeGameActivity.class));
     }
 
     @OnClick(R.id.button_game_levels)

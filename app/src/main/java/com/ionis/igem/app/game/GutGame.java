@@ -4,6 +4,7 @@ import android.hardware.SensorManager;
 import android.util.Log;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
+import com.ionis.igem.app.game.gut.Flow;
 import com.ionis.igem.app.game.gut.Item;
 import com.ionis.igem.app.game.gut.Player;
 import com.ionis.igem.app.game.managers.ResMan;
@@ -12,16 +13,25 @@ import com.ionis.igem.app.game.model.HUDElement;
 import com.ionis.igem.app.game.model.Wall;
 import com.ionis.igem.app.game.model.res.FontAsset;
 import com.ionis.igem.app.game.model.res.GFXAsset;
-import com.ionis.igem.app.ui.GameActivity;
+import com.ionis.igem.app.utils.CalcUtils;
+import org.andengine.engine.camera.SmoothCamera;
+import org.andengine.engine.handler.timer.ITimerCallback;
+import org.andengine.engine.handler.timer.TimerHandler;
+import org.andengine.entity.IEntity;
+import org.andengine.entity.modifier.ColorModifier;
+import org.andengine.entity.modifier.DelayModifier;
+import org.andengine.entity.modifier.SequenceEntityModifier;
 import org.andengine.entity.scene.IOnSceneTouchListener;
 import org.andengine.entity.scene.Scene;
-import org.andengine.entity.scene.background.Background;
+import org.andengine.entity.scene.background.SpriteBackground;
 import org.andengine.entity.sprite.AnimatedSprite;
+import org.andengine.entity.sprite.Sprite;
 import org.andengine.extension.physics.box2d.util.constants.PhysicsConstants;
 import org.andengine.input.touch.TouchEvent;
 import org.andengine.opengl.font.IFont;
 import org.andengine.opengl.texture.region.ITiledTextureRegion;
 import org.andengine.opengl.vbo.VertexBufferObjectManager;
+import org.andengine.util.color.Color;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -34,6 +44,20 @@ public class GutGame extends BaseGame {
 
     public static final int INIT_SCORE = 0;
     public static final int INIT_LIVES = 3;
+    public static final float POS_ITEM_X = 850; // Initial item abscissa
+    public static final int SPEED_ITEM_PPS = -150; // Initial item horizontal velocity
+    public static final int[] POS_FLOW = {110, 185, 260, 335};
+    public static final int NB_ITEMS = 4;
+
+    public static final short CATEGORY_WALL = 1;
+    public static final short CATEGORY_PLAYER = 2;
+    public static final short CATEGORY_ITEM = 4;
+    public static final short MASK_WALL = CATEGORY_ITEM + CATEGORY_PLAYER;
+    public static final short MASK_PLAYER = CATEGORY_WALL + CATEGORY_ITEM;
+    public static final short MASK_ITEM = CATEGORY_WALL + CATEGORY_PLAYER;
+
+    public static final short GROUP_INDEX = 0;
+    public static final float ITEM_PERIOD = 0.25f;
 
     private int gameScore = INIT_SCORE;
     private int gameLives = INIT_LIVES;
@@ -44,17 +68,20 @@ public class GutGame extends BaseGame {
     private ArrayList<Item> items = new ArrayList<>();
     private Player player;
 
-    public GutGame(GameActivity pActivity) {
+    public GutGame(AbstractGameActivity pActivity) {
         super(pActivity);
     }
 
     @Override
     public List<GFXAsset> getGraphicalAssets() {
         if (graphicalAssets.isEmpty()) {
-            graphicalAssets.add(new GFXAsset(ResMan.ITEM_SLIDE, 151, 512, 0, 0));
-            graphicalAssets.add(new GFXAsset(ResMan.ITEM_PAPER, 512, 560, 0, 0));
-            graphicalAssets.add(new GFXAsset(ResMan.ITEM_GLOVES, 512, 541, 0, 0));
-            graphicalAssets.add(new GFXAsset(ResMan.ITEM_GEL, 512, 394, 0, 0));
+            graphicalAssets.add(new GFXAsset(ResMan.GUT_BACTMAN, 512, 342, 0, 0));
+            graphicalAssets.add(new GFXAsset(ResMan.GUT_ANTIBIO, 512, 508, 0, 0));
+            graphicalAssets.add(new GFXAsset(ResMan.GUT_VITAMIN, 512, 512, 0, 0));
+            graphicalAssets.add(new GFXAsset(ResMan.GUT_PROTEIN, 512, 512, 0, 0));
+            graphicalAssets.add(new GFXAsset(ResMan.GUT_PHAGE, 512, 663, 0, 0));
+            graphicalAssets.add(new GFXAsset(ResMan.GUT_BG, 2048, 1125, 0, 0));
+            graphicalAssets.add(new GFXAsset(ResMan.GUT_FLOW, 512, 33, 0, 0));
 
             /* HUD */
             graphicalAssets.add(new GFXAsset(ResMan.HUD_LIVES, 1479, 1024, 0, 0));
@@ -66,6 +93,7 @@ public class GutGame extends BaseGame {
     @Override
     public List<FontAsset> getFontAssets() {
         if (fontAssets.isEmpty()) {
+            fontAssets.add(new FontAsset(ResMan.F_HUD_GUT, ResMan.F_HUD_GUT_SIZE, ResMan.F_HUD_BIN_COLOR, ResMan.F_HUD_BIN_ANTI));
             fontAssets.add(new FontAsset(ResMan.F_HUD_BIN, ResMan.F_HUD_BIN_SIZE, ResMan.F_HUD_BIN_COLOR, ResMan.F_HUD_BIN_ANTI));
         }
         return fontAssets;
@@ -83,25 +111,25 @@ public class GutGame extends BaseGame {
             final ITiledTextureRegion textureScore = activity.getTexture(ResMan.HUD_SCORE);
             final ITiledTextureRegion textureLives = activity.getTexture(ResMan.HUD_LIVES);
 
-            final float scale = 0.120f;
+            final float scale = 0.08f;
 
-            Vector2 posS = new Vector2(5, 0); //activity.spritePosition(textureScore, 0.1f, 0.05f, HUDElement.SCALE_DEFAULT);
-            Vector2 posL = new Vector2(155, 0); //activity.spritePosition(textureLives, 0.6f, 0.05f, HUDElement.SCALE_DEFAULT);
+            Vector2 posS = new Vector2(5, 0);
+            Vector2 posL = new Vector2(350, 0);
 
-            Vector2 offS = new Vector2(120, 45);
-            Vector2 offL = new Vector2(170, 45);
+            Vector2 offS = new Vector2(75, 30);
+            Vector2 offL = new Vector2(340, 27.5f);
 
-            IFont fontRoboto = activity.getFont(FontAsset.name(ResMan.F_HUD_BIN, ResMan.F_HUD_BIN_SIZE, ResMan.F_HUD_BIN_COLOR, ResMan.F_HUD_BIN_ANTI));
-            activity.putFont(ResMan.F_HUD_BIN, fontRoboto);
+            IFont fontRoboto = activity.getFont(FontAsset.name(ResMan.F_HUD_GUT, ResMan.F_HUD_GUT_SIZE, ResMan.F_HUD_BIN_COLOR, ResMan.F_HUD_BIN_ANTI));
+            Log.d(TAG, "getHudElements - sprites: " + posS + ", " + posL + " - text:" + offS.add(posS) + ", " + offL.add(posL));
 
             final VertexBufferObjectManager vbom = activity.getVBOM();
 
             HUDScore = new HUDElement()
                     .buildSprite(posS, textureScore, vbom, scale)
-                    .buildText("", "31337".length(), posS.add(offS), fontRoboto, vbom);
+                    .buildText("", "31337".length(), offS, fontRoboto, vbom);
             HUDLives = new HUDElement()
                     .buildSprite(posL, textureLives, vbom, scale)
-                    .buildText("", "999".length(), posL.add(offL), fontRoboto, vbom);
+                    .buildText("", "999".length(), offL, fontRoboto, vbom);
 
             elements.add(HUDScore);
             elements.add(HUDLives);
@@ -114,30 +142,85 @@ public class GutGame extends BaseGame {
     public Scene prepareScene() {
         Scene scene = activity.getScene();
 
-        final Background backgroundColor = new Background(0.96862f, 0.63921f, 0.35686f);
-        scene.setBackground(backgroundColor);
-
         resetGamePoints();
+        createBackground(scene);
+        createCameraWalls(true, false, true, true, true);
         createPlayer();
-        createItems();
+        createItems(NB_ITEMS);
 
         scene.setTouchAreaBindingOnActionDownEnabled(true);
 
         return scene;
     }
 
+    private void createBackground(Scene scene) {
+        final SmoothCamera camera = activity.getCamera();
+        final VertexBufferObjectManager vbom = activity.getVBOM();
+        final ITiledTextureRegion texFlow = activity.getTexture(ResMan.GUT_FLOW);
+        final IEntity layerBG = scene.getChildByIndex(AbstractGameActivity.LAYER_BACKGROUND);
+
+        scene.setBackground(new SpriteBackground(new Sprite(0, 0, camera.getWidth(), camera.getHeight(),
+                activity.getTexture(ResMan.GUT_BG), vbom)));
+
+        for (int i = 0; i < 4; i++) {
+            layerBG.attachChild(new Flow(POS_FLOW[i], texFlow, vbom).getSprite());
+        }
+    }
+
     private void createPlayer() {
-        player = new Player(240, 240, 0, activity.getTexture(ResMan.ITEM_SLIDE), activity);
+        player = new Player(240, 240, 0, activity.getTexture(ResMan.GUT_BACTMAN), activity);
         final Scene scene = activity.getScene();
-        scene.getChildByIndex(GameActivity.LAYER_FOREGROUND).attachChild(player.getSprite());
+        scene.getChildByIndex(AbstractGameActivity.LAYER_FOREGROUND).attachChild(player.getSprite());
     }
 
-    private void createItems() {
-        createItem(400, 400, Item.Type.ANTIBIO);
+    private void createItems(final int count) {
+        if (count > 0) {
+            createItem();
+            activity.registerUpdateHandler(ITEM_PERIOD, new ITimerCallback() {
+                @Override
+                public void onTimePassed(TimerHandler pTimerHandler) {
+                    createItems(count - 1);
+                }
+            });
+        }
     }
 
-    private void createItem(int x, int y, Item.Type type) {
-        Item item = new Item(x, y, 0.5f, type, activity);
+    private void createItem() {
+        createItem(Item.Type.random());
+    }
+
+    private void createItem(Item.Type type) {
+        final ITiledTextureRegion texture;
+        float angleD;
+        switch (type) {
+            case NUTRIENT:
+                if (random.nextBoolean()) {
+                    texture = activity.getTexture(ResMan.GUT_VITAMIN);
+                    angleD = -45 + CalcUtils.randomOf(90, random);
+                } else {
+                    texture = activity.getTexture(ResMan.GUT_PROTEIN);
+                    angleD = CalcUtils.randomOf(360, random);
+                }
+                break;
+            case IMMUNO:
+                angleD = 90;
+                texture = activity.getTexture(ResMan.GUT_PHAGE);
+                break;
+            case ANTIBIO:
+                angleD = CalcUtils.randomOf(360, random);
+                texture = activity.getTexture(ResMan.GUT_ANTIBIO);
+                break;
+            default:
+                throw new IllegalStateException("No default!");
+        }
+
+        float texHeight = type == Item.Type.IMMUNO ? texture.getWidth() : texture.getHeight();
+        texHeight *= Item.SCALE_DEFAULT;
+        final float lanePos = POS_FLOW[CalcUtils.randomOf(4, random)] + 5;
+        final float laneHeight = POS_FLOW[1] - POS_FLOW[0];
+        float itemY = lanePos + (laneHeight - texHeight) / 2;
+
+        Item item = new Item(POS_ITEM_X, itemY, (float) Math.toRadians(angleD), type, (float) ((50.0 + gameScore) / 50), texture, activity);
         items.add(item);
         activity.getScene().getChildByIndex(AbstractGameActivity.LAYER_FOREGROUND).attachChild(item.getSprite());
     }
@@ -145,7 +228,7 @@ public class GutGame extends BaseGame {
     private void deleteItem(final Item item) {
         final AnimatedSprite sprite = item.getSprite();
         sprite.setVisible(false);
-        activity.getScene().getChildByIndex(GameActivity.LAYER_BACKGROUND).detachChild(sprite);
+        activity.getScene().getChildByIndex(AbstractGameActivity.LAYER_BACKGROUND).detachChild(sprite);
         activity.markForDeletion(item);
     }
 
@@ -156,7 +239,7 @@ public class GutGame extends BaseGame {
             public void run() {
                 items.remove(item);
                 if (isPlaying()) {
-                    createItem(400, 400, Item.Type.random());
+                    createItem();
                 }
             }
         });
@@ -183,6 +266,9 @@ public class GutGame extends BaseGame {
         if (score < 10) {
             padding += " ";
         }
+        if (score < 100) {
+            padding += " ";
+        }
         setScore(padding + score);
     }
 
@@ -194,10 +280,12 @@ public class GutGame extends BaseGame {
         Log.v(TAG, "beginContact - Decreasing lives to " + gameLives + ".");
         if (--gameLives == 0) {
             setPlaying(false);
+            final float posRatioX = 0.5f;
+            final float posRatioY = 0f;
             if (gameScore >= 50) {
-                activity.onWin(gameScore);
+                activity.onWin(gameScore, posRatioX, posRatioY);
             } else {
-                activity.onLose(gameScore);
+                activity.onLose(gameScore, posRatioX, posRatioY);
             }
         }
 
@@ -224,7 +312,7 @@ public class GutGame extends BaseGame {
                 items.clear();
                 Log.d(TAG, "resetGame - Cleared game items.");
 
-                createItems();
+                createItems(NB_ITEMS);
             }
         });
     }
@@ -234,15 +322,10 @@ public class GutGame extends BaseGame {
         return new IOnSceneTouchListener() {
             @Override
             public boolean onSceneTouchEvent(Scene pScene, TouchEvent pSceneTouchEvent) {
-                Log.d(TAG, "onSceneTouchEvent - Touched: " + pSceneTouchEvent.getAction());
                 if (pSceneTouchEvent.getAction() == TouchEvent.ACTION_MOVE) {
-                    Log.d(TAG, "onSceneTouchEvent - Moving: " + pSceneTouchEvent.getX() + ", " + pSceneTouchEvent.getY());
                     final Body body = player.getBody();
-                    final float x = body.getPosition().x;
-                    final float y = body.getPosition().y;
-                    float velocityX = pSceneTouchEvent.getX() - x * PhysicsConstants.PIXEL_TO_METER_RATIO_DEFAULT;
-                    float velocityY = pSceneTouchEvent.getY() - y * PhysicsConstants.PIXEL_TO_METER_RATIO_DEFAULT;
-                    body.setLinearVelocity(velocityX, velocityY);
+                    float ratio = PhysicsConstants.PIXEL_TO_METER_RATIO_DEFAULT;
+                    body.setTransform(pSceneTouchEvent.getX() / ratio, pSceneTouchEvent.getY() / ratio, body.getAngle());
                     return true;
                 }
                 return false;
@@ -272,21 +355,34 @@ public class GutGame extends BaseGame {
                     } else if (Wall.isOne(x2) && Item.isOne(x1)) {
                         item = (Item) x1.getBody().getUserData();
                         handleWallItemContact(item);
+                    } else if (Item.isOne(x1) && Item.isOne(x2)) {
+                        x1.setSensor(true);
                     }
                 }
             }
 
             private void handlePlayerItemContact(final Item item) {
+                final Color toColor;
                 switch (item.getType()) {
                     case NUTRIENT:
                         incrementScore();
+                        toColor = Color.GREEN;
                         break;
                     case IMMUNO:
                     case ANTIBIO:
+                        toColor = Color.RED;
                         decrementLives();
                         break;
-
+                    default: throw new IllegalStateException();
                 }
+
+                final float pDuration = 0.25f;
+
+                player.getSprite().registerEntityModifier(new SequenceEntityModifier(
+                        new ColorModifier(pDuration, Color.WHITE, toColor),
+                        new ColorModifier(pDuration, toColor, Color.WHITE),
+                        new DelayModifier(pDuration * 2)
+                ));
                 recycleItem(item);
             }
 
@@ -309,6 +405,11 @@ public class GutGame extends BaseGame {
 
             }
         };
+    }
+
+    @Override
+    public boolean isPortrait() {
+        return false;
     }
 
 }

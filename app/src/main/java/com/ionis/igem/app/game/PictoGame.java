@@ -9,7 +9,6 @@ import com.ionis.igem.app.game.model.HUDElement;
 import com.ionis.igem.app.game.model.res.FontAsset;
 import com.ionis.igem.app.game.model.res.GFXAsset;
 import com.ionis.igem.app.game.picto.Card;
-import com.ionis.igem.app.ui.GameActivity;
 import com.ionis.igem.app.utils.CalcUtils;
 import org.andengine.engine.handler.timer.ITimerCallback;
 import org.andengine.engine.handler.timer.TimerHandler;
@@ -51,7 +50,7 @@ public class PictoGame extends BaseGame {
     private HUDElement HUDTime;
     private double cardCount;
 
-    public PictoGame(GameActivity pActivity) {
+    public PictoGame(PortraitGameActivity pActivity) {
         super(pActivity);
     }
 
@@ -102,7 +101,6 @@ public class PictoGame extends BaseGame {
         Vector2 offT = new Vector2(185, 45);
 
         IFont fontRoboto = activity.getFont(FontAsset.name(ResMan.F_HUD_BIN, ResMan.F_HUD_BIN_SIZE, ResMan.F_HUD_PICTO_COLOR, ResMan.F_HUD_BIN_ANTI));
-        activity.putFont(ResMan.F_HUD_BIN, fontRoboto);
 
         final VertexBufferObjectManager vbom = activity.getVBOM();
 
@@ -157,14 +155,14 @@ public class PictoGame extends BaseGame {
         Log.v(TAG, "beginContact - Increasing score to " + gameScore);
         setScore(gameScorePercent);
         if (gameScorePercent == 100) {
-            activity.onWin(50 + 50 * gameTime / GAME_DURATION);
+            activity.onWin(50 + 50 * gameTime / GAME_DURATION, 0.5f, 0.2f);
         }
     }
 
     private void decrementTime() {
         setTime(--gameTime);
         if (gameTime == 0) {
-            activity.onLose((int) (gameScorePercent * 0.5));
+            activity.onLose((int) (gameScorePercent * 0.5), 0.5f, 0.2f);
         }
     }
 
@@ -181,8 +179,8 @@ public class PictoGame extends BaseGame {
             cards.remove(card);
         }
 
-        scene.getChildByIndex(GameActivity.LAYER_FOREGROUND).detachChild(card);
-        scene.getChildByIndex(GameActivity.LAYER_FOREGROUND).detachChild(back);
+        scene.getChildByIndex(PortraitGameActivity.LAYER_FOREGROUND).detachChild(card);
+        scene.getChildByIndex(PortraitGameActivity.LAYER_FOREGROUND).detachChild(back);
     }
 
     private void createCards() {
@@ -247,7 +245,7 @@ public class PictoGame extends BaseGame {
     private String randomCardName() {
         String resName = ResMan.CARD_BACK;
 
-        int randCardIndex = CalcUtils.randomOf(random, ResMan.CARD_COUNT);
+        int randCardIndex = CalcUtils.randomOf(ResMan.CARD_COUNT, random);
         switch (randCardIndex) {
             case 0:
                 resName = ResMan.CARD_BIOHAZARD;
@@ -296,8 +294,8 @@ public class PictoGame extends BaseGame {
     private void addCard(Card card) {
         cards.add(card);
         final Scene gameScene = activity.getScene();
-        gameScene.getChildByIndex(GameActivity.LAYER_FOREGROUND).attachChild(card);
-        gameScene.getChildByIndex(GameActivity.LAYER_FOREGROUND).attachChild(card.getBack());
+        gameScene.getChildByIndex(PortraitGameActivity.LAYER_FOREGROUND).attachChild(card);
+        gameScene.getChildByIndex(PortraitGameActivity.LAYER_FOREGROUND).attachChild(card.getBack());
         gameScene.registerTouchArea(card);
     }
 

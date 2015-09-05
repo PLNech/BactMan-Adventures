@@ -3,7 +3,7 @@ package com.ionis.igem.app.game.picto;
 import android.util.Log;
 import com.ionis.igem.app.game.PictoGame;
 import com.ionis.igem.app.game.managers.ResMan;
-import com.ionis.igem.app.ui.GameActivity;
+import com.ionis.igem.app.game.AbstractGameActivity;
 import com.ionis.igem.app.utils.WorldUtils;
 import org.andengine.entity.sprite.Sprite;
 import org.andengine.input.touch.TouchEvent;
@@ -24,7 +24,7 @@ public class Card extends Sprite {
 
     PictoGame game;
 
-    public Card(float pX, float pY, String resCardName, ITextureRegion pTiledTextureRegion, GameActivity activity) {
+    public Card(float pX, float pY, String resCardName, ITextureRegion pTiledTextureRegion, AbstractGameActivity activity) {
         this(pX, pY, pTiledTextureRegion, activity.getVBOM());
         type = WorldUtils.toUpperCase(resCardName.replace("card_", "").replace(".png", ""));
         game = (PictoGame) activity.getCurrentGame();

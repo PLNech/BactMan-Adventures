@@ -19,6 +19,7 @@ import com.ionis.igem.app.game.model.HUDElement;
 import com.ionis.igem.app.game.model.PhysicalWorldObject;
 import com.ionis.igem.app.game.model.res.FontAsset;
 import com.ionis.igem.app.game.model.res.GFXAsset;
+import com.ionis.igem.app.utils.FontsOverride;
 import org.andengine.engine.Engine;
 import org.andengine.engine.camera.SmoothCamera;
 import org.andengine.engine.handler.timer.ITimerCallback;
@@ -119,6 +120,7 @@ public abstract class AbstractGameActivity extends SimpleBaseGameActivity implem
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        FontsOverride.setDefaultFont(this, "SANS_SERIF", "fonts/Roboto-Medium.ttf");
 
         if (vertexBufferObjectManager == null) {
             vertexBufferObjectManager = super.getVertexBufferObjectManager();
@@ -153,6 +155,13 @@ public abstract class AbstractGameActivity extends SimpleBaseGameActivity implem
         return engine;
     }
 
+    @Override
+    public void onCreateResources() {
+        Log.d(TAG, "onCreateResources - Beginning resource creation.");
+        loadSplashScene();
+    }
+
+    protected abstract void loadSplashScene();
 
     @Override
     public synchronized void onResumeGame() {
@@ -176,9 +185,11 @@ public abstract class AbstractGameActivity extends SimpleBaseGameActivity implem
     @Override
     public boolean onKeyDown(final int pKeyCode, @NonNull final KeyEvent pEvent) {
         if (gameScene != null && pauseScene != null &&
-                pKeyCode == KeyEvent.KEYCODE_MENU && pEvent.getAction() == KeyEvent.ACTION_DOWN) {
+                pKeyCode == KeyEvent.KEYCODE_MENU && pEvent.getAction() == KeyEvent.ACTION_DOWN)
+        {
             if (gameScene.hasChildScene()) { // The game is paused
                 pauseScene.back();
+                updateNextStatus();
             } else {
                 gameScene.setChildScene(pauseScene, false, true, true);
             }
@@ -387,6 +398,7 @@ public abstract class AbstractGameActivity extends SimpleBaseGameActivity implem
 
         nextPauseMenuItem = new SpriteMenuItem(OPTION_NEXT, textureNext, getVBOM());
         nextPauseMenuItem.setBlendFunction(GLES20.GL_SRC_ALPHA, GLES20.GL_ONE_MINUS_SRC_ALPHA);
+        nextPauseMenuItem.setVisible(false);
         pauseScene.addMenuItem(nextPauseMenuItem);
 
         final SpriteMenuItem resetMenuItem = new SpriteMenuItem(OPTION_RESET, textureReset, getVBOM());
@@ -410,6 +422,7 @@ public abstract class AbstractGameActivity extends SimpleBaseGameActivity implem
 
         nextWinMenuItem = new SpriteMenuItem(OPTION_NEXT, textureNext, getVBOM());
         nextWinMenuItem.setBlendFunction(GLES20.GL_SRC_ALPHA, GLES20.GL_ONE_MINUS_SRC_ALPHA);
+        nextWinMenuItem.setVisible(false);
         winScene.addMenuItem(nextWinMenuItem);
 
         final SpriteMenuItem resetMenuItem = new SpriteMenuItem(OPTION_RESET, textureReset, getVBOM());
@@ -467,21 +480,23 @@ public abstract class AbstractGameActivity extends SimpleBaseGameActivity implem
 
         winScene.detachChild(winText);
         winScene.reset();
+
+        updateNextStatus();
     }
 
-    public void onLose(int score) {
+    public void onLose(int score, float posRatioX, float posRatioY) {
         final IFont menuFont = getFont(FontAsset.name(ResMan.F_HUD_BIN, ResMan.F_HUD_BIN_SIZE, ResMan.F_HUD_BIN_COLOR, ResMan.F_HUD_BIN_ANTI));
         gameOverText = new Text(0, 0, menuFont, getEndTextAndUpdateHighScore(false, score), 32, new TextOptions(HorizontalAlign.CENTER), getVBOM());
-        final Vector2 textPosition = spritePosition(gameOverText.getWidth(), gameOverText.getHeight(), 0.5f, 0.2f);
+        final Vector2 textPosition = spritePosition(gameOverText.getWidth(), gameOverText.getHeight(), posRatioX, posRatioY);
         gameOverText.setPosition(textPosition.x, textPosition.y);
         pauseScene.attachChild(gameOverText);
         gameScene.setChildScene(pauseScene, false, true, true);
     }
 
-    public void onWin(int score) {
+    public void onWin(int score, float posRatioX, float posRatioY) {
         final IFont menuFont = getFont(FontAsset.name(ResMan.F_HUD_BIN, ResMan.F_HUD_BIN_SIZE, ResMan.F_HUD_BIN_COLOR, ResMan.F_HUD_BIN_ANTI));
         winText = new Text(0, 0, menuFont, getEndTextAndUpdateHighScore(true, score), 32, new TextOptions(HorizontalAlign.CENTER), getVBOM());
-        final Vector2 textPosition = spritePosition(winText.getWidth(), winText.getHeight(), 0.5f, 0.2f);
+        final Vector2 textPosition = spritePosition(winText.getWidth(), winText.getHeight(), posRatioX, posRatioY);
         winText.setPosition(textPosition.x, textPosition.y);
         winScene.attachChild(winText);
         gameScene.setChildScene(winScene, false, true, true);
@@ -529,6 +544,16 @@ public abstract class AbstractGameActivity extends SimpleBaseGameActivity implem
         }
     }
 
+    protected void addGame(Class<? extends BaseGame> c) {
+        try {
+            final BaseGame game = c.getConstructor(AbstractGameActivity.class).newInstance(this);
+            game.setPosition(games.size());
+            games.add(game);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
     public Vector2 spriteCenter(ITextureRegion textureRegion) {
         /**
          * Returns the appropriate coordinates to center the given textureRegion in the game camera.
@@ -538,7 +563,8 @@ public abstract class AbstractGameActivity extends SimpleBaseGameActivity implem
 
     public Vector2 spritePosition(ITextureRegion textureRegion,
                                   float positionRatioX, float positionRatioY,
-                                  float ratio) {
+                                  float ratio)
+    {
         final float widthToRatio = textureRegion.getWidth() * ratio;
         final float heightToRatio = textureRegion.getHeight() * ratio;
         return spritePosition(new Vector2(widthToRatio, heightToRatio), new Vector2(positionRatioX, positionRatioY));
@@ -558,8 +584,8 @@ public abstract class AbstractGameActivity extends SimpleBaseGameActivity implem
     }
 
     protected Vector2 spritePosition(Vector2 textureDims, Vector2 positionRatio) {
-        final Vector2 res = new Vector2(this.mEngine.getCamera().getWidth() * positionRatio.x - textureDims.x / 2,
-                CAMERA_HEIGHT * positionRatio.y - -textureDims.y / 2);
+        final Vector2 res = new Vector2(getCamera().getWidth() * positionRatio.x - textureDims.x / 2,
+                getCamera().getHeight() * positionRatio.y - -textureDims.y / 2);
         Log.v(TAG, "spritePosition - Returning " + res.x + ", " + res.y);
         return res;
     }

@@ -1,6 +1,5 @@
 package com.ionis.igem.app.game;
 
-import android.content.SharedPreferences;
 import android.hardware.SensorManager;
 import android.util.Log;
 import com.badlogic.gdx.math.Vector2;
@@ -14,15 +13,12 @@ import com.ionis.igem.app.game.model.HUDElement;
 import com.ionis.igem.app.game.model.Wall;
 import com.ionis.igem.app.game.model.res.FontAsset;
 import com.ionis.igem.app.game.model.res.GFXAsset;
-import com.ionis.igem.app.ui.GameActivity;
 import com.ionis.igem.app.utils.CalcUtils;
-import org.andengine.engine.camera.Camera;
 import org.andengine.entity.IEntity;
 import org.andengine.entity.modifier.*;
 import org.andengine.entity.scene.Scene;
 import org.andengine.entity.scene.background.Background;
 import org.andengine.entity.sprite.AnimatedSprite;
-import org.andengine.entity.sprite.Sprite;
 import org.andengine.opengl.font.IFont;
 import org.andengine.opengl.texture.region.ITiledTextureRegion;
 import org.andengine.opengl.vbo.VertexBufferObjectManager;
@@ -32,7 +28,6 @@ import org.andengine.util.modifier.IModifier;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Random;
 
 /**
  * Created by PLNech on 21/08/2015.
@@ -55,7 +50,7 @@ public class BinGame extends BaseGame {
     private HUDElement HUDScore;
     private HUDElement HUDLives;
 
-    public BinGame(GameActivity pActivity) {
+    public BinGame(AbstractGameActivity pActivity) {
         super(pActivity);
     }
 
@@ -133,7 +128,6 @@ public class BinGame extends BaseGame {
             Vector2 offL = new Vector2(170, 45);
 
             IFont fontRoboto = activity.getFont(FontAsset.name(ResMan.F_HUD_BIN, ResMan.F_HUD_BIN_SIZE, ResMan.F_HUD_BIN_COLOR, ResMan.F_HUD_BIN_ANTI));
-            activity.putFont(ResMan.F_HUD_BIN, fontRoboto);
 
             final VertexBufferObjectManager vbom = activity.getVBOM();
 
@@ -233,9 +227,9 @@ public class BinGame extends BaseGame {
         if (--gameLives == 0) {
             setPlaying(false);
             if (gameScore >= 50) {
-                activity.onWin(gameScore);
+                activity.onWin(gameScore, 0.5f, 0.2f);
             } else {
-                activity.onLose(gameScore);
+                activity.onLose(gameScore, 0.5f, 0.2f);
             }
         }
 
@@ -259,7 +253,7 @@ public class BinGame extends BaseGame {
         scene.setBackground(backgroundColor);
 
         resetGamePoints();
-        createWalls();
+        createCameraWalls();
         createBins();
         createItems();
 
@@ -437,7 +431,7 @@ public class BinGame extends BaseGame {
         Item item = new Item(type, textureRegion, posX, posY, activity.getVBOM(), activity.getPhysicsWorld());
         items.add(item);
         final Scene gameScene = activity.getScene();
-        final IEntity layerBG = gameScene.getChildByIndex(GameActivity.LAYER_BACKGROUND);
+        final IEntity layerBG = gameScene.getChildByIndex(PortraitGameActivity.LAYER_BACKGROUND);
         layerBG.attachChild(item.getSprite());
         layerBG.attachChild(item.getShape());
         gameScene.registerTouchArea(item.getShape());
@@ -447,7 +441,7 @@ public class BinGame extends BaseGame {
         final AnimatedSprite sprite = item.getSprite();
         final DraggableAnimatedSprite biggerSprite = item.getShape();
         final Scene scene = activity.getScene();
-        final IEntity layerBG = scene.getChildByIndex(GameActivity.LAYER_BACKGROUND);
+        final IEntity layerBG = scene.getChildByIndex(PortraitGameActivity.LAYER_BACKGROUND);
 
         sprite.setVisible(false);
         scene.unregisterTouchArea(biggerSprite);
@@ -461,7 +455,7 @@ public class BinGame extends BaseGame {
         Bin bin = new Bin(type, posX, posY, textureRegion, activity.getVBOM(), activity.getPhysicsWorld());
         bins.add(bin);
         binMap.put(type, bin);
-        activity.getScene().getChildByIndex(GameActivity.LAYER_FOREGROUND).attachChild(bin.getSprite());
+        activity.getScene().getChildByIndex(PortraitGameActivity.LAYER_FOREGROUND).attachChild(bin.getSprite());
     }
 
     private void createBins() {
@@ -480,26 +474,6 @@ public class BinGame extends BaseGame {
         createBin(Bin.Type.LIQUIDS, bin2TextureRegion, bin2Pos.x, bin2Pos.y);
         createBin(Bin.Type.NORMAL, bin3TextureRegion, bin3Pos.x, bin3Pos.y);
         createBin(Bin.Type.BIO, bin4TextureRegion, bin4Pos.x, bin4Pos.y);
-    }
-
-    private void createWalls() {
-        final Camera camera = activity.getCamera();
-        final float camWidth = camera.getWidth();
-        final float camHeight = camera.getHeight();
-        final float wallDepth = 10;
-
-        final float centerX = camWidth / 2;
-        final float centerY = camHeight / 2;
-
-        createWall(centerX, camHeight + wallDepth / 2, camWidth, wallDepth, Wall.Type.BOTTOM);
-        createWall(centerX, -wallDepth / 2, camWidth, wallDepth, Wall.Type.TOP);
-        createWall(-wallDepth / 2, centerY, wallDepth, camHeight, Wall.Type.LEFT);
-        createWall(camWidth + wallDepth / 2, centerY, wallDepth, camHeight, Wall.Type.RIGHT);
-    }
-
-    private void createWall(float x, float y, float width, float height, Wall.Type type) {
-        Wall wall = new Wall(x, y, width, height, type, activity.getVBOM(), activity.getPhysicsWorld());
-        activity.getScene().getChildByIndex(GameActivity.LAYER_BACKGROUND).attachChild(wall);
     }
 
     private void animateBins(Bin.Animation animation) {
@@ -532,7 +506,6 @@ public class BinGame extends BaseGame {
 //                });
             }
         };
-        final Color initialColor = bin.getDefaultColor();
         final Color toColor;
 
         switch (animation) {
@@ -552,8 +525,8 @@ public class BinGame extends BaseGame {
         final float pDuration = 0.25f;
 
         final SequenceEntityModifier entityModifier = new SequenceEntityModifier(
-                new ColorModifier(pDuration, initialColor, toColor),
-                new ColorModifier(pDuration, toColor, initialColor),
+                new ColorModifier(pDuration, Color.WHITE, toColor),
+                new ColorModifier(pDuration, toColor, Color.WHITE),
                 new DelayModifier(pDuration * 2)
         );
 

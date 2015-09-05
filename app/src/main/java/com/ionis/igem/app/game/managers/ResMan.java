@@ -8,6 +8,7 @@ import android.graphics.Color;
 public class ResMan {
     /* Global */
     public static final String SPLASH = "splash.png";
+    public static final String SPLASH_LAND = "splash_land.png";
     public static final String FACE_BOX_TILED = "face_box_tiled.png";
     public static final String MENU_BG = "menu_background.png";
     public static final String MENU_RESET = "menu_reset.png";
@@ -72,4 +73,17 @@ public class ResMan {
     public static final String HUD_TIME = "hud_time.png";
 
     public static final int F_HUD_PICTO_COLOR = Color.WHITE;
+
+    /* GutGame */
+    public static final String GUT_BACTMAN = "gut_bactman.png";
+    public static final String GUT_ANTIBIO = "gut_antibiotic.png";
+    public static final String GUT_PHAGE = "gut_phage.png";
+    public static final String GUT_PROTEIN = "gut_protein.png";
+    public static final String GUT_VITAMIN = "gut_vitamine.png";
+
+    public static final String GUT_BG = "gut_background.png";
+    public static final String GUT_FLOW = "gut_flow.png";
+
+    public static final String F_HUD_GUT = "Roboto-Medium.ttf";
+    public static final int F_HUD_GUT_SIZE = 30;
 }

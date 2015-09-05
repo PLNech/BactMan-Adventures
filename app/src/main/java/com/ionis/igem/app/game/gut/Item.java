@@ -2,9 +2,10 @@ package com.ionis.igem.app.game.gut;
 
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.Fixture;
-import com.ionis.igem.app.game.managers.ResMan;
+import com.ionis.igem.app.game.AbstractGameActivity;
+import com.ionis.igem.app.game.GutGame;
 import com.ionis.igem.app.game.model.PhysicalWorldObject;
-import com.ionis.igem.app.ui.GameActivity;
+import org.andengine.extension.physics.box2d.util.constants.PhysicsConstants;
 import org.andengine.opengl.texture.region.ITiledTextureRegion;
 
 /**
@@ -25,31 +26,17 @@ public class Item extends PhysicalWorldObject {
 
     private Type type;
 
-    public Item(float pX, float pY, float pAngle, Type pType, GameActivity activity) {
-        super(pX, pY, pAngle, SCALE_DEFAULT, false, chooseTexture(activity, pType), activity.getVBOM(), activity.getPhysicsWorld());
+    public Item(float pX, float pY, float pAngle, Type pType, float speedCoeff, ITiledTextureRegion textureRegion, AbstractGameActivity activity) {
+        super(new PhysicalWorldObject.Builder(pX, pY, textureRegion, activity.getVBOM(), activity.getPhysicsWorld())
+                .angle(pAngle).draggable(false).scaleDefault(SCALE_DEFAULT)
+                .category(GutGame.CATEGORY_ITEM).mask(GutGame.MASK_ITEM).groupIndex(GutGame.GROUP_INDEX));
         type = pType;
+        body.setLinearVelocity(speedCoeff * GutGame.SPEED_ITEM_PPS / PhysicsConstants.PIXEL_TO_METER_RATIO_DEFAULT, 0);
     }
+
     @Override
     protected BodyDef.BodyType getBodyType() {
         return BodyDef.BodyType.DynamicBody;
-    }
-
-    private static ITiledTextureRegion chooseTexture(GameActivity activity, Type type) {
-        final ITiledTextureRegion texture;
-        switch (type) {
-            case ANTIBIO:
-                texture = activity.getTexture(ResMan.ITEM_GLOVES);
-                break;
-            case IMMUNO:
-                texture = activity.getTexture(ResMan.ITEM_PAPER);
-                break;
-            case NUTRIENT:
-                texture = activity.getTexture(ResMan.ITEM_GEL);
-                break;
-            default:
-                throw new IllegalStateException("No default!");
-        }
-        return texture;
     }
 
     public static boolean isOne(Fixture x1) {

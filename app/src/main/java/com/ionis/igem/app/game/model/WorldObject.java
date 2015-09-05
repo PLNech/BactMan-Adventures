@@ -20,16 +20,21 @@ public abstract class WorldObject {
 
     private Color defaultColor;
 
-    public WorldObject(float pX, float pY, boolean draggable, @Nullable Float pScale, ITiledTextureRegion pTiledTextureRegion, VertexBufferObjectManager pVertexBufferObjectManager) {
+    public WorldObject(float pX, float pY, boolean draggable, @Nullable Float pScale, @Nullable Float pScaleGrabbed,
+                       ITiledTextureRegion pTiledTextureRegion, VertexBufferObjectManager pVertexBufferObjectManager) {
         if (pScale == null) {
             pScale = SCALE_DEFAULT;
         }
+        if (pScaleGrabbed == null) {
+            pScaleGrabbed = SCALE_GRABBED;
+        }
         if (draggable) {
-            sprite = new DraggableAnimatedSprite(pX, pY, pScale, pTiledTextureRegion, pVertexBufferObjectManager, this);
+            sprite = new DraggableAnimatedSprite(pX, pY, pScaleGrabbed, pTiledTextureRegion, pVertexBufferObjectManager, this);
         } else {
-            sprite = new DraggableAnimatedSprite(pX, pY, pScale, pTiledTextureRegion, pVertexBufferObjectManager, null);
+            sprite = new DraggableAnimatedSprite(pX, pY, pScaleGrabbed, pTiledTextureRegion, pVertexBufferObjectManager, null);
         }
         sprite.setBlendFunction(GLES20.GL_SRC_ALPHA, GLES20.GL_ONE_MINUS_SRC_ALPHA);
+        sprite.setInitialScale(pScale);
         defaultColor = new Color(sprite.getColor());
         Log.d(TAG, "WorldObject - New " + this.getClass().getSimpleName() + " of scale " + pScale + " at " + pX + ", " + pY);
     }
