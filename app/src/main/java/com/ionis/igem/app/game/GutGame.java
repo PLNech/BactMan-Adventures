@@ -222,7 +222,7 @@ public class GutGame extends BaseGame {
 
         Item item = new Item(POS_ITEM_X, itemY, (float) Math.toRadians(angleD), type, (float) ((50.0 + gameScore) / 50), texture, activity);
         items.add(item);
-        activity.getScene().getChildByIndex(AbstractGameActivity.LAYER_FOREGROUND).attachChild(item.getSprite());
+        activity.getScene().getChildByIndex(Item.chooseLayer(type)).attachChild(item.getSprite());
     }
 
     private void deleteItem(final Item item) {
