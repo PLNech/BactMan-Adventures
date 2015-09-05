@@ -168,7 +168,7 @@ public class GutGame extends BaseGame {
     }
 
     private void createPlayer() {
-        player = new Player(240, 240, 0, activity.getTexture(ResMan.GUT_BACTMAN), activity);
+        player = new Player(150, 240, 0, activity.getTexture(ResMan.GUT_BACTMAN), activity);
         final Scene scene = activity.getScene();
         scene.getChildByIndex(AbstractGameActivity.LAYER_FOREGROUND).attachChild(player.getSprite());
     }
@@ -278,7 +278,7 @@ public class GutGame extends BaseGame {
 
     private void decrementLives() {
         Log.v(TAG, "beginContact - Decreasing lives to " + gameLives + ".");
-        if (--gameLives == 0) {
+        if (--gameLives <= 0) {
             setPlaying(false);
             final float posRatioX = 0.5f;
             final float posRatioY = 0f;
