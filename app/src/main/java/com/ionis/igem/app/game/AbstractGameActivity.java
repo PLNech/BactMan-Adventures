@@ -101,12 +101,12 @@ public abstract class AbstractGameActivity extends SimpleBaseGameActivity implem
     protected SmoothCamera gameCamera;
     protected PhysicsWorld physicsWorld;
 
-    protected static final int LAYER_COUNT = 4;
     public static final int LAYER_BACKGROUND = 0;
     public static final int LAYER_FOREGROUND = LAYER_BACKGROUND + 1;
     public static final int LAYER_OVERGROUND = LAYER_FOREGROUND + 1;
     public static final int LAYER_HUD = LAYER_OVERGROUND + 1;
     public static final int LAYER_HUD_TEXT = LAYER_HUD + 1;
+    protected static final int LAYER_COUNT = LAYER_HUD_TEXT + 1;
 
     protected static final float MAX_SPEED_X = 200.0f;
     protected static final float MAX_SPEED_Y = 200.0f;
