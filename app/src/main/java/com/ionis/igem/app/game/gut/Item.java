@@ -13,24 +13,34 @@ import org.andengine.opengl.texture.region.ITiledTextureRegion;
  */
 public class Item extends PhysicalWorldObject {
     public enum Type {
-        NUTRIENT, ANTIBIO, IMMUNO;
+        VITAMIN, PROTEIN, ANTIBIO, IMMUNO;
 
         public static Type random() {
             final Type[] values = Type.values();
             final int randomIndex = (int) (values.length * Math.random());
             return values[randomIndex];
         }
+
     }
 
+
+    public enum Role {
+        ONCE,   /* Appears only once */
+        EAT,   /* Appears until eaten */
+        REPEAT, /* Repeated with same type */
+        RANDOM  /* Repeated with random type */;
+    }
     public static float SCALE_DEFAULT = 0.1f;
 
     private Type type;
 
-    public Item(float pX, float pY, float pAngle, Type pType, float speedCoeff, ITiledTextureRegion textureRegion, AbstractGameActivity activity) {
+    private Role role;
+    public Item(float pX, float pY, float pAngle, Type pType, Role pRole, float speedCoeff, ITiledTextureRegion textureRegion, AbstractGameActivity activity) {
         super(new PhysicalWorldObject.Builder(pX, pY, textureRegion, activity.getVBOM(), activity.getPhysicsWorld())
                 .angle(pAngle).draggable(false).scaleDefault(SCALE_DEFAULT)
                 .category(GutGame.CATEGORY_ITEM).mask(GutGame.MASK_ITEM).groupIndex(GutGame.GROUP_INDEX));
         type = pType;
+        role = pRole;
         body.setLinearVelocity(speedCoeff * GutGame.SPEED_ITEM_PPS / PhysicsConstants.PIXEL_TO_METER_RATIO_DEFAULT, 0);
     }
 
@@ -54,5 +64,12 @@ public class Item extends PhysicalWorldObject {
 
     public Type getType() {
         return type;
+    }
+
+    public void setRole(Role role) {
+        this.role = role;
+    }
+    public Role getRole() {
+        return role;
     }
 }

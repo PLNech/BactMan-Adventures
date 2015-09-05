@@ -137,4 +137,9 @@ public abstract class PhysicalWorldObject extends WorldObject {
     public Body getBody() {
         return body;
     }
+
+    @Override
+    public String toString() {
+        return "PhysicalWorldObject (" + this.getClass().getSimpleName() + "): " + super.toString();
+    }
 }
