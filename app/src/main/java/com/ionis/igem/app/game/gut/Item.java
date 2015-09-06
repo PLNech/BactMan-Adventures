@@ -28,7 +28,7 @@ public class Item extends PhysicalWorldObject {
         ONCE,   /* Appears only once */
         EAT,   /* Appears until eaten */
         REPEAT, /* Repeated with same type */
-        RANDOM  /* Repeated with random type */;
+        RANDOM  /* Repeated with random type */
     }
     public static float SCALE_DEFAULT = 0.1f;
 

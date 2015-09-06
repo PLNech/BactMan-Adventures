@@ -16,37 +16,37 @@ public class ResMan {
     public static final String MENU_QUIT = "menu_quit.png";
 
     /* BinGame */
-    public static final String BIN1 = "bin1.png";
-    public static final String BIN2 = "bin2.png";
-    public static final String BIN3 = "bin3.png";
-    public static final String BIN4 = "bin4.png";
+    public static final String BIN1 = "bins/bin1.png";
+    public static final String BIN2 = "bins/bin2.png";
+    public static final String BIN3 = "bins/bin3.png";
+    public static final String BIN4 = "bins/bin4.png";
 
-    public static final String ITEM_PEN = "item_pen.png";
-    public static final String ITEM_TUBE = "item_tube.png";
-    public static final String ITEM_CONE_BLUE = "item_cone_blue.png";
-    public static final String ITEM_CONE_WHITE = "item_cone_white.png";
-    public static final String ITEM_CONE_YELLOW = "item_cone_yellow.png";
+    public static final String ITEM_PEN = "bins/item_pen.png";
+    public static final String ITEM_TUBE = "bins/item_tube.png";
+    public static final String ITEM_CONE_BLUE = "bins/item_cone_blue.png";
+    public static final String ITEM_CONE_WHITE = "bins/item_cone_white.png";
+    public static final String ITEM_CONE_YELLOW = "bins/item_cone_yellow.png";
 
-    public static final String ITEM_BECHER_ORANGE = "item_becher_orange.png";
-    public static final String ITEM_BECHER_RED = "item_becher_red.png";
-    public static final String ITEM_BECHER_GREEN = "item_becher_green.png";
-    public static final String ITEM_BECHER_BROKEN = "item_becher_broken.png";
-    public static final String ITEM_ERLEN_ORANGE = "item_erlenmeyer_orange.png";
-    public static final String ITEM_ERLEN_RED = "item_erlenmeyer_red.png";
-    public static final String ITEM_ERLEN_GREEN = "item_erlenmeyer_green.png";
-    public static final String ITEM_ERLEN_BROKEN = "item_erlenmeyer_broken.png";
-    public static final String ITEM_PAPER = "item_paper.png";
-    public static final String ITEM_PETRI = "item_petri.png";
-    public static final String ITEM_SLIDE = "item_slide.png";
-    public static final String ITEM_SLIDE_BROKEN = "item_slide_broken.png";
-    public static final String ITEM_GLOVES = "item_gloves.png";
-    public static final String ITEM_GEL = "item_gel.png";
-    public static final String ITEM_ROUNDFLASK_ORANGE = "item_roundflask_orange.png";
-    public static final String ITEM_ROUNDFLASK_RED = "item_roundflask_red.png";
-    public static final String ITEM_ROUNDFLASK_GREEN = "item_roundflask_green.png";
-    public static final String ITEM_ROUNDFLASK_BROKEN = "item_roundflask_broken.png";
-    public static final String ITEM_MICROTUBE_RED = "item_microtube_red.png";
-    public static final String ITEM_MICROTUBE_GREEN = "item_microtube_green.png";
+    public static final String ITEM_BECHER_ORANGE = "bins/item_becher_orange.png";
+    public static final String ITEM_BECHER_RED = "bins/item_becher_red.png";
+    public static final String ITEM_BECHER_GREEN = "bins/item_becher_green.png";
+    public static final String ITEM_BECHER_BROKEN = "bins/item_becher_broken.png";
+    public static final String ITEM_ERLEN_ORANGE = "bins/item_erlenmeyer_orange.png";
+    public static final String ITEM_ERLEN_RED = "bins/item_erlenmeyer_red.png";
+    public static final String ITEM_ERLEN_GREEN = "bins/item_erlenmeyer_green.png";
+    public static final String ITEM_ERLEN_BROKEN = "bins/item_erlenmeyer_broken.png";
+    public static final String ITEM_PAPER = "bins/item_paper.png";
+    public static final String ITEM_PETRI = "bins/item_petri.png";
+    public static final String ITEM_SLIDE = "bins/item_slide.png";
+    public static final String ITEM_SLIDE_BROKEN = "bins/item_slide_broken.png";
+    public static final String ITEM_GLOVES = "bins/item_gloves.png";
+    public static final String ITEM_GEL = "bins/item_gel.png";
+    public static final String ITEM_ROUNDFLASK_ORANGE = "bins/item_roundflask_orange.png";
+    public static final String ITEM_ROUNDFLASK_RED = "bins/item_roundflask_red.png";
+    public static final String ITEM_ROUNDFLASK_GREEN = "bins/item_roundflask_green.png";
+    public static final String ITEM_ROUNDFLASK_BROKEN = "bins/item_roundflask_broken.png";
+    public static final String ITEM_MICROTUBE_RED = "bins/item_microtube_red.png";
+    public static final String ITEM_MICROTUBE_GREEN = "bins/item_microtube_green.png";
 
     public static final String HUD_LIVES = "hud_lives.png";
     public static final String HUD_SCORE = "hud_score.png";
@@ -57,17 +57,17 @@ public class ResMan {
     public static final boolean F_HUD_BIN_ANTI = true;
 
     /* PictoGame */
-    public static final String CARD_BACK = "card_back.png";
-    public static final String CARD_BIOHAZARD = "card_biohazard.png";
-    public static final String CARD_CMR = "card_CMR.png";
-    public static final String CARD_ENVIRONMENT = "card_environment.png";
-    public static final String CARD_FACE = "card_face.png";
-    public static final String CARD_FLAMMABLE = "card_flammable.png";
-    public static final String CARD_GLOVES = "card_gloves.png";
-    public static final String CARD_MASK = "card_mask.png";
-    public static final String CARD_OXIDISING = "card_oxidising.png";
-    public static final String CARD_RADIOACTIVE = "card_radioactive.png";
-    public static final String CARD_TOXIC = "card_toxic.png";
+    public static final String CARD_BACK = "picto/card_back.png";
+    public static final String CARD_BIOHAZARD = "picto/card_biohazard.png";
+    public static final String CARD_CMR = "picto/card_CMR.png";
+    public static final String CARD_ENVIRONMENT = "picto/card_environment.png";
+    public static final String CARD_FACE = "picto/card_face.png";
+    public static final String CARD_FLAMMABLE = "picto/card_flammable.png";
+    public static final String CARD_GLOVES = "picto/card_gloves.png";
+    public static final String CARD_MASK = "picto/card_mask.png";
+    public static final String CARD_OXIDISING = "picto/card_oxidising.png";
+    public static final String CARD_RADIOACTIVE = "picto/card_radioactive.png";
+    public static final String CARD_TOXIC = "picto/card_toxic.png";
     public static final int CARD_COUNT = 10;
 
     public static final String HUD_TIME = "hud_time.png";
@@ -75,15 +75,28 @@ public class ResMan {
     public static final int F_HUD_PICTO_COLOR = Color.WHITE;
 
     /* GutGame */
-    public static final String GUT_BACTMAN = "gut_bactman.png";
-    public static final String GUT_ANTIBIO = "gut_antibiotic.png";
-    public static final String GUT_PHAGE = "gut_phage.png";
-    public static final String GUT_PROTEIN = "gut_protein.png";
-    public static final String GUT_VITAMIN = "gut_vitamine.png";
+    public static final String GUT_BACTMAN = "gut/bactman.png";
+    public static final String GUT_ANTIBIO = "gut/antibiotic.png";
+    public static final String GUT_PHAGE = "gut/phage.png";
+    public static final String GUT_PROTEIN = "gut/protein.png";
+    public static final String GUT_VITAMIN = "gut/vitamine.png";
 
-    public static final String GUT_BG = "gut_background.png";
-    public static final String GUT_FLOW = "gut_flow.png";
+    public static final String GUT_BG = "gut/background.png";
+    public static final String GUT_FLOW = "gut/flow.png";
 
     public static final String F_HUD_GUT = "Roboto-Medium.ttf";
     public static final int F_HUD_GUT_SIZE = 30;
+
+    /* PianoGame */
+    public static final String PIANO_BG = "piano/background.png";
+    public static final String PIANO_L_PHO = "piano/base_l_phosphate.png";
+    public static final String PIANO_POLY = "piano/polymerase.png";
+    public static final String PIANO_A = "piano/base_a.png";
+    public static final String PIANO_A_CPL = "piano/base_a_cpl.png";
+    public static final String PIANO_T = "piano/base_t.png";
+    public static final String PIANO_T_CPL = "piano/base_t_cpl.png";
+    public static final String PIANO_G = "piano/base_g.png";
+    public static final String PIANO_G_CPL = "piano/base_g_cpl.png";
+    public static final String PIANO_C = "piano/base_c.png";
+    public static final String PIANO_C_CPL = "piano/base_c_cpl.png";
 }

@@ -28,6 +28,7 @@ public class LandscapeGameActivity extends AbstractGameActivity {
         Log.d(TAG, "onCreate - Created Activity.");
 
         addGame(GutGame.class);
+        addGame(PianoGame.class);
         currentGame = games.get(currentGameId);
     }
 
