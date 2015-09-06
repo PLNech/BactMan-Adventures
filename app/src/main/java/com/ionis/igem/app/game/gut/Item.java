@@ -32,21 +32,33 @@ public class Item extends PhysicalWorldObject {
     }
     public static float SCALE_DEFAULT = 0.1f;
 
+    private final float speedCoeff;
     private Type type;
-
     private Role role;
-    public Item(float pX, float pY, float pAngle, Type pType, Role pRole, float speedCoeff, ITiledTextureRegion textureRegion, AbstractGameActivity activity) {
-        super(new PhysicalWorldObject.Builder(pX, pY, textureRegion, activity.getVBOM(), activity.getPhysicsWorld())
+
+    private final GutGame game;
+
+    public Item(float pX, float pY, float pAngle, Type pType, Role pRole, float speedCoeff, ITiledTextureRegion textureRegion, GutGame game) {
+        super(new PhysicalWorldObject.Builder(pX, pY, textureRegion, game.getActivity().getVBOM(), game.getActivity().getPhysicsWorld())
                 .angle(pAngle).draggable(false).scaleDefault(SCALE_DEFAULT)
-                .category(GutGame.CATEGORY_ITEM).mask(GutGame.MASK_ITEM).groupIndex(GutGame.GROUP_INDEX));
+                .category(GutGame.CATEGORY_ITEM).mask(GutGame.MASK_ITEM).groupIndex(GutGame.GROUP_INDEX)
+                .shouldAdd(false));
         type = pType;
         role = pRole;
-        body.setLinearVelocity(speedCoeff * GutGame.SPEED_ITEM_PPS / PhysicsConstants.PIXEL_TO_METER_RATIO_DEFAULT, 0);
+        this.speedCoeff = speedCoeff;
+        this.game = game;
     }
 
     @Override
     protected BodyDef.BodyType getBodyType() {
         return BodyDef.BodyType.DynamicBody;
+    }
+
+    @Override
+    public void onAddToWorld() {
+        super.onAddToWorld();
+        body.setLinearVelocity(speedCoeff * GutGame.SPEED_ITEM_PPS / PhysicsConstants.PIXEL_TO_METER_RATIO_DEFAULT, 0);
+        game.addItem(this);
     }
 
     public static int chooseLayer(Type type) {

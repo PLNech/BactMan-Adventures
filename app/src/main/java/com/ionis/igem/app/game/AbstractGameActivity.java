@@ -33,6 +33,7 @@ import org.andengine.entity.scene.menu.MenuScene;
 import org.andengine.entity.scene.menu.item.IMenuItem;
 import org.andengine.entity.scene.menu.item.SpriteMenuItem;
 import org.andengine.entity.shape.IShape;
+import org.andengine.entity.sprite.Sprite;
 import org.andengine.entity.text.Text;
 import org.andengine.entity.text.TextOptions;
 import org.andengine.entity.util.FPSLogger;
@@ -113,6 +114,7 @@ public abstract class AbstractGameActivity extends SimpleBaseGameActivity implem
     protected static final float MAX_ZOOM_CHANGE = 0.8f;
 
     private ArrayList<PhysicalWorldObject> objectsToDelete = new ArrayList<>();
+    private ArrayList<PhysicalWorldObject> objectsToAdd = new ArrayList<>();
 
     protected BaseGame currentGame;
     protected ArrayList<BaseGame> games = new ArrayList<>();
@@ -346,16 +348,31 @@ public abstract class AbstractGameActivity extends SimpleBaseGameActivity implem
                 super.onUpdate(pSecondsElapsed);
                 if (!physicsWorld.isLocked()) {
                     for (PhysicalWorldObject object : objectsToDelete) {
-                        destroyBody(object.getBody(), object.getSprite());
+                        destroyObject(object);
                     }
                     objectsToDelete.clear();
+
+                    for (PhysicalWorldObject object : objectsToAdd) {
+                        createObject(object);
+                    }
+                    objectsToAdd.clear();
                 }
             }
 
-            private void destroyBody(final Body body, final IShape mask) {
-                unregisterPhysicsConnector(physicsWorld.getPhysicsConnectorManager().findPhysicsConnectorByShape(mask));
+            private void createObject(final PhysicalWorldObject object) {
+                object.onAddToWorld();
+            }
+
+            private void destroyObject(final PhysicalWorldObject object) {
+                Body body = object.getBody();
+                Sprite sprite = object.getSprite();
+                body.setActive(false);
+                body.setAwake(false);
+                unregisterPhysicsConnector(physicsWorld.getPhysicsConnectorManager().findPhysicsConnectorByShape(sprite));
                 body.setActive(false);
                 destroyBody(body);
+                sprite.detachChildren();
+                sprite.detachSelf();
             }
         };
         physicsWorld.setContactListener(contactListener);
@@ -472,6 +489,12 @@ public abstract class AbstractGameActivity extends SimpleBaseGameActivity implem
     public void markForDeletion(PhysicalWorldObject object) {
         if (!objectsToDelete.contains(object)) {
             objectsToDelete.add(object);
+        }
+    }
+
+    public void markForAddition(PhysicalWorldObject object) {
+        if (!objectsToAdd.contains(object)) {
+            objectsToAdd.add(object);
         }
     }
 

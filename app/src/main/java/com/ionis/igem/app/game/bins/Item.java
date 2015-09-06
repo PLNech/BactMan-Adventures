@@ -72,7 +72,8 @@ public class Item extends PhysicalWorldObject {
         super(new PhysicalWorldObject.Builder(posX, posY, texture, manager, physicsWorld)
                 .angle(new Random().nextFloat()).draggable(true)
                 .scaleDefault(WorldObject.getIdealScale(SCALE_DEFAULT, texture))
-                .scaleGrabbed(WorldObject.getIdealScale(SCALE_GRABBED, texture)));
+                .scaleGrabbed(WorldObject.getIdealScale(SCALE_GRABBED, texture))
+                .density(BODY_DENSITY).elasticity(BODY_ELASTICITY).friction(BODY_FRICTION));
         sprite.setCullingEnabled(true);
         shape = new DraggableAnimatedSprite(posX, posY, getIdealScale(SCALE_GRABBED, texture), sprite.getTiledTextureRegion(), manager, this) {
             //TODO: Move Draggability to own interface
@@ -104,21 +105,6 @@ public class Item extends PhysicalWorldObject {
 
     public DraggableAnimatedSprite getShape() {
         return shape;
-    }
-
-    @Override
-    public float getDensity() {
-        return BODY_DENSITY;
-    }
-
-    @Override
-    public float getElasticity() {
-        return BODY_ELASTICITY;
-    }
-
-    @Override
-    public float getFriction() {
-        return BODY_FRICTION;
     }
 
     @Override

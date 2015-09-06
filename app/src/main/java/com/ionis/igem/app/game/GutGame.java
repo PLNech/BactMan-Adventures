@@ -219,16 +219,13 @@ public class GutGame extends BaseGame {
         final float textureHeight = Item.SCALE_DEFAULT * (type == Item.Type.IMMUNO ? texture.getWidth() : texture.getHeight());
         final float itemY = lanePos + (laneHeight - textureHeight) / 2;
         final float speedCoeff = (float) ((50.0 + gameScore) / 50);
+        final Item item = new Item(POS_ITEM_X, itemY, (float) Math.toRadians(angleD), type, role, speedCoeff, texture, this);
+        activity.markForAddition(item);
+    }
 
-        activity.runOnUpdateThread(new Runnable() {
-            @Override
-            public void run() {
-                Item item = new Item(POS_ITEM_X, itemY, (float) Math.toRadians(angleD), type, role, speedCoeff, texture, activity);
-                items.add(item);
-                activity.getScene().getChildByIndex(Item.chooseLayer(type)).attachChild(item.getSprite());
-            }
-        });
-
+    public void addItem(Item item) {
+        items.add(item);
+        activity.getScene().getChildByIndex(Item.chooseLayer(item.getType())).attachChild(item.getSprite());
     }
 
     private void stopRepeating() {
@@ -246,10 +243,7 @@ public class GutGame extends BaseGame {
     }
 
     private void deleteItem(final Item item) {
-        final AnimatedSprite sprite = item.getSprite();
-        sprite.setVisible(false);
-        activity.getScene().getChildByIndex(AbstractGameActivity.LAYER_BACKGROUND).detachChild(sprite);
-        Log.d(TAG, "deleteItem - Item removed from scene, marking for deletion.");
+        items.remove(item);
         activity.markForDeletion(item);
     }
 
@@ -259,7 +253,6 @@ public class GutGame extends BaseGame {
         activity.runOnUpdateThread(new Runnable() {
             @Override
             public void run() {
-                items.remove(item);
                 Log.d(TAG, "recycleItem - removed item from list.");
                 final Item.Role role = item.getRole();
                 if (isPlaying()) {
@@ -362,21 +355,15 @@ public class GutGame extends BaseGame {
 
     @Override
     public void resetGame() {
-        activity.runOnUpdateThread(new Runnable() {
-            @Override
-            public void run() {
-                resetGamePoints();
-                activity.getPhysicsWorld().setGravity(getPhysicsVector());
+        resetGamePoints();
 
-                for (final Item item : items) {
-                    deleteItem(item);
-                }
-                items.clear();
-                Log.d(TAG, "resetGame - Cleared game items.");
+        for (final Item item : items) {
+            deleteItem(item);
+        }
+        items.clear();
+        Log.d(TAG, "resetGame - Cleared game items.");
 
-                startScenario();
-            }
-        });
+        startScenario();
     }
 
     @Override
@@ -479,4 +466,7 @@ public class GutGame extends BaseGame {
         return false;
     }
 
+    public AbstractGameActivity getActivity() {
+        return activity;
+    }
 }
