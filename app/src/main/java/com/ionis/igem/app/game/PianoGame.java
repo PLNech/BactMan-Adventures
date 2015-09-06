@@ -36,7 +36,7 @@ public class PianoGame extends BaseGame {
     @Override
     public List<GFXAsset> getGraphicalAssets() {
         if (graphicalAssets.isEmpty()) {
-            graphicalAssets.add(new GFXAsset(ResMan.PIANO_BG, 2048, 1509, 0, 0));
+            graphicalAssets.add(new GFXAsset(ResMan.PIANO_BG, 1841, 1395, 0, 0));
             graphicalAssets.add(new GFXAsset(ResMan.PIANO_L_PHO, 732, 512, 0, 0));
             graphicalAssets.add(new GFXAsset(ResMan.PIANO_POLY, 1536, 1014, 0, 0, 2, 1));
             graphicalAssets.add(new GFXAsset(ResMan.PIANO_A, 317, 1024, 0, 0));
