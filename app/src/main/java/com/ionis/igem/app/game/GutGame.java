@@ -65,7 +65,7 @@ public class GutGame extends BaseGame {
     private HUDElement HUDScore;
     private HUDElement HUDLives;
 
-    private ArrayList<Item> items = new ArrayList<>();
+    private final ArrayList<Item> items = new ArrayList<>();
     private Player player;
 
     public GutGame(AbstractGameActivity pActivity) {
@@ -243,7 +243,6 @@ public class GutGame extends BaseGame {
     }
 
     private void deleteItem(final Item item) {
-        items.remove(item);
         activity.markForDeletion(item);
     }
 
@@ -356,9 +355,10 @@ public class GutGame extends BaseGame {
     @Override
     public void resetGame() {
         resetGamePoints();
-
-        for (final Item item : items) {
-            deleteItem(item);
+        synchronized (items) {
+            for (final Item item : items) {
+                deleteItem(item);
+            }
         }
         items.clear();
         Log.d(TAG, "resetGame - Cleared game items.");
@@ -371,7 +371,8 @@ public class GutGame extends BaseGame {
         return new IOnSceneTouchListener() {
             @Override
             public boolean onSceneTouchEvent(Scene pScene, TouchEvent pSceneTouchEvent) {
-                if (pSceneTouchEvent.getAction() == TouchEvent.ACTION_MOVE) {
+                final int action = pSceneTouchEvent.getAction();
+                if (action == TouchEvent.ACTION_MOVE || action == TouchEvent.ACTION_DOWN) {
                     final Body body = player.getBody();
                     float ratio = PhysicsConstants.PIXEL_TO_METER_RATIO_DEFAULT;
                     body.setTransform(body.getPosition().x, pSceneTouchEvent.getY() / ratio, body.getAngle());
@@ -468,5 +469,9 @@ public class GutGame extends BaseGame {
 
     public AbstractGameActivity getActivity() {
         return activity;
+    }
+
+    public void removeItem(Item item) {
+        items.remove(item);
     }
 }

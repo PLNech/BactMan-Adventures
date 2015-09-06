@@ -5,6 +5,7 @@ import android.util.Pair;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
+import org.andengine.entity.sprite.Sprite;
 import org.andengine.extension.physics.box2d.PhysicsConnector;
 import org.andengine.extension.physics.box2d.PhysicsFactory;
 import org.andengine.extension.physics.box2d.PhysicsWorld;
@@ -119,16 +120,6 @@ public abstract class PhysicalWorldObject extends WorldObject {
         }
     }
 
-    public void onAddToWorld() {
-        Log.d(TAG, "onAddToWorld - Adding to world a " + this.getClass().getSimpleName());
-        initBody(b.physicsWorld, b.category, b.mask, b.groupIndex);
-        body.setTransform(b.pX / PhysicsConstants.PIXEL_TO_METER_RATIO_DEFAULT,
-                b.pY / PhysicsConstants.PIXEL_TO_METER_RATIO_DEFAULT, b.angle);
-
-        Pair<Boolean, Boolean> updates = getBodyUpdates();
-        b.physicsWorld.registerPhysicsConnector(new PhysicsConnector(sprite, body, updates.first, updates.second));
-    }
-
     protected void initBody(PhysicsWorld physicsWorld) {
         initBody(physicsWorld, null, null, null);
     }
@@ -155,6 +146,21 @@ public abstract class PhysicalWorldObject extends WorldObject {
          *  Describes the updates to apply : position/rotation
          */
         return new Pair<>(true, true);
+    }
+
+    public void onAddToWorld() {
+        Log.d(TAG, "onAddToWorld - Adding to world a " + this.getClass().getSimpleName());
+        initBody(b.physicsWorld, b.category, b.mask, b.groupIndex);
+        body.setTransform(b.pX / PhysicsConstants.PIXEL_TO_METER_RATIO_DEFAULT,
+                b.pY / PhysicsConstants.PIXEL_TO_METER_RATIO_DEFAULT, b.angle);
+
+        Pair<Boolean, Boolean> updates = getBodyUpdates();
+        b.physicsWorld.registerPhysicsConnector(new PhysicsConnector(sprite, body, updates.first, updates.second));
+    }
+
+    public void onRemoveFromWorld() {
+        sprite.detachChildren();
+        sprite.detachSelf();
     }
 
     public Body getBody() {

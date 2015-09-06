@@ -371,8 +371,7 @@ public abstract class AbstractGameActivity extends SimpleBaseGameActivity implem
                 unregisterPhysicsConnector(physicsWorld.getPhysicsConnectorManager().findPhysicsConnectorByShape(sprite));
                 body.setActive(false);
                 destroyBody(body);
-                sprite.detachChildren();
-                sprite.detachSelf();
+                object.onRemoveFromWorld();
             }
         };
         physicsWorld.setContactListener(contactListener);

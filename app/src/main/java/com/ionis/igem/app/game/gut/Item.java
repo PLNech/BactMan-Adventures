@@ -61,6 +61,12 @@ public class Item extends PhysicalWorldObject {
         game.addItem(this);
     }
 
+    @Override
+    public void onRemoveFromWorld() {
+        super.onRemoveFromWorld();
+        game.removeItem(this);
+    }
+
     public static int chooseLayer(Type type) {
         switch (type) {
             case ANTIBIO:
