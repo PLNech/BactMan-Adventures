@@ -16,10 +16,11 @@ public class ResMan {
     public static final String MENU_QUIT = "menu_quit.png";
 
     /* BinGame */
-    public static final String BIN1 = "bins/bin1.png";
-    public static final String BIN2 = "bins/bin2.png";
-    public static final String BIN3 = "bins/bin3.png";
-    public static final String BIN4 = "bins/bin4.png";
+    public static final String BIN_BG = "bins/background.png";
+    public static final String BIN_SHARPS = "bins/bin_sharps.png";
+    public static final String BIN_CHEMICAL = "bins/bin_chemical.png";
+    public static final String BIN_REGULAR = "bins/bin_regular.png";
+    public static final String BIN_BIO = "bins/bin_biohazard.png";
 
     public static final String ITEM_PEN = "bins/item_pen.png";
     public static final String ITEM_TUBE = "bins/item_tube.png";

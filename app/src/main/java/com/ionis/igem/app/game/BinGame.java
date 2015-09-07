@@ -18,7 +18,9 @@ import org.andengine.entity.IEntity;
 import org.andengine.entity.modifier.*;
 import org.andengine.entity.scene.Scene;
 import org.andengine.entity.scene.background.Background;
+import org.andengine.entity.scene.background.SpriteBackground;
 import org.andengine.entity.sprite.AnimatedSprite;
+import org.andengine.entity.sprite.Sprite;
 import org.andengine.opengl.font.IFont;
 import org.andengine.opengl.texture.region.ITiledTextureRegion;
 import org.andengine.opengl.vbo.VertexBufferObjectManager;
@@ -57,14 +59,15 @@ public class BinGame extends BaseGame {
     @Override
     public List<GFXAsset> getGraphicalAssets() {
         if (graphicalAssets.isEmpty()) {
+            graphicalAssets.add(new GFXAsset(ResMan.BIN_BG, 1536, 2048, 0, 0, 2, 1));
+
             /* Bins */
-            graphicalAssets.add(new GFXAsset(ResMan.BIN1, 696, 1024, 0, 0));
-            graphicalAssets.add(new GFXAsset(ResMan.BIN2, 696, 1024, 0, 0));
-            graphicalAssets.add(new GFXAsset(ResMan.BIN3, 696, 1024, 0, 0));
-            graphicalAssets.add(new GFXAsset(ResMan.BIN4, 696, 1024, 0, 0));
+            graphicalAssets.add(new GFXAsset(ResMan.BIN_SHARPS, 512, 753, 0, 0));
+            graphicalAssets.add(new GFXAsset(ResMan.BIN_CHEMICAL, 512, 753, 0, 0));
+            graphicalAssets.add(new GFXAsset(ResMan.BIN_REGULAR, 512, 753, 0, 0));
+            graphicalAssets.add(new GFXAsset(ResMan.BIN_BIO, 512, 753, 0, 0));
 
             /* Items */
-            graphicalAssets.add(new GFXAsset(ResMan.FACE_BOX_TILED, 696, 1024, 0, 0, 2, 1));
 
             graphicalAssets.add(new GFXAsset(ResMan.ITEM_TUBE, 99, 512, 0, 0));
             graphicalAssets.add(new GFXAsset(ResMan.ITEM_CONE_BLUE, 59, 512, 0, 0));
@@ -249,8 +252,10 @@ public class BinGame extends BaseGame {
     public Scene prepareScene() {
         Scene scene = activity.getScene();
 
-        final Background backgroundColor = new Background(0.96862f, 0.77647f, 0.37647f);
-        scene.setBackground(backgroundColor);
+//        final Background backgroundColor = new Background(0.96862f, 0.77647f, 0.37647f);
+//        scene.setBackground(backgroundColor);
+        scene.setBackground(new SpriteBackground(new Sprite(0, 0, PortraitGameActivity.CAMERA_WIDTH,
+                PortraitGameActivity.CAMERA_HEIGHT, activity.getTexture(ResMan.BIN_BG), activity.getVBOM())));
 
         resetGamePoints();
         createCameraWalls();
@@ -438,6 +443,7 @@ public class BinGame extends BaseGame {
     }
 
     private void deleteItem(final Item item) {
+        //TODO: Mark for deletion
         final AnimatedSprite sprite = item.getSprite();
         final DraggableAnimatedSprite biggerSprite = item.getShape();
         final Scene scene = activity.getScene();
@@ -460,10 +466,10 @@ public class BinGame extends BaseGame {
 
     private void createBins() {
         final float binY = 0.85f;
-        final ITiledTextureRegion bin1TextureRegion = activity.getTexture(ResMan.BIN1);
-        final ITiledTextureRegion bin2TextureRegion = activity.getTexture(ResMan.BIN2);
-        final ITiledTextureRegion bin3TextureRegion = activity.getTexture(ResMan.BIN3);
-        final ITiledTextureRegion bin4TextureRegion = activity.getTexture(ResMan.BIN4);
+        final ITiledTextureRegion bin1TextureRegion = activity.getTexture(ResMan.BIN_SHARPS);
+        final ITiledTextureRegion bin2TextureRegion = activity.getTexture(ResMan.BIN_CHEMICAL);
+        final ITiledTextureRegion bin3TextureRegion = activity.getTexture(ResMan.BIN_REGULAR);
+        final ITiledTextureRegion bin4TextureRegion = activity.getTexture(ResMan.BIN_BIO);
 
         Vector2 bin1Pos = activity.spritePosition(bin1TextureRegion, 0.20f, binY, Bin.SCALE_DEFAULT);
         Vector2 bin2Pos = activity.spritePosition(bin2TextureRegion, 0.46f, binY, Bin.SCALE_DEFAULT);
