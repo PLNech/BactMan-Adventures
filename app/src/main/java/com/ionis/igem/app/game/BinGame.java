@@ -274,7 +274,6 @@ public class BinGame extends BaseGame {
                 resetGamePoints();
                 activity.getPhysicsWorld().setGravity(getPhysicsVector());
 
-                final Scene gameScene = activity.getScene();
                 for (final Item item : items) {
                     deleteItem(item);
                 }

@@ -19,6 +19,7 @@ import com.ionis.igem.app.game.model.HUDElement;
 import com.ionis.igem.app.game.model.PhysicalWorldObject;
 import com.ionis.igem.app.game.model.res.FontAsset;
 import com.ionis.igem.app.game.model.res.GFXAsset;
+import com.ionis.igem.app.game.ui.DitheredSprite;
 import com.ionis.igem.app.utils.FontsOverride;
 import org.andengine.engine.Engine;
 import org.andengine.engine.camera.SmoothCamera;
@@ -29,10 +30,10 @@ import org.andengine.entity.Entity;
 import org.andengine.entity.IEntity;
 import org.andengine.entity.scene.IOnSceneTouchListener;
 import org.andengine.entity.scene.Scene;
+import org.andengine.entity.scene.background.SpriteBackground;
 import org.andengine.entity.scene.menu.MenuScene;
 import org.andengine.entity.scene.menu.item.IMenuItem;
 import org.andengine.entity.scene.menu.item.SpriteMenuItem;
-import org.andengine.entity.shape.IShape;
 import org.andengine.entity.sprite.Sprite;
 import org.andengine.entity.text.Text;
 import org.andengine.entity.text.TextOptions;
@@ -188,8 +189,7 @@ public abstract class AbstractGameActivity extends SimpleBaseGameActivity implem
     @Override
     public boolean onKeyDown(final int pKeyCode, @NonNull final KeyEvent pEvent) {
         if (gameScene != null && pauseScene != null &&
-                pKeyCode == KeyEvent.KEYCODE_MENU && pEvent.getAction() == KeyEvent.ACTION_DOWN)
-        {
+                pKeyCode == KeyEvent.KEYCODE_MENU && pEvent.getAction() == KeyEvent.ACTION_DOWN) {
             if (gameScene.hasChildScene()) { // The game is paused
                 pauseScene.back();
                 updateNextStatus();
@@ -586,8 +586,7 @@ public abstract class AbstractGameActivity extends SimpleBaseGameActivity implem
 
     public Vector2 spritePosition(ITextureRegion textureRegion,
                                   float positionRatioX, float positionRatioY,
-                                  float ratio)
-    {
+                                  float ratio) {
         final float widthToRatio = textureRegion.getWidth() * ratio;
         final float heightToRatio = textureRegion.getHeight() * ratio;
         return spritePosition(new Vector2(widthToRatio, heightToRatio), new Vector2(positionRatioX, positionRatioY));
@@ -635,5 +634,11 @@ public abstract class AbstractGameActivity extends SimpleBaseGameActivity implem
 
     public VertexBufferObjectManager getVBOM() {
         return vertexBufferObjectManager;
+    }
+
+    protected void initSplashScene(ITextureRegion splashTexture, int width, int height) {
+        splashScene = new Scene();
+        DitheredSprite splash = new DitheredSprite(0, 0, width, height, splashTexture, getVBOM());
+        splashScene.setBackground(new SpriteBackground(splash));
     }
 }

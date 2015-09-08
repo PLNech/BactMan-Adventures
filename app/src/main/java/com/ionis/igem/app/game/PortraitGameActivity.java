@@ -2,19 +2,15 @@ package com.ionis.igem.app.game;
 
 import android.os.Bundle;
 import android.util.Log;
-import com.badlogic.gdx.math.Vector2;
 import com.ionis.igem.app.game.managers.ResMan;
-import com.ionis.igem.app.game.ui.DitheredSprite;
 import org.andengine.engine.camera.SmoothCamera;
 import org.andengine.engine.options.EngineOptions;
 import org.andengine.engine.options.ScreenOrientation;
 import org.andengine.engine.options.resolutionpolicy.RatioResolutionPolicy;
 import org.andengine.entity.scene.Scene;
-import org.andengine.entity.scene.background.Background;
 import org.andengine.opengl.texture.TextureOptions;
 import org.andengine.opengl.texture.atlas.bitmap.BitmapTextureAtlas;
 import org.andengine.opengl.texture.atlas.bitmap.BitmapTextureAtlasTextureRegionFactory;
-import org.andengine.opengl.texture.region.ITextureRegion;
 import org.andengine.opengl.texture.region.TiledTextureRegion;
 
 public class PortraitGameActivity extends AbstractGameActivity {
@@ -57,7 +53,7 @@ public class PortraitGameActivity extends AbstractGameActivity {
 
     protected void loadSplashScene() {
         checkSetGFXPath();
-        BitmapTextureAtlas splashTextureAtlas = new BitmapTextureAtlas(textureManager, 699, 985, TextureOptions.BILINEAR);
+        BitmapTextureAtlas splashTextureAtlas = new BitmapTextureAtlas(textureManager, 1440, 2400, TextureOptions.BILINEAR);
         TiledTextureRegion splashTextureRegion = BitmapTextureAtlasTextureRegionFactory.
                 createTiledFromAsset(splashTextureAtlas, this, ResMan.SPLASH, 0, 0, 1, 1);
         splashTextureAtlas.load();
@@ -65,19 +61,7 @@ public class PortraitGameActivity extends AbstractGameActivity {
     }
 
     private void initSplashScene() {
-        splashScene = new Scene();
-
-        final ITextureRegion splashTexture = getTexture(ResMan.SPLASH);
-        final Vector2 posS = new Vector2(-100, -80);
-        Log.d(TAG, "initSplashScene - Center: " + posS.x + ", " + posS.y);
-
-        final Background backgroundColor = new Background(0.78431f, 0.77254f, 0.76862f);
-        splashScene.setBackground(backgroundColor);
-
-        DitheredSprite splash = new DitheredSprite(0, 0, splashTexture, getVBOM());
-        splash.setScale(0.75f);
-        splash.setPosition(posS.x, posS.y);
-        splashScene.attachChild(splash);
+        super.initSplashScene(getTexture(ResMan.SPLASH), CAMERA_WIDTH, CAMERA_HEIGHT);
     }
 
     private void loadMenus() {
