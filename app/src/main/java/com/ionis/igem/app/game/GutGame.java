@@ -467,10 +467,6 @@ public class GutGame extends BaseGame {
         return false;
     }
 
-    public AbstractGameActivity getActivity() {
-        return activity;
-    }
-
     public void removeItem(Item item) {
         items.remove(item);
     }

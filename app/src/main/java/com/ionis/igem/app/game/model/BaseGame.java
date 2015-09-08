@@ -96,6 +96,10 @@ public abstract class BaseGame {
         return position;
     }
 
+    public AbstractGameActivity getActivity() {
+        return activity;
+    }
+
     public boolean isPortrait() {
         return true;
     }
