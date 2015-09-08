@@ -67,6 +67,7 @@ public class GutGame extends BaseGame {
 
     private final ArrayList<Item> items = new ArrayList<>();
     private Player player;
+    private int lastLaneId = -42;
 
     public GutGame(AbstractGameActivity pActivity) {
         super(pActivity);
@@ -214,13 +215,23 @@ public class GutGame extends BaseGame {
                 throw new IllegalStateException("No default!");
         }
 
-        final float lanePos = POS_FLOW[CalcUtils.randomOf(4, random)] + 5;
+        final float lanePos = POS_FLOW[getRandomLane()] + 5;
         final float laneHeight = POS_FLOW[1] - POS_FLOW[0];
         final float textureHeight = Item.SCALE_DEFAULT * (type == Item.Type.IMMUNO ? texture.getWidth() : texture.getHeight());
         final float itemY = lanePos + (laneHeight - textureHeight) / 2;
         final float speedCoeff = (float) ((50.0 + gameScore) / 50);
         final Item item = new Item(POS_ITEM_X, itemY, (float) Math.toRadians(angleD), type, role, speedCoeff, texture, this);
         activity.markForAddition(item);
+    }
+
+    private int getRandomLane() {
+        int newLane;
+        while (lastLaneId == (newLane = CalcUtils.randomOf(4, random))) {
+            // Avoid sending two consecutive items in the same lane
+        }
+
+        lastLaneId = newLane;
+        return lastLaneId;
     }
 
     public void addItem(Item item) {
