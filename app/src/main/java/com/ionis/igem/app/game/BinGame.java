@@ -183,9 +183,8 @@ public class BinGame extends BaseGame {
                 Log.v(TAG, "beginContact - Item " + item + " went in bin " + bin + (validMove ? " :)" : " :("));
 
                 if (deadItems.contains(item.getId())) {
-                    final String msg = "Contacts a deleted item!";
-                    Log.e(TAG, "handleBinItemContact - " + msg);
-                    throw new IllegalStateException(msg);
+                    Log.e(TAG, "handleBinItemContact - " + "Contacts an item marked for deletion!");
+                    return;
                 }
                 final Bin.Animation animation = validMove ? Bin.Animation.VALID_HIT : Bin.Animation.INVALID_HIT;
 
@@ -315,7 +314,11 @@ public class BinGame extends BaseGame {
     }
 
     private void createItems() {
-        createItem(Item.Type.random());
+        activity.runOnUpdateThread(new Runnable() {
+            @Override
+            public void run() {
+                createItem(Item.Type.random());
+            }});
     }
 
     private void createItem(Item.Type type) {
@@ -433,17 +436,23 @@ public class BinGame extends BaseGame {
     }
 
     private void createItem(float posX, float posY, ITiledTextureRegion textureRegion, Item.Type type) {
-        Item item = new Item(type, textureRegion, posX, posY, activity.getVBOM(), activity.getPhysicsWorld());
+        //TODO: Mark for addition?
+        Item item = new Item(type, textureRegion, posX, posY, this);
         items.add(item);
         final Scene gameScene = activity.getScene();
         final IEntity layerBG = gameScene.getChildByIndex(PortraitGameActivity.LAYER_BACKGROUND);
-        layerBG.attachChild(item.getSprite());
+        final DraggableAnimatedSprite sprite = item.getSprite();
+        sprite.setVisible(true);
+        layerBG.attachChild(sprite);
         layerBG.attachChild(item.getShape());
         gameScene.registerTouchArea(item.getShape());
     }
 
+    public void removeItem(Item item) {
+        items.remove(item);
+    }
+
     private void deleteItem(final Item item) {
-        //TODO: Mark for deletion
         final AnimatedSprite sprite = item.getSprite();
         final DraggableAnimatedSprite biggerSprite = item.getShape();
         final Scene scene = activity.getScene();
@@ -453,8 +462,8 @@ public class BinGame extends BaseGame {
         scene.unregisterTouchArea(biggerSprite);
         layerBG.detachChild(biggerSprite);
         layerBG.detachChild(sprite);
-        activity.markForDeletion(item);
         biggerSprite.stopDragging();
+        activity.markForDeletion(item);
     }
 
     private void createBin(Bin.Type type, ITiledTextureRegion textureRegion, float posX, float posY) {

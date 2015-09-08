@@ -70,13 +70,11 @@ public class PianoGame extends BaseGame {
             final float scale = 0.08f;
 
             Vector2 posS = new Vector2(5, 0);
-            Vector2 posL = new Vector2(350, 0);
 
             Vector2 offS = new Vector2(75, 30);
-            Vector2 offL = new Vector2(340, 27.5f);
 
             IFont fontRoboto = activity.getFont(FontAsset.name(ResMan.F_HUD_BIN, ResMan.F_HUD_BIN_SIZE, ResMan.F_HUD_BIN_COLOR, ResMan.F_HUD_BIN_ANTI));
-            Log.d(TAG, "getHudElements - sprites: " + posS + ", " + posL + " - text:" + offS.add(posS) + ", " + offL.add(posL));
+            Log.d(TAG, "getHudElements - sprites: " + posS + " - text:" + offS.add(posS));
 
             final VertexBufferObjectManager vbom = activity.getVBOM();
 
