@@ -24,7 +24,6 @@ import org.andengine.entity.modifier.SequenceEntityModifier;
 import org.andengine.entity.scene.IOnSceneTouchListener;
 import org.andengine.entity.scene.Scene;
 import org.andengine.entity.scene.background.SpriteBackground;
-import org.andengine.entity.sprite.AnimatedSprite;
 import org.andengine.entity.sprite.Sprite;
 import org.andengine.extension.physics.box2d.util.constants.PhysicsConstants;
 import org.andengine.input.touch.TouchEvent;
@@ -435,7 +434,8 @@ public class GutGame extends BaseGame {
                         toColor = Color.RED;
                         decrementLives();
                         break;
-                    default: throw new IllegalStateException();
+                    default:
+                        throw new IllegalStateException();
                 }
 
                 final float pDuration = 0.25f;

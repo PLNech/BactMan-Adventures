@@ -17,7 +17,6 @@ import com.ionis.igem.app.utils.CalcUtils;
 import org.andengine.entity.IEntity;
 import org.andengine.entity.modifier.*;
 import org.andengine.entity.scene.Scene;
-import org.andengine.entity.scene.background.Background;
 import org.andengine.entity.scene.background.SpriteBackground;
 import org.andengine.entity.sprite.AnimatedSprite;
 import org.andengine.entity.sprite.Sprite;
@@ -59,7 +58,7 @@ public class BinGame extends BaseGame {
     @Override
     public List<GFXAsset> getGraphicalAssets() {
         if (graphicalAssets.isEmpty()) {
-            graphicalAssets.add(new GFXAsset(ResMan.BIN_BG, 1536, 2048, 0, 0, 2, 1));
+            graphicalAssets.add(new GFXAsset(ResMan.BIN_BG, 960, 1600, 0, 0));
 
             /* Bins */
             graphicalAssets.add(new GFXAsset(ResMan.BIN_SHARPS, 512, 753, 0, 0));
@@ -99,7 +98,6 @@ public class BinGame extends BaseGame {
             graphicalAssets.add(new GFXAsset(ResMan.HUD_LIVES, 1479, 1024, 0, 0));
             graphicalAssets.add(new GFXAsset(ResMan.HUD_SCORE, 1885, 1024, 0, 0));
         }
-
         return graphicalAssets;
     }
 
@@ -250,9 +248,6 @@ public class BinGame extends BaseGame {
     @Override
     public Scene prepareScene() {
         Scene scene = activity.getScene();
-
-//        final Background backgroundColor = new Background(0.96862f, 0.77647f, 0.37647f);
-//        scene.setBackground(backgroundColor);
         scene.setBackground(new SpriteBackground(new Sprite(0, 0, PortraitGameActivity.CAMERA_WIDTH,
                 PortraitGameActivity.CAMERA_HEIGHT, activity.getTexture(ResMan.BIN_BG), activity.getVBOM())));
 
@@ -317,7 +312,8 @@ public class BinGame extends BaseGame {
             @Override
             public void run() {
                 createItem(Item.Type.random());
-            }});
+            }
+        });
     }
 
     private void createItem(Item.Type type) {
