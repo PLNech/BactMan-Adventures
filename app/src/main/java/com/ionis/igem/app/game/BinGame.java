@@ -318,7 +318,7 @@ public class BinGame extends BaseGame {
 
     private void createItem(Item.Type type) {
         float posRatioX = 0.15f + random.nextFloat() * 0.85f;
-        float posRatioY = random.nextFloat() * 0.2f;
+        float posRatioY = 0.15f;
         Vector2 itemPos = activity.spritePosition(32, 32, posRatioX, posRatioY);
         createItem(itemPos, type);
     }
