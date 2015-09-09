@@ -1,5 +1,6 @@
 package com.ionis.igem.app.game.model;
 
+import android.util.Log;
 import android.util.Pair;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
@@ -15,12 +16,14 @@ import org.andengine.opengl.vbo.VertexBufferObjectManager;
  * Created by PLN on 23/08/2015.
  */
 public abstract class PhysicalWorldObject extends WorldObject {
+    private static final String TAG = "PhysicalWorldObject";
 
     public static final float BODY_DENSITY = 1000;
     public static final float BODY_ELASTICITY = 0;
     public static final float BODY_FRICTION = 0;
 
     protected Body body;
+    private Builder b;
 
     public static class Builder {
         private final float pX;
@@ -37,6 +40,11 @@ public abstract class PhysicalWorldObject extends WorldObject {
         private Short category = null;
         private Short mask = null;
         private Short groupIndex = null;
+        private boolean shouldAdd = true;
+
+        private float density = BODY_DENSITY;
+        private float elasticity = BODY_ELASTICITY;
+        private float friction = BODY_FRICTION;
 
         public Builder(float pX, float pY, ITiledTextureRegion textureRegion, VertexBufferObjectManager manager, PhysicsWorld physicsWorld) {
             this.pX = pX;
@@ -80,18 +88,35 @@ public abstract class PhysicalWorldObject extends WorldObject {
             groupIndex = val;
             return this;
         }
+
+        public Builder shouldAdd(boolean val) {
+            shouldAdd = val;
+            return this;
+        }
+
+        public Builder density(float val) {
+            density = val;
+            return this;
+        }
+
+        public Builder elasticity(float val) {
+            elasticity = val;
+            return this;
+        }
+
+        public Builder friction(float val) {
+            friction = val;
+            return this;
+        }
     }
 
     protected PhysicalWorldObject(Builder b) {
         super(b.pX, b.pY, b.draggable, b.scaleDefault, b.scaleGrabbed, b.textureRegion, b.manager);
         sprite.setScale(b.scaleDefault);
-
-        initBody(b.physicsWorld, b.category, b.mask, b.groupIndex);
-        body.setTransform(b.pX / PhysicsConstants.PIXEL_TO_METER_RATIO_DEFAULT,
-                b.pY / PhysicsConstants.PIXEL_TO_METER_RATIO_DEFAULT, b.angle);
-
-        Pair<Boolean, Boolean> updates = getBodyUpdates();
-        b.physicsWorld.registerPhysicsConnector(new PhysicsConnector(sprite, body, updates.first, updates.second));
+        this.b = b;
+        if (b.shouldAdd) {
+            onAddToWorld();
+        }
     }
 
     protected void initBody(PhysicsWorld physicsWorld) {
@@ -102,9 +127,9 @@ public abstract class PhysicalWorldObject extends WorldObject {
     protected void initBody(PhysicsWorld physicsWorld, Short category, Short mask, Short groupIndex) {
         final FixtureDef itemFixtureDef;
         if (category != null && mask != null && groupIndex != null) {
-            itemFixtureDef = PhysicsFactory.createFixtureDef(this.getDensity(), this.getElasticity(), this.getFriction(), false, category, mask, groupIndex);
+            itemFixtureDef = PhysicsFactory.createFixtureDef(b.density, b.elasticity, b.friction, false, category, mask, groupIndex);
         } else {
-            itemFixtureDef = PhysicsFactory.createFixtureDef(this.getDensity(), this.getElasticity(), this.getFriction());
+            itemFixtureDef = PhysicsFactory.createFixtureDef(b.density, b.elasticity, b.friction);
         }
 
         body = PhysicsFactory.createBoxBody(physicsWorld, sprite, this.getBodyType(), itemFixtureDef);
@@ -122,19 +147,27 @@ public abstract class PhysicalWorldObject extends WorldObject {
         return new Pair<>(true, true);
     }
 
-    public float getElasticity() {
-        return BODY_ELASTICITY;
+    public void onAddToWorld() {
+        Log.d(TAG, "onAddToWorld - Adding to world a " + this.getClass().getSimpleName());
+        initBody(b.physicsWorld, b.category, b.mask, b.groupIndex);
+        body.setTransform(b.pX / PhysicsConstants.PIXEL_TO_METER_RATIO_DEFAULT,
+                b.pY / PhysicsConstants.PIXEL_TO_METER_RATIO_DEFAULT, b.angle);
+
+        Pair<Boolean, Boolean> updates = getBodyUpdates();
+        b.physicsWorld.registerPhysicsConnector(new PhysicsConnector(sprite, body, updates.first, updates.second));
     }
 
-    public float getFriction() {
-        return BODY_FRICTION;
-    }
-
-    public float getDensity() {
-        return BODY_DENSITY;
+    public void onRemoveFromWorld() {
+        sprite.detachChildren();
+        sprite.detachSelf();
     }
 
     public Body getBody() {
         return body;
+    }
+
+    @Override
+    public String toString() {
+        return "PhysicalWorldObject (" + this.getClass().getSimpleName() + "): " + super.toString();
     }
 }

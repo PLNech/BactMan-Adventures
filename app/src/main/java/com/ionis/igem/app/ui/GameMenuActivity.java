@@ -8,6 +8,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import com.ionis.igem.app.R;
 import com.ionis.igem.app.game.LandscapeGameActivity;
+import com.ionis.igem.app.game.PortraitGameActivity;
 
 public class GameMenuActivity extends AppCompatActivity {
 
@@ -25,7 +26,7 @@ public class GameMenuActivity extends AppCompatActivity {
 
     @OnClick(R.id.button_game_levels)
     protected void onClickLevels() {
-//        startActivity(new Intent(this, GameLevelsActivity.class));
+        startActivity(new Intent(this, PortraitGameActivity.class));
     }
 
     @OnClick(R.id.button_game_settings)

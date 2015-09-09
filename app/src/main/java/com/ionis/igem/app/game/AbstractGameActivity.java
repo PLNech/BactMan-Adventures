@@ -19,6 +19,7 @@ import com.ionis.igem.app.game.model.HUDElement;
 import com.ionis.igem.app.game.model.PhysicalWorldObject;
 import com.ionis.igem.app.game.model.res.FontAsset;
 import com.ionis.igem.app.game.model.res.GFXAsset;
+import com.ionis.igem.app.game.ui.DitheredSprite;
 import com.ionis.igem.app.utils.FontsOverride;
 import org.andengine.engine.Engine;
 import org.andengine.engine.camera.SmoothCamera;
@@ -29,10 +30,11 @@ import org.andengine.entity.Entity;
 import org.andengine.entity.IEntity;
 import org.andengine.entity.scene.IOnSceneTouchListener;
 import org.andengine.entity.scene.Scene;
+import org.andengine.entity.scene.background.SpriteBackground;
 import org.andengine.entity.scene.menu.MenuScene;
 import org.andengine.entity.scene.menu.item.IMenuItem;
 import org.andengine.entity.scene.menu.item.SpriteMenuItem;
-import org.andengine.entity.shape.IShape;
+import org.andengine.entity.sprite.Sprite;
 import org.andengine.entity.text.Text;
 import org.andengine.entity.text.TextOptions;
 import org.andengine.entity.util.FPSLogger;
@@ -101,17 +103,19 @@ public abstract class AbstractGameActivity extends SimpleBaseGameActivity implem
     protected SmoothCamera gameCamera;
     protected PhysicsWorld physicsWorld;
 
-    protected static final int LAYER_COUNT = 4;
     public static final int LAYER_BACKGROUND = 0;
     public static final int LAYER_FOREGROUND = LAYER_BACKGROUND + 1;
-    public static final int LAYER_HUD = LAYER_FOREGROUND + 1;
+    public static final int LAYER_OVERGROUND = LAYER_FOREGROUND + 1;
+    public static final int LAYER_HUD = LAYER_OVERGROUND + 1;
     public static final int LAYER_HUD_TEXT = LAYER_HUD + 1;
+    protected static final int LAYER_COUNT = LAYER_HUD_TEXT + 1;
 
     protected static final float MAX_SPEED_X = 200.0f;
     protected static final float MAX_SPEED_Y = 200.0f;
     protected static final float MAX_ZOOM_CHANGE = 0.8f;
 
     private ArrayList<PhysicalWorldObject> objectsToDelete = new ArrayList<>();
+    private ArrayList<PhysicalWorldObject> objectsToAdd = new ArrayList<>();
 
     protected BaseGame currentGame;
     protected ArrayList<BaseGame> games = new ArrayList<>();
@@ -185,8 +189,7 @@ public abstract class AbstractGameActivity extends SimpleBaseGameActivity implem
     @Override
     public boolean onKeyDown(final int pKeyCode, @NonNull final KeyEvent pEvent) {
         if (gameScene != null && pauseScene != null &&
-                pKeyCode == KeyEvent.KEYCODE_MENU && pEvent.getAction() == KeyEvent.ACTION_DOWN)
-        {
+                pKeyCode == KeyEvent.KEYCODE_MENU && pEvent.getAction() == KeyEvent.ACTION_DOWN) {
             if (gameScene.hasChildScene()) { // The game is paused
                 pauseScene.back();
                 updateNextStatus();
@@ -345,16 +348,30 @@ public abstract class AbstractGameActivity extends SimpleBaseGameActivity implem
                 super.onUpdate(pSecondsElapsed);
                 if (!physicsWorld.isLocked()) {
                     for (PhysicalWorldObject object : objectsToDelete) {
-                        destroyBody(object.getBody(), object.getSprite());
+                        destroyObject(object);
                     }
                     objectsToDelete.clear();
+
+                    for (PhysicalWorldObject object : objectsToAdd) {
+                        createObject(object);
+                    }
+                    objectsToAdd.clear();
                 }
             }
 
-            private void destroyBody(final Body body, final IShape mask) {
-                unregisterPhysicsConnector(physicsWorld.getPhysicsConnectorManager().findPhysicsConnectorByShape(mask));
+            private void createObject(final PhysicalWorldObject object) {
+                object.onAddToWorld();
+            }
+
+            private void destroyObject(final PhysicalWorldObject object) {
+                Body body = object.getBody();
+                Sprite sprite = object.getSprite();
+                body.setActive(false);
+                body.setAwake(false);
+                unregisterPhysicsConnector(physicsWorld.getPhysicsConnectorManager().findPhysicsConnectorByShape(sprite));
                 body.setActive(false);
                 destroyBody(body);
+                object.onRemoveFromWorld();
             }
         };
         physicsWorld.setContactListener(contactListener);
@@ -474,6 +491,12 @@ public abstract class AbstractGameActivity extends SimpleBaseGameActivity implem
         }
     }
 
+    public void markForAddition(PhysicalWorldObject object) {
+        if (!objectsToAdd.contains(object)) {
+            objectsToAdd.add(object);
+        }
+    }
+
     public void resetMenus() {
         pauseScene.detachChild(gameOverText);
         pauseScene.reset();
@@ -563,8 +586,7 @@ public abstract class AbstractGameActivity extends SimpleBaseGameActivity implem
 
     public Vector2 spritePosition(ITextureRegion textureRegion,
                                   float positionRatioX, float positionRatioY,
-                                  float ratio)
-    {
+                                  float ratio) {
         final float widthToRatio = textureRegion.getWidth() * ratio;
         final float heightToRatio = textureRegion.getHeight() * ratio;
         return spritePosition(new Vector2(widthToRatio, heightToRatio), new Vector2(positionRatioX, positionRatioY));
@@ -612,5 +634,11 @@ public abstract class AbstractGameActivity extends SimpleBaseGameActivity implem
 
     public VertexBufferObjectManager getVBOM() {
         return vertexBufferObjectManager;
+    }
+
+    protected void initSplashScene(ITextureRegion splashTexture, int width, int height) {
+        splashScene = new Scene();
+        DitheredSprite splash = new DitheredSprite(0, 0, width, height, splashTexture, getVBOM());
+        splashScene.setBackground(new SpriteBackground(splash));
     }
 }

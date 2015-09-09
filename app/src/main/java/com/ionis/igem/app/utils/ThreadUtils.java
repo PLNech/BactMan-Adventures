@@ -5,8 +5,8 @@ import android.os.Handler;
 import android.os.Looper;
 import android.widget.Toast;
 
-public class ThreadUtils {
-    public static void runOnUiThread(Runnable runnable) {
+class ThreadUtils {
+    private static void runOnUiThread(Runnable runnable) {
         if (Looper.getMainLooper() != Looper.myLooper()) {
             Handler mainHandler = new Handler(Looper.getMainLooper());
             mainHandler.post(runnable);

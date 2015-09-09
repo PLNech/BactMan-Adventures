@@ -50,7 +50,7 @@ public class PictoGame extends BaseGame {
     private HUDElement HUDTime;
     private double cardCount;
 
-    public PictoGame(PortraitGameActivity pActivity) {
+    public PictoGame(AbstractGameActivity pActivity) {
         super(pActivity);
     }
 

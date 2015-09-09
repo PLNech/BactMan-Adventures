@@ -23,9 +23,7 @@ public class GFXAsset extends Asset {
     }
 
     public GFXAsset(String filename, int width, int height, int textureX, int textureY) {
-        this(filename, width, height, textureX, textureY, 0, 0);
-        this.tileColumns = 1;
-        this.tileRows = 1;
+        this(filename, width, height, textureX, textureY, 1, 1);
     }
 
     public int getHeight() {

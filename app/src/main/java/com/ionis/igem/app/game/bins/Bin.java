@@ -24,7 +24,7 @@ public class Bin extends PhysicalWorldObject {
     }
 
     public static short ID = 0;
-    public static final float SCALE_DEFAULT = 0.125f;
+    public static final float SCALE_DEFAULT = 0.17f;
 
     int id;
     Type type;

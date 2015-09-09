@@ -2,12 +2,11 @@ package com.ionis.igem.app.game.bins;
 
 import android.util.Log;
 import com.badlogic.gdx.physics.box2d.BodyDef;
+import com.ionis.igem.app.game.BinGame;
 import com.ionis.igem.app.game.model.DraggableAnimatedSprite;
 import com.ionis.igem.app.game.model.PhysicalWorldObject;
 import com.ionis.igem.app.game.model.WorldObject;
-import org.andengine.extension.physics.box2d.PhysicsWorld;
 import org.andengine.opengl.texture.region.ITiledTextureRegion;
-import org.andengine.opengl.vbo.VertexBufferObjectManager;
 import org.andengine.util.color.Color;
 
 import java.util.Random;
@@ -63,18 +62,23 @@ public class Item extends PhysicalWorldObject {
 
     public static short ID = 0;
 
+    private final BinGame game;
+
+    int id;
     Type type;
     DraggableAnimatedSprite shape;
 
-    int id;
-
-    public Item(Type pType, ITiledTextureRegion texture, float posX, float posY, VertexBufferObjectManager manager, PhysicsWorld physicsWorld) {
-        super(new PhysicalWorldObject.Builder(posX, posY, texture, manager, physicsWorld)
+    public Item(Type pType, ITiledTextureRegion texture, float posX, float posY, BinGame game) {
+        super(new PhysicalWorldObject.Builder(posX, posY, texture,
+                game.getActivity().getVBOM(), game.getActivity().getPhysicsWorld())
                 .angle(new Random().nextFloat()).draggable(true)
                 .scaleDefault(WorldObject.getIdealScale(SCALE_DEFAULT, texture))
-                .scaleGrabbed(WorldObject.getIdealScale(SCALE_GRABBED, texture)));
+                .scaleGrabbed(WorldObject.getIdealScale(SCALE_GRABBED, texture))
+                .density(BODY_DENSITY).elasticity(BODY_ELASTICITY).friction(BODY_FRICTION));
+        this.game = game;
         sprite.setCullingEnabled(true);
-        shape = new DraggableAnimatedSprite(posX, posY, getIdealScale(SCALE_GRABBED, texture), sprite.getTiledTextureRegion(), manager, this) {
+        shape = new DraggableAnimatedSprite(posX, posY, getIdealScale(SCALE_GRABBED, texture), sprite.getTiledTextureRegion(),
+                game.getActivity().getVBOM(), this) {
             //TODO: Move Draggability to own interface
             @Override
             protected void onManagedUpdate(float pSecondsElapsed) {
@@ -86,11 +90,10 @@ public class Item extends PhysicalWorldObject {
         shape.setInitialScale(BIGGER_SHAPE_FACTOR * sprite.getScaleX());
         shape.setColor(Color.TRANSPARENT);
         shape.setRotation(sprite.getRotation());
-        body.setBullet(true);
 
         id = ID++;
         type = pType;
-        Log.v(TAG, "Item - Created " + type.toString() + " at " + posX + ", " + posY
+        Log.v(TAG, "Item - Created " + type.toString() + " at " + sprite.getX() + ", " + sprite.getY()
                 + " with texture of w:" + texture.getWidth() + ", h:" + texture.getHeight());
     }
 
@@ -107,18 +110,15 @@ public class Item extends PhysicalWorldObject {
     }
 
     @Override
-    public float getDensity() {
-        return BODY_DENSITY;
+    public void onAddToWorld() {
+        super.onAddToWorld();
+        body.setBullet(true);
     }
 
     @Override
-    public float getElasticity() {
-        return BODY_ELASTICITY;
-    }
-
-    @Override
-    public float getFriction() {
-        return BODY_FRICTION;
+    public void onRemoveFromWorld() {
+        super.onRemoveFromWorld();
+        game.removeItem(this);
     }
 
     @Override

@@ -24,7 +24,6 @@ import org.andengine.entity.modifier.SequenceEntityModifier;
 import org.andengine.entity.scene.IOnSceneTouchListener;
 import org.andengine.entity.scene.Scene;
 import org.andengine.entity.scene.background.SpriteBackground;
-import org.andengine.entity.sprite.AnimatedSprite;
 import org.andengine.entity.sprite.Sprite;
 import org.andengine.extension.physics.box2d.util.constants.PhysicsConstants;
 import org.andengine.input.touch.TouchEvent;
@@ -47,7 +46,7 @@ public class GutGame extends BaseGame {
     public static final float POS_ITEM_X = 850; // Initial item abscissa
     public static final int SPEED_ITEM_PPS = -150; // Initial item horizontal velocity
     public static final int[] POS_FLOW = {110, 185, 260, 335};
-    public static final int NB_ITEMS = 4;
+    private static final short NB_ITEMS = 4;
 
     public static final short CATEGORY_WALL = 1;
     public static final short CATEGORY_PLAYER = 2;
@@ -65,8 +64,9 @@ public class GutGame extends BaseGame {
     private HUDElement HUDScore;
     private HUDElement HUDLives;
 
-    private ArrayList<Item> items = new ArrayList<>();
+    private final ArrayList<Item> items = new ArrayList<>();
     private Player player;
+    private int lastLaneId = -42;
 
     public GutGame(AbstractGameActivity pActivity) {
         super(pActivity);
@@ -146,7 +146,8 @@ public class GutGame extends BaseGame {
         createBackground(scene);
         createCameraWalls(true, false, true, true, true);
         createPlayer();
-        createItems(NB_ITEMS);
+
+        startScenario();
 
         scene.setTouchAreaBindingOnActionDownEnabled(true);
 
@@ -168,14 +169,14 @@ public class GutGame extends BaseGame {
     }
 
     private void createPlayer() {
-        player = new Player(240, 240, 0, activity.getTexture(ResMan.GUT_BACTMAN), activity);
+        player = new Player(150, 240, 0, activity.getTexture(ResMan.GUT_BACTMAN), activity);
         final Scene scene = activity.getScene();
         scene.getChildByIndex(AbstractGameActivity.LAYER_FOREGROUND).attachChild(player.getSprite());
     }
 
     private void createItems(final int count) {
         if (count > 0) {
-            createItem();
+            createItem(Item.Role.RANDOM);
             activity.registerUpdateHandler(ITEM_PERIOD, new ITimerCallback() {
                 @Override
                 public void onTimePassed(TimerHandler pTimerHandler) {
@@ -185,22 +186,21 @@ public class GutGame extends BaseGame {
         }
     }
 
-    private void createItem() {
-        createItem(Item.Type.random());
+    private void createItem(Item.Role role) {
+        createItem(Item.Type.random(), role);
     }
 
-    private void createItem(Item.Type type) {
+    private void createItem(final Item.Type type, final Item.Role role) {
         final ITiledTextureRegion texture;
-        float angleD;
+        final float angleD;
         switch (type) {
-            case NUTRIENT:
-                if (random.nextBoolean()) {
-                    texture = activity.getTexture(ResMan.GUT_VITAMIN);
-                    angleD = -45 + CalcUtils.randomOf(90, random);
-                } else {
-                    texture = activity.getTexture(ResMan.GUT_PROTEIN);
-                    angleD = CalcUtils.randomOf(360, random);
-                }
+            case VITAMIN:
+                angleD = -45 + CalcUtils.randomOf(90, random);
+                texture = activity.getTexture(ResMan.GUT_VITAMIN);
+                break;
+            case PROTEIN:
+                angleD = CalcUtils.randomOf(360, random);
+                texture = activity.getTexture(ResMan.GUT_PROTEIN);
                 break;
             case IMMUNO:
                 angleD = 90;
@@ -214,32 +214,65 @@ public class GutGame extends BaseGame {
                 throw new IllegalStateException("No default!");
         }
 
-        float texHeight = type == Item.Type.IMMUNO ? texture.getWidth() : texture.getHeight();
-        texHeight *= Item.SCALE_DEFAULT;
-        final float lanePos = POS_FLOW[CalcUtils.randomOf(4, random)] + 5;
+        final float lanePos = POS_FLOW[getRandomLane()] + 5;
         final float laneHeight = POS_FLOW[1] - POS_FLOW[0];
-        float itemY = lanePos + (laneHeight - texHeight) / 2;
+        final float textureHeight = Item.SCALE_DEFAULT * (type == Item.Type.IMMUNO ? texture.getWidth() : texture.getHeight());
+        final float itemY = lanePos + (laneHeight - textureHeight) / 2;
+        final float speedCoeff = (float) ((50.0 + gameScore) / 50);
+        final Item item = new Item(POS_ITEM_X, itemY, (float) Math.toRadians(angleD), type, role, speedCoeff, texture, this);
+        activity.markForAddition(item);
+    }
 
-        Item item = new Item(POS_ITEM_X, itemY, (float) Math.toRadians(angleD), type, (float) ((50.0 + gameScore) / 50), texture, activity);
+    private int getRandomLane() {
+        int newLane;
+        while (lastLaneId == (newLane = CalcUtils.randomOf(4, random))) {
+            // Avoid sending two consecutive items in the same lane
+        }
+
+        lastLaneId = newLane;
+        return lastLaneId;
+    }
+
+    public void addItem(Item item) {
         items.add(item);
-        activity.getScene().getChildByIndex(AbstractGameActivity.LAYER_FOREGROUND).attachChild(item.getSprite());
+        activity.getScene().getChildByIndex(Item.chooseLayer(item.getType())).attachChild(item.getSprite());
+    }
+
+    private void stopRepeating() {
+        for (Item.Type type : Item.Type.values()) {
+            stopRepeating(type);
+        }
+    }
+
+    private void stopRepeating(Item.Type type) {
+        for (Item item : items) {
+            if (item.getType() == type) {
+                item.setRole(Item.Role.ONCE);
+            }
+        }
     }
 
     private void deleteItem(final Item item) {
-        final AnimatedSprite sprite = item.getSprite();
-        sprite.setVisible(false);
-        activity.getScene().getChildByIndex(AbstractGameActivity.LAYER_BACKGROUND).detachChild(sprite);
         activity.markForDeletion(item);
     }
 
-    private void recycleItem(final Item item) {
+    private void recycleItem(final Item item, final boolean forceRepeat) {
+        Log.d(TAG, "recycleItem - beginning.");
         deleteItem(item);
         activity.runOnUpdateThread(new Runnable() {
             @Override
             public void run() {
-                items.remove(item);
+                Log.d(TAG, "recycleItem - removed item from list.");
+                final Item.Role role = item.getRole();
                 if (isPlaying()) {
-                    createItem();
+                    if (role != Item.Role.ONCE || forceRepeat) {
+                        if (role != Item.Role.RANDOM) {
+                            createItem(item.getType(), role);
+                        } else {
+                            createItem(role);
+                        }
+                    }
+                    Log.d(TAG, "recycleItem - finished.");
                 }
             }
         });
@@ -252,10 +285,10 @@ public class GutGame extends BaseGame {
         setLives(gameLives);
     }
 
-
     private void setLives(int value) {
         setLives("" + value);
     }
+
 
     private void setLives(CharSequence text) {
         HUDLives.getText().setText(text);
@@ -278,7 +311,7 @@ public class GutGame extends BaseGame {
 
     private void decrementLives() {
         Log.v(TAG, "beginContact - Decreasing lives to " + gameLives + ".");
-        if (--gameLives == 0) {
+        if (--gameLives <= 0) {
             setPlaying(false);
             final float posRatioX = 0.5f;
             final float posRatioY = 0f;
@@ -295,26 +328,52 @@ public class GutGame extends BaseGame {
     private void incrementScore() {
         setScore(++gameScore);
         Log.v(TAG, "beginContact - Increasing score to " + gameScore + ".");
-        Log.v(TAG, "beginContact - Increasing gravity to " + activity.getPhysicsWorld().getGravity() + ".");
+
+        executeScenario();
+    }
+
+    private void startScenario() {
+        /* At first, you see a vitamin. */
+        createItem(Item.Type.VITAMIN, Item.Role.EAT);
+    }
+
+    private void executeScenario() {
+        if (gameScore == 1) {
+        /* Then a protein... */
+            createItem(Item.Type.PROTEIN, Item.Role.EAT);
+        } else if (gameScore == 2) {
+            /* And more vitamins. Such a nice world! */
+            createItem(Item.Type.VITAMIN, Item.Role.REPEAT);
+        } else if (gameScore == 5) {
+            /* No more vitamins, but I see again some proteins...
+            *  And the immune system starts fighting back! */
+            stopRepeating(Item.Type.VITAMIN);
+            createItem(Item.Type.PROTEIN, Item.Role.REPEAT);
+            createItem(Item.Type.IMMUNO, Item.Role.REPEAT);
+        } else if (gameScore == 10) {
+            /* As if it wasn't enough, now you have to deal with antibiotics.
+             * Thankfully there are also loads of vitamins! */
+            createItem(Item.Type.ANTIBIO, Item.Role.REPEAT);
+            createItem(Item.Type.VITAMIN, Item.Role.REPEAT);
+        } else if (gameScore == 15) {
+            /* End of scenario, here be dragons! */
+            stopRepeating();
+            createItems(NB_ITEMS);
+        }
     }
 
     @Override
     public void resetGame() {
-        activity.runOnUpdateThread(new Runnable() {
-            @Override
-            public void run() {
-                resetGamePoints();
-                activity.getPhysicsWorld().setGravity(getPhysicsVector());
-
-                for (final Item item : items) {
-                    deleteItem(item);
-                }
-                items.clear();
-                Log.d(TAG, "resetGame - Cleared game items.");
-
-                createItems(NB_ITEMS);
+        resetGamePoints();
+        synchronized (items) {
+            for (final Item item : items) {
+                deleteItem(item);
             }
-        });
+        }
+        items.clear();
+        Log.d(TAG, "resetGame - Cleared game items.");
+
+        startScenario();
     }
 
     @Override
@@ -322,10 +381,11 @@ public class GutGame extends BaseGame {
         return new IOnSceneTouchListener() {
             @Override
             public boolean onSceneTouchEvent(Scene pScene, TouchEvent pSceneTouchEvent) {
-                if (pSceneTouchEvent.getAction() == TouchEvent.ACTION_MOVE) {
+                final int action = pSceneTouchEvent.getAction();
+                if (action == TouchEvent.ACTION_MOVE || action == TouchEvent.ACTION_DOWN) {
                     final Body body = player.getBody();
                     float ratio = PhysicsConstants.PIXEL_TO_METER_RATIO_DEFAULT;
-                    body.setTransform(pSceneTouchEvent.getX() / ratio, pSceneTouchEvent.getY() / ratio, body.getAngle());
+                    body.setTransform(body.getPosition().x, pSceneTouchEvent.getY() / ratio, body.getAngle());
                     return true;
                 }
                 return false;
@@ -364,7 +424,8 @@ public class GutGame extends BaseGame {
             private void handlePlayerItemContact(final Item item) {
                 final Color toColor;
                 switch (item.getType()) {
-                    case NUTRIENT:
+                    case VITAMIN:
+                    case PROTEIN:
                         incrementScore();
                         toColor = Color.GREEN;
                         break;
@@ -373,7 +434,8 @@ public class GutGame extends BaseGame {
                         toColor = Color.RED;
                         decrementLives();
                         break;
-                    default: throw new IllegalStateException();
+                    default:
+                        throw new IllegalStateException();
                 }
 
                 final float pDuration = 0.25f;
@@ -383,11 +445,15 @@ public class GutGame extends BaseGame {
                         new ColorModifier(pDuration, toColor, Color.WHITE),
                         new DelayModifier(pDuration * 2)
                 ));
-                recycleItem(item);
+                if (item.getRole() != Item.Role.EAT) {
+                    recycleItem(item, false);
+                } else {
+                    deleteItem(item);
+                }
             }
 
             private void handleWallItemContact(Item item) {
-                recycleItem(item);
+                recycleItem(item, true);
             }
 
             @Override
@@ -412,4 +478,7 @@ public class GutGame extends BaseGame {
         return false;
     }
 
+    public void removeItem(Item item) {
+        items.remove(item);
+    }
 }

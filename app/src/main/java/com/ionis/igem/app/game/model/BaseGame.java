@@ -48,8 +48,6 @@ public abstract class BaseGame {
         return null;
     }
 
-    ;
-
     public Vector2 getPhysicsVector() {
         return null;
     }
@@ -96,6 +94,10 @@ public abstract class BaseGame {
 
     public int getPosition() {
         return position;
+    }
+
+    public AbstractGameActivity getActivity() {
+        return activity;
     }
 
     public boolean isPortrait() {

@@ -17,8 +17,9 @@ import com.ionis.igem.app.utils.CalcUtils;
 import org.andengine.entity.IEntity;
 import org.andengine.entity.modifier.*;
 import org.andengine.entity.scene.Scene;
-import org.andengine.entity.scene.background.Background;
+import org.andengine.entity.scene.background.SpriteBackground;
 import org.andengine.entity.sprite.AnimatedSprite;
+import org.andengine.entity.sprite.Sprite;
 import org.andengine.opengl.font.IFont;
 import org.andengine.opengl.texture.region.ITiledTextureRegion;
 import org.andengine.opengl.vbo.VertexBufferObjectManager;
@@ -57,14 +58,15 @@ public class BinGame extends BaseGame {
     @Override
     public List<GFXAsset> getGraphicalAssets() {
         if (graphicalAssets.isEmpty()) {
+            graphicalAssets.add(new GFXAsset(ResMan.BIN_BG, 960, 1600, 0, 0));
+
             /* Bins */
-            graphicalAssets.add(new GFXAsset(ResMan.BIN1, 696, 1024, 0, 0));
-            graphicalAssets.add(new GFXAsset(ResMan.BIN2, 696, 1024, 0, 0));
-            graphicalAssets.add(new GFXAsset(ResMan.BIN3, 696, 1024, 0, 0));
-            graphicalAssets.add(new GFXAsset(ResMan.BIN4, 696, 1024, 0, 0));
+            graphicalAssets.add(new GFXAsset(ResMan.BIN_SHARPS, 512, 753, 0, 0));
+            graphicalAssets.add(new GFXAsset(ResMan.BIN_CHEMICAL, 512, 753, 0, 0));
+            graphicalAssets.add(new GFXAsset(ResMan.BIN_REGULAR, 512, 753, 0, 0));
+            graphicalAssets.add(new GFXAsset(ResMan.BIN_BIO, 512, 753, 0, 0));
 
             /* Items */
-            graphicalAssets.add(new GFXAsset(ResMan.FACE_BOX_TILED, 696, 1024, 0, 0, 2, 1));
 
             graphicalAssets.add(new GFXAsset(ResMan.ITEM_TUBE, 99, 512, 0, 0));
             graphicalAssets.add(new GFXAsset(ResMan.ITEM_CONE_BLUE, 59, 512, 0, 0));
@@ -96,7 +98,6 @@ public class BinGame extends BaseGame {
             graphicalAssets.add(new GFXAsset(ResMan.HUD_LIVES, 1479, 1024, 0, 0));
             graphicalAssets.add(new GFXAsset(ResMan.HUD_SCORE, 1885, 1024, 0, 0));
         }
-
         return graphicalAssets;
     }
 
@@ -180,9 +181,8 @@ public class BinGame extends BaseGame {
                 Log.v(TAG, "beginContact - Item " + item + " went in bin " + bin + (validMove ? " :)" : " :("));
 
                 if (deadItems.contains(item.getId())) {
-                    final String msg = "Contacts a deleted item!";
-                    Log.e(TAG, "handleBinItemContact - " + msg);
-                    throw new IllegalStateException(msg);
+                    Log.e(TAG, "handleBinItemContact - " + "Contacts an item marked for deletion!");
+                    return;
                 }
                 final Bin.Animation animation = validMove ? Bin.Animation.VALID_HIT : Bin.Animation.INVALID_HIT;
 
@@ -248,9 +248,8 @@ public class BinGame extends BaseGame {
     @Override
     public Scene prepareScene() {
         Scene scene = activity.getScene();
-
-        final Background backgroundColor = new Background(0.96862f, 0.77647f, 0.37647f);
-        scene.setBackground(backgroundColor);
+        scene.setBackground(new SpriteBackground(new Sprite(0, 0, PortraitGameActivity.CAMERA_WIDTH,
+                PortraitGameActivity.CAMERA_HEIGHT, activity.getTexture(ResMan.BIN_BG), activity.getVBOM())));
 
         resetGamePoints();
         createCameraWalls();
@@ -270,7 +269,6 @@ public class BinGame extends BaseGame {
                 resetGamePoints();
                 activity.getPhysicsWorld().setGravity(getPhysicsVector());
 
-                final Scene gameScene = activity.getScene();
                 for (final Item item : items) {
                     deleteItem(item);
                 }
@@ -310,7 +308,12 @@ public class BinGame extends BaseGame {
     }
 
     private void createItems() {
-        createItem(Item.Type.random());
+        activity.runOnUpdateThread(new Runnable() {
+            @Override
+            public void run() {
+                createItem(Item.Type.random());
+            }
+        });
     }
 
     private void createItem(Item.Type type) {
@@ -428,13 +431,20 @@ public class BinGame extends BaseGame {
     }
 
     private void createItem(float posX, float posY, ITiledTextureRegion textureRegion, Item.Type type) {
-        Item item = new Item(type, textureRegion, posX, posY, activity.getVBOM(), activity.getPhysicsWorld());
+        //TODO: Mark for addition?
+        Item item = new Item(type, textureRegion, posX, posY, this);
         items.add(item);
         final Scene gameScene = activity.getScene();
         final IEntity layerBG = gameScene.getChildByIndex(PortraitGameActivity.LAYER_BACKGROUND);
-        layerBG.attachChild(item.getSprite());
+        final DraggableAnimatedSprite sprite = item.getSprite();
+        sprite.setVisible(true);
+        layerBG.attachChild(sprite);
         layerBG.attachChild(item.getShape());
         gameScene.registerTouchArea(item.getShape());
+    }
+
+    public void removeItem(Item item) {
+        items.remove(item);
     }
 
     private void deleteItem(final Item item) {
@@ -447,8 +457,8 @@ public class BinGame extends BaseGame {
         scene.unregisterTouchArea(biggerSprite);
         layerBG.detachChild(biggerSprite);
         layerBG.detachChild(sprite);
-        activity.markForDeletion(item);
         biggerSprite.stopDragging();
+        activity.markForDeletion(item);
     }
 
     private void createBin(Bin.Type type, ITiledTextureRegion textureRegion, float posX, float posY) {
@@ -460,10 +470,10 @@ public class BinGame extends BaseGame {
 
     private void createBins() {
         final float binY = 0.85f;
-        final ITiledTextureRegion bin1TextureRegion = activity.getTexture(ResMan.BIN1);
-        final ITiledTextureRegion bin2TextureRegion = activity.getTexture(ResMan.BIN2);
-        final ITiledTextureRegion bin3TextureRegion = activity.getTexture(ResMan.BIN3);
-        final ITiledTextureRegion bin4TextureRegion = activity.getTexture(ResMan.BIN4);
+        final ITiledTextureRegion bin1TextureRegion = activity.getTexture(ResMan.BIN_SHARPS);
+        final ITiledTextureRegion bin2TextureRegion = activity.getTexture(ResMan.BIN_CHEMICAL);
+        final ITiledTextureRegion bin3TextureRegion = activity.getTexture(ResMan.BIN_REGULAR);
+        final ITiledTextureRegion bin4TextureRegion = activity.getTexture(ResMan.BIN_BIO);
 
         Vector2 bin1Pos = activity.spritePosition(bin1TextureRegion, 0.20f, binY, Bin.SCALE_DEFAULT);
         Vector2 bin2Pos = activity.spritePosition(bin2TextureRegion, 0.46f, binY, Bin.SCALE_DEFAULT);
