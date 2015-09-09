@@ -87,7 +87,7 @@ public class Item extends PhysicalWorldObject {
                 setRotation(sprite.getRotation());
             }
         };
-        shape.setInitialScale(BIGGER_SHAPE_FACTOR * sprite.getScaleX());
+        shape.setInitialScale(BIGGER_SHAPE_FACTOR * sprite.getScaleX(), true);
         shape.setColor(Color.TRANSPARENT);
         shape.setRotation(sprite.getRotation());
 

@@ -61,9 +61,13 @@ public class DraggableAnimatedSprite extends AnimatedSprite {
         object = null;
     }
 
-    public void setInitialScale(float scale) {
+    public void setInitialScale(float scale, boolean doubleWidth) {
         initScale = scale;
-        setScale(initScale);
-        setScaleX(initScale * 2);
+        final float xScale = doubleWidth ? initScale * 2 : initScale;
+        setScale(xScale, initScale);
+    }
+
+    public void setInitialScale(Float scale) {
+        setInitialScale(scale, false);
     }
 }
