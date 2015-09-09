@@ -318,7 +318,7 @@ public class BinGame extends BaseGame {
 
     private void createItem(Item.Type type) {
         float posRatioX = 0.15f + random.nextFloat() * 0.85f;
-        float posRatioY = 0.15f;
+        float posRatioY = 0.2f;
         Vector2 itemPos = activity.spritePosition(32, 32, posRatioX, posRatioY);
         createItem(itemPos, type);
     }
@@ -469,7 +469,7 @@ public class BinGame extends BaseGame {
     }
 
     private void createBins() {
-        final float binY = 0.85f;
+        final float binY = 1.0f;
         final ITiledTextureRegion bin1TextureRegion = activity.getTexture(ResMan.BIN_SHARPS);
         final ITiledTextureRegion bin2TextureRegion = activity.getTexture(ResMan.BIN_CHEMICAL);
         final ITiledTextureRegion bin3TextureRegion = activity.getTexture(ResMan.BIN_REGULAR);

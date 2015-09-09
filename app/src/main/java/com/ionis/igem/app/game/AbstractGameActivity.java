@@ -606,10 +606,8 @@ public abstract class AbstractGameActivity extends SimpleBaseGameActivity implem
     }
 
     protected Vector2 spritePosition(Vector2 textureDims, Vector2 positionRatio) {
-        final Vector2 res = new Vector2(getCamera().getWidth() * positionRatio.x - textureDims.x / 2,
-                getCamera().getHeight() * positionRatio.y - -textureDims.y / 2);
-        Log.v(TAG, "spritePosition - Returning " + res.x + ", " + res.y);
-        return res;
+        return new Vector2(getCamera().getWidth() * positionRatio.x - textureDims.x / 2,
+                getCamera().getHeight() * positionRatio.y - textureDims.y / 2);
     }
 
     public SmoothCamera getCamera() {
