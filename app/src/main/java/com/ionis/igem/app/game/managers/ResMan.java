@@ -69,7 +69,8 @@ public class ResMan {
     public static final String CARD_OXIDISING = "picto/card_oxidising.png";
     public static final String CARD_RADIOACTIVE = "picto/card_radioactive.png";
     public static final String CARD_TOXIC = "picto/card_toxic.png";
-    public static final int CARD_COUNT = 10;
+    public static final String CARD_EYE = "picto/card_eye.png";
+    public static final String CARD_SHOWER = "picto/card_shower.png";
 
     public static final String HUD_TIME = "hud_time.png";
 

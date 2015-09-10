@@ -14,6 +14,28 @@ import org.andengine.opengl.vbo.VertexBufferObjectManager;
  * Created by PLNech on 28/08/2015.
  */
 public class Card extends Sprite {
+    public enum Type {
+        BACK,
+        BIOHAZARD,
+        CMR,
+        ENVIRONMENT,
+        FACE,
+        FLAMMABLE,
+        GLOVES,
+        MASK,
+        OXIDISING,
+        RADIOACTIVE,
+        TOXIC,
+        EYE,
+        SHOWER;
+
+        public static Type random() {
+            final Type[] values = Type.values();
+            final int randomIndex = 1 + (int) (values.length - 1 * Math.random());
+            return values[randomIndex];
+        }
+    }
+
     private static final String TAG = "Card";
 
     public static final float SCALE_DEFAULT = 0.15f;

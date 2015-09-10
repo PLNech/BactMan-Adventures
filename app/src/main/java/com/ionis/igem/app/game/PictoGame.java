@@ -9,7 +9,6 @@ import com.ionis.igem.app.game.model.HUDElement;
 import com.ionis.igem.app.game.model.res.FontAsset;
 import com.ionis.igem.app.game.model.res.GFXAsset;
 import com.ionis.igem.app.game.picto.Card;
-import com.ionis.igem.app.utils.CalcUtils;
 import org.andengine.engine.handler.timer.ITimerCallback;
 import org.andengine.engine.handler.timer.TimerHandler;
 import org.andengine.entity.IEntity;
@@ -70,6 +69,8 @@ public class PictoGame extends BaseGame {
             graphicalAssets.add(new GFXAsset(ResMan.CARD_OXIDISING, 512, 785, 0, 0));
             graphicalAssets.add(new GFXAsset(ResMan.CARD_RADIOACTIVE, 512, 785, 0, 0));
             graphicalAssets.add(new GFXAsset(ResMan.CARD_TOXIC, 512, 785, 0, 0));
+            graphicalAssets.add(new GFXAsset(ResMan.CARD_EYE, 512, 785, 0, 0));
+            graphicalAssets.add(new GFXAsset(ResMan.CARD_SHOWER, 512, 785, 0, 0));
 
             /* HUD */
             graphicalAssets.add(new GFXAsset(ResMan.HUD_TIME, 1885, 1024, 0, 0));
@@ -188,7 +189,6 @@ public class PictoGame extends BaseGame {
         final float rows = 5;
         final float cols = 5;
         cardCount = rows * cols;
-        final Stack<String> cardStack = new Stack<>();
         final boolean countIsEven = cardCount % 2 != 0;
         if (countIsEven) {
             cardCount--; //We will remove a card.
@@ -201,18 +201,8 @@ public class PictoGame extends BaseGame {
 
         Log.d(TAG, "createCards - cardW:" + cardWidth + ", H:" + cardHeight);
         Log.d(TAG, "createCards - baseX:" + baseX + ", Y:" + baseY);
-//        final float stepX = (GameActivity.CAMERA_WIDTH - baseX) / cardWidth;
-//        final float stepY = (GameActivity.CAMERA_HEIGHT - baseY) / cardHeight;
-//        final float rows = Math.min(stepX, stepY);
-//        Log.d(TAG, "createCards - stepX:" + stepX + ", stepY:" + stepY);
 
-        ArrayList<String> cardList = new ArrayList<>();
-        for (int i = 0; i < cardCount / 2; i++) {
-            cardList.add(randomCardName());
-        }
-        cardStack.addAll(cardList);
-        Collections.shuffle(cardList);
-        cardStack.addAll(cardList);
+        final Stack<String> cardStack = generateCardStack();
 
         for (int i = 0; i < cols; i++) {
             for (int j = 0; j < rows; j++) {
@@ -241,48 +231,71 @@ public class PictoGame extends BaseGame {
 //        addCard(debugCard);
     }
 
-    @NonNull
-    private String randomCardName() {
-        String resName = ResMan.CARD_BACK;
+    private Stack<String> generateCardStack() {
+        Stack<String> nameStack = new Stack<>();
+        List<String> nameList = new ArrayList<>();
+        Card.Type[] typeArray = Card.Type.values();
 
-        int randCardIndex = CalcUtils.randomOf(ResMan.CARD_COUNT, random);
-        switch (randCardIndex) {
-            case 0:
+        for (Card.Type type : typeArray) {
+            nameList.add(cardName(type));
+        }
+
+        nameStack.addAll(nameList);
+        Collections.shuffle(nameList);
+        nameStack.addAll(nameList);
+        return nameStack;
+    }
+
+    @NonNull
+    private String cardName(Card.Type type) {
+        String resName;
+        switch (type) {
+            case BACK:
+                resName = ResMan.CARD_BACK;
+            case BIOHAZARD:
                 resName = ResMan.CARD_BIOHAZARD;
                 break;
-            case 1:
+            case CMR:
                 resName = ResMan.CARD_CMR;
                 break;
-            case 2:
+            case ENVIRONMENT:
                 resName = ResMan.CARD_ENVIRONMENT;
                 break;
-            case 3:
+            case FACE:
                 resName = ResMan.CARD_FACE;
                 break;
-            case 4:
+            case FLAMMABLE:
                 resName = ResMan.CARD_FLAMMABLE;
                 break;
-            case 5:
+            case GLOVES:
                 resName = ResMan.CARD_GLOVES;
                 break;
-            case 6:
+            case MASK:
                 resName = ResMan.CARD_MASK;
                 break;
-            case 7:
+            case OXIDISING:
                 resName = ResMan.CARD_OXIDISING;
                 break;
-            case 8:
+            case RADIOACTIVE:
                 resName = ResMan.CARD_RADIOACTIVE;
                 break;
-            case 9:
+            case TOXIC:
                 resName = ResMan.CARD_TOXIC;
                 break;
+            case EYE:
+                resName = ResMan.CARD_EYE;
+                break;
+            case SHOWER:
+                resName = ResMan.CARD_SHOWER;
+                break;
+            default:
+                throw new IllegalStateException("Missing sprite for type " + type);
         }
         return resName;
     }
 
     private void createCard(float pX, float pY) {
-        String resName = randomCardName();
+        String resName = cardName(Card.Type.random());
         createCard(resName, pX, pY);
     }
 
