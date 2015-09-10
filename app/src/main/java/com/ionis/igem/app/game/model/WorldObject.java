@@ -35,6 +35,7 @@ public abstract class WorldObject {
         }
         sprite.setBlendFunction(GLES20.GL_SRC_ALPHA, GLES20.GL_ONE_MINUS_SRC_ALPHA);
         sprite.setInitialScale(pScale);
+        sprite.setPosition(pX, pY);
         defaultColor = new Color(sprite.getColor());
         Log.d(TAG, "WorldObject - New " + this.getClass().getSimpleName() + " of scale " + pScale + " at " + pX + ", " + pY);
     }

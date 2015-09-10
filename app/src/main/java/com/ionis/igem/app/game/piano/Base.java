@@ -3,17 +3,42 @@ package com.ionis.igem.app.game.piano;
 import com.ionis.igem.app.game.AbstractGameActivity;
 import com.ionis.igem.app.game.managers.ResMan;
 import com.ionis.igem.app.game.model.WorldObject;
+import org.andengine.entity.sprite.Sprite;
 
 /**
  * Created by PLNech on 06/09/2015.
  */
 public class Base extends WorldObject {
+    public static final String TAG = "WorldObject";
+
+    public static final float SCALE_DEFAULT = 0.08f; //TODO-OPTI: Scale upfront sprites instead of relying on this
+
+    private final Sprite phosphate;
+
     public enum Type {
         A, T, G, C;
-    }
 
+        public static Type random() {
+            final Type[] values = Type.values();
+            final int randomIndex = (int) (values.length * Math.random());
+            return values[randomIndex];
+        }
+
+    }
     public Base(float pX, float pY, Type type, boolean cpl, AbstractGameActivity activity) {
         super(pX, pY, false, SCALE_DEFAULT, null, activity.getTexture(chooseTextureName(type, cpl)), activity.getVBOM());
+        phosphate = new Sprite(pX - 0.5f * SCALE_DEFAULT * sprite.getWidth(), pY + sprite.getHeight() * SCALE_DEFAULT, activity.getTexture(ResMan.PIANO_L_PHO), activity.getVBOM());
+        setScale(SCALE_DEFAULT);
+    }
+
+
+    protected void setScale(float scale) {
+        sprite.setScaleCenter(sprite.getScaleCenterX() * scale,
+                sprite.getScaleCenterY() * scale); //TODO: Correct scaleCenter and position of all WorldObjects
+        sprite.setScale(scale);
+        phosphate.setScaleCenter(phosphate.getScaleCenterX() * scale,
+                phosphate.getScaleCenterY() * scale);
+        phosphate.setScale(scale);
     }
 
     private static String chooseTextureName(Type type, boolean cpl) {
@@ -34,5 +59,9 @@ public class Base extends WorldObject {
         }
         if (cpl) retStr = retStr.replace(".png", "_cpl.png");
         return retStr;
+    }
+
+    public Sprite getPhosphate() {
+        return phosphate;
     }
 }

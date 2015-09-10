@@ -11,6 +11,8 @@ public class Polymerase extends WorldObject {
 
     public Polymerase(float pX, float pY, AbstractGameActivity activity) {
         super(pX, pY, false, SCALE_DEFAULT, null, activity.getTexture(ResMan.PIANO_POLY), activity.getVBOM());
+        sprite.setScaleCenter(sprite.getScaleCenterX() * SCALE_DEFAULT,
+                sprite.getScaleCenterY() * SCALE_DEFAULT); //TODO: Correct scaleCenter and position of all WorldObjects
         sprite.animate(100);
     }
 }

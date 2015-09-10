@@ -24,8 +24,8 @@ public class LandscapeGameActivity extends AbstractGameActivity {
         super.onCreate(savedInstanceState);
         Log.d(TAG, "onCreate - Created Activity.");
 
-        addGame(GutGame.class);
         addGame(PianoGame.class);
+        addGame(GutGame.class);
         currentGame = games.get(currentGameId);
     }
 

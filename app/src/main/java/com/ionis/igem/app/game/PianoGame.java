@@ -7,8 +7,11 @@ import com.ionis.igem.app.game.model.BaseGame;
 import com.ionis.igem.app.game.model.HUDElement;
 import com.ionis.igem.app.game.model.res.FontAsset;
 import com.ionis.igem.app.game.model.res.GFXAsset;
+import com.ionis.igem.app.game.piano.Base;
+import com.ionis.igem.app.game.piano.Key;
 import com.ionis.igem.app.game.piano.Polymerase;
 import org.andengine.engine.camera.SmoothCamera;
+import org.andengine.entity.IEntity;
 import org.andengine.entity.scene.Scene;
 import org.andengine.entity.scene.background.SpriteBackground;
 import org.andengine.entity.sprite.Sprite;
@@ -16,6 +19,7 @@ import org.andengine.opengl.font.IFont;
 import org.andengine.opengl.texture.region.ITiledTextureRegion;
 import org.andengine.opengl.vbo.VertexBufferObjectManager;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -28,6 +32,7 @@ public class PianoGame extends BaseGame {
 
     private HUDElement HUDScore;
     private int gameScore;
+    private ArrayList<Base> bases = new ArrayList<>();
 
     public PianoGame(AbstractGameActivity pActivity) {
         super(pActivity);
@@ -70,11 +75,10 @@ public class PianoGame extends BaseGame {
             final float scale = 0.08f;
 
             Vector2 posS = new Vector2(5, 0);
-
-            Vector2 offS = new Vector2(75, 30);
+            Vector2 offS = new Vector2(50, 20);
 
             IFont fontRoboto = activity.getFont(FontAsset.name(ResMan.F_HUD_BIN, ResMan.F_HUD_BIN_SIZE, ResMan.F_HUD_BIN_COLOR, ResMan.F_HUD_BIN_ANTI));
-            Log.d(TAG, "getHudElements - sprites: " + posS + " - text:" + offS.add(posS));
+            Log.d(TAG, "getHudElements - sprite: " + posS + " - text:" + offS.add(posS));
 
             final VertexBufferObjectManager vbom = activity.getVBOM();
 
@@ -98,14 +102,65 @@ public class PianoGame extends BaseGame {
 
         scene.setBackground(new SpriteBackground(new Sprite(0, 0, camera.getWidth(), camera.getHeight(),
                 activity.getTexture(ResMan.PIANO_BG), vbom)));
-//        createCameraWalls(true, false, true, true, true);
-        for (int i = 0; i < 10; i++) {
-            Polymerase polymerase = new Polymerase(35 * i, 35 * i, activity);
-            scene.getChildByIndex(AbstractGameActivity.LAYER_FOREGROUND).attachChild(polymerase.getSprite());
-        }
+
+        Polymerase polymerase = new Polymerase(200, 35, activity);
+        scene.getChildByIndex(AbstractGameActivity.LAYER_FOREGROUND).attachChild(polymerase.getSprite());
+        createKeys();
+
+        createADN();
 
         scene.setTouchAreaBindingOnActionDownEnabled(true);
         return scene;
+    }
+
+    private void createADN() {
+        for (int i = 0; i < 15; i++) {
+            createBase();
+        }
+    }
+
+    private void createBase() {
+        shiftBases();
+        createBase(Base.Type.random(), new Vector2(800, 200));
+    }
+
+    private void createBase(Base.Type t, Vector2 pos) {
+        Base b = new Base(pos.x, pos.y, t, false, activity);
+        final IEntity layerBG = activity.getScene().getChildByIndex(AbstractGameActivity.LAYER_BACKGROUND);
+        layerBG.attachChild(b.getPhosphate());
+        layerBG.attachChild(b.getSprite());
+        bases.add(b);
+    }
+
+    private void createKeys() {
+        createKey(Base.Type.A);
+        createKey(Base.Type.T);
+        createKey(Base.Type.G);
+        createKey(Base.Type.C);
+    }
+
+    private void createKey(Base.Type type) {
+        Key key = new Key(type, activity);
+        activity.getScene().getChildByIndex(AbstractGameActivity.LAYER_FOREGROUND).attachChild(key.getSprite());
+    }
+
+    private Vector2 shiftPos(float x, float y) {
+        final float baseWidth = 27; // Maximum sprite width, once scaled
+        final float margin = 10;
+        return new Vector2(x - baseWidth - margin, y);
+    }
+
+    private void shiftBases() {
+        for (Base base : bases) {
+            final Sprite s = base.getSprite();
+            final Sprite phosphate = base.getPhosphate();
+            final Vector2 newPos = shiftPos(s.getX(), s.getY());
+            final Vector2 newPosPho = shiftPos(phosphate.getX(), phosphate.getY());
+
+            Log.d(TAG, "shiftBases: shifted from " + s.getX() + ", " + s.getY() + " to " + newPos.x + ", " + newPos.y);
+            s.setPosition(newPos.x, newPos.y);
+            phosphate.setPosition(newPosPho.x, newPosPho.y);
+        }
     }
 
     private void resetGamePoints() {
