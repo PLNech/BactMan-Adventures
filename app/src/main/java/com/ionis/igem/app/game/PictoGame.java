@@ -366,7 +366,7 @@ public class PictoGame extends BaseGame {
         if (isInteger) padding += " ";
         final String formatStr = isInteger ? "%.0f%%" : "%.1f%%";
         final String scoreStr = padding + String.format(formatStr, score);
-        Log.d(TAG, "setScore - Setting score to _" + scoreStr + "_");
+        Log.d(TAG, "setValue - Setting score to _" + scoreStr + "_");
         setScore(scoreStr);
     }
 

@@ -188,7 +188,7 @@ public class BinGame extends BaseGame {
 
                 animateBin(bin, animation);
                 if (validMove) {
-                    incrementScore();
+                    incrementScore(item.getValue());
                 } else {
                     animateBin(binMap.get(item.getType().getValid()), Bin.Animation.VALID_MISS);
                     decrementLives();
@@ -202,6 +202,8 @@ public class BinGame extends BaseGame {
                     animateBins(Bin.Animation.INVALID_HIT);
                     recycleItem(item);
                     decrementLives();
+                } else {
+                    item.setValue(item.getValue() + 1);
                 }
             }
 
@@ -238,6 +240,11 @@ public class BinGame extends BaseGame {
         Log.v(TAG, "beginContact - Decreasing speed to " + activity.getPhysicsWorld().getGravity() + ".");
     }
 
+    private void incrementScore(int increment) {
+        for (int i = 0; i < increment; i++) {
+            incrementScore();
+        }
+    }
     private void incrementScore() {
         setScore(++gameScore);
         activity.setPhysicsCoeff(1.05f);

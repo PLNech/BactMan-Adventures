@@ -66,4 +66,7 @@ public abstract class WorldObject {
     public float getScaleGrabbed() {
         return SCALE_GRABBED;
     }
+
+    public void onDrag() {
+    }
 }

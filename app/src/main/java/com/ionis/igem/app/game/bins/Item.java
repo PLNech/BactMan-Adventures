@@ -64,9 +64,10 @@ public class Item extends PhysicalWorldObject {
 
     private final BinGame game;
 
-    int id;
-    Type type;
-    DraggableAnimatedSprite shape;
+    private int id;
+    private int value = 1;
+    private Type type;
+    private DraggableAnimatedSprite shape;
 
     public Item(Type pType, ITiledTextureRegion texture, float posX, float posY, BinGame game) {
         super(new PhysicalWorldObject.Builder(posX, posY, texture,
@@ -79,7 +80,6 @@ public class Item extends PhysicalWorldObject {
         sprite.setCullingEnabled(true);
         shape = new DraggableAnimatedSprite(posX, posY, getIdealScale(SCALE_GRABBED, texture), sprite.getTiledTextureRegion(),
                 game.getActivity().getVBOM(), this) {
-            //TODO: Move Draggability to own interface
             @Override
             protected void onManagedUpdate(float pSecondsElapsed) {
                 super.onManagedUpdate(pSecondsElapsed);
@@ -124,6 +124,19 @@ public class Item extends PhysicalWorldObject {
     @Override
     protected BodyDef.BodyType getBodyType() {
         return BodyDef.BodyType.DynamicBody;
+    }
+
+    @Override
+    public void onDrag() {
+        setValue(1);
+    }
+
+    public int getValue() {
+        return value;
+    }
+
+    public void setValue(int value) {
+        this.value = value;
     }
 
     @Override

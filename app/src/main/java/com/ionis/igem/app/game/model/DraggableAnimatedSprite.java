@@ -45,6 +45,7 @@ public class DraggableAnimatedSprite extends AnimatedSprite {
                     float velocityX = pSceneTouchEvent.getX() - x * PhysicsConstants.PIXEL_TO_METER_RATIO_DEFAULT;
                     float velocityY = pSceneTouchEvent.getY() - y * PhysicsConstants.PIXEL_TO_METER_RATIO_DEFAULT;
                     body.setLinearVelocity(velocityX, velocityY);
+                    object.onDrag();
                 }
                 break;
             case TouchEvent.ACTION_UP:
