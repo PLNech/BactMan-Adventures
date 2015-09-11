@@ -1,6 +1,5 @@
 package com.ionis.igem.app.game.model;
 
-import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import org.andengine.entity.sprite.AnimatedSprite;
 import org.andengine.extension.physics.box2d.util.constants.PhysicsConstants;
@@ -13,18 +12,16 @@ import org.andengine.opengl.vbo.VertexBufferObjectManager;
  */
 public class DraggableAnimatedSprite extends AnimatedSprite {
 
-    private static final String TAG = "DraggableAnimatedSprite";
-
     private PhysicalWorldObject object; //TODO: Handle objects without bodies
     private boolean isGrabbed;
     private float scaleGrabbed;
     private float initScale;
-    private Vector2 savedVelocity;
     private float velocityX;
     private float velocityY;
 
     public DraggableAnimatedSprite(float pX, float pY, float pScaleGrabbed, ITiledTextureRegion pTiledTextureRegion,
-                                   VertexBufferObjectManager pVertexBufferObjectManager, WorldObject pObject) {
+                                   VertexBufferObjectManager pVertexBufferObjectManager, WorldObject pObject)
+    {
         super(pX, pY, pTiledTextureRegion, pVertexBufferObjectManager);
         object = (PhysicalWorldObject) pObject;
         scaleGrabbed = pScaleGrabbed;
