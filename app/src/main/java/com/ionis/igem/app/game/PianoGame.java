@@ -32,7 +32,7 @@ public class PianoGame extends BaseGame {
     private static final String TAG = "PianoGame";
 
     public static final int INIT_SCORE = 0;
-    public static final float CREATION_INTERVAL = 0.1f;
+    public static final float CREATION_INTERVAL = 0.05f;
 
     private HUDElement HUDScore;
     private int gameScore;
@@ -140,7 +140,7 @@ public class PianoGame extends BaseGame {
     }
 
     private void createCplBase(Base.Type type) {
-        createBase(type, new Vector2(200, 150), true);
+        createBase(type, new Vector2(245, 125), true);
     }
 
     private void createBase(Base.Type t, Vector2 pos, boolean cpl) {
@@ -239,6 +239,7 @@ public class PianoGame extends BaseGame {
 
     public void onKeyPress(Base.Type type) {
         createCplBase(type);
+        createBase();
     }
 
     @Override

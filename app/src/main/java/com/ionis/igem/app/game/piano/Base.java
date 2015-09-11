@@ -1,9 +1,11 @@
 package com.ionis.igem.app.game.piano;
 
+import android.util.Log;
 import com.ionis.igem.app.game.AbstractGameActivity;
 import com.ionis.igem.app.game.managers.ResMan;
 import com.ionis.igem.app.game.model.WorldObject;
 import org.andengine.entity.sprite.Sprite;
+import org.andengine.opengl.texture.region.ITiledTextureRegion;
 
 /**
  * Created by PLNech on 06/09/2015.
@@ -34,9 +36,25 @@ public class Base extends WorldObject {
 
     protected Base(float pX, float pY, Type pType, boolean cpl, boolean touchable, AbstractGameActivity activity) {
         super(pX, pY, touchable, SCALE_DEFAULT, activity.getTexture(chooseTextureName(pType, cpl)), activity.getVBOM());
-        phosphate = new Sprite(pX - 0.5f * SCALE_DEFAULT * sprite.getWidth(), pY + sprite.getHeight() * SCALE_DEFAULT, activity.getTexture(ResMan.PIANO_L_PHO), activity.getVBOM());
+        final ITiledTextureRegion texture = activity.getTexture(ResMan.PIANO_L_PHO);
+        final float phosphateX;
+        final float phosphateY;
+        if (cpl) {
+            phosphateX = pX;
+            phosphateY = pY - texture.getHeight() * SCALE_DEFAULT;
+        } else {
+            phosphateX = pX - 0.5f * sprite.getWidth() * SCALE_DEFAULT;
+            phosphateY = pY + sprite.getHeight() * SCALE_DEFAULT;
+        }
+
+        phosphate = new Sprite(phosphateX, phosphateY, texture, activity.getVBOM());
         setScale(SCALE_DEFAULT);
+        phosphate.setRotationCenter(phosphate.getX() / 2, phosphate.getY() / 2);
+        if (cpl) { phosphate.setRotation(180);}
         type = pType;
+        Log.d(TAG, "Base " + (cpl? "cpl" : "") + ": phosphate asked at " + phosphateX + ", " + phosphateY
+                + ", is at " + phosphate.getX() + ", " + phosphate.getY()
+                + ", w:" + phosphate.getWidth() + ", s:" + phosphate.getScaleX());
     }
 
 
