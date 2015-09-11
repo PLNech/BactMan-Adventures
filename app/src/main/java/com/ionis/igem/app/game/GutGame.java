@@ -56,7 +56,7 @@ public class GutGame extends BaseGame {
     public static final short MASK_ITEM = CATEGORY_WALL + CATEGORY_PLAYER;
 
     public static final short GROUP_INDEX = 0;
-    public static final float ITEM_PERIOD = 0.25f;
+    public static final float ITEM_INTERVAL = 0.25f;
 
     private int gameScore = INIT_SCORE;
     private int gameLives = INIT_LIVES;
@@ -177,7 +177,7 @@ public class GutGame extends BaseGame {
     private void createItems(final int count) {
         if (count > 0) {
             createItem(Item.Role.RANDOM);
-            activity.registerUpdateHandler(ITEM_PERIOD, new ITimerCallback() {
+            activity.registerUpdateHandler(ITEM_INTERVAL, new ITimerCallback() {
                 @Override
                 public void onTimePassed(TimerHandler pTimerHandler) {
                     createItems(count - 1);

@@ -12,6 +12,8 @@ import com.ionis.igem.app.game.piano.Base;
 import com.ionis.igem.app.game.piano.Key;
 import com.ionis.igem.app.game.piano.Polymerase;
 import org.andengine.engine.camera.SmoothCamera;
+import org.andengine.engine.handler.timer.ITimerCallback;
+import org.andengine.engine.handler.timer.TimerHandler;
 import org.andengine.entity.IEntity;
 import org.andengine.entity.scene.Scene;
 import org.andengine.entity.scene.background.SpriteBackground;
@@ -30,6 +32,7 @@ public class PianoGame extends BaseGame {
     private static final String TAG = "PianoGame";
 
     public static final int INIT_SCORE = 0;
+    public static final float CREATION_INTERVAL = 0.1f;
 
     private HUDElement HUDScore;
     private int gameScore;
@@ -116,8 +119,18 @@ public class PianoGame extends BaseGame {
     }
 
     private void createADN() {
-        for (int i = 0; i < 15; i++) {
+        createADN(15);
+    }
+
+    private void createADN(final int count) {
+        if (count > 0) {
             createBase();
+            activity.registerUpdateHandler(CREATION_INTERVAL, new ITimerCallback() {
+                @Override
+                public void onTimePassed(TimerHandler pTimerHandler) {
+                    createADN(count - 1);
+                }
+            });
         }
     }
 
@@ -225,7 +238,7 @@ public class PianoGame extends BaseGame {
     }
 
     public void onKeyPress(Base.Type type) {
-//        createCplBase(type);
+        createCplBase(type);
     }
 
     @Override
