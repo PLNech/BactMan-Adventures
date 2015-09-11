@@ -51,6 +51,7 @@ public class DraggableAnimatedSprite extends AnimatedSprite {
                     body.setLinearVelocity(0, 0);
                     body.setTransform(pSceneTouchEvent.getX() / PhysicsConstants.PIXEL_TO_METER_RATIO_DEFAULT,
                             pSceneTouchEvent.getY() / PhysicsConstants.PIXEL_TO_METER_RATIO_DEFAULT, body.getAngle());
+                    object.onDrag();
                 }
                 break;
             case TouchEvent.ACTION_UP:
