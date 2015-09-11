@@ -111,7 +111,7 @@ public abstract class PhysicalWorldObject extends WorldObject {
     }
 
     protected PhysicalWorldObject(Builder b) {
-        super(b.pX, b.pY, b.draggable, b.scaleDefault, b.scaleGrabbed, b.textureRegion, b.manager);
+        super(b.pX, b.pY, b.draggable, b.scaleDefault, b.textureRegion, b.manager);
         sprite.setScale(b.scaleDefault);
         this.b = b;
         if (b.shouldAdd) {

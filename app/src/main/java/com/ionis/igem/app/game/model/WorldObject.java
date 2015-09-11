@@ -4,6 +4,7 @@ import android.opengl.GLES20;
 import android.support.annotation.Nullable;
 import android.util.Log;
 import org.andengine.entity.modifier.IEntityModifier;
+import org.andengine.input.touch.TouchEvent;
 import org.andengine.opengl.texture.region.ITiledTextureRegion;
 import org.andengine.opengl.vbo.VertexBufferObjectManager;
 import org.andengine.util.color.Color;
@@ -14,27 +15,24 @@ import org.andengine.util.color.Color;
 public abstract class WorldObject {
     private static final String TAG = "WorldObject";
     public static final float SCALE_DEFAULT = 0.150f;
-    public static final float SCALE_GRABBED = 0.250f;
+    public static final float SCALE_GRABBED = 0.200f;
 
-    protected DraggableAnimatedSprite sprite;
+    protected TouchableAnimatedSprite sprite;
 
     private Color defaultColor;
 
-    public WorldObject(float pX, float pY, boolean draggable, @Nullable Float pScale, @Nullable Float pScaleGrabbed,
+    public WorldObject(float pX, float pY, boolean touchable, @Nullable Float pScale,
                        ITiledTextureRegion pTiledTextureRegion, VertexBufferObjectManager pVertexBufferObjectManager) {
         if (pScale == null) {
             pScale = SCALE_DEFAULT;
         }
-        if (pScaleGrabbed == null) {
-            pScaleGrabbed = SCALE_GRABBED;
-        }
-        if (draggable) {
-            sprite = new DraggableAnimatedSprite(pX, pY, pScaleGrabbed, pTiledTextureRegion, pVertexBufferObjectManager, this);
+        if (touchable) {
+            sprite = new TouchableAnimatedSprite(pX, pY, pTiledTextureRegion, pVertexBufferObjectManager, this);
         } else {
-            sprite = new DraggableAnimatedSprite(pX, pY, pScaleGrabbed, pTiledTextureRegion, pVertexBufferObjectManager, null);
+            sprite = new TouchableAnimatedSprite(pX, pY, pTiledTextureRegion, pVertexBufferObjectManager, null);
         }
         sprite.setBlendFunction(GLES20.GL_SRC_ALPHA, GLES20.GL_ONE_MINUS_SRC_ALPHA);
-        sprite.setInitialScale(pScale);
+        sprite.setScale(pScale);
         sprite.setPosition(pX, pY);
         defaultColor = new Color(sprite.getColor());
         Log.d(TAG, "WorldObject - New " + this.getClass().getSimpleName() + " of scale " + pScale + " at " + pX + ", " + pY);
@@ -51,11 +49,15 @@ public abstract class WorldObject {
         return scale;
     }
 
+    public boolean onAreaTouched(TouchEvent pSceneTouchEvent, float pTouchAreaLocalX, float pTouchAreaLocalY) {
+        return false;
+    }
+
     public Color getDefaultColor() {
         return defaultColor;
     }
 
-    public DraggableAnimatedSprite getSprite() {
+    public TouchableAnimatedSprite getSprite() {
         return sprite;
     }
 
@@ -67,6 +69,4 @@ public abstract class WorldObject {
         return SCALE_GRABBED;
     }
 
-    public void onDrag() {
-    }
 }

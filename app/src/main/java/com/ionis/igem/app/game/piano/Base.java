@@ -25,10 +25,18 @@ public class Base extends WorldObject {
         }
 
     }
-    public Base(float pX, float pY, Type type, boolean cpl, AbstractGameActivity activity) {
-        super(pX, pY, false, SCALE_DEFAULT, null, activity.getTexture(chooseTextureName(type, cpl)), activity.getVBOM());
+
+    protected Type type;
+
+    public Base(float pX, float pY, Type pType, boolean cpl, AbstractGameActivity activity) {
+        this(pX, pY, pType, cpl, false, activity);
+    }
+
+    protected Base(float pX, float pY, Type pType, boolean cpl, boolean touchable, AbstractGameActivity activity) {
+        super(pX, pY, touchable, SCALE_DEFAULT, activity.getTexture(chooseTextureName(pType, cpl)), activity.getVBOM());
         phosphate = new Sprite(pX - 0.5f * SCALE_DEFAULT * sprite.getWidth(), pY + sprite.getHeight() * SCALE_DEFAULT, activity.getTexture(ResMan.PIANO_L_PHO), activity.getVBOM());
         setScale(SCALE_DEFAULT);
+        type = pType;
     }
 
 

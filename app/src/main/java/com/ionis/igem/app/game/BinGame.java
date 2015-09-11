@@ -8,7 +8,7 @@ import com.ionis.igem.app.game.bins.Bin;
 import com.ionis.igem.app.game.bins.Item;
 import com.ionis.igem.app.game.managers.ResMan;
 import com.ionis.igem.app.game.model.BaseGame;
-import com.ionis.igem.app.game.model.DraggableAnimatedSprite;
+import com.ionis.igem.app.game.model.TouchableAnimatedSprite;
 import com.ionis.igem.app.game.model.HUDElement;
 import com.ionis.igem.app.game.model.Wall;
 import com.ionis.igem.app.game.model.res.FontAsset;
@@ -443,7 +443,7 @@ public class BinGame extends BaseGame {
         items.add(item);
         final Scene gameScene = activity.getScene();
         final IEntity layerBG = gameScene.getChildByIndex(PortraitGameActivity.LAYER_BACKGROUND);
-        final DraggableAnimatedSprite sprite = item.getSprite();
+        final TouchableAnimatedSprite sprite = item.getSprite();
         sprite.setVisible(true);
         layerBG.attachChild(sprite);
         layerBG.attachChild(item.getShape());
@@ -456,7 +456,7 @@ public class BinGame extends BaseGame {
 
     private void deleteItem(final Item item) {
         final AnimatedSprite sprite = item.getSprite();
-        final DraggableAnimatedSprite biggerSprite = item.getShape();
+        final TouchableAnimatedSprite biggerSprite = item.getShape();
         final Scene scene = activity.getScene();
         final IEntity layerBG = scene.getChildByIndex(PortraitGameActivity.LAYER_BACKGROUND);
 

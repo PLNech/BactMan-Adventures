@@ -5,6 +5,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.ionis.igem.app.game.managers.ResMan;
 import com.ionis.igem.app.game.model.BaseGame;
 import com.ionis.igem.app.game.model.HUDElement;
+import com.ionis.igem.app.game.model.TouchableAnimatedSprite;
 import com.ionis.igem.app.game.model.res.FontAsset;
 import com.ionis.igem.app.game.model.res.GFXAsset;
 import com.ionis.igem.app.game.piano.Base;
@@ -33,6 +34,7 @@ public class PianoGame extends BaseGame {
     private HUDElement HUDScore;
     private int gameScore;
     private ArrayList<Base> bases = new ArrayList<>();
+    private ArrayList<Base> baseCpls = new ArrayList<>();
 
     public PianoGame(AbstractGameActivity pActivity) {
         super(pActivity);
@@ -121,15 +123,23 @@ public class PianoGame extends BaseGame {
 
     private void createBase() {
         shiftBases();
-        createBase(Base.Type.random(), new Vector2(800, 200));
+        createBase(Base.Type.random(), new Vector2(800, 200), false);
     }
 
-    private void createBase(Base.Type t, Vector2 pos) {
-        Base b = new Base(pos.x, pos.y, t, false, activity);
+    private void createCplBase(Base.Type type) {
+        createBase(type, new Vector2(200, 150), true);
+    }
+
+    private void createBase(Base.Type t, Vector2 pos, boolean cpl) {
+        Base b = new Base(pos.x, pos.y, t, cpl, activity);
         final IEntity layerBG = activity.getScene().getChildByIndex(AbstractGameActivity.LAYER_BACKGROUND);
         layerBG.attachChild(b.getPhosphate());
         layerBG.attachChild(b.getSprite());
-        bases.add(b);
+        if (cpl) {
+            baseCpls.add(b);
+        } else {
+            bases.add(b);
+        }
     }
 
     private void createKeys() {
@@ -140,8 +150,12 @@ public class PianoGame extends BaseGame {
     }
 
     private void createKey(Base.Type type) {
-        Key key = new Key(type, activity);
-        activity.getScene().getChildByIndex(AbstractGameActivity.LAYER_FOREGROUND).attachChild(key.getSprite());
+        Key key = new Key(type, this);
+        final Scene scene = activity.getScene();
+        final TouchableAnimatedSprite sprite = key.getSprite();
+
+        scene.getChildByIndex(AbstractGameActivity.LAYER_FOREGROUND).attachChild(sprite);
+        scene.registerTouchArea(sprite);
     }
 
     private Vector2 shiftPos(float x, float y) {
@@ -152,15 +166,22 @@ public class PianoGame extends BaseGame {
 
     private void shiftBases() {
         for (Base base : bases) {
-            final Sprite s = base.getSprite();
-            final Sprite phosphate = base.getPhosphate();
-            final Vector2 newPos = shiftPos(s.getX(), s.getY());
-            final Vector2 newPosPho = shiftPos(phosphate.getX(), phosphate.getY());
-
-            Log.d(TAG, "shiftBases: shifted from " + s.getX() + ", " + s.getY() + " to " + newPos.x + ", " + newPos.y);
-            s.setPosition(newPos.x, newPos.y);
-            phosphate.setPosition(newPosPho.x, newPosPho.y);
+            shiftBase(base);
         }
+        for (Base base : baseCpls) {
+            shiftBase(base);
+        }
+    }
+
+    private void shiftBase(Base base) {
+        final Sprite s = base.getSprite();
+        final Sprite phosphate = base.getPhosphate();
+        final Vector2 newPos = shiftPos(s.getX(), s.getY());
+        final Vector2 newPosPho = shiftPos(phosphate.getX(), phosphate.getY());
+
+        Log.d(TAG, "shiftBase: shifted from " + s.getX() + ", " + s.getY() + " to " + newPos.x + ", " + newPos.y);
+        s.setPosition(newPos.x, newPos.y);
+        phosphate.setPosition(newPosPho.x, newPosPho.y);
     }
 
     private void resetGamePoints() {
@@ -203,9 +224,12 @@ public class PianoGame extends BaseGame {
         //TODO
     }
 
+    public void onKeyPress(Base.Type type) {
+//        createCplBase(type);
+    }
+
     @Override
     public boolean isPortrait() {
         return false;
     }
-
 }

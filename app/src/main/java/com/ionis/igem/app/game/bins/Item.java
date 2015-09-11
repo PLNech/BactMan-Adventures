@@ -3,9 +3,11 @@ package com.ionis.igem.app.game.bins;
 import android.util.Log;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.ionis.igem.app.game.BinGame;
-import com.ionis.igem.app.game.model.DraggableAnimatedSprite;
+import com.ionis.igem.app.game.model.TouchableAnimatedSprite;
 import com.ionis.igem.app.game.model.PhysicalWorldObject;
 import com.ionis.igem.app.game.model.WorldObject;
+import org.andengine.extension.physics.box2d.util.constants.PhysicsConstants;
+import org.andengine.input.touch.TouchEvent;
 import org.andengine.opengl.texture.region.ITiledTextureRegion;
 import org.andengine.util.color.Color;
 
@@ -67,7 +69,12 @@ public class Item extends PhysicalWorldObject {
     private int id;
     private int value = 1;
     private Type type;
-    private DraggableAnimatedSprite shape;
+    private TouchableAnimatedSprite shape;
+
+    private boolean isGrabbed;
+    private float velocityX;
+    private float velocityY;
+
 
     public Item(Type pType, ITiledTextureRegion texture, float posX, float posY, BinGame game) {
         super(new PhysicalWorldObject.Builder(posX, posY, texture,
@@ -78,7 +85,7 @@ public class Item extends PhysicalWorldObject {
                 .density(BODY_DENSITY).elasticity(BODY_ELASTICITY).friction(BODY_FRICTION));
         this.game = game;
         sprite.setCullingEnabled(true);
-        shape = new DraggableAnimatedSprite(posX, posY, getIdealScale(SCALE_GRABBED, texture), sprite.getTiledTextureRegion(),
+        shape = new TouchableAnimatedSprite(posX, posY, sprite.getTiledTextureRegion(),
                 game.getActivity().getVBOM(), this) {
             @Override
             protected void onManagedUpdate(float pSecondsElapsed) {
@@ -87,7 +94,7 @@ public class Item extends PhysicalWorldObject {
                 setRotation(sprite.getRotation());
             }
         };
-        shape.setInitialScale(BIGGER_SHAPE_FACTOR * sprite.getScaleX(), true);
+        shape.setScale(BIGGER_SHAPE_FACTOR * SCALE_DEFAULT, SCALE_DEFAULT);
         shape.setColor(Color.TRANSPARENT);
         shape.setRotation(sprite.getRotation());
 
@@ -105,7 +112,7 @@ public class Item extends PhysicalWorldObject {
         return id;
     }
 
-    public DraggableAnimatedSprite getShape() {
+    public TouchableAnimatedSprite getShape() {
         return shape;
     }
 
@@ -127,8 +134,33 @@ public class Item extends PhysicalWorldObject {
     }
 
     @Override
-    public void onDrag() {
-        setValue(1);
+    public boolean onAreaTouched(TouchEvent pSceneTouchEvent, float pTouchAreaLocalX, float pTouchAreaLocalY) {
+        switch (pSceneTouchEvent.getAction()) {
+            case TouchEvent.ACTION_DOWN:
+                sprite.setScale(SCALE_GRABBED);
+                isGrabbed = true;
+                return true;
+            case TouchEvent.ACTION_MOVE:
+                if (isGrabbed) {
+                    final float x = body.getPosition().x;
+                    final float y = body.getPosition().y;
+                    velocityX = pSceneTouchEvent.getX() - x * PhysicsConstants.PIXEL_TO_METER_RATIO_DEFAULT;
+                    velocityY = pSceneTouchEvent.getY() - y * PhysicsConstants.PIXEL_TO_METER_RATIO_DEFAULT;
+                    body.setLinearVelocity(0, 0);
+                    body.setTransform(pSceneTouchEvent.getX() / PhysicsConstants.PIXEL_TO_METER_RATIO_DEFAULT,
+                            pSceneTouchEvent.getY() / PhysicsConstants.PIXEL_TO_METER_RATIO_DEFAULT, body.getAngle());
+                    setValue(1);
+                }
+                return true;
+            case TouchEvent.ACTION_UP:
+                if (isGrabbed) {
+                    isGrabbed = false;
+                    sprite.setScale(SCALE_DEFAULT);
+                    body.setLinearVelocity(velocityX, velocityY);
+                }
+                return true;
+        }
+        return false;
     }
 
     public int getValue() {
