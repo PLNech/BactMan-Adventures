@@ -260,6 +260,11 @@ public class PianoGame extends BaseGame {
         Log.v(TAG, "beginContact - Increasing score to " + gameScore + ".");
     }
 
+    private void decrementScore() {
+        setScore(--gameScore);
+        Log.v(TAG, "beginContact - Decreasing score to " + gameScore + ".");
+    }
+
     private void decrementTime() {
         setTime(--gameTime);
         if (gameTime == 0) {
@@ -312,6 +317,8 @@ public class PianoGame extends BaseGame {
             createCplBase(type);
             currentBaseIndex++;
             incrementScore();
+        } else {
+            decrementScore();
         }
     }
 
