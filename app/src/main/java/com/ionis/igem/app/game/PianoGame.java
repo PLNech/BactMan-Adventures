@@ -50,6 +50,7 @@ public class PianoGame extends BaseGame {
         if (graphicalAssets.isEmpty()) {
             graphicalAssets.add(new GFXAsset(ResMan.PIANO_BG, 1841, 1395, 0, 0));
             graphicalAssets.add(new GFXAsset(ResMan.PIANO_L_PHO, 732, 512, 0, 0));
+            graphicalAssets.add(new GFXAsset(ResMan.PIANO_L_PHO_CPL, 732, 512, 0, 0));
             graphicalAssets.add(new GFXAsset(ResMan.PIANO_POLY, 1536, 1014, 0, 0, 2, 1));
             graphicalAssets.add(new GFXAsset(ResMan.PIANO_A, 317, 1024, 0, 0));
             graphicalAssets.add(new GFXAsset(ResMan.PIANO_A_CPL, 317, 1024, 0, 0));
@@ -82,7 +83,7 @@ public class PianoGame extends BaseGame {
             final float scale = 0.08f;
 
             Vector2 posS = new Vector2(5, 0);
-            Vector2 offS = new Vector2(50, 20);
+            Vector2 offS = new Vector2(65, 23);
 
             IFont fontRoboto = activity.getFont(FontAsset.name(ResMan.F_HUD_BIN, ResMan.F_HUD_BIN_SIZE, ResMan.F_HUD_BIN_COLOR, ResMan.F_HUD_BIN_ANTI));
             Log.d(TAG, "getHudElements - sprite: " + posS + " - text:" + offS.add(posS));
@@ -244,6 +245,7 @@ public class PianoGame extends BaseGame {
             createBase();
             createCplBase(type);
             currentBaseIndex++;
+            setScore(++gameScore);
         }
     }
 

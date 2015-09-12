@@ -36,27 +36,20 @@ public class Base extends WorldObject {
 
     protected Base(float pX, float pY, Type pType, boolean cpl, boolean touchable, AbstractGameActivity activity) {
         super(pX, pY, touchable, SCALE_DEFAULT, activity.getTexture(chooseTextureName(pType, cpl)), activity.getVBOM());
-        final ITiledTextureRegion texture = activity.getTexture(ResMan.PIANO_L_PHO);
-        final float phosphateX;
+        final ITiledTextureRegion texture = activity.getTexture(cpl ? ResMan.PIANO_L_PHO_CPL : ResMan.PIANO_L_PHO);
+        final float phosphateX = pX - 0.45f * sprite.getWidth() * SCALE_DEFAULT;
         final float phosphateY;
         if (cpl) {
-            phosphateX = pX;
-            phosphateY = pY - texture.getHeight() * SCALE_DEFAULT;
+            phosphateY = pY - 0.1f * texture.getHeight() * SCALE_DEFAULT;
         } else {
-            phosphateX = pX - 0.5f * sprite.getWidth() * SCALE_DEFAULT;
             phosphateY = pY + sprite.getHeight() * SCALE_DEFAULT;
         }
 
         phosphate = new Sprite(phosphateX, phosphateY, texture, activity.getVBOM());
         setScale(SCALE_DEFAULT);
         phosphate.setRotationCenter(phosphate.getX() / 2, phosphate.getY() / 2);
-        if (cpl) { phosphate.setRotation(180);}
         type = pType;
-        Log.d(TAG, "Base " + (cpl? "cpl" : "") + ": phosphate asked at " + phosphateX + ", " + phosphateY
-                + ", is at " + phosphate.getX() + ", " + phosphate.getY()
-                + ", w:" + phosphate.getWidth() + ", s:" + phosphate.getScaleX());
     }
-
 
     protected void setScale(float scale) {
         sprite.setScaleCenter(sprite.getScaleCenterX() * scale,

@@ -92,6 +92,7 @@ public class ResMan {
     /* PianoGame */
     public static final String PIANO_BG = "piano/background.png";
     public static final String PIANO_L_PHO = "piano/base_l_phosphate.png";
+    public static final String PIANO_L_PHO_CPL = "piano/base_l_phosphate_cpl.png";
     public static final String PIANO_POLY = "piano/polymerase.png";
     public static final String PIANO_A = "piano/base_a.png";
     public static final String PIANO_A_CPL = "piano/base_a_cpl.png";
