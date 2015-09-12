@@ -91,10 +91,11 @@ public class PianoGame extends BaseGame {
             Vector2 posS = new Vector2(5, 0);
             Vector2 offS = new Vector2(65, 23);
             Vector2 posT = new Vector2(350, 0);
-            Vector2 offT = new Vector2(340, 27.5f);
+            Vector2 offT = new Vector2(345, 21);
 
             IFont fontRoboto = activity.getFont(FontAsset.name(ResMan.F_HUD_BIN, ResMan.F_HUD_BIN_SIZE, ResMan.F_HUD_BIN_COLOR, ResMan.F_HUD_BIN_ANTI));
-            Log.d(TAG, "getHudElements - sprite: " + posS + " - text:" + offS.add(posS));
+            Log.d(TAG, "getHudElements - Score: sprite: " + posS + " - text:" + offS.add(posS));
+            Log.d(TAG, "getHudElements - Time:  sprite: " + posT + " - text:" + offT.add(posT));
 
             final VertexBufferObjectManager vbom = activity.getVBOM();
 
@@ -103,7 +104,7 @@ public class PianoGame extends BaseGame {
                     .buildText("", "31337".length(), offS, fontRoboto, vbom);
             HUDTime = new HUDElement()
                     .buildSprite(posT, textureTime, vbom, scale)
-                    .buildText("", 8, posT.add(offT), fontRoboto, vbom)
+                    .buildText("", 8, offT, fontRoboto, vbom)
                     .setUrgent(false);
 
             elements.add(HUDScore);
@@ -232,10 +233,11 @@ public class PianoGame extends BaseGame {
 
     private void setScore(int score) {
         String padding = "";
-        if (score < 10) {
+        final int scoreLength = String.valueOf(score).length();
+        if (scoreLength < 2) {
             padding += " ";
         }
-        if (score < 100) {
+        if (scoreLength < 3) {
             padding += " ";
         }
         setScore(padding + score);
