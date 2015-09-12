@@ -15,7 +15,7 @@ public class Base extends WorldObject {
 
     public static final float SCALE_DEFAULT = 0.08f; //TODO-OPTI: Scale upfront sprites instead of relying on this
 
-    private final Sprite phosphate;
+    protected final Sprite phosphate;
 
     public enum Type {
         A, T, G, C;
@@ -46,9 +46,9 @@ public class Base extends WorldObject {
         }
 
         phosphate = new Sprite(phosphateX, phosphateY, texture, activity.getVBOM());
-        setScale(SCALE_DEFAULT);
-        phosphate.setRotationCenter(phosphate.getX() / 2, phosphate.getY() / 2);
         type = pType;
+
+        setScale(SCALE_DEFAULT);
     }
 
     protected void setScale(float scale) {

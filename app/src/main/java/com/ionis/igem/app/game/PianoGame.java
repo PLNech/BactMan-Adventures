@@ -189,9 +189,12 @@ public class PianoGame extends BaseGame {
         Key key = new Key(type, this);
         final Scene scene = activity.getScene();
         final TouchableAnimatedSprite sprite = key.getSprite();
+        final TouchableAnimatedSprite shape = key.getShape();
 
-        scene.getChildByIndex(AbstractGameActivity.LAYER_FOREGROUND).attachChild(sprite);
-        scene.registerTouchArea(sprite);
+        final IEntity layerBG = scene.getChildByIndex(AbstractGameActivity.LAYER_FOREGROUND);
+        layerBG.attachChild(sprite);
+        layerBG.attachChild(shape);
+        scene.registerTouchArea(shape);
     }
 
     private Vector2 shiftPos(float x, float y) {
