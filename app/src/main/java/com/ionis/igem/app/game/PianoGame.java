@@ -6,6 +6,7 @@ import com.ionis.igem.app.game.managers.ResMan;
 import com.ionis.igem.app.game.model.BaseGame;
 import com.ionis.igem.app.game.model.HUDElement;
 import com.ionis.igem.app.game.model.TouchableAnimatedSprite;
+import com.ionis.igem.app.game.model.WorldObject;
 import com.ionis.igem.app.game.model.res.FontAsset;
 import com.ionis.igem.app.game.model.res.GFXAsset;
 import com.ionis.igem.app.game.piano.Base;
@@ -15,14 +16,19 @@ import org.andengine.engine.camera.SmoothCamera;
 import org.andengine.engine.handler.timer.ITimerCallback;
 import org.andengine.engine.handler.timer.TimerHandler;
 import org.andengine.entity.IEntity;
+import org.andengine.entity.modifier.DelayModifier;
+import org.andengine.entity.modifier.IEntityModifier;
+import org.andengine.entity.modifier.SequenceEntityModifier;
 import org.andengine.entity.scene.Scene;
 import org.andengine.entity.scene.background.SpriteBackground;
 import org.andengine.entity.sprite.Sprite;
 import org.andengine.opengl.font.IFont;
 import org.andengine.opengl.texture.region.ITiledTextureRegion;
 import org.andengine.opengl.vbo.VertexBufferObjectManager;
+import org.andengine.util.modifier.IModifier;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -34,6 +40,7 @@ public class PianoGame extends BaseGame {
     public static final int INIT_SCORE = 0;
     public static final int INIT_TIME = 60;
     public static final float CREATION_INTERVAL = 0.05f;
+    public static final float DURATION_SHADER = 0.25f;
 
     private HUDElement HUDScore;
     private HUDElement HUDTime;
@@ -42,6 +49,7 @@ public class PianoGame extends BaseGame {
     private int gameTime;
     private ArrayList<Base> bases = new ArrayList<>();
     private ArrayList<Base> baseCpls = new ArrayList<>();
+    private HashMap<Key.Type, Key> keyMap = new HashMap<>();
 
     private int currentBaseIndex = 0;
 
@@ -56,6 +64,8 @@ public class PianoGame extends BaseGame {
             graphicalAssets.add(new GFXAsset(ResMan.PIANO_L_PHO, 732, 512, 0, 0));
             graphicalAssets.add(new GFXAsset(ResMan.PIANO_L_PHO_CPL, 732, 512, 0, 0));
             graphicalAssets.add(new GFXAsset(ResMan.PIANO_POLY, 1536, 1014, 0, 0, 2, 1));
+
+            /* Bases */
             graphicalAssets.add(new GFXAsset(ResMan.PIANO_A, 317, 1024, 0, 0));
             graphicalAssets.add(new GFXAsset(ResMan.PIANO_A_CPL, 317, 1024, 0, 0));
             graphicalAssets.add(new GFXAsset(ResMan.PIANO_T, 334, 1024, 0, 0));
@@ -64,6 +74,10 @@ public class PianoGame extends BaseGame {
             graphicalAssets.add(new GFXAsset(ResMan.PIANO_G_CPL, 334, 1024, 0, 0));
             graphicalAssets.add(new GFXAsset(ResMan.PIANO_C, 331, 1024, 0, 0));
             graphicalAssets.add(new GFXAsset(ResMan.PIANO_C_CPL, 329, 1024, 0, 0));
+
+            /* Effects */
+            graphicalAssets.add(new GFXAsset(ResMan.PIANO_SHADER_OK, 329, 1024, 0, 0));
+            graphicalAssets.add(new GFXAsset(ResMan.PIANO_SHADER_KO, 329, 1024, 0, 0));
 
             /* HUD */
             graphicalAssets.add(new GFXAsset(ResMan.HUD_TIME, 1885, 1024, 0, 0));
@@ -188,11 +202,14 @@ public class PianoGame extends BaseGame {
 
     private void createKey(Base.Type type) {
         Key key = new Key(type, this);
+        keyMap.put(type, key);
         final Scene scene = activity.getScene();
         final TouchableAnimatedSprite sprite = key.getSprite();
         final TouchableAnimatedSprite shape = key.getShape();
 
         final IEntity layerBG = scene.getChildByIndex(AbstractGameActivity.LAYER_FOREGROUND);
+        layerBG.attachChild(key.getShadowInvalid());
+        layerBG.attachChild(key.getShadowValid());
         layerBG.attachChild(sprite);
         layerBG.attachChild(shape);
         scene.registerTouchArea(shape);
@@ -313,8 +330,32 @@ public class PianoGame extends BaseGame {
         phosphate.detachSelf();
     }
 
-    public void onKeyPress(Base.Type type) {
-        if (bases.get(currentBaseIndex).getCplType() == type) {
+    public void onKeyPress(final Base.Type type) {
+        final Base.Type currentType = bases.get(currentBaseIndex).getCplType();
+        final Key keyValid = keyMap.get(currentType);
+        final Key keyInvalid = keyMap.get(type);
+        final boolean isValid = currentType == type;
+
+        animate(keyValid, new SequenceEntityModifier(new DelayModifier(DURATION_SHADER)), new IEntityModifier.IEntityModifierListener() {
+            @Override
+            public void onModifierStarted(IModifier<IEntity> pModifier, IEntity pItem) {
+                keyValid.showShadow(true, Key.Animation.VALID_HIT);
+                if (!isValid) {
+                    keyValid.showShadow(true, Key.Animation.VALID_HIT);
+                    keyInvalid.showShadow(true, WorldObject.Animation.INVALID_HIT);
+                }
+            }
+
+            @Override
+            public void onModifierFinished(IModifier<IEntity> pModifier, IEntity pItem) {
+                keyValid.hideShadows();
+                if (!isValid) {
+                    keyInvalid.hideShadows();
+                }
+            }
+        });
+
+        if (isValid) {
             createBase();
             createCplBase(type);
             currentBaseIndex++;

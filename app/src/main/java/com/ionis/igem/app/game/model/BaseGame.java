@@ -1,5 +1,6 @@
 package com.ionis.igem.app.game.model;
 
+import android.support.annotation.Nullable;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.ContactListener;
 import com.ionis.igem.app.game.AbstractGameActivity;
@@ -7,9 +8,13 @@ import com.ionis.igem.app.game.PortraitGameActivity;
 import com.ionis.igem.app.game.model.res.FontAsset;
 import com.ionis.igem.app.game.model.res.GFXAsset;
 import org.andengine.engine.camera.Camera;
+import org.andengine.entity.IEntity;
+import org.andengine.entity.modifier.*;
 import org.andengine.entity.scene.IOnSceneTouchListener;
 import org.andengine.entity.scene.Scene;
 import org.andengine.input.touch.TouchEvent;
+import org.andengine.util.color.Color;
+import org.andengine.util.modifier.IModifier;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -107,4 +112,68 @@ public abstract class BaseGame {
     public boolean onSceneTouchEvent(Scene pScene, TouchEvent pSceneTouchEvent) {
         return false;
     }
+
+    protected void animate(final WorldObject object, WorldObject.Animation animation) {
+        final Color toColor;
+
+        switch (animation) {
+            case VALID_HIT:
+                toColor = Color.GREEN;
+                break;
+            case INVALID_HIT:
+                toColor = Color.RED;
+                break;
+            case VALID_MISS:
+                toColor = Color.GREEN;
+                break;
+            default:
+                throw new IllegalStateException("THERE IS NO DEFAULT");
+        }
+
+        animate(object, Color.WHITE, toColor);
+    }
+
+    protected void animate(final WorldObject object, Color fromColor, Color toColor) {
+        final IEntityModifier.IEntityModifierListener logListener = new IEntityModifier.IEntityModifierListener() {
+            @Override
+            public void onModifierStarted(final IModifier<IEntity> pModifier, final IEntity pItem) {
+//                activity.runOnUiThread(new Runnable() {
+//                    @Override
+//                    public void run() {
+//                        final String text = "Animation started.";
+//                        Log.v(TAG, "onModifierStarted - " + text);
+//                    }
+//                });
+            }
+
+            @Override
+            public void onModifierFinished(final IModifier<IEntity> pEntityModifier, final IEntity pEntity) {
+//                activity.runOnUiThread(new Runnable() {
+//                    @Override
+//                    public void run() {
+//                        final String text = "Animation finished.";
+//                        Log.v(TAG, "onModifierFinished - " + text);
+//                    }
+//                });
+            }
+        };
+
+        final float pDuration = 0.25f;
+
+        final SequenceEntityModifier entityModifier = new SequenceEntityModifier(
+                new ColorModifier(pDuration, fromColor, toColor),
+                new ColorModifier(pDuration, toColor, fromColor),
+                new DelayModifier(pDuration * 2)
+        );
+    }
+
+    protected void animate(final WorldObject object,
+                           SequenceEntityModifier modifier, @Nullable IEntityModifier.IEntityModifierListener listener) {
+        if (listener == null) {
+            object.registerEntityModifier(new LoopEntityModifier(modifier, 1));
+        } else {
+            object.registerEntityModifier(new LoopEntityModifier(modifier, 1, listener));
+        }
+    }
+
 }

@@ -69,4 +69,7 @@ public abstract class WorldObject {
         return SCALE_GRABBED;
     }
 
+    public enum Animation {
+        VALID_HIT, INVALID_HIT, VALID_MISS
+    }
 }

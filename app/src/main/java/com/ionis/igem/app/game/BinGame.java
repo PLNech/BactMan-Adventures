@@ -7,10 +7,7 @@ import com.badlogic.gdx.physics.box2d.*;
 import com.ionis.igem.app.game.bins.Bin;
 import com.ionis.igem.app.game.bins.Item;
 import com.ionis.igem.app.game.managers.ResMan;
-import com.ionis.igem.app.game.model.BaseGame;
-import com.ionis.igem.app.game.model.TouchableAnimatedSprite;
-import com.ionis.igem.app.game.model.HUDElement;
-import com.ionis.igem.app.game.model.Wall;
+import com.ionis.igem.app.game.model.*;
 import com.ionis.igem.app.game.model.res.FontAsset;
 import com.ionis.igem.app.game.model.res.GFXAsset;
 import com.ionis.igem.app.utils.CalcUtils;
@@ -186,11 +183,11 @@ public class BinGame extends BaseGame {
                 }
                 final Bin.Animation animation = validMove ? Bin.Animation.VALID_HIT : Bin.Animation.INVALID_HIT;
 
-                animateBin(bin, animation);
+                animate(bin, animation);
                 if (validMove) {
                     incrementScore(item.getValue());
                 } else {
-                    animateBin(binMap.get(item.getType().getValid()), Bin.Animation.VALID_MISS);
+                    animate(binMap.get(item.getType().getValid()), Bin.Animation.VALID_MISS);
                     decrementLives();
                 }
                 recycleItem(item);
@@ -495,59 +492,8 @@ public class BinGame extends BaseGame {
 
     private void animateBins(Bin.Animation animation) {
         for (Bin bin : bins) {
-            animateBin(bin, animation);
+            animate(bin, animation);
         }
-    }
-
-    private void animateBin(final Bin bin, Bin.Animation animation) {
-        final IEntityModifier.IEntityModifierListener logListener = new IEntityModifier.IEntityModifierListener() {
-            @Override
-            public void onModifierStarted(final IModifier<IEntity> pModifier, final IEntity pItem) {
-//                activity.runOnUiThread(new Runnable() {
-//                    @Override
-//                    public void run() {
-//                        final String text = "Animation started.";
-//                        Log.v(TAG, "onModifierStarted - " + text);
-//                    }
-//                });
-            }
-
-            @Override
-            public void onModifierFinished(final IModifier<IEntity> pEntityModifier, final IEntity pEntity) {
-//                activity.runOnUiThread(new Runnable() {
-//                    @Override
-//                    public void run() {
-//                        final String text = "Animation finished.";
-//                        Log.v(TAG, "onModifierFinished - " + text);
-//                    }
-//                });
-            }
-        };
-        final Color toColor;
-
-        switch (animation) {
-            case VALID_HIT:
-                toColor = Color.GREEN;
-                break;
-            case INVALID_HIT:
-                toColor = Color.RED;
-                break;
-            case VALID_MISS:
-                toColor = Color.GREEN;
-                break;
-            default:
-                throw new IllegalStateException("THERE IS NO DEFAULT");
-        }
-
-        final float pDuration = 0.25f;
-
-        final SequenceEntityModifier entityModifier = new SequenceEntityModifier(
-                new ColorModifier(pDuration, Color.WHITE, toColor),
-                new ColorModifier(pDuration, toColor, Color.WHITE),
-                new DelayModifier(pDuration * 2)
-        );
-
-        bin.registerEntityModifier(new LoopEntityModifier(entityModifier, 1, logListener));
     }
 
     private void recycleItem(final Item item) {
