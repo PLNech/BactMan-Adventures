@@ -165,6 +165,8 @@ public abstract class BaseGame {
                 new ColorModifier(pDuration, toColor, fromColor),
                 new DelayModifier(pDuration * 2)
         );
+
+        animate(object, entityModifier, logListener);
     }
 
     protected void animate(final WorldObject object,
