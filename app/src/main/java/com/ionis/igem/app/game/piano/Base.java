@@ -87,6 +87,27 @@ public class Base extends WorldObject {
         return retStr;
     }
 
+    public Type getType() {return type;}
+
+    public Type getCplType() {
+        return getCplType(type);
+    }
+
+    public static Type getCplType(Type type) {
+        switch (type) {
+            case A:
+                return Type.T;
+            case T:
+                return Type.A;
+            case G:
+                return Type.C;
+            case C:
+                return Type.G;
+            default:
+                throw new IllegalStateException("No default");
+        }
+    }
+
     public Sprite getPhosphate() {
         return phosphate;
     }

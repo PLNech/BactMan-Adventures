@@ -39,6 +39,8 @@ public class PianoGame extends BaseGame {
     private ArrayList<Base> bases = new ArrayList<>();
     private ArrayList<Base> baseCpls = new ArrayList<>();
 
+    private int currentBaseIndex = 0;
+
     public PianoGame(AbstractGameActivity pActivity) {
         super(pActivity);
     }
@@ -238,8 +240,11 @@ public class PianoGame extends BaseGame {
     }
 
     public void onKeyPress(Base.Type type) {
-        createCplBase(type);
-        createBase();
+        if (bases.get(currentBaseIndex).getCplType() == type) {
+            createBase();
+            createCplBase(type);
+            currentBaseIndex++;
+        }
     }
 
     @Override
