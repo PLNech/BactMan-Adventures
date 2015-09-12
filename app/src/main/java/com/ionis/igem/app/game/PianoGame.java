@@ -139,10 +139,10 @@ public class PianoGame extends BaseGame {
         scene.setBackground(new SpriteBackground(new Sprite(0, 0, camera.getWidth(), camera.getHeight(),
                 activity.getTexture(ResMan.PIANO_BG), vbom)));
 
-        Polymerase polymerase = new Polymerase(200, 35, activity);
+        Polymerase polymerase = new Polymerase(189, 35, activity);
         scene.getChildByIndex(AbstractGameActivity.LAYER_FOREGROUND).attachChild(polymerase.getSprite());
-        createKeys();
 
+        createKeys();
         createADN();
 
         scene.setTouchAreaBindingOnActionDownEnabled(true);
