@@ -287,6 +287,9 @@ public class PianoGame extends BaseGame {
             deleteBase(b);
         }
 
+        bases.clear();
+        basesCpls.clear();
+        currentBaseIndex = 0;
         resetGamePoints();
         createADN();
     }
