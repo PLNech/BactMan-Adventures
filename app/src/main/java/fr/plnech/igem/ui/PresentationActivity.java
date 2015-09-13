@@ -1,15 +1,17 @@
 package fr.plnech.igem.ui;
 
-import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import fr.plnech.igem.R;
 
-public class PresentationActivity extends AppCompatActivity {
+public class PresentationActivity extends DetailActivity {
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_presentation);
+    int getTitleResId() {
+        return R.string.title_activity_presentation;
+    }
+
+    @Override
+    int getLayoutResId() {
+        return R.layout.activity_presentation;
     }
 
 }

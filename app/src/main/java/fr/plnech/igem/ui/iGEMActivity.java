@@ -7,13 +7,22 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import fr.plnech.igem.R;
 
-public class iGEMActivity extends AppCompatActivity {
+public class iGEMActivity extends MenuActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_igem);
         ButterKnife.inject(this);
+    }
+
+    @Override
+    int getTitleResId() {
+        return R.string.title_activity_igem;
+    }
+
+    @Override
+    int getLayoutResId() {
+        return R.layout.activity_igem;
     }
 
     @OnClick(R.id.button_igem_what)

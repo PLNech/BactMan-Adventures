@@ -1,16 +1,16 @@
 package fr.plnech.igem.ui;
 
-import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
-
 import fr.plnech.igem.R;
 
-public class BiobrickActivity extends AppCompatActivity {
+public class BiobrickActivity extends DetailActivity {
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_biobrick);
+    int getTitleResId() {
+        return R.string.title_activity_biobrick;
     }
 
+    @Override
+    int getLayoutResId() {
+        return R.layout.activity_biobrick;
+    }
 }

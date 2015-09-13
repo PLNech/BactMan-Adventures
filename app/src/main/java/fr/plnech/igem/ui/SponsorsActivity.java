@@ -1,17 +1,17 @@
 package fr.plnech.igem.ui;
 
-import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
-import butterknife.ButterKnife;
 import fr.plnech.igem.R;
 
-public class SponsorsActivity extends AppCompatActivity {
+public class SponsorsActivity extends DetailActivity {
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_sponsors);
-        ButterKnife.inject(this);
+    int getTitleResId() {
+        return R.string.title_activity_sponsors;
+    }
+
+    @Override
+    int getLayoutResId() {
+        return R.layout.activity_sponsors;
     }
 
 }

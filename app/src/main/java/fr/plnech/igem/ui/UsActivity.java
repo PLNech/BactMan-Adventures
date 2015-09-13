@@ -7,13 +7,22 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import fr.plnech.igem.R;
 
-public class UsActivity extends AppCompatActivity {
+public class UsActivity extends MenuActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_us);
         ButterKnife.inject(this);
+    }
+
+    @Override
+    int getTitleResId() {
+        return R.string.title_activity_us;
+    }
+
+    @Override
+    int getLayoutResId() {
+        return R.layout.activity_us;
     }
 
     @OnClick(R.id.button_us_presentation)

@@ -1,15 +1,16 @@
 package fr.plnech.igem.ui;
 
-import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import fr.plnech.igem.R;
 
-public class CreditsActivity extends AppCompatActivity {
+public class CreditsActivity extends DetailActivity {
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_credits);
+    int getTitleResId() {
+        return R.string.title_activity_credits;
     }
 
+    @Override
+    int getLayoutResId() {
+        return R.layout.activity_credits;
+    }
 }

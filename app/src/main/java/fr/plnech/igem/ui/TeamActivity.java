@@ -7,12 +7,21 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import fr.plnech.igem.R;
 
-public class TeamActivity extends AppCompatActivity {
+public class TeamActivity extends DetailActivity {
+
+    @Override
+    int getTitleResId() {
+        return R.string.title_activity_team;
+    }
+
+    @Override
+    int getLayoutResId() {
+        return R.layout.activity_team;
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_team);
         ButterKnife.inject(this);
     }
 

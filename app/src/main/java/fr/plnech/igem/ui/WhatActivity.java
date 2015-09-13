@@ -11,7 +11,17 @@ import butterknife.OnClick;
 import fr.plnech.igem.R;
 import fr.plnech.igem.utils.ViewUtils;
 
-public class WhatActivity extends AppCompatActivity {
+public class WhatActivity extends DetailActivity {
+
+    @Override
+    int getTitleResId() {
+        return R.string.title_activity_what;
+    }
+
+    @Override
+    int getLayoutResId() {
+        return R.layout.activity_what;
+    }
 
     @InjectView(R.id.link)
     protected TextView linkView;
@@ -19,10 +29,8 @@ public class WhatActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_what);
         ButterKnife.inject(this);
         ViewUtils.textUnderline(linkView);
-
     }
 
     @OnClick(R.id.link)

@@ -10,13 +10,22 @@ import fr.plnech.igem.R;
 import fr.plnech.igem.game.LandscapeGameActivity;
 import fr.plnech.igem.game.PortraitGameActivity;
 
-public class GameMenuActivity extends AppCompatActivity {
+public class GameMenuActivity extends MenuActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_game_menu);
         ButterKnife.inject(this);
+    }
+
+    @Override
+    int getTitleResId() {
+        return R.string.title_activity_game_menu;
+    }
+
+    @Override
+    int getLayoutResId() {
+        return R.layout.activity_game_menu;
     }
 
     @OnClick(R.id.button_game_new)
