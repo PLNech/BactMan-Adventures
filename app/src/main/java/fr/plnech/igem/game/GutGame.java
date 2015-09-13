@@ -58,7 +58,6 @@ public class GutGame extends BaseGame {
     public static final short GROUP_INDEX = 0;
     public static final float ITEM_INTERVAL = 0.25f;
 
-    private int gameScore = INIT_SCORE;
     private int gameLives = INIT_LIVES;
 
     private HUDElement HUDScore;
@@ -70,6 +69,7 @@ public class GutGame extends BaseGame {
 
     public GutGame(AbstractGameActivity pActivity) {
         super(pActivity);
+        gameScore = INIT_SCORE;
     }
 
     @Override

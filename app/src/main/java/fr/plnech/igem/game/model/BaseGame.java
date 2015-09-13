@@ -1,9 +1,14 @@
 package fr.plnech.igem.game.model;
 
 import android.support.annotation.Nullable;
+import android.util.Log;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.ContactListener;
+import com.crashlytics.android.answers.Answers;
+import com.crashlytics.android.answers.LevelEndEvent;
+import com.crashlytics.android.answers.LevelStartEvent;
 import fr.plnech.igem.game.AbstractGameActivity;
+import fr.plnech.igem.game.BinGame;
 import fr.plnech.igem.game.PortraitGameActivity;
 import fr.plnech.igem.game.model.res.FontAsset;
 import fr.plnech.igem.game.model.res.GFXAsset;
@@ -24,6 +29,7 @@ import java.util.Random;
  * Created by PLN on 21/08/2015.
  */
 public abstract class BaseGame {
+    private static final String TAG = "BaseGame";
     protected ArrayList<GFXAsset> graphicalAssets = new ArrayList<>();
     protected ArrayList<FontAsset> fontAssets = new ArrayList<>();
     protected ArrayList<HUDElement> elements = new ArrayList<>();
@@ -32,6 +38,7 @@ public abstract class BaseGame {
 
     protected AbstractGameActivity activity;
     protected Random random;
+    protected int gameScore = BinGame.INIT_SCORE;
     private int position;
 
     public BaseGame(AbstractGameActivity pActivity) {
@@ -81,32 +88,6 @@ public abstract class BaseGame {
     private void createWall(float x, float y, float width, float height, Wall.Type type, boolean masked) {
         Wall wall = new Wall(x, y, width, height, type, activity.getVBOM(), activity.getPhysicsWorld(), masked);
         activity.getScene().getChildByIndex(PortraitGameActivity.LAYER_BACKGROUND).attachChild(wall);
-    }
-
-    public boolean isPlaying() {
-        return playing;
-    }
-
-    public void setPlaying(boolean isPlaying) {
-        this.playing = isPlaying;
-    }
-
-    public abstract void resetGame();
-
-    public void setPosition(int position) {
-        this.position = position;
-    }
-
-    public int getPosition() {
-        return position;
-    }
-
-    public AbstractGameActivity getActivity() {
-        return activity;
-    }
-
-    public boolean isPortrait() {
-        return true;
     }
 
     public boolean onSceneTouchEvent(Scene pScene, TouchEvent pSceneTouchEvent) {
@@ -178,4 +159,47 @@ public abstract class BaseGame {
         }
     }
 
+    public void logLevelStart(){
+        Log.d(TAG, "logLevelStart");
+        Answers.getInstance().logLevelStart(new LevelStartEvent()
+                .putLevelName(this.getClass().getSimpleName()));
+    }
+
+    public void logLevelEnd(int score, boolean success){
+        Log.d(TAG, "logLevelEnd - score:" + score + ", " + (success? "win":"lose"));
+        Answers.getInstance().logLevelEnd(new LevelEndEvent()
+                .putLevelName(this.getClass().getSimpleName())
+                .putScore(score)
+                .putSuccess(success));
+    }
+
+    public boolean isPlaying() {
+        return playing;
+    }
+
+    public void setPlaying(boolean isPlaying) {
+        this.playing = isPlaying;
+    }
+
+    public abstract void resetGame();
+
+    public void setPosition(int position) {
+        this.position = position;
+    }
+
+    public int getPosition() {
+        return position;
+    }
+
+    public AbstractGameActivity getActivity() {
+        return activity;
+    }
+
+    public boolean isPortrait() {
+        return true;
+    }
+
+    public int getScore() {
+        return gameScore;
+    }
 }

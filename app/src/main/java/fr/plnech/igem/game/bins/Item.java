@@ -1,8 +1,10 @@
 package fr.plnech.igem.game.bins;
 
 import android.util.Log;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import fr.plnech.igem.game.BinGame;
+import fr.plnech.igem.game.PortraitGameActivity;
 import fr.plnech.igem.game.model.TouchableAnimatedSprite;
 import fr.plnech.igem.game.model.PhysicalWorldObject;
 import fr.plnech.igem.game.model.WorldObject;
@@ -70,6 +72,7 @@ public class Item extends PhysicalWorldObject {
     private int value = 1;
     private Type type;
     private TouchableAnimatedSprite shape;
+    private final Vector2 initialPosition;
 
     private boolean isGrabbed;
     private float velocityX;
@@ -92,6 +95,8 @@ public class Item extends PhysicalWorldObject {
                 super.onManagedUpdate(pSecondsElapsed);
                 setPosition(sprite.getX(), sprite.getY());
                 setRotation(sprite.getRotation());
+
+                checkPosition();
             }
         };
         shape.setScale(BIGGER_SHAPE_FACTOR * SCALE_DEFAULT, SCALE_DEFAULT);
@@ -102,6 +107,7 @@ public class Item extends PhysicalWorldObject {
         type = pType;
         Log.v(TAG, "Item - Created " + type.toString() + " at " + sprite.getX() + ", " + sprite.getY()
                 + " with texture of w:" + texture.getWidth() + ", h:" + texture.getHeight());
+        initialPosition = new Vector2(posX, posY);
     }
 
     public Type getType() {
@@ -142,25 +148,43 @@ public class Item extends PhysicalWorldObject {
                 return true;
             case TouchEvent.ACTION_MOVE:
                 if (isGrabbed) {
-                    final float x = body.getPosition().x;
-                    final float y = body.getPosition().y;
-                    velocityX = pSceneTouchEvent.getX() - x * PhysicsConstants.PIXEL_TO_METER_RATIO_DEFAULT;
-                    velocityY = pSceneTouchEvent.getY() - y * PhysicsConstants.PIXEL_TO_METER_RATIO_DEFAULT;
-                    body.setLinearVelocity(0, 0);
-                    body.setTransform(pSceneTouchEvent.getX() / PhysicsConstants.PIXEL_TO_METER_RATIO_DEFAULT,
-                            pSceneTouchEvent.getY() / PhysicsConstants.PIXEL_TO_METER_RATIO_DEFAULT, body.getAngle());
                     setValue(1);
+                    final float pixelConstant = PhysicsConstants.PIXEL_TO_METER_RATIO_DEFAULT;
+                    float x = body.getPosition().x;
+                    float y = body.getPosition().y;
+                    body.setLinearVelocity(0, 0);
+                    velocityX = pSceneTouchEvent.getX() - x * pixelConstant;
+                    velocityY = pSceneTouchEvent.getY() - y * pixelConstant;
+
+                    body.setTransform(pSceneTouchEvent.getX() / pixelConstant,
+                            pSceneTouchEvent.getY() / pixelConstant, body.getAngle());
                 }
                 return true;
             case TouchEvent.ACTION_UP:
                 if (isGrabbed) {
-                    isGrabbed = false;
-                    sprite.setScale(SCALE_DEFAULT);
+                    stopGrabbing();
                     body.setLinearVelocity(velocityX, velocityY);
                 }
                 return true;
         }
         return false;
+    }
+
+    private void checkPosition() {
+        float x = body.getPosition().x;
+        float y = body.getPosition().y;
+        if (x < 0 || y < 0 || x > PortraitGameActivity.CAMERA_WIDTH || y > PortraitGameActivity.CAMERA_HEIGHT) {
+            Log.d(TAG, "logShittyPosition - Shitty position!");
+
+            body.setTransform(initialPosition.x / PhysicsConstants.PIXEL_TO_METER_RATIO_DEFAULT,
+                    initialPosition.y / PhysicsConstants.PIXEL_TO_METER_RATIO_DEFAULT, body.getAngle());
+            stopGrabbing();
+        }
+    }
+
+    private void stopGrabbing() {
+        isGrabbed = false;
+        sprite.setScale(SCALE_DEFAULT);
     }
 
     public int getValue() {

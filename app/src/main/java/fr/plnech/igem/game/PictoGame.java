@@ -35,7 +35,6 @@ public class PictoGame extends BaseGame {
     public static final float WIN_DURATION = 1.0f;
     public static final int GAME_DURATION = 60;
 
-    private int gameScore = 0;
     private double gameScorePercent = 0;
     private int gameTime = 100;
 
@@ -51,6 +50,7 @@ public class PictoGame extends BaseGame {
 
     public PictoGame(AbstractGameActivity pActivity) {
         super(pActivity);
+        gameScore = 0;
     }
 
     @Override

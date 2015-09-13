@@ -68,8 +68,8 @@ public abstract class AbstractGameActivity extends SimpleBaseGameActivity implem
 
     private Boolean shouldStartEngine = false;
 
-    protected static final int CAMERA_WIDTH = 480;
-    protected static final int CAMERA_HEIGHT = 800;
+    public static final int CAMERA_WIDTH = 480;
+    public static final int CAMERA_HEIGHT = 800;
 
     public static final float SPLASH_DURATION = 0.5f;
 

@@ -7,12 +7,14 @@ import com.badlogic.gdx.physics.box2d.*;
 import fr.plnech.igem.game.bins.Bin;
 import fr.plnech.igem.game.bins.Item;
 import fr.plnech.igem.game.managers.ResMan;
-import fr.plnech.igem.game.model.*;
+import fr.plnech.igem.game.model.BaseGame;
+import fr.plnech.igem.game.model.HUDElement;
+import fr.plnech.igem.game.model.TouchableAnimatedSprite;
+import fr.plnech.igem.game.model.Wall;
 import fr.plnech.igem.game.model.res.FontAsset;
 import fr.plnech.igem.game.model.res.GFXAsset;
 import fr.plnech.igem.utils.CalcUtils;
 import org.andengine.entity.IEntity;
-import org.andengine.entity.modifier.*;
 import org.andengine.entity.scene.Scene;
 import org.andengine.entity.scene.background.SpriteBackground;
 import org.andengine.entity.sprite.AnimatedSprite;
@@ -20,8 +22,6 @@ import org.andengine.entity.sprite.Sprite;
 import org.andengine.opengl.font.IFont;
 import org.andengine.opengl.texture.region.ITiledTextureRegion;
 import org.andengine.opengl.vbo.VertexBufferObjectManager;
-import org.andengine.util.color.Color;
-import org.andengine.util.modifier.IModifier;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -42,7 +42,6 @@ public class BinGame extends BaseGame {
 
     private static final String TAG = "BinGame";
 
-    private int gameScore = INIT_SCORE;
     private int gameLives = INIT_LIVES;
 
     private HUDElement HUDScore;

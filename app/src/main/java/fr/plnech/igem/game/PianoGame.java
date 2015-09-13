@@ -45,7 +45,6 @@ public class PianoGame extends BaseGame {
     private HUDElement HUDScore;
     private HUDElement HUDTime;
 
-    private int gameScore;
     private int gameTime;
     private ArrayList<Base> bases = new ArrayList<>();
     private ArrayList<Base> baseCpls = new ArrayList<>();
