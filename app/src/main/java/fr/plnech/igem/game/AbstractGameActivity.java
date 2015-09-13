@@ -209,6 +209,8 @@ public abstract class AbstractGameActivity extends SimpleBaseGameActivity implem
                 onQuit();
                 return true;
             case OPTION_RESET:
+                currentGame.logLevelEnd(currentGame.getScore(), false);
+                currentGame.logLevelStart();
                 currentGame.setPlaying(true);
                 currentGame.resetGame();
                 gameScene.clearChildScene();
@@ -461,6 +463,7 @@ public abstract class AbstractGameActivity extends SimpleBaseGameActivity implem
                 mEngine.unregisterUpdateHandler(pTimerHandler);
 
                 initGameScene();
+                currentGame.logLevelStart();
                 Log.d(TAG, "onTimePassed - Game Scene created.");
             }
         });
@@ -514,6 +517,7 @@ public abstract class AbstractGameActivity extends SimpleBaseGameActivity implem
         gameOverText.setPosition(textPosition.x, textPosition.y);
         pauseScene.attachChild(gameOverText);
         gameScene.setChildScene(pauseScene, false, true, true);
+        currentGame.logLevelEnd(score, false);
     }
 
     public void onWin(int score, float posRatioX, float posRatioY) {
@@ -523,6 +527,7 @@ public abstract class AbstractGameActivity extends SimpleBaseGameActivity implem
         winText.setPosition(textPosition.x, textPosition.y);
         winScene.attachChild(winText);
         gameScene.setChildScene(winScene, false, true, true);
+        currentGame.logLevelEnd(score, true);
     }
 
     private void onQuit() {
