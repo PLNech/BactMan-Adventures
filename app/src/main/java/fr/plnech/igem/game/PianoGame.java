@@ -266,7 +266,7 @@ public class PianoGame extends BaseGame {
 
     private void gameOver() {
         final float posRatioX = 0.5f;
-        final float posRatioY = 0f;
+        final float posRatioY = 0.2f;
         if (gameScore >= 50) {
             activity.onWin(gameScore, posRatioX, posRatioY);
         } else {
@@ -287,7 +287,7 @@ public class PianoGame extends BaseGame {
     private void decrementTime() {
         setTime(--gameTime);
         if (gameTime == 0) {
-            activity.onLose(gameScore, 0.5f, 0.2f);
+            gameOver();
         }
     }
 
