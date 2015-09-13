@@ -1,4 +1,4 @@
-package com.ionis.igem.app;
+package fr.plnech.igem;
 
 import android.app.Application;
 import android.test.ApplicationTestCase;

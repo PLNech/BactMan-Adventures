@@ -3,7 +3,7 @@
             style="@style/AppTheme.ScrollView">
 
     <RelativeLayout style="@style/AppTheme.Layout.Detail"
-                    tools:context="com.ionis.igem.app.ui.PresentationActivity">
+                    tools:context="fr.plnech.igem.ui.PresentationActivity">
 
         <ImageView style="@style/AppTheme.ImageView.FullWidth"
                    android:id="@+id/mainPic"

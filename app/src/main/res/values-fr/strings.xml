@@ -102,8 +102,10 @@
     <string name="title_activity_game_levels">Niveaux</string>
     <string name="title_activity_game_menu">Le Jeu</string>
     <string name="title_activity_game_settings">Réglages</string>
-    <string name="credits_subtitle"></string>
+    <string name="credits_subtitle">Ils ont permis l\'aventure</string><!--TODO:Translate-->
     <string name="title_activity_credits">Crédits</string>
     <string name="credits_title">Crédits, Licences et Remerciements</string>
     <string name="msg_next_game_soon">Le prochain jeu sera bientôt disponible !</string>
+    <string name="text_credits">Developed by Paul-Louis Nech and Goulwen Mintec\n\n Games build with the AndEngine\n\n</string><!--TODO:Translate-->
+    <string name="font_fontFamily_title">sans-serif</string>
 </resources>
