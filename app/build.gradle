@@ -51,7 +51,7 @@ dependencies {
     compile 'com.jakewharton:butterknife:6.1.0'
     compile project(':AndEngine')
     compile project(':AndEnginePhysicsBox2DExtension')
-    compile('com.crashlytics.sdk.android:crashlytics:2.5.1@aar') {
+    compile('com.crashlytics.sdk.android:crashlytics:2.5.2@aar') {
         transitive = true;
     }
 }
