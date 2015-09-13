@@ -3,6 +3,7 @@
 
     <!-- Main texts -->
     <string name="app_name" translatable="false">BactMan Adventures</string>
+    <string name="app_name_short" translatable="false">BactMan</string>
     <string name="action_quit">Quit</string>
     <string name="action_reset">Reset</string>
 
