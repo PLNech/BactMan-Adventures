@@ -68,7 +68,7 @@ public class Key extends Base {
     }
 
     private static Vector2 position(Type type, AbstractGameActivity activity) {
-        final float keyY = 0.85f;
+        final float keyY = 0.80f;
         final float keyX;
         final ITiledTextureRegion baseTextureRegion = activity.getTexture(ResMan.PIANO_A);
 
