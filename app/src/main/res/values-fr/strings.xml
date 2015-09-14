@@ -108,4 +108,10 @@
     <string name="msg_last_game">Félicitations, vous avez gagné le dernier jeu !</string>
     <string name="text_credits">Developed by Paul-Louis Nech and Goulwen Mintec\n\n Games build with the AndEngine\n\n</string><!--TODO:Translate-->
     <string name="font_fontFamily_title">sans-serif</string>
+
+
+    <string name="label_levels_gut">La Course dans l'Intestin</string>
+    <string name="label_levels_bin">Le Tri au Labo</string>
+    <string name="label_levels_picto">Le Memo du Labo</string>
+    <string name="label_levels_piano">Le PolyPiano</string>
 </resources>

@@ -153,8 +153,8 @@
 
     <!-- Home -> GameMenu -> Levels -->
     <string name="title_activity_game_levels">Level select</string>
-    <string name="label_levels_gut">The Gut Game</string>
-    <string name="label_levels_bin">The Bin Packer</string>
+    <string name="label_levels_gut">The Gut Run</string>
+    <string name="label_levels_bin">The Lab Sorter</string>
     <string name="label_levels_picto">The Labo Memo</string>
     <string name="label_levels_piano">The PolyPiano</string>
     <!-- Home -> GameMenu -> Settings -->
