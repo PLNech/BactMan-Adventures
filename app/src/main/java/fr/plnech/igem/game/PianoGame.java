@@ -38,7 +38,6 @@ public class PianoGame extends BaseGame {
     private static final String TAG = "PianoGame";
 
     public static final int INIT_SCORE = 0;
-    public static final int INIT_TIME = 60;
     public static final float CREATION_INTERVAL = 0.05f;
     public static final float DURATION_SHADER = 0.25f;
 

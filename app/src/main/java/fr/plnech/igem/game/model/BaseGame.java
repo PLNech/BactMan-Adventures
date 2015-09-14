@@ -40,6 +40,7 @@ public abstract class BaseGame {
 
     public static final int INIT_SCORE = 0;
     public static final int INIT_LIVES = 3;
+    public static final int INIT_TIME = 60;
 
     protected ArrayList<GFXAsset> graphicalAssets = new ArrayList<>();
     protected ArrayList<FontAsset> fontAssets = new ArrayList<>();

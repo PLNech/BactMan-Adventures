@@ -33,7 +33,6 @@ public class PictoGame extends BaseGame {
     private static final String TAG = "PictoGame";
     public static final float FAIL_DURATION = 1.0f;
     public static final float WIN_DURATION = 1.0f;
-    public static final int GAME_DURATION = 60;
 
     private double gameScorePercent = 0;
     private int gameTime = 100;
@@ -156,7 +155,7 @@ public class PictoGame extends BaseGame {
         Log.v(TAG, "beginContact - Increasing score to " + gameScore);
         setScore(gameScorePercent);
         if (gameScorePercent == 100) {
-            activity.onWin(50 + 50 * gameTime / GAME_DURATION, 0.5f, 0.2f);
+            activity.onWin(50 + 50 * gameTime / INIT_TIME, 0.5f, 0.2f);
         }
     }
 
@@ -352,7 +351,7 @@ public class PictoGame extends BaseGame {
 
     private void resetGamePoints() {
         gameScore = 0;
-        gameTime = GAME_DURATION;
+        gameTime = INIT_TIME;
         setScore(gameScore);
         setTime(gameTime);
         HUDTime.setUrgent(false);
