@@ -34,6 +34,7 @@
     <string name="label_game_levels">Level select</string>
     <string name="label_game_help">Help</string>
     <string name="label_game_settings">Settings</string>
+    
 
     <!-- Home -> Us -->
     <string name="title_activity_us">Us</string>
@@ -152,7 +153,10 @@
 
     <!-- Home -> GameMenu -> Levels -->
     <string name="title_activity_game_levels">Level select</string>
-
+    <string name="label_levels_gut">The Gut Game</string>
+    <string name="label_levels_bin">The Bin Packer</string>
+    <string name="label_levels_picto">The Labo Memo</string>
+    <string name="label_levels_piano">The PolyPiano</string>
     <!-- Home -> GameMenu -> Settings -->
     <string name="title_activity_game_settings">Game Settings</string>
 
