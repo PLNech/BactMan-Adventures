@@ -170,6 +170,6 @@
         universels.\n\n
         Comme elles sont conçues sur le même modèle, on peut les assembler comme un jeu de LEGO® pour
         ensuite les incorporer dans une cellule vivante.</string>
-    <string name="msg_next_game_soon">The next game will soon be available!</string>
+    <string name="msg_last_game">Congratulations, you just won the last game!</string>
 
 </resources>

@@ -105,7 +105,7 @@
     <string name="credits_subtitle">Ils ont permis l\'aventure</string><!--TODO:Translate-->
     <string name="title_activity_credits">Crédits</string>
     <string name="credits_title">Crédits, Licences et Remerciements</string>
-    <string name="msg_next_game_soon">Le prochain jeu sera bientôt disponible !</string>
+    <string name="msg_last_game">Félicitations, vous avez gagné le dernier jeu !</string>
     <string name="text_credits">Developed by Paul-Louis Nech and Goulwen Mintec\n\n Games build with the AndEngine\n\n</string><!--TODO:Translate-->
     <string name="font_fontFamily_title">sans-serif</string>
 </resources>

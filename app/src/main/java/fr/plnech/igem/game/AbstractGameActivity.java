@@ -1,5 +1,6 @@
 package fr.plnech.igem.game;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.AssetManager;
 import android.opengl.GLES20;
@@ -144,7 +145,22 @@ public abstract class AbstractGameActivity extends SimpleBaseGameActivity implem
         if (preferences == null) {
             preferences = getSharedPreferences(getString(R.string.app_name), MODE_PRIVATE);
         }
+
+        final Intent intent;
+        final Bundle extras;
+        if ((intent = getIntent()) != null && (extras = intent.getExtras()) != null) {
+            try {
+                final int gameId = extras.getInt(BaseGame.KEY_GAME_ID);
+                currentGame = BaseGame.getGameFromTag(gameId, this);
+                Log.d(TAG, "onCreate - Game id: " + gameId);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        } else {
+            Log.e(TAG, "onCreate - No game given!");
+        }
     }
+
 
     @Override
     public Engine onCreateEngine(EngineOptions pEngineOptions) {
@@ -189,7 +205,8 @@ public abstract class AbstractGameActivity extends SimpleBaseGameActivity implem
     @Override
     public boolean onKeyDown(final int pKeyCode, @NonNull final KeyEvent pEvent) {
         if (gameScene != null && pauseScene != null &&
-                pKeyCode == KeyEvent.KEYCODE_MENU && pEvent.getAction() == KeyEvent.ACTION_DOWN) {
+                pKeyCode == KeyEvent.KEYCODE_MENU && pEvent.getAction() == KeyEvent.ACTION_DOWN)
+        {
             if (gameScene.hasChildScene()) { // The game is paused
                 pauseScene.back();
                 updateNextStatus();
@@ -217,17 +234,26 @@ public abstract class AbstractGameActivity extends SimpleBaseGameActivity implem
                 resetMenus();
                 return true;
             case OPTION_NEXT:
-                if (currentGame.getPosition() < games.size() - 1) {
-                    currentGame = games.get(++currentGameId);
-                    updateNextStatus();
-                    resetMenus();
-                    loadGameAsync();
-                    mEngine.setScene(splashScene);
+                final int nextGameId = currentGame.getNextGameId();
+
+                if (nextGameId != BaseGame.ID_NONE) {
+                    final boolean nextGameIsPortrait = BaseGame.isPortrait(nextGameId);
+                    if (nextGameIsPortrait == currentGame.isPortrait()) {
+                        currentGame = BaseGame.getGameFromTag(nextGameId, this);
+                        updateNextStatus();
+                        resetMenus();
+                        loadGameAsync();
+                        mEngine.setScene(splashScene);
+                    } else {
+                        BaseGame.startGame(this, nextGameId);
+                        onQuit();
+                    }
+
                 } else {
                     runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
-                            Toast.makeText(getApplicationContext(), getResources().getString(R.string.msg_next_game_soon), Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getApplicationContext(), getResources().getString(R.string.msg_last_game), Toast.LENGTH_SHORT).show();
                         }
                     });
                     NavUtils.navigateUpFromSameTask(AbstractGameActivity.this);
@@ -333,8 +359,12 @@ public abstract class AbstractGameActivity extends SimpleBaseGameActivity implem
         final IEntity layerHUD = gameScene.getChildByIndex(LAYER_HUD);
         final IEntity layerText = gameScene.getChildByIndex(LAYER_HUD_TEXT);
         for (HUDElement element : elements) {
-            layerHUD.attachChild(element.getSprite());
-            layerText.attachChild(element.getText());
+            final Sprite sprite = element.getSprite();
+            final Text text = element.getText();
+            sprite.detachSelf();
+            text.detachSelf();
+            layerHUD.attachChild(sprite);
+            layerText.attachChild(text);
         }
     }
 
@@ -557,7 +587,7 @@ public abstract class AbstractGameActivity extends SimpleBaseGameActivity implem
     }
 
     protected void updateNextStatus() {
-        final boolean isUnlocked = getHighScore(currentGame) >= 50;
+        final boolean isUnlocked = true;//getHighScore(currentGame) >= 50;
         Log.d(TAG, "updateNextStatus: " + isUnlocked);
         updateNextStatus(nextPauseMenuItem, pauseScene, isUnlocked);
         updateNextStatus(nextWinMenuItem, winScene, isUnlocked);
@@ -572,16 +602,6 @@ public abstract class AbstractGameActivity extends SimpleBaseGameActivity implem
         }
     }
 
-    protected void addGame(Class<? extends BaseGame> c) {
-        try {
-            final BaseGame game = c.getConstructor(AbstractGameActivity.class).newInstance(this);
-            game.setPosition(games.size());
-            games.add(game);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
     public Vector2 spriteCenter(ITextureRegion textureRegion) {
         /**
          * Returns the appropriate coordinates to center the given textureRegion in the game camera.
@@ -591,7 +611,8 @@ public abstract class AbstractGameActivity extends SimpleBaseGameActivity implem
 
     public Vector2 spritePosition(ITextureRegion textureRegion,
                                   float positionRatioX, float positionRatioY,
-                                  float ratio) {
+                                  float ratio)
+    {
         final float widthToRatio = textureRegion.getWidth() * ratio;
         final float heightToRatio = textureRegion.getHeight() * ratio;
         return spritePosition(new Vector2(widthToRatio, heightToRatio), new Vector2(positionRatioX, positionRatioY));

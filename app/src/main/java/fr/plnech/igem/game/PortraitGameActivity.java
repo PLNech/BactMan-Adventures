@@ -1,6 +1,5 @@
 package fr.plnech.igem.game;
 
-import android.os.Bundle;
 import android.util.Log;
 import fr.plnech.igem.game.managers.ResMan;
 import org.andengine.engine.camera.SmoothCamera;
@@ -15,16 +14,6 @@ import org.andengine.opengl.texture.region.TiledTextureRegion;
 
 public class PortraitGameActivity extends AbstractGameActivity {
     private static final String TAG = "PortraitGameActivity";
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        Log.d(TAG, "onCreate - Created Activity.");
-
-        addGame(BinGame.class);
-        addGame(PictoGame.class);
-        currentGame = games.get(currentGameId);
-    }
 
     @Override
     public EngineOptions onCreateEngineOptions() {

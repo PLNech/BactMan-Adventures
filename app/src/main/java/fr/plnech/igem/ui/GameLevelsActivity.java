@@ -1,10 +1,17 @@
 package fr.plnech.igem.ui;
 
-import android.content.Intent;
+import android.os.Bundle;
+import butterknife.ButterKnife;
 import butterknife.OnClick;
 import fr.plnech.igem.R;
+import fr.plnech.igem.game.model.BaseGame;
 
 public class GameLevelsActivity extends MenuActivity {
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        ButterKnife.inject(this);
+    }
 
     @Override
     int getTitleResId() {
@@ -16,26 +23,23 @@ public class GameLevelsActivity extends MenuActivity {
         return R.layout.activity_game_levels;
     }
 
-
     @OnClick(R.id.button_levels_gut)
     protected void onClickGut() {
-        startActivity(new Intent(this, PresentationActivity.class));
+        BaseGame.startGame(this, BaseGame.ID_GUT);
     }
 
     @OnClick(R.id.button_levels_bin)
     protected void onClickBin() {
-        startActivity(new Intent(this, TeamActivity.class));
+        BaseGame.startGame(this, BaseGame.ID_BIN);
     }
 
     @OnClick(R.id.button_levels_picto)
     protected void onClickPicto() {
-        startActivity(new Intent(this, SponsorsActivity.class));
+        BaseGame.startGame(this, BaseGame.ID_PICTO);
     }
 
     @OnClick(R.id.button_levels_piano)
     protected void onClickPiano() {
-        startActivity(new Intent(this, ContactUsActivity.class));
+        BaseGame.startGame(this, BaseGame.ID_PIANO);
     }
-
-
 }

@@ -1,5 +1,7 @@
 package fr.plnech.igem.game.model;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.support.annotation.Nullable;
 import android.util.Log;
 import com.badlogic.gdx.math.Vector2;
@@ -7,9 +9,7 @@ import com.badlogic.gdx.physics.box2d.ContactListener;
 import com.crashlytics.android.answers.Answers;
 import com.crashlytics.android.answers.LevelEndEvent;
 import com.crashlytics.android.answers.LevelStartEvent;
-import fr.plnech.igem.game.AbstractGameActivity;
-import fr.plnech.igem.game.BinGame;
-import fr.plnech.igem.game.PortraitGameActivity;
+import fr.plnech.igem.game.*;
 import fr.plnech.igem.game.model.res.FontAsset;
 import fr.plnech.igem.game.model.res.GFXAsset;
 import org.andengine.engine.camera.Camera;
@@ -29,7 +29,14 @@ import java.util.Random;
  * Created by PLN on 21/08/2015.
  */
 public abstract class BaseGame {
+    public static final String KEY_GAME_ID = "game_id";
     private static final String TAG = "BaseGame";
+    public static final int ID_NONE = 0;
+    public static final int ID_GUT = 1;
+    public static final int ID_BIN = 2;
+    public static final int ID_PICTO = 3;
+    public static final int ID_PIANO = 4;
+
     protected ArrayList<GFXAsset> graphicalAssets = new ArrayList<>();
     protected ArrayList<FontAsset> fontAssets = new ArrayList<>();
     protected ArrayList<HUDElement> elements = new ArrayList<>();
@@ -39,7 +46,7 @@ public abstract class BaseGame {
     protected AbstractGameActivity activity;
     protected Random random;
     protected int gameScore = BinGame.INIT_SCORE;
-    private int position;
+    private int nextGameId;
 
     public BaseGame(AbstractGameActivity pActivity) {
         activity = pActivity;
@@ -52,6 +59,10 @@ public abstract class BaseGame {
 
     public abstract Scene prepareScene();
 
+    public abstract List<HUDElement> getHudElements();
+
+    public abstract void resetGame();
+
     public ContactListener getContactListener() {
         return null;
     }
@@ -63,8 +74,6 @@ public abstract class BaseGame {
     public Vector2 getPhysicsVector() {
         return null;
     }
-
-    public abstract List<HUDElement> getHudElements();
 
     protected void createCameraWalls() {
         createCameraWalls(true, true, true, true, false);
@@ -151,7 +160,8 @@ public abstract class BaseGame {
     }
 
     protected void animate(final WorldObject object,
-                           SequenceEntityModifier modifier, @Nullable IEntityModifier.IEntityModifierListener listener) {
+                           SequenceEntityModifier modifier, @Nullable IEntityModifier.IEntityModifierListener listener)
+    {
         if (listener == null) {
             object.registerEntityModifier(new LoopEntityModifier(modifier, 1));
         } else {
@@ -159,18 +169,70 @@ public abstract class BaseGame {
         }
     }
 
-    public void logLevelStart(){
+    public void logLevelStart() {
         Log.d(TAG, "logLevelStart");
         Answers.getInstance().logLevelStart(new LevelStartEvent()
                 .putLevelName(this.getClass().getSimpleName()));
     }
 
-    public void logLevelEnd(int score, boolean success){
-        Log.d(TAG, "logLevelEnd - score:" + score + ", " + (success? "win":"lose"));
+    public void logLevelEnd(int score, boolean success) {
+        Log.d(TAG, "logLevelEnd - score:" + score + ", " + (success ? "win" : "lose"));
         Answers.getInstance().logLevelEnd(new LevelEndEvent()
                 .putLevelName(this.getClass().getSimpleName())
                 .putScore(score)
                 .putSuccess(success));
+    }
+
+    public static void startGame(Activity activity, int gameId) {
+        final Intent intent = new Intent(activity, isPortrait(gameId) ?
+                PortraitGameActivity.class : LandscapeGameActivity.class);
+        intent.putExtra(KEY_GAME_ID, gameId);
+        activity.startActivity(intent);
+    }
+
+    public static BaseGame getGameFromTag(int gameId, AbstractGameActivity activity) {
+        final Class<? extends BaseGame> gameClass;
+        final int nextGameId;
+        switch (gameId) {
+            case ID_GUT:
+                gameClass = GutGame.class;
+                nextGameId = ID_BIN;
+                break;
+            case ID_BIN:
+                gameClass = BinGame.class;
+                nextGameId = ID_PICTO;
+                break;
+            case ID_PICTO:
+                gameClass = PictoGame.class;
+                nextGameId = ID_PIANO;
+                break;
+            case ID_PIANO:
+                gameClass = PianoGame.class;
+                nextGameId = ID_NONE;
+                break;
+            default:
+                throw new IllegalStateException("No default!");
+        }
+        try {
+            BaseGame game = gameClass.getConstructor(AbstractGameActivity.class).newInstance(activity);
+            game.setNextGameId(nextGameId);
+            return game;
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new IllegalStateException("No default!");
+        }
+    }
+
+    public static boolean isPortrait(int gameId) {
+        switch (gameId) {
+            case ID_GUT:
+            case ID_PIANO:
+                return false;
+            case ID_BIN:
+            case ID_PICTO:
+            default:
+                return true;
+        }
     }
 
     public boolean isPlaying() {
@@ -179,16 +241,6 @@ public abstract class BaseGame {
 
     public void setPlaying(boolean isPlaying) {
         this.playing = isPlaying;
-    }
-
-    public abstract void resetGame();
-
-    public void setPosition(int position) {
-        this.position = position;
-    }
-
-    public int getPosition() {
-        return position;
     }
 
     public AbstractGameActivity getActivity() {
@@ -201,5 +253,13 @@ public abstract class BaseGame {
 
     public int getScore() {
         return gameScore;
+    }
+
+    public void setNextGameId(int nextGameId) {
+        this.nextGameId = nextGameId;
+    }
+
+    public int getNextGameId() {
+        return nextGameId;
     }
 }

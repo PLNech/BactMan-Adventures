@@ -2,13 +2,11 @@ package fr.plnech.igem.ui;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.widget.Toast;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import fr.plnech.igem.R;
-import fr.plnech.igem.game.LandscapeGameActivity;
-import fr.plnech.igem.game.PortraitGameActivity;
+import fr.plnech.igem.game.model.BaseGame;
 
 public class GameMenuActivity extends MenuActivity {
 
@@ -30,12 +28,12 @@ public class GameMenuActivity extends MenuActivity {
 
     @OnClick(R.id.button_game_new)
     protected void onClickNew() {
-        startActivity(new Intent(this, LandscapeGameActivity.class));
+        BaseGame.startGame(this, BaseGame.ID_GUT);
     }
 
     @OnClick(R.id.button_game_levels)
     protected void onClickLevels() {
-        startActivity(new Intent(this, PortraitGameActivity.class));
+        startActivity(new Intent(this, GameLevelsActivity.class));
     }
 
     @OnClick(R.id.button_game_settings)

@@ -1,6 +1,5 @@
 package fr.plnech.igem.game;
 
-import android.os.Bundle;
 import android.util.Log;
 import fr.plnech.igem.game.managers.ResMan;
 import org.andengine.engine.camera.SmoothCamera;
@@ -18,16 +17,6 @@ public class LandscapeGameActivity extends AbstractGameActivity {
 
     protected static final int CAMERA_WIDTH = AbstractGameActivity.CAMERA_HEIGHT;
     protected static final int CAMERA_HEIGHT = AbstractGameActivity.CAMERA_WIDTH;
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        Log.d(TAG, "onCreate - Created Activity.");
-
-        addGame(PianoGame.class);
-        addGame(GutGame.class);
-        currentGame = games.get(currentGameId);
-    }
 
     @Override
     public EngineOptions onCreateEngineOptions() {

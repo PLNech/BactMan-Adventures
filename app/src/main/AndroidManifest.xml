@@ -24,13 +24,22 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".ui.GameMenuActivity"
-            android:label="@string/title_activity_game"
-            android:screenOrientation="portrait"
-            android:parentActivityName=".ui.HomeActivity" >
+                android:name=".ui.GameMenuActivity"
+                android:label="@string/title_activity_game"
+                android:screenOrientation="portrait"
+                android:parentActivityName=".ui.HomeActivity" >
             <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value=".ui.HomeActivity" />
+                    android:name="android.support.PARENT_ACTIVITY"
+                    android:value=".ui.HomeActivity" />
+        </activity>
+        <activity
+                android:name=".ui.GameLevelsActivity"
+                android:label="@string/title_activity_game_levels"
+                android:screenOrientation="portrait"
+                android:parentActivityName=".ui.GameMenuActivity" >
+            <meta-data
+                    android:name="android.support.PARENT_ACTIVITY"
+                    android:value=".ui.GameMenuActivity" />
         </activity>
         <activity
             android:name=".ui.UsActivity"
