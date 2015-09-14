@@ -34,13 +34,13 @@ public class HomeActivity extends AppCompatActivity implements SurfaceHolder.Cal
 //        final CrashlyticsCore crashlyticsCore = new CrashlyticsCore.Builder().disabled(BuildConfig.DEBUG).build();
 //        Fabric.with(this, new Crashlytics.Builder().core(crashlyticsCore).build());
         /* Normal */
-//        Fabric.with(this, new Crashlytics());
+        Fabric.with(this, new Crashlytics());
         /* Debug mode */
-        final Fabric fabric = new Fabric.Builder(this)
-                .kits(new Crashlytics())
-                .debuggable(true)
-                .build();
-        Fabric.with(fabric);
+//        final Fabric fabric = new Fabric.Builder(this)
+//                .kits(new Crashlytics())
+//                .debuggable(true)
+//                .build();
+//        Fabric.with(fabric);
 
         setContentView(R.layout.activity_home);
         ButterKnife.inject(this);
