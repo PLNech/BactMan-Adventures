@@ -2,6 +2,7 @@ package fr.plnech.igem.game.model;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.annotation.Nullable;
 import android.util.Log;
 import com.badlogic.gdx.math.Vector2;
@@ -17,7 +18,6 @@ import org.andengine.entity.IEntity;
 import org.andengine.entity.modifier.*;
 import org.andengine.entity.scene.IOnSceneTouchListener;
 import org.andengine.entity.scene.Scene;
-import org.andengine.input.touch.TouchEvent;
 import org.andengine.util.color.Color;
 import org.andengine.util.modifier.IModifier;
 
@@ -31,11 +31,15 @@ import java.util.Random;
 public abstract class BaseGame {
     public static final String KEY_GAME_ID = "game_id";
     private static final String TAG = "BaseGame";
+
     public static final int ID_NONE = 0;
     public static final int ID_GUT = 1;
     public static final int ID_BIN = 2;
     public static final int ID_PICTO = 3;
     public static final int ID_PIANO = 4;
+
+    public static final int INIT_SCORE = 0;
+    public static final int INIT_LIVES = 3;
 
     protected ArrayList<GFXAsset> graphicalAssets = new ArrayList<>();
     protected ArrayList<FontAsset> fontAssets = new ArrayList<>();
@@ -45,8 +49,9 @@ public abstract class BaseGame {
 
     protected AbstractGameActivity activity;
     protected Random random;
-    protected int gameScore = BinGame.INIT_SCORE;
+    protected int gameScore = INIT_SCORE;
     private int nextGameId;
+    private int id;
 
     public BaseGame(AbstractGameActivity pActivity) {
         activity = pActivity;
@@ -97,10 +102,6 @@ public abstract class BaseGame {
     private void createWall(float x, float y, float width, float height, Wall.Type type, boolean masked) {
         Wall wall = new Wall(x, y, width, height, type, activity.getVBOM(), activity.getPhysicsWorld(), masked);
         activity.getScene().getChildByIndex(PortraitGameActivity.LAYER_BACKGROUND).attachChild(wall);
-    }
-
-    public boolean onSceneTouchEvent(Scene pScene, TouchEvent pSceneTouchEvent) {
-        return false;
     }
 
     protected void animate(final WorldObject object, WorldObject.Animation animation) {
@@ -216,22 +217,11 @@ public abstract class BaseGame {
         try {
             BaseGame game = gameClass.getConstructor(AbstractGameActivity.class).newInstance(activity);
             game.setNextGameId(nextGameId);
+            game.setId(gameId);
             return game;
         } catch (Exception e) {
             e.printStackTrace();
             throw new IllegalStateException("No default!");
-        }
-    }
-
-    public static boolean isPortrait(int gameId) {
-        switch (gameId) {
-            case ID_GUT:
-            case ID_PIANO:
-                return false;
-            case ID_BIN:
-            case ID_PICTO:
-            default:
-                return true;
         }
     }
 
@@ -261,5 +251,29 @@ public abstract class BaseGame {
 
     public int getNextGameId() {
         return nextGameId;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public static boolean isPortrait(int gameId) {
+        switch (gameId) {
+            case ID_GUT:
+            case ID_PIANO:
+                return false;
+            case ID_BIN:
+            case ID_PICTO:
+            default:
+                return true;
+        }
+    }
+
+    public static int getLastUnlockedId(SharedPreferences preferences) {
+        return preferences.getInt(KEY_GAME_ID, 1);
     }
 }

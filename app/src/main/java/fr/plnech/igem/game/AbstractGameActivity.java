@@ -121,8 +121,6 @@ public abstract class AbstractGameActivity extends SimpleBaseGameActivity implem
     private ArrayList<PhysicalWorldObject> objectsToAdd = new ArrayList<>();
 
     protected BaseGame currentGame;
-    protected ArrayList<BaseGame> games = new ArrayList<>();
-    protected int currentGameId = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -565,6 +563,7 @@ public abstract class AbstractGameActivity extends SimpleBaseGameActivity implem
         winScene.attachChild(winText);
         gameScene.setChildScene(winScene, false, true, true);
         currentGame.logLevelEnd(score, true);
+        updateNextGame();
     }
 
     private void onQuit() {
@@ -574,7 +573,6 @@ public abstract class AbstractGameActivity extends SimpleBaseGameActivity implem
     @NonNull
     private String getEndTextAndUpdateHighScore(boolean win, int score) {
         final StringBuilder winBuilder = new StringBuilder();
-        final SharedPreferences preferences = getPreferences();
         final String keyHighScore = currentGame.getClass().getSimpleName() + SUFFIX_SCORE;
         final int highScore = preferences.getInt(keyHighScore, 0);
         final boolean best = score > highScore;
@@ -598,6 +596,17 @@ public abstract class AbstractGameActivity extends SimpleBaseGameActivity implem
         Log.d(TAG, "updateNextStatus: " + isUnlocked);
         updateNextStatus(nextPauseMenuItem, pauseScene, isUnlocked);
         updateNextStatus(nextWinMenuItem, winScene, isUnlocked);
+    }
+
+    private void updateNextGame() {
+        int lastUnlockedId = preferences.getInt(BaseGame.KEY_GAME_ID, 0);
+        final int nextGameId = Math.max(currentGame.getNextGameId(), BaseGame.ID_GUT);
+        if (nextGameId >= lastUnlockedId) {
+            preferences.edit().putInt(BaseGame.KEY_GAME_ID, nextGameId).apply();
+            Log.d(TAG, "updateNextGame - New value: " + nextGameId);
+        } else {
+            Log.d(TAG, "updateNextGame - Last unlocked game: " + lastUnlockedId);
+        }
     }
 
     private void updateNextStatus(SpriteMenuItem item, Scene scene, boolean isUnlocking) {

@@ -32,9 +32,6 @@ import java.util.List;
  */
 public class BinGame extends BaseGame {
 
-    public static final int INIT_SCORE = 0;
-    public static final int INIT_LIVES = 3;
-
     private ArrayList<Item> items = new ArrayList<>();
     private ArrayList<Integer> deadItems = new ArrayList<>();
     private ArrayList<Bin> bins = new ArrayList<>();
