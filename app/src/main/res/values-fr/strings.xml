@@ -97,8 +97,7 @@
     <string name="label_game_new">Jouer</string>
     <string name="label_game_levels">Niveaux</string>
     <string name="label_game_help">Aide</string>
-    <string name="label_game_settings">Réglages</string>
-    <string name="title_activity_game_help">Aide</string>
+    <string name="title_activity_game_help">Glossaire</string>
     <string name="title_activity_game_levels">Niveaux</string>
     <string name="title_activity_game_menu">Le Jeu</string>
     <string name="title_activity_game_settings">Réglages</string>

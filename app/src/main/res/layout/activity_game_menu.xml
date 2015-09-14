@@ -13,25 +13,19 @@
                   android:layout_below="@id/menu_title"/>
 
     </RelativeLayout>
-    <RelativeLayout style="@style/AppTheme.Container.Button">
+    <RelativeLayout style="@style/AppTheme.Container.Button.3">
         <Button style="@style/AppTheme.Button"
                 android:text="@string/label_game_new"
                 android:id="@+id/button_game_new"/>
     </RelativeLayout>
 
-    <RelativeLayout style="@style/AppTheme.Container.Button">
+    <RelativeLayout style="@style/AppTheme.Container.Button.3">
         <Button style="@style/AppTheme.Button"
                 android:text="@string/label_game_levels"
                 android:id="@+id/button_game_levels"/>
     </RelativeLayout>
 
-    <RelativeLayout style="@style/AppTheme.Container.Button">
-        <Button style="@style/AppTheme.Button"
-                android:text="@string/label_game_settings"
-                android:id="@+id/button_game_settings"/>
-    </RelativeLayout>
-
-    <RelativeLayout style="@style/AppTheme.Container.Button">
+    <RelativeLayout style="@style/AppTheme.Container.Button.3">
         <Button style="@style/AppTheme.Button"
                 android:text="@string/label_game_help"
                 android:id="@+id/button_game_help"/>
