@@ -9,7 +9,7 @@
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
                   xmlns:tools="http://schemas.android.com/tools"
                   style="@style/AppTheme.Layout.Menu.Home"
-                  tools:context="com.ionis.igem.app.ui.HomeActivity">
+                  tools:context="fr.plnech.igem.ui.HomeActivity">
 
         <RelativeLayout style="@style/AppTheme.Container.Title.Menu" android:id="@+id/titleBox">
 

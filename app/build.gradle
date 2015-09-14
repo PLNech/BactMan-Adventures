@@ -20,12 +20,13 @@ android {
     buildToolsVersion "21.1.2"
 
     defaultConfig {
-        applicationId "com.ionis.igem.app"
+        applicationId "fr.plnech.igem"
         minSdkVersion 10
         targetSdkVersion 10
         versionCode 1
-        versionName "1.0"
+        versionName "0.5"
     }
+
     buildTypes {
         release {
             minifyEnabled false
@@ -50,7 +51,7 @@ dependencies {
     compile 'com.jakewharton:butterknife:6.1.0'
     compile project(':AndEngine')
     compile project(':AndEnginePhysicsBox2DExtension')
-    compile('com.crashlytics.sdk.android:crashlytics:2.5.1@aar') {
+    compile('com.crashlytics.sdk.android:crashlytics:2.5.2@aar') {
         transitive = true;
     }
 }

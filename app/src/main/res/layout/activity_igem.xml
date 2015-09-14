@@ -1,6 +1,6 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android" xmlns:tools="http://schemas.android.com/tools"
               style="@style/AppTheme.Layout.Menu"
-              tools:context="com.ionis.igem.app.ui.iGEMActivity">
+              tools:context="fr.plnech.igem.ui.iGEMActivity">
     <RelativeLayout style="@style/AppTheme.Container.Title.Menu">
 
         <TextView style="@style/AppTheme.TextView.Title"
