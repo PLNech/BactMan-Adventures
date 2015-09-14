@@ -41,7 +41,6 @@ import java.util.List;
 public class GutGame extends BaseGame {
     private static final String TAG = "GutGame";
 
-    public static final int INIT_SCORE = 0;
     public static final int INIT_LIVES = 3;
     public static final float POS_ITEM_X = 850; // Initial item abscissa
     public static final int SPEED_ITEM_PPS = -150; // Initial item horizontal velocity
@@ -225,8 +224,8 @@ public class GutGame extends BaseGame {
 
     private int getRandomLane() {
         int newLane;
+        //noinspection StatementWithEmptyBody: Avoid sending two consecutive items in the same lane
         while (lastLaneId == (newLane = CalcUtils.randomOf(4, random))) {
-            // Avoid sending two consecutive items in the same lane
         }
 
         lastLaneId = newLane;
@@ -282,7 +281,7 @@ public class GutGame extends BaseGame {
         gameScore = INIT_SCORE;
         gameLives = INIT_LIVES;
         setScore(gameScore);
-        setLives(gameLives);
+        setLives(Math.max(0, gameLives));
     }
 
     private void setLives(int value) {
@@ -355,7 +354,7 @@ public class GutGame extends BaseGame {
              * Thankfully there are also loads of vitamins! */
             createItem(Item.Type.ANTIBIO, Item.Role.REPEAT);
             createItem(Item.Type.VITAMIN, Item.Role.REPEAT);
-        } else if (gameScore == 15) {
+        } else if (gameScore >= 15) {
             /* End of scenario, here be dragons! */
             stopRepeating();
             createItems(NB_ITEMS);
