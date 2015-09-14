@@ -66,6 +66,8 @@ import java.util.List;
 public abstract class AbstractGameActivity extends SimpleBaseGameActivity implements MenuScene.IOnMenuItemClickListener {
 
     private static final String TAG = "BaseGameActivity";
+    public static final String SUFFIX_UNLOCKED = "_unlocked";
+    public static final String SUFFIX_SCORE = "_highscore";
 
     private Boolean shouldStartEngine = false;
 
@@ -504,7 +506,12 @@ public abstract class AbstractGameActivity extends SimpleBaseGameActivity implem
     }
 
     public int getHighScore(BaseGame game) {
-        final String keyHighScore = game.getClass().getSimpleName() + "_highscore";
+        final String keyHighScore = game.getClass().getSimpleName() + SUFFIX_SCORE;
+        return preferences.getInt(keyHighScore, 0);
+    }
+
+    public int getUnlockedStatus(BaseGame game) {
+        final String keyHighScore = game.getClass().getSimpleName() + SUFFIX_UNLOCKED;
         return preferences.getInt(keyHighScore, 0);
     }
 
@@ -568,7 +575,7 @@ public abstract class AbstractGameActivity extends SimpleBaseGameActivity implem
     private String getEndTextAndUpdateHighScore(boolean win, int score) {
         final StringBuilder winBuilder = new StringBuilder();
         final SharedPreferences preferences = getPreferences();
-        final String keyHighScore = currentGame.getClass().getSimpleName() + "_highscore";
+        final String keyHighScore = currentGame.getClass().getSimpleName() + SUFFIX_SCORE;
         final int highScore = preferences.getInt(keyHighScore, 0);
         final boolean best = score > highScore;
         if (win) {
@@ -587,7 +594,7 @@ public abstract class AbstractGameActivity extends SimpleBaseGameActivity implem
     }
 
     protected void updateNextStatus() {
-        final boolean isUnlocked = true;//getHighScore(currentGame) >= 50;
+        final boolean isUnlocked = getHighScore(currentGame) >= 50;
         Log.d(TAG, "updateNextStatus: " + isUnlocked);
         updateNextStatus(nextPauseMenuItem, pauseScene, isUnlocked);
         updateNextStatus(nextWinMenuItem, winScene, isUnlocked);
