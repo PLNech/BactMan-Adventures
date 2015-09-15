@@ -52,7 +52,8 @@ public class TeamActivity extends DetailActivity {
         teamMembers.add(new TeamMember("Matt", "Yo!", "avatar_matt"));
         teamMembers.add(new TeamMember("Nico", "Yo!", "avatar_nico"));
         teamMembers.add(new TeamMember("Samuel", "Yo!", "avatar_samuel"));
-        teamMembers.add(new TeamMember("Goulwen", "This sucks.", "avatar1"));//TODO: Use round one
+        teamMembers.add(new TeamMember("Goulwen", "This sucks.", "avatar_goulwen"));
+        teamMembers.add(new TeamMember("Pauline", "This sucks.", "avatar_pauline"));
 
         final CarouselAdapter adapter = new MemberAdapter(this, teamMembers);
         carousel.setOnItemClickListener(new CarouselBaseAdapter.OnItemClickListener()
