@@ -5,6 +5,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import fr.plnech.igem.R;
 import fr.plnech.igem.game.model.BaseGame;
+import fr.plnech.igem.ui.model.MenuActivity;
 
 public class GameLevelsActivity extends MenuActivity {
     @Override
@@ -14,12 +15,12 @@ public class GameLevelsActivity extends MenuActivity {
     }
 
     @Override
-    int getTitleResId() {
+    public int getTitleResId() {
         return R.string.title_activity_game_levels;
     }
 
     @Override
-    int getLayoutResId() {
+    public int getLayoutResId() {
         return R.layout.activity_game_levels;
     }
 

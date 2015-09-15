@@ -97,7 +97,9 @@
     <string name="label_game_new">Jouer</string>
     <string name="label_game_levels">Niveaux</string>
     <string name="label_game_help">Aide</string>
-    <string name="title_activity_game_help">Glossaire</string>
+    <string name="title_activity_game_glossary">Glossaire</string>
+    <string name="glossary_title">Glossaire</string>
+    <string name="glossary_subtitle">Apprendre en jouant</string>
     <string name="title_activity_game_levels">Niveaux</string>
     <string name="title_activity_game_menu">Le Jeu</string>
     <string name="title_activity_game_settings">Réglages</string>
@@ -109,8 +111,125 @@
     <string name="font_fontFamily_title">sans-serif</string>
 
 
-    <string name="label_levels_gut">La Course dans l'Intestin</string>
+    <string name="label_levels_gut">La Course dans l\'Intestin</string>
     <string name="label_levels_bin">Le Tri au Labo</string>
     <string name="label_levels_picto">Le Memo du Labo</string>
     <string name="label_levels_piano">Le PolyPiano</string>
+
+    <string-array name="glossary_titles">
+        <item>ADN</item>
+        <item>Réplication</item>
+        <item>Nucléotide</item>
+        <item>Complémentarité</item>
+        <item>Plasmide</item>
+        <item>Site de restriction (digestion)</item>
+        <item>Ligation</item>
+        <item>Biobrique</item>
+        <item>Boite de Pétri</item>
+        <item>Electrophorèse</item>
+        <item>Transcription</item>
+        <item>Traduction</item>
+        <item>Mutation</item>
+        <item>Vitamine</item>
+        <item>Virus</item>
+        <item>Phage</item>
+        <item>Antibiotique</item>
+    </string-array>
+    <string-array name="glossary_texts">
+        <item>L’ADN est l’abréviation d’Acide DésoxyriboNucléique.\n\n
+            C’est une énorme molécule qui contient toutes les informations nécessaires au bon fonctionnement de l’organisme.
+            Présent dans toutes les cellules du corps humain, l’ADN est aussi présent dans tous les autres organismes vivants (plantes, oiseaux, insectes, bactéries).\n\n
+            C’est grâce à cette molécule que nous sommes tous des individus uniques avec des caractéristiques différentes.
+        </item>
+        <item>La réplication est le processus biologique qui se déroule pendant la division cellulaire.\n\n
+            Lors de ce processus, L’ADN va être copié afin d’obtenir deux exemplaires identiques.\n
+            On obtiendra donc deux cellules filles avec chacune leur ADN à partir d’une cellule mère.</item>
+        <item>Un nucléotide est un élément de base de l’ADN. Il est lui même compose de 3 éléments :\n
+            • Une base azotée\n
+            • Un ribose (sucre)\n
+            • Un phosphate.\n\n
+            Il existe 4 nucléotides constituant le code de base de l’ADN : A (Adénine), T (Thymine), C (Cytosine) et G (Guanine).</item>
+        <item>l’ADN est une hélice à double brin.\n\n
+            Imaginez vous un rail de train où de chaque côté, des bases doivent s’assembler par complémentarité !\n\n
+            A et T s’assemblent ensemble et C et G ensemble.</item>
+        <item>Un plasmide est un ADN circulaire présent en plus de l’ADN chromosomique dans la bactérie (à quelques exceptions près).\n\n
+            Il peut être transmis d’une bacterie à une autre et confère de nouvelles propriétés à la bactérie receveuse (résistance a un antibiotique, par exemple).</item>
+        <item>C’est une partie spécifique de l’ADN qui est reconnue par une enzyme, dite enzyme de restriction, qui coupe l’ADN à cet endroit.\n\n
+            Imaginez-vous que l’enzyme est une paire de ciseau qui ne peut couper qu’au niveau de ces sites ! On appelle cela la digestion.\n
+            Il existe plusieurs enzymes et donc plusieurs sites dans un même ADN.\n\n
+
+            Il existe 2 types de digestions :\n
+            • Digestion à extrémité franche\n\n
+            • Digestion à extrémité cohésives
+        </item>
+        <item>La ligation se produit après la digestion.\n
+            Elle permet de coller ou de recoller deux brins d’ADN compatibles ensemble.\n\n
+            L’enzyme qui permet la ligation est appelée Ligase.
+        </item>
+        <item>Les BioBricks sont des fragments d’ADN standardisés, développés afin de permettre une construction plus simple de systèmes biologiques.\n\n
+            Chaque BioBrick est délimitée par des préfixes et suffixes universels, elles débutent et se terminent donc toutes de la même façon.\n
+            Comme elles sont conçues sur le même modèle, on peut les assembler comme un jeu de “LEGO” pour ensuite les incorporer dans une cellule vivante.\n\n
+            Ces standards permettent notamment aux équipes iGEM du monde entier de collaborer ensemble car toutes travaillent avec les mêmes normes.
+        </item>
+        <item>C’est une boîte ronde en plastique, munie d’un couvercle. Elle est utilisée pour faire des cultures de micro-organismes (bactéries, champignons etc.).\n\n
+            Pour cela, il faut la remplir partiellement d’un milieu de culture adéquat qui permet à l’organisme de grandir dans de bonnes conditions.</item>
+        <item>Cette méthode permet de séparer les protéines, ADN ou ARN en fonction de leur poids moléculaire.\n
+            Ces ADN/ARN/protéines sont préalablement préparés puis déposés dans un gel. Ce gel sera alors placé dans un liquide spécial puis soumis à un courant électrique qui permettra la séparation des molécules.\n\n
+            Plus les molécules sont petites et plus elles migreront vite, donc loin dans le gel. </item>
+        <item>La transcription fonctionne selon un mécanisme similaire à celui de la réplication, cependant il ne concerne pas tout l’ADN !\n\n
+            En effet, la transcription consiste à répliquer des zones particulières de l’ADN. Ces zones débutent par des promoteurs et se terminent par des terminateurs.\n
+            Les promoteurs sont des séquences jouant un rôle régulateur et permettant la fixation de la machinerie nécessaire à la réplication tandis que le terminateur marque la fin de la séquence à transcrire.\n
+            L’ARN, la molécule issue de la transcription est complémentaire de l’ADN et chimiquement très proche de celui-ci, à quelques détails près.\n
+            Dans l’ARN on retrouve les mêmes bases que dans l’ADN à l’exception de la thymine, remplacée par de l’uracile (T devient donc U)!\n\n
+            Une fois formé, l’ARN subira quelques modifications lors de sa maturation puis sera fin prêt pour sa traduction en protéine.
+        </item>
+        <item>La traduction est le processus permettant de convertir les informations génétiques en protéines fonctionnelles.\n
+            En effet, l’ARN issue de l’ADN contient toutes les données nécessaires à la création des protéines, il ne reste qu’à décrypter ces informations !\n\n
+            Une protéine appelée ribosome est responsable de ce décodage. Après s’être fixé sur le brin d’ARN, le ribosome va lire la séquence nucléique en créant des “mots” de trois acides nucléiques chacun.\n
+            Ces mots, appelés codons, vont alors être reconnus et traduit en acide aminé pour former une protéine.\n
+            Comme dans un traducteur linguistique, le ribosome associe le mot à son équivalent en langage protéique. Le dictionnaire utilisé est appelé code génétique.\n
+            Durant ce processus, les acides aminés “lus” sont attachés les uns aux autres, tel un collier de perle.\n\n
+            Une fois la lecture finie, la chaîne d’acide aminée est libérée.\n
+            Elle se repliera alors afin d’adopter sa structure et sa fonction définitive avant de remplir son rôle.
+        </item>
+        <item>Une mutation est une variation de la séquence d’ADN. Cette variation peut se produire naturellement, par des erreurs lors de la réplication par exemple, ou être induite par des substances ou phénomènes dit mutagènes. Les UV par exemple endommagent l’ADN et induisent des mutations.\n\n
+            Si les mutations sont indispensables à l’évolution ainsi qu’à la diversité, ces variations peuvent avoir plusieurs conséquences pour l’organisme.\n
+            Certaines sont positives et confèrent un avantage à l’organisme, tel qu’un meilleur métabolisme, tandis que d’autres sont inoffensives ou même néfastes. En effet, si une mutation peut permettre le meilleur fonctionnement d’une protéine, elle peut également altérer sa fonction et la rendre inefficace.\n\n
+            Il existe différents types de variations :\n\n
+
+            • Les insertions, où un ou plusieurs nucléotides supplémentaires seront ajoutés\n
+            • Les délétions, où un ou plusieurs nucléotides déjà existant seront supprimés\n
+            • Les substitutions, où une ou plusieurs bases seront remplacées par d’autres\n\n
+
+            Comment expliquer que de si “petits” changements puissent avoir de si grandes conséquences?\n\n
+            Lors de la traduction, les informations génétiques sont découpées en mots de 3 lettres, les codons.\n
+            La traduction de ce codon est ensuite cherchée dans un “dictionnaire”, le code génétique, afin de traduire ce mot en langage protéique.\n
+            Si l’une des lettres changent ou si les mots ne sont plus découpés de la même façon, la traduction en protéine sera altérée.\n
+            Heureusement, toutes les mutations sont loin d’être néfastes ! La majorité d’entre elles n’ont même pas de conséquences directes en raison de la redondance du code génétique : parmi les codons, il existe de nombreux synonymes, ainsi même si une base change, la traduction peut rester correcte.\n\n
+
+            Les mutations permettent également la diversité génétique : si nous n’avons pas tous les yeux de la même couleur c’est que nous n’avons pas tous les mêmes gènes et les mêmes mutations!</item>
+        <item>Une vitamine est une substance organique, nécessaire en faible quantité au métabolisme d’un organisme vivant. Elle ne peut pas être synthétisée en quantité suffisante par cet organisme.\n\n
+            Elle est donc considérée comme des compléments indispensables. \nLes vitamines sont classées en deux groupes : les vitamines hydrosolubles (solubles dans l’eau) et les vitamines liposolubles (solubles dans les graisses).\n\n
+
+            Le rôle essentiel d’une vitamine consiste en un transfert d’une molécule vers une autre, d’un électron, d’un atome ou groupe d’atomes vers un autre.\n\n
+
+            • Un apport insuffisant ou une absence de vitamine provoque de nombreuses maladies telles que le scorbut, rachitisme, etc.\n
+            • Un apport excessif de vitamines peut également provoquer des maladies telles que l’hypervitaminose, très toxique pour l’organisme.\n\n
+
+            Les besoins en vitamines sont difficiles à établir car ils varient avec l’âge, le sexe, la taille et l’activité musculaire.\n
+            Ils augmentent pendant la croissance ou les maladies. Chez les femmes, le besoin en vitamines augmente pendant la grossesse et l’allaitement.</item>
+        <item>Un virus est une entité biologique nécessitant un hôte, souvent une cellule, dont il utilise le métabolisme et ses constituants pour se répliquer et vivre.</item>
+        <item>Les phages ou bactériophages sont des virus n’infectant que des bactéries. Ils sont généralement très spécifiques et ne peuvent souvent infecter qu’une seule espèce de bactérie.\n\n
+            Cette spécificité est dûe à leur mécanisme de pénétration dans la cellule bactérienne : les phages reconnaissent des récepteurs spécifiques à la surface bactérienne qui leur permettent de s’accrocher et d’injecter leur matériel génétique dans la bactérie.\n\n
+
+            Les phages sont incapables de se reproduire par leurs propres moyens. Ils injectent donc leur matériel génétique dans les bactéries.\n
+            Grâce aux enzymes et ribosomes de la bactérie (hôte), le génome viral peut être répliqué et traduit pour former de nombreuses copies du virus.\n
+            Ces virus seront ensuite libérés de la bactérie par un mécanisme de lyse bactérie-hôte, la lyse étant un mécanisme de désintégration de la membrane d’une cellule provoquant la mort cellulaire.
+        </item>
+        <item>Un antibiotique est une substance naturelle ou synthétique qui détruit ou bloque la croissance des bactéries.\n\n
+            Ils agissent de manière spécifique sur les bactéries en bloquant sélectivement une étape d’un mécanisme essentiel de leur développement et de leur survie. (Synthèse de leur paroi, de l’ADN, des protéines, etc.)\n
+            Ce blocage se produit lorsque l\'antibiotique se fixe sur sa cible (récepteur).\n\n
+            Cette interaction entre l’antibiotique et sa cible est très sélective et spécifique des bactéries.
+        </item>
+    </string-array>
 </resources>

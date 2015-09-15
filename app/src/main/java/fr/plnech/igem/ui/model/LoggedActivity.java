@@ -1,4 +1,4 @@
-package fr.plnech.igem.ui;
+package fr.plnech.igem.ui.model;
 
 import android.content.res.Resources;
 import android.os.Bundle;
@@ -16,10 +16,16 @@ public abstract class LoggedActivity extends AppCompatActivity {
     protected void logView() {
         final Resources resources = getResources();
         final String contentName = resources.getString(getTitleResId());
+        final String contentType = getContentType();
+        final String contentId = resources.getResourceName(getLayoutResId());
+        logView(contentName, contentType, contentId);
+    }
+
+    public static void logView(String contentName, String contentType, String contentId) {
         Answers.getInstance().logContentView(new ContentViewEvent()
-                .putContentType(getContentType())
+                .putContentType(contentType)
                 .putContentName(contentName)
-                .putContentId(resources.getResourceName(getLayoutResId())));
+                .putContentId(contentId));
         Log.d(TAG, "logView - " + contentName);
     }
 
@@ -32,6 +38,6 @@ public abstract class LoggedActivity extends AppCompatActivity {
 
     abstract String getContentType();
 
-    abstract int getTitleResId();
-    abstract int getLayoutResId();
+    public abstract int getTitleResId();
+    public abstract int getLayoutResId();
 }

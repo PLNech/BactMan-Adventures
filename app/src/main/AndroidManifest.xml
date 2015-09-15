@@ -89,22 +89,13 @@
                     android:value=".ui.GameMenuActivity" />
         </activity>
         <activity
-            android:name=".ui.GameSettingsActivity"
+            android:name=".ui.GlossaryActivity"
             android:label="@string/title_activity_game_settings"
             android:screenOrientation="portrait"
             android:parentActivityName=".ui.GameMenuActivity" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".ui.GameMenuActivity" />
-        </activity>
-        <activity
-            android:name=".ui.GameHelpActivity"
-            android:label="@string/title_activity_game_help"
-            android:screenOrientation="portrait"
-            android:parentActivityName=".ui.GameMenuActivity" >
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="fr.plnech.igem.ui.GameMenuActivity" />
         </activity>
 
         <!-- Us Activities -->

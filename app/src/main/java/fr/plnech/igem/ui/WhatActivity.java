@@ -3,23 +3,23 @@ package fr.plnech.igem.ui;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.widget.TextView;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 import butterknife.OnClick;
 import fr.plnech.igem.R;
+import fr.plnech.igem.ui.model.DetailActivity;
 import fr.plnech.igem.utils.ViewUtils;
 
 public class WhatActivity extends DetailActivity {
 
     @Override
-    int getTitleResId() {
+    public int getTitleResId() {
         return R.string.title_activity_what;
     }
 
     @Override
-    int getLayoutResId() {
+    public int getLayoutResId() {
         return R.layout.activity_what;
     }
 

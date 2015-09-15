@@ -1,21 +1,21 @@
 package fr.plnech.igem.ui;
 
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.widget.Toast;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import fr.plnech.igem.R;
+import fr.plnech.igem.ui.model.DetailActivity;
 
 public class TeamActivity extends DetailActivity {
 
     @Override
-    int getTitleResId() {
+    public int getTitleResId() {
         return R.string.title_activity_team;
     }
 
     @Override
-    int getLayoutResId() {
+    public int getLayoutResId() {
         return R.layout.activity_team;
     }
 

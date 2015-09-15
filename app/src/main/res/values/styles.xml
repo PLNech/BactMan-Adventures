@@ -130,6 +130,13 @@
         <item name="android:scaleType">fitXY</item>
         <item name="android:adjustViewBounds">true</item>
     </style>
+    
+    <style name="AppTheme.ImageView.Background">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:src">@drawable/background_menu</item>
+        <item name="android:scaleType">centerCrop</item>
+    </style>
 
     <style name="AppTheme.ScrollView">
         <item name="android:layout_width">match_parent</item>

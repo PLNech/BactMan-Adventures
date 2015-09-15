@@ -3,7 +3,6 @@ package fr.plnech.igem.ui;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 
 import android.widget.TextView;
 import butterknife.InjectView;
@@ -11,6 +10,7 @@ import fr.plnech.igem.R;
 
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import fr.plnech.igem.ui.model.DetailActivity;
 import fr.plnech.igem.utils.ViewUtils;
 
 public class ContactUsActivity extends DetailActivity {
@@ -35,12 +35,12 @@ public class ContactUsActivity extends DetailActivity {
     }
 
     @Override
-    int getTitleResId() {
+    public int getTitleResId() {
         return R.string.title_activity_contact_us;
     }
 
     @Override
-    int getLayoutResId() {
+    public int getLayoutResId() {
         return R.layout.activity_contact_us;
     }
 

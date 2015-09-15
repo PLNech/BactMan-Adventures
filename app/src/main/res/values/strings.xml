@@ -159,8 +159,9 @@
     <string name="title_activity_game_settings">Game Settings</string>
 
     <!-- Home -> GameMenu -> Help -->
-    <string name="title_activity_game_help">Glossary</string>
-
+    <string name="title_activity_game_glossary">Glossary</string>
+    <string name="glossary_title">Glossary</string>
+    <string name="glossary_subtitle">Playing with serious concepts</string>
     <!-- Fonts -->
     <string name="font_fontFamily_title">sans-serif</string>
     <string name="text_biobrick">Les BioBricks sont des fragments d’ADN standardisés, développés afin de permettre une
@@ -170,4 +171,116 @@
         ensuite les incorporer dans une cellule vivante.</string>
     <string name="msg_last_game">Congratulations, you just won the last game!</string>
 
+    <string-array name="glossary_titles">
+        <item>ADN</item>
+        <item>Replication</item>
+        <item>Nucleotide</item>
+        <item>Complementarity</item>
+        <item>Plasmid</item>
+        <item>Restriction site (digestion)</item>
+        <item>Ligation</item>
+        <item>Biobrick</item>
+        <item>Petri Box</item>
+        <item>Electrophoresis</item>
+        <item>Transcription</item>
+        <item>Translation</item>
+        <item>Mutation</item>
+        <item>Vitamin</item>
+        <item>Virus</item>
+        <item>Phage</item>
+        <item>Antibiotic</item>
+    </string-array>
+    <string-array name="glossary_texts">
+        <item>DNA (DeoxyriboNucleic Acid) is a huge molecule that contains all information necessary for the proper functioning of the body.\n\n
+            Present in all of human body cells, DNA is also present in all other organisms (plants, birds, insects, bacteria).\n\n
+            It is this molecule that makes us all unique individuals with different characteristics.</item>
+        <item>Replication is the biological process that occurs during cell division.\n\n
+            During this process, DNA will be copied in two identical copies.\n
+            Therefore, two daughter cells each with DNA from a mother cell will be obtained after this process.</item>
+        <item>A nucleotide is a principal constituent of the DNA. It is itself composed of three elements:\n\n
+            • A nitrogen base\n
+            • A ribose (sugar)\n
+            • A phosphate\n\n
+            There are 4 basic nucleotides constituting the DNA code: A (Adenine), T (Thymine), C (Cytosine) and G (Guanine).</item>
+        <item>DNA is a double helix strand.\n\n
+            Imagine a railroad where each side (the bases) must be assembled by complementarity!\n\n
+            A and T are assembled together, and C and G together.
+        </item>
+        <item>A plasmid is a circular DNA present in addition to the chromosomal DNA of the bacterium.\n\n
+            It can be transmitted from one bacterium to another and confers new properties to the receiving bacteria (resistance to an antibiotic, for example).
+        </item>
+        <item>It is a specific part of DNA that is recognized by an enzyme, called restriction enzyme, which cuts DNA at this location.\n\n
+            Picture yourself the enzyme as a pair of scissors that can only cut DNA at these sites! This process is called digestion.\n
+            There are several enzymes and therefore multiple sites in a single DNA.\n\n
+
+
+            There are 2 different kinds of digestion:\n
+            • Digestion with blunt ends\n\n
+            • Digestion with sticky ends
+        </item>
+        <item>Ligation occurs after digestion.\nIt allows you to stick or stick back together two strands of DNA compatible together.\n\n
+            The enzyme that allows ligation is called Ligase.</item>
+        <item>BioBricks are fragments of standardized DNA, created to engineer simpler construction of biological systems.\n\n
+            Each BioBrick is delimited by universal prefixes and suffixes, they thus begin and end all in the same way.\n
+            As they are designed on the same model, we can assemble them like "LEGO" and then incorporate them into a living cell.\n\n
+            This standards allows iGEM teams around the world to work together as all work with the same standards.
+        </item>
+        <item>It is a round plastic box, cover by a lid. Petri dishes are used to make micro-organism cultures (bacteria, fungi etc.).\n\n
+            In order to grow, micro-organisms needs a suitable culture medium that is introduced in such a box.</item>
+        <item>This method allows the separation of proteins, DNA or RNA according to their molecular weight.\n
+            These DNA / RNA / protein are previously prepared and then deposited in a gel. This gel is then placed in a special liquid and then subjected to an electric current which enables the separation of molecules.\n\n
+            The smaller, the molecule is, the faster it will migrate on the gel.</item>
+        <item>Transcription operates thanks to a mechanism similar to the process of replication, however it does not concern any DNA!\n\n
+            In fact, transcription involve the replication of specific DNA areas. These zones are surrounded by promoters and terminators.\n
+            Promoters are sequences that play a regulatory role and that fixes the necessary machinery for replication whereas the terminator marks the end of the sequence to be transcribed.\n
+            RNA, the molecule obtained by transcription, is complementary to the DNA and chemically very close to it, except for some details.\n
+            In RNA, we find the same bases as in DNA except for thymine, replaced by uracil (T becomes U)!\n\n
+            Once formed, RNA will undergo some changes during maturation to be ready for his translation into protein.</item>
+        <item>Translation is the process of converting genetic information into functional proteins.\n
+            Indeed, RNA create from DNA contains all the data needed to create proteins, it only remains to decrypt this information!\n\n
+            A protein called ribosome is responsible for decoding. After being fixed to the RNA strand, the ribosome will read the nucleic acid sequence by creating "words" of three nucleic acids each.\n
+            These words, called codons, will then be recognized and translated into amino acid to form a protein. As a language translator, the ribosome associates the word to its equivalent in protein language. The dictionary used is called genetic code.\n
+            During this process, the amino acid "read" are attached to each other like a pearl necklace.\n\n
+            Once finished reading the amino acid chain is released.\n
+            She then fold up to adopt its structure and function before finally fulfill its role in its orgaism.
+        </item>
+        <item>A mutation is a modification in the DNA sequence. This modification can occur naturally, by errors during replication for example, or be induced by mutagens or phenomena said. For example, UV damages DNA and induce mutations.\n\n
+            If these changes are essential for the evolution and the diversity, some variations can also have several consequences for the living organism.\n
+            Some are positive and confer a benefit to the organization, such as a better metabolism, while others are harmless or even harmful. Indeed, if a mutation can allow better functioning of a protein, it can also alter its function and make it ineffective.\n\n
+            There are different types of variations:\n\n
+
+            • Insertions, where one or more nucleotides are added\n
+            • The deletions, in which one or several nucleotides are deleted existing\n
+            • Substitutions, where one or more bases are replaced with other\n\n
+
+            How these small changes can have such great consequences?\n\n
+            When translating the genetic information is cut into 3-letter words, the codons.\n
+            The translation of this codon is then looked-up in a "dictionary", the genetic code to translate this word into protein language.\n
+            If one of the letters change or if the words are not separated the same way, the translation into a protein will be altered.\n
+            Fortunately, all mutations are far from harmful! The majority of them do not even have direct consequences because of the redundancy of the genetic code: among codons, there are many synonyms, so even if a base changes, the translation may remain correct.\n\n
+
+            The mutations also allow genetic diversity: if we do not have all the eyes of the same color, it is due to individuals not having all the same genes and the same mutations!
+        </item>
+        <item>A vitamin is an organic substance needed in small amounts for the metabolism of a living organism. It can’t be synthesized in sufficient quantities by the organism.\n\n
+            They are therefore considered essential supplements. Vitamins are classified into two groups: water-soluble vitamins (water-soluble) and lipid-soluble vitamins (fat soluble).
+
+            The essential role of a vitamin is a transfer from one molecule to another, of an electron, an atom or group of atoms to another.\n\n
+
+            • Inadequate intake or absence of vitamin causes many diseases such as scurvy, rachitis etc.\n
+            • Excessive intake of vitamins can also cause diseases such as hypervitaminosis, very toxic to the body.\n\n
+
+            Vitamin requirements are difficult to establish because they vary with the age, sex, size and muscular activity.\n
+            They increase during growth or diseases. In women, the need for vitamins increases during pregnancy and lactation.</item>
+        <item>A virus is a biological entity that requires a host, usually a cell, for whom it uses the metabolism and its constituents to replicate and live.</item>
+        <item>Phage or Bacteriophage are viruses that infect bacteria. They are usually very specific and often can infect only one species of bacteria.\n\n
+            This specificity is due to their mechanism of penetration into the bacterial cell: the phages recognize specific receptors on the bacterial surface which allow them to attach and inject their genetic material into the bacterium.\n\n
+
+            Phages are unable to reproduce on their own. They do it by injecting their genetic material into a bacteria which has the enzymes and the ribosomes needed to replicate and translate its genetic information, the viral genome can therefore be translated and replicated to form many copies of the virus.\n
+            These viruses are then released from the bacteria by a host bacterium lysis mechanism, lysis being a membrane disintegrating mechanism of cell killing of the cell.
+        </item>
+        <item>An antibiotic is a natural or synthetic substance that blocks the growth or destroys bacteria.\n\n
+            They act specifically on bacteria by selectively blocking one step in an essential mechanism for their development and survival. (Synthesis of their wall, DNA, proteins, etc.)\n
+            This blocking occurs when the antibiotic binds to its target (receptor).\n\n
+            This interaction between the antibiotic and its target is very selective and specific bacteria.</item>
+    </string-array>
 </resources>

@@ -28,7 +28,7 @@
     <RelativeLayout style="@style/AppTheme.Container.Button.3">
         <Button style="@style/AppTheme.Button"
                 android:text="@string/label_game_help"
-                android:id="@+id/button_game_help"/>
+                android:id="@+id/button_game_glossary"/>
     </RelativeLayout>
 
 

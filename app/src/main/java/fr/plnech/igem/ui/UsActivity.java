@@ -1,11 +1,11 @@
 package fr.plnech.igem.ui;
 
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import fr.plnech.igem.R;
+import fr.plnech.igem.ui.model.MenuActivity;
 
 public class UsActivity extends MenuActivity {
 
@@ -16,12 +16,12 @@ public class UsActivity extends MenuActivity {
     }
 
     @Override
-    int getTitleResId() {
+    public int getTitleResId() {
         return R.string.title_activity_us;
     }
 
     @Override
-    int getLayoutResId() {
+    public int getLayoutResId() {
         return R.layout.activity_us;
     }
 

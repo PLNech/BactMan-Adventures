@@ -7,6 +7,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import fr.plnech.igem.R;
 import fr.plnech.igem.game.model.BaseGame;
+import fr.plnech.igem.ui.model.MenuActivity;
 
 public class GameMenuActivity extends MenuActivity {
 
@@ -17,12 +18,12 @@ public class GameMenuActivity extends MenuActivity {
     }
 
     @Override
-    int getTitleResId() {
+    public int getTitleResId() {
         return R.string.title_activity_game_menu;
     }
 
     @Override
-    int getLayoutResId() {
+    public int getLayoutResId() {
         return R.layout.activity_game_menu;
     }
 
@@ -38,16 +39,9 @@ public class GameMenuActivity extends MenuActivity {
         startActivity(new Intent(this, GameLevelsActivity.class));
     }
 
-    @OnClick(R.id.button_game_settings)
-    protected void onClickSettings() {
-        Toast.makeText(GameMenuActivity.this, "En travaux!", Toast.LENGTH_SHORT).show();
-    }
-
-    @OnClick(R.id.button_game_help)
-    protected void onClickHelp() {
-        Toast.makeText(GameMenuActivity.this, "Need help?", Toast.LENGTH_SHORT).show();
-//        startActivity(new Intent(this, HelpActivity.class));
-//        TODO: Consider a help page
+    @OnClick(R.id.button_game_glossary)
+    protected void onClickGlossary() {
+        startActivity(new Intent(this, GlossaryActivity.class));
     }
 
 }
