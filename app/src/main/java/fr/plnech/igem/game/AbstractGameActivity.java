@@ -604,8 +604,6 @@ public abstract class AbstractGameActivity extends SimpleBaseGameActivity implem
         if (nextGameId >= lastUnlockedId) {
             preferences.edit().putInt(BaseGame.KEY_GAME_ID, nextGameId).apply();
             Log.d(TAG, "updateNextGame - New value: " + nextGameId);
-        } else {
-            Log.d(TAG, "updateNextGame - Last unlocked game: " + lastUnlockedId);
         }
     }
 

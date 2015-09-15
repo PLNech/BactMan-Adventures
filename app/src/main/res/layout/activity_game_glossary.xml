@@ -25,6 +25,8 @@
 
         <ListView android:layout_width="fill_parent" android:layout_height="wrap_content"
                   android:id="@android:id/list"
+                  android:fastScrollEnabled="true"
+                  android:fastScrollAlwaysVisible="true"
                   android:layout_below="@id/box_title">
 
         </ListView>

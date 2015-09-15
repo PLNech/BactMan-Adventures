@@ -2,11 +2,14 @@
                 xmlns:tools="http://schemas.android.com/tools"
                 style="@style/AppTheme.Layout">
     <ImageView style="@style/AppTheme.ImageView.Background"/>
-    <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-                xmlns:tools="http://schemas.android.com/tools"
-                style="@style/AppTheme.ScrollView">
-
-        <RelativeLayout style="@style/AppTheme.Layout.Detail"
+    <fr.rolandl.carousel.Carousel
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            android:id="@+id/carousel"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:paddingTop="20dp"
+            android:animationDuration="200"/>
+        <RelativeLayout style="@style/AppTheme.Layout.Carousel"
                         tools:context="fr.plnech.igem.ui.WhatActivity">
 
             <ImageView style="@style/AppTheme.ImageView.FullWidth"
@@ -28,18 +31,5 @@
                           android:layout_below="@id/menu_title"/>
             </RelativeLayout>
 
-            <ImageView style="@style/AppTheme.ImageView"
-                       android:id="@+id/firstImage"
-                       android:src="@drawable/avatar1"
-                       android:layout_below="@id/box_title"/>
-
-            <ImageView style="@style/AppTheme.ImageView"
-                       android:id="@+id/secondImage"
-                       android:src="@drawable/avatar2"
-                       android:layout_below="@id/box_title"
-                       android:layout_toRightOf="@id/firstImage"/>
-
-
         </RelativeLayout>
-    </ScrollView>
 </RelativeLayout>

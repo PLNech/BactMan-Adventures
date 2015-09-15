@@ -32,6 +32,10 @@
         <item name="android:padding">0dp</item>
     </style>
 
+    <style name="AppTheme.Layout.Carousel">
+        <item name="android:padding">0dp</item>
+    </style>
+
     <style name="AppTheme.Container">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
@@ -108,6 +112,7 @@
     <style name="AppTheme.Button">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">64dp</item>
+        <item name="android:textSize">20sp</item>
         <item name="android:layout_gravity">center_horizontal</item>
         <item name="android:layout_centerInParent">true</item>
 

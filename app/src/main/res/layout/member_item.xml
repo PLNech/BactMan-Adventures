@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_height="wrap_content" android:layout_width="fill_parent">
+    <ImageView android:layout_width="wrap_content" android:layout_height="wrap_content"
+               android:layout_centerInParent="true"
+               android:id="@+id/avatar"
+               android:src="@drawable/avatar_armelle"
+               android:paddingBottom="30dp"/>
+
+    <TextView xmlns:android="http://schemas.android.com/apk/res/android"
+              style="@style/AppTheme.TextView"
+              android:id="@+id/name"
+              android:layout_below="@id/avatar"
+              android:textSize="20sp"
+              android:paddingBottom="30dp"
+              android:text="Name of member!"/>
+</RelativeLayout>

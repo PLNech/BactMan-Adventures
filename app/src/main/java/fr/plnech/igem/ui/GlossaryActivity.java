@@ -39,7 +39,6 @@ public class GlossaryActivity extends ListActivity {
         LoggedActivity.logView(contentName, "DetailActivity", contentId, this);
 
         ButterKnife.inject(this);
-        glossaryListView.setFastScrollEnabled(true);
 
         String[] entryTitles = resources.getStringArray(R.array.glossary_titles);
         String[] entryTexts = resources.getStringArray(R.array.glossary_texts);
