@@ -1,6 +1,7 @@
 package fr.plnech.igem.ui;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -40,7 +41,9 @@ public class iGEMActivity extends MenuActivity {
 
     @OnClick(R.id.button_igem_partners)
     protected void onClickPartners() {
-        startActivity(new Intent(this, PartnersActivity.class));
+        Intent iWebsite = new Intent(Intent.ACTION_VIEW);
+        iWebsite.setData(Uri.parse(getResources().getString(R.string.partners_url)));
+        startActivity(iWebsite);
     }
 
 

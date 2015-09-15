@@ -120,6 +120,7 @@
     <string name="what_subtitle">A competition to celebrate science and knowledge</string>
     <string name="what_link">Official website</string>
     <string name="what_url" translatable="false">https://igem.org/Main_Page</string>
+    <string name="partners_url" translatable="false">http://2015.igem.org/Team:IONIS_Paris/Practices#about</string>
 
     <!-- Home -> iGEM -> SynBio -->
     <string name="title_activity_bio">Synthetic Biology</string>
