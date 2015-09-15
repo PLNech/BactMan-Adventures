@@ -354,7 +354,7 @@ public class GutGame extends BaseGame {
              * Thankfully there are also loads of vitamins! */
             createItem(Item.Type.ANTIBIO, Item.Role.REPEAT);
             createItem(Item.Type.VITAMIN, Item.Role.REPEAT);
-        } else if (gameScore >= 15) {
+        } else if (gameScore == 15) {
             /* End of scenario, here be dragons! */
             stopRepeating();
             createItems(NB_ITEMS);
