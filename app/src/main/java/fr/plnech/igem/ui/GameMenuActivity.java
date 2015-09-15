@@ -30,7 +30,6 @@ public class GameMenuActivity extends MenuActivity {
     @OnClick(R.id.button_game_new)
     protected void onClickNew() {
         final int lastUnlockedId = BaseGame.getLastUnlockedId(getSharedPreferences(getString(R.string.app_name), MODE_PRIVATE));
-        Toast.makeText(GameMenuActivity.this, "Last unlocked id: " + lastUnlockedId, Toast.LENGTH_SHORT).show();
         BaseGame.startGame(this, lastUnlockedId);
     }
 
