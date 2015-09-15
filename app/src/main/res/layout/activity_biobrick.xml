@@ -1,34 +1,40 @@
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-            xmlns:tools="http://schemas.android.com/tools"
-            style="@style/AppTheme.ScrollView">
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:tools="http://schemas.android.com/tools"
+                style="@style/AppTheme.Layout">
 
-    <RelativeLayout style="@style/AppTheme.Layout.Detail"
-                    tools:context="fr.plnech.igem.ui.SynBioActivity">
+    <ImageView style="@style/AppTheme.ImageView.Background"/>
+    <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:tools="http://schemas.android.com/tools"
+                style="@style/AppTheme.ScrollView">
 
-        <ImageView style="@style/AppTheme.ImageView.FullWidth"
-                   android:id="@+id/mainPic"
-                   android:src="@drawable/biobrick"
-                   android:contentDescription="@string/igem_title"/>
+        <RelativeLayout style="@style/AppTheme.Layout.Detail"
+                        tools:context="fr.plnech.igem.ui.SynBioActivity">
 
-        <RelativeLayout style="@style/AppTheme.Container.Title"
-                        android:id="@+id/box_title"
-                        android:layout_below="@id/mainPic">
+            <ImageView style="@style/AppTheme.ImageView.FullWidth"
+                       android:id="@+id/mainPic"
+                       android:src="@drawable/biobrick"
+                       android:contentDescription="@string/igem_title"/>
 
-            <TextView style="@style/AppTheme.TextView.Title"
-                      android:text="@string/title_activity_biobrick"
-                      android:id="@+id/biobrick_title"/>
-            <TextView style="@style/AppTheme.TextView.Subtitle"
-                      android:text="@string/biobrick_subtitle"
-                      android:id="@+id/biobrick_subtitle"
-                      android:layout_below="@id/biobrick_title"/>
+            <RelativeLayout style="@style/AppTheme.Container.Title"
+                            android:id="@+id/box_title"
+                            android:layout_below="@id/mainPic">
+
+                <TextView style="@style/AppTheme.TextView.Title"
+                          android:text="@string/title_activity_biobrick"
+                          android:id="@+id/biobrick_title"/>
+                <TextView style="@style/AppTheme.TextView.Subtitle"
+                          android:text="@string/biobrick_subtitle"
+                          android:id="@+id/biobrick_subtitle"
+                          android:layout_below="@id/biobrick_title"/>
+            </RelativeLayout>
+
+            <RelativeLayout style="@style/AppTheme.Container.Paragraphs"
+                            android:layout_below="@id/box_title">
+                <TextView style="@style/AppTheme.TextView.Paragraphs"
+                          android:text="@string/text_biobrick"
+                          android:id="@+id/paragraphs"/>
+            </RelativeLayout>
+
         </RelativeLayout>
-
-        <RelativeLayout style="@style/AppTheme.Container.Paragraphs"
-                        android:layout_below="@id/box_title">
-            <TextView style="@style/AppTheme.TextView.Paragraphs"
-                      android:text="@string/text_biobrick"
-                      android:id="@+id/paragraphs"/>
-        </RelativeLayout>
-
-    </RelativeLayout>
-</ScrollView>
+    </ScrollView>
+</RelativeLayout>

@@ -1,7 +1,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
                 xmlns:tools="http://schemas.android.com/tools"
                 style="@style/AppTheme.Layout">
-    <ImageView style="@style/AppTheme.ImageView.Background"/>
+<ImageView style="@style/AppTheme.ImageView.Background"/>
     <ScrollView style="@style/AppTheme.ScrollView">
         <RelativeLayout style="@style/AppTheme.Layout.Detail"
                         tools:context="fr.plnech.igem.ui.WhatActivity">
