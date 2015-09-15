@@ -9,6 +9,6 @@ import org.andengine.opengl.vbo.VertexBufferObjectManager;
  */
 public class Flow extends WorldObject {
     public Flow(float pY, ITiledTextureRegion pTiledTextureRegion, VertexBufferObjectManager pVertexBufferObjectManager) {
-        super(0, pY, false, 2f, pTiledTextureRegion, pVertexBufferObjectManager);
+        super(50, pY, false, 2f, pTiledTextureRegion, pVertexBufferObjectManager);
     }
 }
