@@ -1,5 +1,6 @@
 package fr.plnech.igem.ui;
 
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Point;
 import android.media.MediaPlayer;
@@ -30,18 +31,7 @@ public class HomeActivity extends AppCompatActivity implements SurfaceHolder.Cal
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        /* Disabled on DEBUG builds */
-//        final CrashlyticsCore crashlyticsCore = new CrashlyticsCore.Builder().disabled(BuildConfig.DEBUG).build();
-//        Fabric.with(this, new Crashlytics.Builder().core(crashlyticsCore).build());
-        /* Normal */
-        Fabric.with(this, new Crashlytics());
-        /* Debug mode */
-//        final Fabric fabric = new Fabric.Builder(this)
-//                .kits(new Crashlytics())
-//                .debuggable(true)
-//                .build();
-//        Fabric.with(fabric);
-
+        initFabric(this);
         setContentView(R.layout.activity_home);
         ButterKnife.inject(this);
 
@@ -105,5 +95,19 @@ public class HomeActivity extends AppCompatActivity implements SurfaceHolder.Cal
     public void surfaceDestroyed(SurfaceHolder holder) {
         Log.d(TAG, "surfaceDestroyed - Destroying MediaPlayer.");
         mPlayer.release();
+    }
+
+    public static void initFabric(Context context) {
+        /* Disabled on DEBUG builds */
+//        final CrashlyticsCore crashlyticsCore = new CrashlyticsCore.Builder().disabled(BuildConfig.DEBUG).build();
+//        Fabric.with(this, new Crashlytics.Builder().core(crashlyticsCore).build());
+        /* Normal */
+        Fabric.with(context, new Crashlytics());
+        /* Debug mode */
+//        final Fabric fabric = new Fabric.Builder(this)
+//                .kits(new Crashlytics())
+//                .debuggable(true)
+//                .build();
+//        Fabric.with(fabric);
     }
 }

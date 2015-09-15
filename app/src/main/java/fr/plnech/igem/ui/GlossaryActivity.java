@@ -36,7 +36,7 @@ public class GlossaryActivity extends ListActivity {
 
         final String contentName = resources.getString(R.string.title_activity_game_glossary);
         final String contentId = resources.getResourceName(R.layout.activity_game_glossary);
-        LoggedActivity.logView(contentName, "DetailActivity", contentId);
+        LoggedActivity.logView(contentName, "DetailActivity", contentId, this);
 
         ButterKnife.inject(this);
         glossaryListView.setFastScrollEnabled(true);
