@@ -79,7 +79,7 @@ public class HomeActivity extends AppCompatActivity implements SurfaceHolder.Cal
         lp.height = (int) (((float) videoView.getHeight() / (float) videoView.getWidth()) * (float) screenWidth);
         videoView.setLayoutParams(lp);
 
-        Uri uri = Uri.parse("android.resource://" + getPackageName() + "/" + R.raw.testfile);
+        Uri uri = Uri.parse("android.resource://" + getPackageName() + "/" + R.raw.animation);
         mPlayer = MediaPlayer.create(getApplicationContext(), uri, holder);
         mPlayer.setLooping(true);
         mPlayer.start();
@@ -96,7 +96,6 @@ public class HomeActivity extends AppCompatActivity implements SurfaceHolder.Cal
         Log.d(TAG, "surfaceDestroyed - Destroying MediaPlayer.");
         mPlayer.release();
     }
-
     public static void initFabric(Context context) {
         /* Disabled on DEBUG builds */
 //        final CrashlyticsCore crashlyticsCore = new CrashlyticsCore.Builder().disabled(BuildConfig.DEBUG).build();
