@@ -70,65 +70,79 @@
     <string name="credits_title">Credits, Licences and Thanks</string>
     <string name="credits_subtitle">They made it real</string>
     <string name="text_credits_people">
-        <a href="http://google.fr">Game Development: Paul-Louis Nech\n
-            Application layouts: Paul-Louis Nech, Goulwen Mintec, Lionel Chesnais\n
-            Graphical design: Lionel Chesnais, Marine Mohmmed, Cyrielle Viaut, Pascal Charleton\n
-            Texts and concepts: Johanna Chesnel, Hugo Cremaschi, Matthieu Da Costa, Gilles Defrel, Armelle Louisy,
-            Marine Mohmmed, Paul-Louis Nech, Pauline Trébulle, Marwa Zerhouni\n
-            \n</a>
+        \n
+        Game Development: Paul-Louis Nech\n\n
+        Application layouts: Paul-Louis Nech, Goulwen Mintec, Lionel Chesnais\n\n
+        Graphical design: Lionel Chesnais, Marine Mohmmed, Cyrielle Viaut, Pascal Charleton\n\n
+        Texts and concepts: Johanna Chesnel, Hugo Cremaschi, Matthieu Da Costa, Gilles Defrel, Armelle Louisy,
+        Marine Mohmmed, Paul-Louis Nech, Pauline Trébulle, Marwa Zerhouni\n\n
+        \n
     </string>
     <string name="text_credits_andengine">
-        Games build with the <a>AndEngine Game Engine.</a>\n\n
+        Games build with the <a href="http://www.google.fr">AndEngine Game Engine.</a>\n\n
     </string>
     <string name="text_credits_butterknife">
-        Interface interaction made easier thanks to the <a>ButterKnife</a> library\n\n</string>
+        Interface interaction made easier thanks to the
+        <a href="#">ButterKnife</a>
+        library\n\n
+    </string>
     <string name="text_credits_carousel">
-        Sponsors and Team pages build with <a>rolandl\' Android Carousel</a> library\n\n</string>
-    <string name="text_credits_licenses" formatted="false">
+        Sponsors and Team pages build with
+        <a href="#">ludovicroland\'s Android Carousel</a>
+        library, based on <a href="#">Igor Kushnarev\'s work</a>\n\n
+    </string>
+    <string name="text_credits_licenses" translatable="false" formatted="false">
+        == LICENSES ==\n
+        \n
+        \n
         === AndEngine ===\n
-\n
-\n
+        \n
         Apache License\n
         Version 2.0, January 2004\n
         http://www.apache.org/licenses/\n
-\n
+        \n
         TERMS AND CONDITIONS FOR USE, REPRODUCTION, AND DISTRIBUTION\n
-\n
+        \n
         Definitions.\n
-\n
+        \n
         "License" shall mean the terms and conditions for use, reproduction, and distribution as defined by Sections 1\n
         through 9 of this document.\n
-\n
+        \n
         "Licensor" shall mean the copyright owner or entity authorized by the copyright owner that is granting the\n
         License.\n
-\n
-        "Legal Entity" shall mean the union of the acting entity and all other entities that control, are controlled by,\n
+        \n
+        "Legal Entity" shall mean the union of the acting entity and all other entities that control, are controlled
+        by,\n
         or are under common control with that entity. For the purposes of this definition, "control" means (i) the\n
         power, direct or indirect, to cause the direction or management of such entity, whether by contract or\n
         otherwise, or (ii) ownership of fifty percent (50%) or more of the outstanding shares, or (iii) beneficial\n
         ownership of such entity.\n
-\n
+        \n
         "You" (or "Your") shall mean an individual or Legal Entity exercising permissions granted by this License.\n
-\n
+        \n
         "Source" form shall mean the preferred form for making modifications, including but not limited to software\n
         source code, documentation source, and configuration files.\n
-\n
+        \n
         "Object" form shall mean any form resulting from mechanical transformation or translation of a Source form,\n
         including but not limited to compiled object code, generated documentation, and conversions to other media\n
         types.\n
-\n
-        "Work" shall mean the work of authorship, whether in Source or Object form, made available under the License, as\n
+        \n
+        "Work" shall mean the work of authorship, whether in Source or Object form, made available under the License,
+        as\n
         indicated by a copyright notice that is included in or attached to the work (an example is provided in the\n
         Appendix below).\n
-\n
-        "Derivative Works" shall mean any work, whether in Source or Object form, that is based on (or derived from) the\n
+        \n
+        "Derivative Works" shall mean any work, whether in Source or Object form, that is based on (or derived from)
+        the\n
         Work and for which the editorial revisions, annotations, elaborations, or other modifications represent, as a\n
         whole, an original work of authorship. For the purposes of this License, Derivative Works shall not include\n
-        works that remain separable from, or merely link (or bind by name) to the interfaces of, the Work and Derivative\n
+        works that remain separable from, or merely link (or bind by name) to the interfaces of, the Work and
+        Derivative\n
         Works thereof.\n
-\n
+        \n
         "Contribution" shall mean any work of authorship, including the original version of the Work and any\n
-        modifications or additions to that Work or Derivative Works thereof, that is intentionally submitted to Licensor\n
+        modifications or additions to that Work or Derivative Works thereof, that is intentionally submitted to
+        Licensor\n
         for inclusion in the Work by the copyright owner or by an individual or Legal Entity authorized to submit on\n
         behalf of the copyright owner. For the purposes of this definition, "submitted" means any form of electronic,\n
         verbal, or written communication sent to the Licensor or its representatives, including but not limited to\n
@@ -136,82 +150,99 @@
         managed by, or on behalf of, the Licensor for the purpose of discussing and improving the Work, but excluding\n
         communication that is conspicuously marked or otherwise designated in writing by the copyright owner as "Not a\n
         Contribution."\n
-\n
+        \n
         "Contributor" shall mean Licensor and any individual or Legal Entity on behalf of whom a Contribution has been\n
         received by Licensor and subsequently incorporated within the Work.\n
-\n
-        Grant of Copyright License. Subject to the terms and conditions of this License, each Contributor hereby grants\n
+        \n
+        Grant of Copyright License. Subject to the terms and conditions of this License, each Contributor hereby
+        grants\n
         to You a perpetual, worldwide, non-exclusive, no-charge, royalty-free, irrevocable copyright license to\n
-        reproduce, prepare Derivative Works of, publicly display, publicly perform, sublicense, and distribute the Work\n
+        reproduce, prepare Derivative Works of, publicly display, publicly perform, sublicense, and distribute the
+        Work\n
         and such Derivative Works in Source or Object form.\n
-\n
-        Grant of Patent License. Subject to the terms and conditions of this License, each Contributor hereby grants to\n
+        \n
+        Grant of Patent License. Subject to the terms and conditions of this License, each Contributor hereby grants
+        to\n
         You a perpetual, worldwide, non-exclusive, no-charge, royalty-free, irrevocable (except as stated in this\n
         section) patent license to make, have made, use, offer to sell, sell, import, and otherwise transfer the Work,\n
         where such license applies only to those patent claims licensable by such Contributor that are necessarily\n
-        infringed by their Contribution(s) alone or by combination of their Contribution(s) with the Work to which such\n
-        Contribution(s) was submitted. If You institute patent litigation against any entity (including a cross-claim or\n
+        infringed by their Contribution(s) alone or by combination of their Contribution(s) with the Work to which
+        such\n
+        Contribution(s) was submitted. If You institute patent litigation against any entity (including a cross-claim
+        or\n
         counterclaim in a lawsuit) alleging that the Work or a Contribution incorporated within the Work constitutes\n
-        direct or contributory patent infringement, then any patent licenses granted to You under this License for that\n
+        direct or contributory patent infringement, then any patent licenses granted to You under this License for
+        that\n
         Work shall terminate as of the date such litigation is filed.\n
-\n
+        \n
         Redistribution. You may reproduce and distribute copies of the Work or Derivative Works thereof in any medium,\n
         with or without modifications, and in Source or Object form, provided that You meet the following conditions:\n
-\n
+        \n
         (a) You must give any other recipients of the Work or Derivative Works a copy of this License; and\n
-\n
+        \n
         (b) You must cause any modified files to carry prominent notices stating that You changed the files; and\n
-\n
+        \n
         © You must retain, in the Source form of any Derivative Works that You distribute, all copyright, patent,\n
-        trademark, and attribution notices from the Source form of the Work, excluding those notices that do not pertain\n
+        trademark, and attribution notices from the Source form of the Work, excluding those notices that do not
+        pertain\n
         to any part of the Derivative Works; and\n
-\n
+        \n
         (d) If the Work includes a "NOTICE" text file as part of its distribution, then any Derivative Works that You\n
-        distribute must include a readable copy of the attribution notices contained within such NOTICE file, excluding\n
-        those notices that do not pertain to any part of the Derivative Works, in at least one of the following places:\n
-        within a NOTICE text file distributed as part of the Derivative Works; within the Source form or documentation,\n
+        distribute must include a readable copy of the attribution notices contained within such NOTICE file,
+        excluding\n
+        those notices that do not pertain to any part of the Derivative Works, in at least one of the following
+        places:\n
+        within a NOTICE text file distributed as part of the Derivative Works; within the Source form or
+        documentation,\n
         if provided along with the Derivative Works; or, within a display generated by the Derivative Works, if and\n
         wherever such third-party notices normally appear. The contents of the NOTICE file are for informational\n
         purposes only and do not modify the License. You may add Your own attribution notices within Derivative Works\n
-        that You distribute, alongside or as an addendum to the NOTICE text from the Work, provided that such additional\n
+        that You distribute, alongside or as an addendum to the NOTICE text from the Work, provided that such
+        additional\n
         attribution notices cannot be construed as modifying the License.\n
-\n
+        \n
         You may add Your own copyright statement to Your modifications and may provide additional or different license\n
         terms and conditions for use, reproduction, or distribution of Your modifications, or for any such Derivative\n
         Works as a whole, provided Your use, reproduction, and distribution of the Work otherwise complies with the\n
         conditions stated in this License.\n
-\n
-        Submission of Contributions. Unless You explicitly state otherwise, any Contribution intentionally submitted for\n
+        \n
+        Submission of Contributions. Unless You explicitly state otherwise, any Contribution intentionally submitted
+        for\n
         inclusion in the Work by You to the Licensor shall be under the terms and conditions of this License, without\n
         any additional terms or conditions. Notwithstanding the above, nothing herein shall supersede or modify the\n
         terms of any separate license agreement you may have executed with Licensor regarding such Contributions.\n
-\n
-        Trademarks. This License does not grant permission to use the trade names, trademarks, service marks, or product\n
-        names of the Licensor, except as required for reasonable and customary use in describing the origin of the Work\n
+        \n
+        Trademarks. This License does not grant permission to use the trade names, trademarks, service marks, or
+        product\n
+        names of the Licensor, except as required for reasonable and customary use in describing the origin of the
+        Work\n
         and reproducing the content of the NOTICE file.\n
-\n
+        \n
         Disclaimer of Warranty. Unless required by applicable law or agreed to in writing, Licensor provides the Work\n
         (and each Contributor provides its Contributions) on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY\n
         KIND, either express or implied, including, without limitation, any warranties or conditions of TITLE,\n
         NON-INFRINGEMENT, MERCHANTABILITY, or FITNESS FOR A PARTICULAR PURPOSE. You are solely responsible for\n
         determining the appropriateness of using or redistributing the Work and assume any risks associated with Your\n
         exercise of permissions under this License.\n
-\n
+        \n
         Limitation of Liability. In no event and under no legal theory, whether in tort (including negligence),\n
         contract, or otherwise, unless required by applicable law (such as deliberate and grossly negligent acts) or\n
         agreed to in writing, shall any Contributor be liable to You for damages, including any direct, indirect,\n
-        special, incidental, or consequential damages of any character arising as a result of this License or out of the\n
+        special, incidental, or consequential damages of any character arising as a result of this License or out of
+        the\n
         use or inability to use the Work (including but not limited to damages for loss of goodwill, work stoppage,\n
         computer failure or malfunction, or any and all other commercial damages or losses), even if such Contributor\n
         has been advised of the possibility of such damages.\n
-\n
+        \n
         Accepting Warranty or Additional Liability. While redistributing the Work or Derivative Works thereof, You may\n
         choose to offer, and charge a fee for, acceptance of support, warranty, indemnity, or other liability\n
-        obligations and/or rights consistent with this License. However, in accepting such obligations, You may act only\n
+        obligations and/or rights consistent with this License. However, in accepting such obligations, You may act
+        only\n
         on Your own behalf and on Your sole responsibility, not on behalf of any other Contributor, and only if You\n
-        agree to indemnify, defend, and hold each Contributor harmless for any liability incurred by, or claims asserted\n
+        agree to indemnify, defend, and hold each Contributor harmless for any liability incurred by, or claims
+        asserted\n
         against, such Contributor by reason of your accepting any such warranty or additional liability.\n
-\n
+        \n
         END OF TERMS AND CONDITIONS\n\n\n
 
         === ButterKnife ===\n
@@ -417,8 +448,152 @@
         WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.\n
         See the License for the specific language governing permissions and\n
         limitations under the License.
-    </string>
+        \n\n\n
+        === Android Carousel ===\n
+        The Code Project Open License (CPOL) 1.02\n
+        \n
+        Preamble\n
+        \n
+        This License governs Your use of the Work. This License is intended to allow developers to use the Source Code
+        and Executable Files provided as part of the Work in any application in any form.\n
+        \n
+        The main points subject to the terms of the License are:\n
+        \n
+        Source Code and Executable Files can be used in commercial applications;\n
+        Source Code and Executable Files can be redistributed; and\n
+        Source Code can be modified to create derivative works.\n
+        No claim of suitability, guarantee, or any warranty whatsoever is provided. The software is provided "as-is".\n
+        The Article(s) accompanying the Work may not be distributed or republished without the Author\'s consent\n
+        \n
+        This License is entered between You, the individual or other entity reading or otherwise making use of the Work
+        licensed pursuant to this License and the individual or other entity which offers the Work under the terms of
+        this License ("Author").\n
+        License\n
+        \n
+        THE WORK (AS DEFINED BELOW) IS PROVIDED UNDER THE TERMS OF THIS CODE PROJECT OPEN LICENSE ("LICENSE"). THE WORK
+        IS PROTECTED BY COPYRIGHT AND/OR OTHER APPLICABLE LAW. ANY USE OF THE WORK OTHER THAN AS AUTHORIZED UNDER THIS
+        LICENSE OR COPYRIGHT LAW IS PROHIBITED.\n
+        \n
+        BY EXERCISING ANY RIGHTS TO THE WORK PROVIDED HEREIN, YOU ACCEPT AND AGREE TO BE BOUND BY THE TERMS OF THIS
+        LICENSE. THE AUTHOR GRANTS YOU THE RIGHTS CONTAINED HEREIN IN CONSIDERATION OF YOUR ACCEPTANCE OF SUCH TERMS AND
+        CONDITIONS. IF YOU DO NOT AGREE TO ACCEPT AND BE BOUND BY THE TERMS OF THIS LICENSE, YOU CANNOT MAKE ANY USE OF
+        THE WORK.\n
+        \n
+        Definitions.\n
+        "Articles" means, collectively, all articles written by Author which describes how the Source Code and
+        Executable Files for the Work may be used by a user.\n
+        "Author" means the individual or entity that offers the Work under the terms of this License.\n
+        "Derivative Work" means a work based upon the Work or upon the Work and other pre-existing works.\n
+        "Executable Files" refer to the executables, binary files, configuration and any required data files included in
+        the Work.\n
+        "Publisher" means the provider of the website, magazine, CD-ROM, DVD or other medium from or by which the Work
+        is obtained by You.\n
+        "Source Code" refers to the collection of source code and configuration files used to create the Executable
+        Files.\n
+        "Standard Version" refers to such a Work if it has not been modified, or has been modified in accordance with
+        the consent of the Author, such consent being in the full discretion of the Author.\n
+        "Work" refers to the collection of files distributed by the Publisher, including the Source Code, Executable
+        Files, binaries, data files, documentation, whitepapers and the Articles.\n
+        "You" is you, an individual or entity wishing to use the Work and exercise your rights under this License.\n
+        Fair Use/Fair Use Rights. Nothing in this License is intended to reduce, limit, or restrict any rights arising
+        from fair use, fair dealing, first sale or other limitations on the exclusive rights of the copyright owner
+        under copyright law or other applicable laws.\n
+        License Grant. Subject to the terms and conditions of this License, the Author hereby grants You a worldwide,
+        royalty-free, non-exclusive, perpetual (for the duration of the applicable copyright) license to exercise the
+        rights in the Work as stated below:\n
+        You may use the standard version of the Source Code or Executable Files in Your own applications.\n
+        You may apply bug fixes, portability fixes and other modifications obtained from the Public Domain or from the
+        Author. A Work modified in such a way shall still be considered the standard version and will be subject to this
+        License.\n
+        You may otherwise modify Your copy of this Work (excluding the Articles) in any way to create a Derivative Work,
+        provided that You insert a prominent notice in each changed file stating how, when and where You changed that
+        file.\n
+        You may distribute the standard version of the Executable Files and Source Code or Derivative Work in aggregate
+        with other (possibly commercial) programs as part of a larger (possibly commercial) software distribution.\n
+        The Articles discussing the Work published in any form by the author may not be distributed or republished
+        without the Author\'s consent. The author retains copyright to any such Articles. You may use the Executable
+        Files and Source Code pursuant to this License but you may not repost or republish or otherwise distribute or
+        make available the Articles, without the prior written consent of the Author.\n
+        Any subroutines or modules supplied by You and linked into the Source Code or Executable Files of this Work
+        shall not be considered part of this Work and will not be subject to the terms of this License.\n
+        Patent License. Subject to the terms and conditions of this License, each Author hereby grants to You a
+        perpetual, worldwide, non-exclusive, no-charge, royalty-free, irrevocable (except as stated in this section)
+        patent license to make, have made, use, import, and otherwise transfer the Work.\n
+        Restrictions. The license granted in Section 3 above is expressly made subject to and limited by the following
+        restrictions:\n
+        You agree not to remove any of the original copyright, patent, trademark, and attribution notices and associated
+        disclaimers that may appear in the Source Code or Executable Files.\n
+        You agree not to advertise or in any way imply that this Work is a product of Your own.\n
+        The name of the Author may not be used to endorse or promote products derived from the Work without the prior
+        written consent of the Author.\n
+        You agree not to sell, lease, or rent any part of the Work. This does not restrict you from including the Work
+        or any part of the Work inside a larger software distribution that itself is being sold. The Work by itself,
+        though, cannot be sold, leased or rented.\n
+        You may distribute the Executable Files and Source Code only under the terms of this License, and You must
+        include a copy of, or the Uniform Resource Identifier for, this License with every copy of the Executable Files
+        or Source Code You distribute and ensure that anyone receiving such Executable Files and Source Code agrees that
+        the terms of this License apply to such Executable Files and/or Source Code. You may not offer or impose any
+        terms on the Work that alter or restrict the terms of this License or the recipients\' exercise of the rights
+        granted hereunder. You may not sublicense the Work. You must keep intact all notices that refer to this License
+        and to the disclaimer of warranties. You may not distribute the Executable Files or Source Code with any
+        technological measures that control access or use of the Work in a manner inconsistent with the terms of this
+        License.\n
+        You agree not to use the Work for illegal, immoral or improper purposes, or on pages containing illegal, immoral
+        or improper material. The Work is subject to applicable export laws. You agree to comply with all such laws and
+        regulations that may apply to the Work after Your receipt of the Work.\n
+        Representations, Warranties and Disclaimer. THIS WORK IS PROVIDED "AS IS", "WHERE IS" AND "AS AVAILABLE",
+        WITHOUT ANY EXPRESS OR IMPLIED WARRANTIES OR CONDITIONS OR GUARANTEES. YOU, THE USER, ASSUME ALL RISK IN ITS
+        USE, INCLUDING COPYRIGHT INFRINGEMENT, PATENT INFRINGEMENT, SUITABILITY, ETC. AUTHOR EXPRESSLY DISCLAIMS ALL
+        EXPRESS, IMPLIED OR STATUTORY WARRANTIES OR CONDITIONS, INCLUDING WITHOUT LIMITATION, WARRANTIES OR CONDITIONS
+        OF MERCHANTABILITY, MERCHANTABLE QUALITY OR FITNESS FOR A PARTICULAR PURPOSE, OR ANY WARRANTY OF TITLE OR
+        NON-INFRINGEMENT, OR THAT THE WORK (OR ANY PORTION THEREOF) IS CORRECT, USEFUL, BUG-FREE OR FREE OF VIRUSES. YOU
+        MUST PASS THIS DISCLAIMER ON WHENEVER YOU DISTRIBUTE THE WORK OR DERIVATIVE WORKS.\n
+        Indemnity. You agree to defend, indemnify and hold harmless the Author and the Publisher from and against any
+        claims, suits, losses, damages, liabilities, costs, and expenses (including reasonable legal or attorneys� fees)
+        resulting from or relating to any use of the Work by You.\n
+        Limitation on Liability. EXCEPT TO THE EXTENT REQUIRED BY APPLICABLE LAW, IN NO EVENT WILL THE AUTHOR OR THE
+        PUBLISHER BE LIABLE TO YOU ON ANY LEGAL THEORY FOR ANY SPECIAL, INCIDENTAL, CONSEQUENTIAL, PUNITIVE OR EXEMPLARY
+        DAMAGES ARISING OUT OF THIS LICENSE OR THE USE OF THE WORK OR OTHERWISE, EVEN IF THE AUTHOR OR THE PUBLISHER HAS
+        BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.\n
+        Termination.\n
+        This License and the rights granted hereunder will terminate automatically upon any breach by You of any term of
+        this License. Individuals or entities who have received Derivative Works from You under this License, however,
+        will not have their licenses terminated provided such individuals or entities remain in full compliance with
+        those licenses. Sections 1, 2, 6, 7, 8, 9, 10 and 11 will survive any termination of this License.\n
+        If You bring a copyright, trademark, patent or any other infringement claim against any contributor over
+        infringements You claim are made by the Work, your License from such contributor to the Work ends
+        automatically.\n
+        Subject to the above terms and conditions, this License is perpetual (for the duration of the applicable
+        copyright in the Work). Notwithstanding the above, the Author reserves the right to release the Work under
+        different license terms or to stop distributing the Work at any time; provided, however that any such election
+        will not serve to withdraw this License (or any other license that has been, or is required to be, granted under
+        the terms of this License), and this License will continue in full force and effect unless terminated as stated
+        above.\n
+        Publisher. The parties hereby confirm that the Publisher shall not, under any circumstances, be responsible for
+        and shall not have any liability in respect of the subject matter of this License. The Publisher makes no
+        warranty whatsoever in connection with the Work and shall not be liable to You or any party on any legal theory
+        for any damages whatsoever, including without limitation any general, special, incidental or consequential
+        damages arising in connection to this license. The Publisher reserves the right to cease making the Work
+        available to You at any time without notice\n
+        Miscellaneous\n
+        This License shall be governed by the laws of the location of the head office of the Author or if the Author is
+        an individual, the laws of location of the principal place of residence of the Author.\n
+        If any provision of this License is invalid or unenforceable under applicable law, it shall not affect the
+        validity or enforceability of the remainder of the terms of this License, and without further action by the
+        parties to this License, such provision shall be reformed to the minimum extent necessary to make such provision
+        valid and enforceable.\n
+        No term or provision of this License shall be deemed waived and no breach consented to unless such waiver or
+        consent shall be in writing and signed by the party to be charged with such waiver or consent.\n
+        This License constitutes the entire agreement between the parties with respect to the Work licensed herein.
+        There are no understandings, agreements or representations with respect to the Work not specified herein. The
+        Author shall not be bound by any additional provisions that may appear in any communication from You. This
+        License may not be modified without the mutual written agreement of the Author and You.\n
+        \n
 
+    </string>
+    <string name="url_andengine" translatable="false">https://github.com/nicolasgramlich/AndEngine</string>
+    <string name="url_butterknife" translatable="false">https://github.com/JakeWharton/butterknife</string>
+    <string name="url_carousel" translatable="false">https://github.com/ludovicroland/carousel-android</string>
     <!-- Home -> Us -> Presentation -->
     <string name="title_activity_presentation">Our project</string>
     <string name="pres_title">The BioConsole</string>
@@ -426,7 +601,7 @@
     <string name="text_pres">
         <!-- TODO: Translate! -->
         Notre équipe, IONIS Paris, a développé un projet en deux parties autour de la vulgarisation scientifique
-        pour la compétition iGEM 2015.  La première partie consiste à créer une bio-console,
+        pour la compétition iGEM 2015. La première partie consiste à créer une bio-console,
         un dispositif reliant le réel au virtuel. La bio-console IONIS Paris est composée de :\n
         • une puce de microfluidique\n
         • un microscope\n
@@ -465,7 +640,8 @@
     <string name="what_subtitle">A competition to celebrate science and knowledge</string>
     <string name="what_link">Official website</string>
     <string name="what_url" translatable="false">https://igem.org/Main_Page</string>
-    <string name="partners_url" translatable="false">http://2015.igem.org/Team:IONIS_Paris/Practices#teamproject</string>
+    <string name="partners_url" translatable="false">http://2015.igem.org/Team:IONIS_Paris/Practices#teamproject
+    </string>
 
     <!-- Home -> iGEM -> SynBio -->
     <string name="title_activity_bio">Synthetic Biology</string>
@@ -514,7 +690,8 @@
         construction plus simple de systèmes biologiques. Chaque BioBrick est délimitée par des préfixes et suffixes
         universels.\n\n
         Comme elles sont conçues sur le même modèle, on peut les assembler comme un jeu de LEGO® pour
-        ensuite les incorporer dans une cellule vivante.</string>
+        ensuite les incorporer dans une cellule vivante.
+    </string>
     <string name="msg_last_game">Congratulations, you just won the last game!</string>
 
     <string-array name="glossary_titles">
@@ -537,26 +714,35 @@
         <item>Antibiotic</item>
     </string-array>
     <string-array name="glossary_texts">
-        <item>DNA (DeoxyriboNucleic Acid) is a huge molecule that contains all information necessary for the proper functioning of the body.\n\n
-            Present in all of human body cells, DNA is also present in all other organisms (plants, birds, insects, bacteria).\n\n
-            It is this molecule that makes us all unique individuals with different characteristics.</item>
+        <item>DNA (DeoxyriboNucleic Acid) is a huge molecule that contains all information necessary for the proper
+            functioning of the body.\n\n
+            Present in all of human body cells, DNA is also present in all other organisms (plants, birds, insects,
+            bacteria).\n\n
+            It is this molecule that makes us all unique individuals with different characteristics.
+        </item>
         <item>Replication is the biological process that occurs during cell division.\n\n
             During this process, DNA will be copied in two identical copies.\n
-            Therefore, two daughter cells each with DNA from a mother cell will be obtained after this process.</item>
+            Therefore, two daughter cells each with DNA from a mother cell will be obtained after this process.
+        </item>
         <item>A nucleotide is a principal constituent of the DNA. It is itself composed of three elements:\n\n
             • A nitrogen base\n
             • A ribose (sugar)\n
             • A phosphate\n\n
-            There are 4 basic nucleotides constituting the DNA code: A (Adenine), T (Thymine), C (Cytosine) and G (Guanine).</item>
+            There are 4 basic nucleotides constituting the DNA code: A (Adenine), T (Thymine), C (Cytosine) and G
+            (Guanine).
+        </item>
         <item>DNA is a double helix strand.\n\n
             Imagine a railroad where each side (the bases) must be assembled by complementarity!\n\n
             A and T are assembled together, and C and G together.
         </item>
         <item>A plasmid is a circular DNA present in addition to the chromosomal DNA of the bacterium.\n\n
-            It can be transmitted from one bacterium to another and confers new properties to the receiving bacteria (resistance to an antibiotic, for example).
+            It can be transmitted from one bacterium to another and confers new properties to the receiving bacteria
+            (resistance to an antibiotic, for example).
         </item>
-        <item>It is a specific part of DNA that is recognized by an enzyme, called restriction enzyme, which cuts DNA at this location.\n\n
-            Picture yourself the enzyme as a pair of scissors that can only cut DNA at these sites! This process is called digestion.\n
+        <item>It is a specific part of DNA that is recognized by an enzyme, called restriction enzyme, which cuts DNA at
+            this location.\n\n
+            Picture yourself the enzyme as a pair of scissors that can only cut DNA at these sites! This process is
+            called digestion.\n
             There are several enzymes and therefore multiple sites in a single DNA.\n\n
 
 
@@ -564,35 +750,58 @@
             • Digestion with blunt ends\n\n
             • Digestion with sticky ends
         </item>
-        <item>Ligation occurs after digestion.\nIt allows you to stick or stick back together two strands of DNA compatible together.\n\n
-            The enzyme that allows ligation is called Ligase.</item>
-        <item>BioBricks are fragments of standardized DNA, created to engineer simpler construction of biological systems.\n\n
-            Each BioBrick is delimited by universal prefixes and suffixes, they thus begin and end all in the same way.\n
-            As they are designed on the same model, we can assemble them like "LEGO" and then incorporate them into a living cell.\n\n
+        <item>Ligation occurs after digestion.\nIt allows you to stick or stick back together two strands of DNA
+            compatible together.\n\n
+            The enzyme that allows ligation is called Ligase.
+        </item>
+        <item>BioBricks are fragments of standardized DNA, created to engineer simpler construction of biological
+            systems.\n\n
+            Each BioBrick is delimited by universal prefixes and suffixes, they thus begin and end all in the same
+            way.\n
+            As they are designed on the same model, we can assemble them like "LEGO" and then incorporate them into a
+            living cell.\n\n
             This standards allows iGEM teams around the world to work together as all work with the same standards.
         </item>
-        <item>It is a round plastic box, cover by a lid. Petri dishes are used to make micro-organism cultures (bacteria, fungi etc.).\n\n
-            In order to grow, micro-organisms needs a suitable culture medium that is introduced in such a box.</item>
+        <item>It is a round plastic box, cover by a lid. Petri dishes are used to make micro-organism cultures
+            (bacteria, fungi etc.).\n\n
+            In order to grow, micro-organisms needs a suitable culture medium that is introduced in such a box.
+        </item>
         <item>This method allows the separation of proteins, DNA or RNA according to their molecular weight.\n
-            These DNA / RNA / protein are previously prepared and then deposited in a gel. This gel is then placed in a special liquid and then subjected to an electric current which enables the separation of molecules.\n\n
-            The smaller, the molecule is, the faster it will migrate on the gel.</item>
-        <item>Transcription operates thanks to a mechanism similar to the process of replication, however it does not concern any DNA!\n\n
-            In fact, transcription involve the replication of specific DNA areas. These zones are surrounded by promoters and terminators.\n
-            Promoters are sequences that play a regulatory role and that fixes the necessary machinery for replication whereas the terminator marks the end of the sequence to be transcribed.\n
-            RNA, the molecule obtained by transcription, is complementary to the DNA and chemically very close to it, except for some details.\n
+            These DNA / RNA / protein are previously prepared and then deposited in a gel. This gel is then placed in a
+            special liquid and then subjected to an electric current which enables the separation of molecules.\n\n
+            The smaller, the molecule is, the faster it will migrate on the gel.
+        </item>
+        <item>Transcription operates thanks to a mechanism similar to the process of replication, however it does not
+            concern any DNA!\n\n
+            In fact, transcription involve the replication of specific DNA areas. These zones are surrounded by
+            promoters and terminators.\n
+            Promoters are sequences that play a regulatory role and that fixes the necessary machinery for replication
+            whereas the terminator marks the end of the sequence to be transcribed.\n
+            RNA, the molecule obtained by transcription, is complementary to the DNA and chemically very close to it,
+            except for some details.\n
             In RNA, we find the same bases as in DNA except for thymine, replaced by uracil (T becomes U)!\n\n
-            Once formed, RNA will undergo some changes during maturation to be ready for his translation into protein.</item>
+            Once formed, RNA will undergo some changes during maturation to be ready for his translation into protein.
+        </item>
         <item>Translation is the process of converting genetic information into functional proteins.\n
-            Indeed, RNA create from DNA contains all the data needed to create proteins, it only remains to decrypt this information!\n\n
-            A protein called ribosome is responsible for decoding. After being fixed to the RNA strand, the ribosome will read the nucleic acid sequence by creating "words" of three nucleic acids each.\n
-            These words, called codons, will then be recognized and translated into amino acid to form a protein. As a language translator, the ribosome associates the word to its equivalent in protein language. The dictionary used is called genetic code.\n
+            Indeed, RNA create from DNA contains all the data needed to create proteins, it only remains to decrypt this
+            information!\n\n
+            A protein called ribosome is responsible for decoding. After being fixed to the RNA strand, the ribosome
+            will read the nucleic acid sequence by creating "words" of three nucleic acids each.\n
+            These words, called codons, will then be recognized and translated into amino acid to form a protein. As a
+            language translator, the ribosome associates the word to its equivalent in protein language. The dictionary
+            used is called genetic code.\n
             During this process, the amino acid "read" are attached to each other like a pearl necklace.\n\n
             Once finished reading the amino acid chain is released.\n
             She then fold up to adopt its structure and function before finally fulfill its role in its orgaism.
         </item>
-        <item>A mutation is a modification in the DNA sequence. This modification can occur naturally, by errors during replication for example, or be induced by mutagens or phenomena said. For example, UV damages DNA and induce mutations.\n\n
-            If these changes are essential for the evolution and the diversity, some variations can also have several consequences for the living organism.\n
-            Some are positive and confer a benefit to the organization, such as a better metabolism, while others are harmless or even harmful. Indeed, if a mutation can allow better functioning of a protein, it can also alter its function and make it ineffective.\n\n
+        <item>A mutation is a modification in the DNA sequence. This modification can occur naturally, by errors during
+            replication for example, or be induced by mutagens or phenomena said. For example, UV damages DNA and induce
+            mutations.\n\n
+            If these changes are essential for the evolution and the diversity, some variations can also have several
+            consequences for the living organism.\n
+            Some are positive and confer a benefit to the organization, such as a better metabolism, while others are
+            harmless or even harmful. Indeed, if a mutation can allow better functioning of a protein, it can also alter
+            its function and make it ineffective.\n\n
             There are different types of variations:\n\n
 
             • Insertions, where one or more nucleotides are added\n
@@ -601,32 +810,53 @@
 
             How these small changes can have such great consequences?\n\n
             When translating the genetic information is cut into 3-letter words, the codons.\n
-            The translation of this codon is then looked-up in a "dictionary", the genetic code to translate this word into protein language.\n
-            If one of the letters change or if the words are not separated the same way, the translation into a protein will be altered.\n
-            Fortunately, all mutations are far from harmful! The majority of them do not even have direct consequences because of the redundancy of the genetic code: among codons, there are many synonyms, so even if a base changes, the translation may remain correct.\n\n
+            The translation of this codon is then looked-up in a "dictionary", the genetic code to translate this word
+            into protein language.\n
+            If one of the letters change or if the words are not separated the same way, the translation into a protein
+            will be altered.\n
+            Fortunately, all mutations are far from harmful! The majority of them do not even have direct consequences
+            because of the redundancy of the genetic code: among codons, there are many synonyms, so even if a base
+            changes, the translation may remain correct.\n\n
 
-            The mutations also allow genetic diversity: if we do not have all the eyes of the same color, it is due to individuals not having all the same genes and the same mutations!
+            The mutations also allow genetic diversity: if we do not have all the eyes of the same color, it is due to
+            individuals not having all the same genes and the same mutations!
         </item>
-        <item>A vitamin is an organic substance needed in small amounts for the metabolism of a living organism. It can’t be synthesized in sufficient quantities by the organism.\n\n
-            They are therefore considered essential supplements. Vitamins are classified into two groups: water-soluble vitamins (water-soluble) and lipid-soluble vitamins (fat soluble).
+        <item>A vitamin is an organic substance needed in small amounts for the metabolism of a living organism. It
+            can’t be synthesized in sufficient quantities by the organism.\n\n
+            They are therefore considered essential supplements. Vitamins are classified into two groups: water-soluble
+            vitamins (water-soluble) and lipid-soluble vitamins (fat soluble).
 
-            The essential role of a vitamin is a transfer from one molecule to another, of an electron, an atom or group of atoms to another.\n\n
+            The essential role of a vitamin is a transfer from one molecule to another, of an electron, an atom or group
+            of atoms to another.\n\n
 
             • Inadequate intake or absence of vitamin causes many diseases such as scurvy, rachitis etc.\n
             • Excessive intake of vitamins can also cause diseases such as hypervitaminosis, very toxic to the body.\n\n
 
-            Vitamin requirements are difficult to establish because they vary with the age, sex, size and muscular activity.\n
-            They increase during growth or diseases. In women, the need for vitamins increases during pregnancy and lactation.</item>
-        <item>A virus is a biological entity that requires a host, usually a cell, for whom it uses the metabolism and its constituents to replicate and live.</item>
-        <item>Phage or Bacteriophage are viruses that infect bacteria. They are usually very specific and often can infect only one species of bacteria.\n\n
-            This specificity is due to their mechanism of penetration into the bacterial cell: the phages recognize specific receptors on the bacterial surface which allow them to attach and inject their genetic material into the bacterium.\n\n
+            Vitamin requirements are difficult to establish because they vary with the age, sex, size and muscular
+            activity.\n
+            They increase during growth or diseases. In women, the need for vitamins increases during pregnancy and
+            lactation.
+        </item>
+        <item>A virus is a biological entity that requires a host, usually a cell, for whom it uses the metabolism and
+            its constituents to replicate and live.
+        </item>
+        <item>Phage or Bacteriophage are viruses that infect bacteria. They are usually very specific and often can
+            infect only one species of bacteria.\n\n
+            This specificity is due to their mechanism of penetration into the bacterial cell: the phages recognize
+            specific receptors on the bacterial surface which allow them to attach and inject their genetic material
+            into the bacterium.\n\n
 
-            Phages are unable to reproduce on their own. They do it by injecting their genetic material into a bacteria which has the enzymes and the ribosomes needed to replicate and translate its genetic information, the viral genome can therefore be translated and replicated to form many copies of the virus.\n
-            These viruses are then released from the bacteria by a host bacterium lysis mechanism, lysis being a membrane disintegrating mechanism of cell killing of the cell.
+            Phages are unable to reproduce on their own. They do it by injecting their genetic material into a bacteria
+            which has the enzymes and the ribosomes needed to replicate and translate its genetic information, the viral
+            genome can therefore be translated and replicated to form many copies of the virus.\n
+            These viruses are then released from the bacteria by a host bacterium lysis mechanism, lysis being a
+            membrane disintegrating mechanism of cell killing of the cell.
         </item>
         <item>An antibiotic is a natural or synthetic substance that blocks the growth or destroys bacteria.\n\n
-            They act specifically on bacteria by selectively blocking one step in an essential mechanism for their development and survival. (Synthesis of their wall, DNA, proteins, etc.)\n
+            They act specifically on bacteria by selectively blocking one step in an essential mechanism for their
+            development and survival. (Synthesis of their wall, DNA, proteins, etc.)\n
             This blocking occurs when the antibiotic binds to its target (receptor).\n\n
-            This interaction between the antibiotic and its target is very selective and specific bacteria.</item>
+            This interaction between the antibiotic and its target is very selective and specific bacteria.
+        </item>
     </string-array>
 </resources>

@@ -4,6 +4,10 @@
     <ImageView style="@style/AppTheme.ImageView.Background"/>
     <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
                 xmlns:tools="http://schemas.android.com/tools"
+                android:id="@+id/scrollView"
+                android:fadeScrollbars="false"
+                android:scrollbarFadeDuration="0"
+                android:scrollbarAlwaysDrawVerticalTrack="true"
                 style="@style/AppTheme.ScrollView">
         <RelativeLayout style="@style/AppTheme.Layout.Detail"
                         tools:context="fr.plnech.igem.ui.CreditsActivity">
@@ -28,29 +32,24 @@
 
             <RelativeLayout style="@style/AppTheme.Container.Paragraphs"
                             android:layout_below="@id/box_title">
-                <TextView style="@style/AppTheme.TextView.Paragraphs"
+                <TextView style="@style/AppTheme.TextView.Paragraphs.Credits"
                           android:text="@string/text_credits_people"
-                          android:autoLink="web"
                           android:id="@+id/paragraphs_people"/>
-                <TextView style="@style/AppTheme.TextView.Paragraphs"
-                          android:text="@string/text_credits_andengine"
-                          android:autoLink="web"
+                <TextView style="@style/AppTheme.TextView.Paragraphs.Credits"
                           android:id="@+id/paragraphs_andengine"
+                          android:text="@string/text_credits_andengine"
                           android:layout_below="@id/paragraphs_people"/>
-                <TextView style="@style/AppTheme.TextView.Paragraphs"
-                          android:autoLink="web"
+                <TextView style="@style/AppTheme.TextView.Paragraphs.Credits"
                           android:id="@+id/paragraphs_butterknife"
                           android:text="@string/text_credits_butterknife"
                           android:layout_below="@id/paragraphs_andengine"/>
-                <TextView style="@style/AppTheme.TextView.Paragraphs"
-                          android:autoLink="web"
+                <TextView style="@style/AppTheme.TextView.Paragraphs.Credits"
                           android:id="@+id/paragraphs_carousel"
                           android:text="@string/text_credits_carousel"
-                          android:layout_below="@id/paragraphs_people"/>
-                <TextView style="@style/AppTheme.TextView.Paragraphs"
-                          android:text="@string/text_credits_licenses"
-                          android:autoLink="web"
+                          android:layout_below="@id/paragraphs_butterknife"/>
+                <TextView style="@style/AppTheme.TextView.Paragraphs.Credits"
                           android:id="@+id/paragraphs_licenses"
+                          android:text="@string/text_credits_licenses"
                           android:layout_below="@id/paragraphs_carousel"/>
             </RelativeLayout>
 

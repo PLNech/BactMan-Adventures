@@ -109,6 +109,11 @@
         <item name="android:textSize">15sp</item>
     </style>
 
+    <style name="AppTheme.TextView.Paragraphs.Credits">
+        <item name="android:gravity">center</item>
+        <item name="android:autoLink">web</item>
+    </style>
+
     <style name="AppTheme.Button">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">64dp</item>
