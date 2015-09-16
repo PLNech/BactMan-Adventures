@@ -10,6 +10,14 @@ public class TeamMember {
     String avatarResName;
     String quote;
 
+    private boolean isTransparent;
+    private boolean noName;
+
+    public TeamMember(String name, String avatarResName) {
+        this.name = name;
+        this.avatarResName = avatarResName;
+    }
+
     public TeamMember(String name, String avatarResName, @Nullable String quote) {
         this.name = name;
         this.avatarResName = avatarResName;
@@ -18,7 +26,7 @@ public class TeamMember {
     }
 
     public String getName() {
-        return name;
+        return noName ? null : name;
     }
 
     public String getAvatarResName() {
@@ -27,5 +35,21 @@ public class TeamMember {
 
     public String getQuote() {
         return quote != null ? quote : name;
+    }
+
+    public boolean isTransparent() {
+        return isTransparent;
+    }
+
+    public void setTransparent(boolean isTransparent) {
+        this.isTransparent = isTransparent;
+    }
+
+    public void setNoName(boolean noName) {
+        this.noName = noName;
+    }
+
+    public boolean isNoName() {
+        return noName;
     }
 }

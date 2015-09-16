@@ -1,72 +1,33 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
                 xmlns:tools="http://schemas.android.com/tools"
+                tools:context="fr.plnech.igem.ui.SponsorsActivity"
                 style="@style/AppTheme.Layout">
     <ImageView style="@style/AppTheme.ImageView.Background"/>
-    <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-                xmlns:tools="http://schemas.android.com/tools"
-                style="@style/AppTheme.ScrollView">
+    <fr.rolandl.carousel.Carousel
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            android:id="@+id/carousel"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:paddingTop="20dp"
+            android:animationDuration="200"/>
+    <RelativeLayout style="@style/AppTheme.Layout.Carousel">
+        <ImageView style="@style/AppTheme.ImageView.FullWidth"
+                   android:id="@+id/mainPic"
+                   android:src="@drawable/igem"
+                   android:contentDescription="@string/igem_title"/>
 
-        <RelativeLayout style="@style/AppTheme.Layout.Detail"
-                        tools:context="fr.plnech.igem.ui.WhatActivity">
+        <RelativeLayout style="@style/AppTheme.Container.Title"
+                        android:id="@+id/box_title"
+                        android:layout_below="@id/mainPic">
 
-            <ImageView style="@style/AppTheme.ImageView.FullWidth"
-                       android:id="@+id/mainPic"
-                       android:src="@drawable/igem"
-                       android:contentDescription="@string/igem_title"/>
+            <TextView style="@style/AppTheme.TextView.Title"
+                      android:text="@string/sponsors_title"
+                      android:id="@+id/sponsors_title"/>
 
-            <RelativeLayout style="@style/AppTheme.Container.Title"
-                            android:id="@+id/box_title"
-                            android:layout_below="@id/mainPic">
-
-                <TextView style="@style/AppTheme.TextView.Title"
-                          android:text="@string/sponsors_title"
-                          android:id="@+id/sponsors_title"/>
-
-                <TextView style="@style/AppTheme.TextView.Subtitle"
-                          android:text="@string/sponsors_subtitle"
-                          android:id="@+id/sponsors_subtitle"
-                          android:layout_below="@id/sponsors_title"/>
-            </RelativeLayout>
-
-            <ImageView style="@style/AppTheme.ImageView"
-                       android:id="@+id/fluigent"
-                       android:src="@drawable/fluigent"
-                       android:layout_below="@id/box_title"/>
-
-            <ImageView style="@style/AppTheme.ImageView"
-                       android:id="@+id/supbiotech"
-                       android:src="@drawable/supbiotech"
-                       android:layout_below="@id/box_title"
-                       android:layout_toRightOf="@id/fluigent"/>
-
-            <ImageView style="@style/AppTheme.ImageView"
-                       android:id="@+id/epita"
-                       android:src="@drawable/epita"
-                       android:layout_below="@id/fluigent"/>
-
-            <ImageView style="@style/AppTheme.ImageView"
-                       android:id="@+id/eartsup"
-                       android:src="@drawable/eartsup"
-                       android:layout_below="@id/fluigent"
-                       android:layout_toRightOf="@id/epita"/>
-
-            <RelativeLayout style="@style/AppTheme.Container.Paragraphs"
-                            android:layout_below="@id/eartsup">
-
-                <RelativeLayout style="@style/AppTheme.Container.Title"
-                                android:id="@+id/line">
-
-                    <TextView style="@style/AppTheme.TextView.Title"
-                              android:text="@string/sponsors_separation_line"
-                            />
-                </RelativeLayout>
-
-                <TextView style="@style/AppTheme.TextView.Paragraphs"
-                          android:text="@string/lorem"
-                          android:id="@+id/paragraphs"
-                          android:layout_below="@+id/line"/>
-            </RelativeLayout>
-
+            <TextView style="@style/AppTheme.TextView.Subtitle"
+                      android:text="@string/sponsors_subtitle"
+                      android:id="@+id/sponsors_subtitle"
+                      android:layout_below="@id/sponsors_title"/>
         </RelativeLayout>
-    </ScrollView>
+    </RelativeLayout>
 </RelativeLayout>

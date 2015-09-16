@@ -29,6 +29,10 @@ public class MemberItem extends CarouselItem<TeamMember> {
     @Override
     public void update(TeamMember teamMember) {
         avatar.setImageResource(getResources().getIdentifier(teamMember.getAvatarResName(), "drawable", context.getPackageName()));
+        if (teamMember.isTransparent()) {
+            avatar.setBackgroundColor(getResources().getColor(android.R.color.white));
+        }
+
         name.setText(teamMember.getName());
     }
 }

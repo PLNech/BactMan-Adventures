@@ -1,26 +1,11 @@
 package fr.plnech.igem.ui;
 
-import android.os.Bundle;
-import android.view.Gravity;
-import android.view.View;
-import android.widget.Toast;
-import butterknife.ButterKnife;
-import butterknife.InjectView;
 import fr.plnech.igem.R;
-import fr.plnech.igem.carousel.MemberAdapter;
 import fr.plnech.igem.carousel.TeamMember;
-import fr.plnech.igem.ui.model.DetailActivity;
-import fr.rolandl.carousel.Carousel;
-import fr.rolandl.carousel.CarouselAdapter;
-import fr.rolandl.carousel.CarouselBaseAdapter;
 
-import java.util.ArrayList;
 import java.util.List;
 
-public class TeamActivity extends DetailActivity {
-
-    @InjectView(R.id.carousel)
-    Carousel carousel;
+public class TeamActivity extends CarouselActivity {
 
     @Override
     public int getTitleResId() {
@@ -33,14 +18,7 @@ public class TeamActivity extends DetailActivity {
     }
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        ButterKnife.inject(this);
-
-        carousel = (Carousel) findViewById(R.id.carousel);
-        carousel.setGravity(Gravity.TOP);
-
-        final List<TeamMember> teamMembers = new ArrayList<>();
+    protected void loadData(List<TeamMember> teamMembers) {
         teamMembers.add(new TeamMember("Paul-Louis", "avatar_pl", "√(♥) = ? | cos(♥) = ? | d♥/dt = ? | ⌹♥ = ?\n" +
                 "My usual approach is useless here.\n\n" +
                 "[Randall Munroe - xkcd]"));
@@ -67,21 +45,6 @@ public class TeamActivity extends DetailActivity {
         teamMembers.add(new TeamMember("Pauline", "avatar_pauline", "Study the science of art. Study the art of science.\n" +
                 "Develop your senses - learn how to see. Realize that everything connects to everything else.\n\n" +
                 "[Leonardo da Vinci]"));
-
-        final CarouselAdapter adapter = new MemberAdapter(this, teamMembers);
-        carousel.setOnItemClickListener(new CarouselBaseAdapter.OnItemClickListener()
-        {
-
-            @Override
-            public void onItemClick(CarouselBaseAdapter<?> carouselBaseAdapter, View view, int position, long id)
-            {
-                Toast.makeText(getApplicationContext(), teamMembers.get(position).getQuote(), Toast.LENGTH_SHORT).show();
-                carousel.scrollToChild(position);
-            }
-
-        });
-        carousel.setAdapter(adapter);
-        adapter.notifyDataSetChanged();
     }
 
 }
