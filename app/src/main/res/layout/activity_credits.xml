@@ -29,8 +29,29 @@
             <RelativeLayout style="@style/AppTheme.Container.Paragraphs"
                             android:layout_below="@id/box_title">
                 <TextView style="@style/AppTheme.TextView.Paragraphs"
-                          android:text="@string/text_credits"
-                          android:id="@+id/paragraphs"/>
+                          android:text="@string/text_credits_people"
+                          android:autoLink="web"
+                          android:id="@+id/paragraphs_people"/>
+                <TextView style="@style/AppTheme.TextView.Paragraphs"
+                          android:text="@string/text_credits_andengine"
+                          android:autoLink="web"
+                          android:id="@+id/paragraphs_andengine"
+                          android:layout_below="@id/paragraphs_people"/>
+                <TextView style="@style/AppTheme.TextView.Paragraphs"
+                          android:autoLink="web"
+                          android:id="@+id/paragraphs_butterknife"
+                          android:text="@string/text_credits_butterknife"
+                          android:layout_below="@id/paragraphs_andengine"/>
+                <TextView style="@style/AppTheme.TextView.Paragraphs"
+                          android:autoLink="web"
+                          android:id="@+id/paragraphs_carousel"
+                          android:text="@string/text_credits_carousel"
+                          android:layout_below="@id/paragraphs_people"/>
+                <TextView style="@style/AppTheme.TextView.Paragraphs"
+                          android:text="@string/text_credits_licenses"
+                          android:autoLink="web"
+                          android:id="@+id/paragraphs_licenses"
+                          android:layout_below="@id/paragraphs_carousel"/>
             </RelativeLayout>
 
         </RelativeLayout>
