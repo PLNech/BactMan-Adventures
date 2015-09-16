@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="AppTheme.ImageView.FullWidth">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_alignParentTop">true</item>
+        <item name="android:layout_alignParentLeft">true</item>
+        <item name="android:scaleType">fitXY</item>
+        <item name="android:adjustViewBounds">true</item>
+
+        <!-- Limited height to avoid screen clutter -->
+        <item name="android:maxHeight">200dp</item>
+    </style>
+</resources>

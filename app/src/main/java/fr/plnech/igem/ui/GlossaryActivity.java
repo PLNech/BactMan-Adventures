@@ -5,7 +5,6 @@ import android.content.DialogInterface;
 import android.content.res.Resources;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
-import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
@@ -80,7 +79,6 @@ public class GlossaryActivity extends ListActivity {
         for (int i = 0; i < entryTexts.length; i++) {
             final Entry e = new Entry(entryTitles[i], entryTexts[i]);
             craftedList.add(e);
-            Log.d(TAG, "buildList -  new Entry:" + e);
         }
         return craftedList;
     }
