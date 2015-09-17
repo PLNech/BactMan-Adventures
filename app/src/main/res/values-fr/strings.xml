@@ -107,7 +107,27 @@
     <string name="title_activity_credits">Crédits</string>
     <string name="credits_title">Crédits, Licences et Remerciements</string>
     <string name="msg_last_game">Félicitations, vous avez gagné le dernier jeu !</string>
-    <string name="text_credits">Developed by Paul-Louis Nech and Goulwen Mintec\n\n Games build with the AndEngine\n\n</string><!--TODO:Translate-->
+    <string name="text_credits_people">
+        \n
+        Développement des jeux : Paul-Louis Nech\n\n
+        Mise en page de l\'application : Paul-Louis Nech, Goulwen Mintec, Lionel Chesnais\n\n
+        Ressources graphiques : Lionel Chesnais, Marine Mohmmed, Cyrielle Viaut, Pascal Charleton\n\n
+        Textes et concepts : Johanna Chesnel, Hugo Cremaschi, Matthieu Da Costa, Gilles Defrel, Armelle Louisy,
+        Marine Mohmmed, Paul-Louis Nech, Pauline Trébulle, Marwa Zerhouni\n\n
+        \n
+    </string>
+    <string name="text_credits_andengine">
+        Jeux développés à l\'aide du moteur de jeu <a href="#">AndEngine.</a>\n\n
+    </string>
+    <string name="text_credits_butterknife">
+        Interactions avec l\'interface simplifiées par la bibliothèqie
+        <a href="#">ButterKnife</a>\n\n
+    </string>
+    <string name="text_credits_carousel">
+        Pages Sponsors et Équipe construites à l\'aide de la bibliothèque
+        <a href="#">Android Carousel, par ludovicroland</a>\n
+        basée sur les travaux de <a href="#">Igor Kushnarev</a>\n\n
+    </string>
     <string name="font_fontFamily_title">sans-serif</string>
 
 
