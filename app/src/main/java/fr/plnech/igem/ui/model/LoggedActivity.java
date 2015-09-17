@@ -20,7 +20,7 @@ public abstract class LoggedActivity extends AppCompatActivity {
         final Resources resources = getResources();
         final String contentName = resources.getString(getTitleResId());
         final String contentType = getContentType();
-        final String contentId = resources.getResourceName(getLayoutResId());
+        final String contentId = resources.getResourceName(getLayoutResId()).replace("fr.plnech.igem:layout/", "");
         logView(contentName, contentType, contentId, this);
     }
 
@@ -30,7 +30,7 @@ public abstract class LoggedActivity extends AppCompatActivity {
                 .putContentType(contentType)
                 .putContentName(contentName)
                 .putContentId(contentId));
-        Log.d(TAG, "logView - " + contentName);
+        Log.d(TAG, "logView - " + contentType + ": " + contentName + "(" + contentId + ")");
     }
 
     @Override

@@ -55,13 +55,14 @@ public class GlossaryActivity extends ListActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 final Entry item = (Entry) parent.getItemAtPosition(position);
+                LoggedActivity.logView("Glossary: " + item.getName(), "GlossaryActivity", "glossary_" + item.getName().replace(" ", "_").toLowerCase(), GlossaryActivity.this);
                 AlertDialog.Builder builder = new AlertDialog.Builder(parent.getContext());
                 builder.setTitle(item.getName())
                         .setMessage(item.getDescription())
                         .setCancelable(false)
                         .setPositiveButton("OK", new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int id) {
-                                //TODO: Read event?
+                                //TODO: Read event? Feedback button?
                             }
                         });
                 AlertDialog alert = builder.create();
