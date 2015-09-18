@@ -313,7 +313,7 @@ public class GutGame extends BaseGame {
         if (--gameLives <= 0) {
             setPlaying(false);
             final float posRatioX = 0.5f;
-            final float posRatioY = 0f;
+            final float posRatioY = 0.2f;
             if (gameScore >= 50) {
                 activity.onWin(gameScore, posRatioX, posRatioY);
             } else {
