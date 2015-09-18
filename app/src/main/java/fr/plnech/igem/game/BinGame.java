@@ -221,10 +221,12 @@ public class BinGame extends BaseGame {
         Log.v(TAG, "beginContact - Decreasing lives to " + gameLives + ".");
         if (--gameLives == 0) {
             setPlaying(false);
+            final float posY = 0.3f;
+            final float posX = 0.5f;
             if (gameScore >= 50) {
-                activity.onWin(gameScore, 0.5f, 0.2f);
+                activity.onWin(gameScore, posX, posY);
             } else {
-                activity.onLose(gameScore, 0.5f, 0.2f);
+                activity.onLose(gameScore, posX, posY);
             }
         }
 
