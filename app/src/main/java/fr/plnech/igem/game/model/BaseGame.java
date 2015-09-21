@@ -3,13 +3,16 @@ package fr.plnech.igem.game.model;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.res.Resources;
 import android.support.annotation.Nullable;
 import android.util.Log;
+import android.widget.Toast;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.ContactListener;
 import com.crashlytics.android.answers.Answers;
 import com.crashlytics.android.answers.LevelEndEvent;
 import com.crashlytics.android.answers.LevelStartEvent;
+import fr.plnech.igem.R;
 import fr.plnech.igem.game.*;
 import fr.plnech.igem.game.model.res.FontAsset;
 import fr.plnech.igem.game.model.res.GFXAsset;
@@ -30,6 +33,7 @@ import java.util.Random;
  */
 public abstract class BaseGame {
     public static final String KEY_GAME_ID = "game_id";
+    public static final String KEY_WARN = "warn";
     private static final String TAG = "BaseGame";
 
     public static final int ID_NONE = 0;
@@ -162,8 +166,7 @@ public abstract class BaseGame {
     }
 
     protected void animate(final WorldObject object,
-                           SequenceEntityModifier modifier, @Nullable IEntityModifier.IEntityModifierListener listener)
-    {
+                           SequenceEntityModifier modifier, @Nullable IEntityModifier.IEntityModifierListener listener) {
         if (listener == null) {
             object.registerEntityModifier(new LoopEntityModifier(modifier, 1));
         } else {
@@ -189,6 +192,7 @@ public abstract class BaseGame {
         final Intent intent = new Intent(activity, isPortrait(gameId) ?
                 PortraitGameActivity.class : LandscapeGameActivity.class);
         intent.putExtra(KEY_GAME_ID, gameId);
+        intent.putExtra(KEY_WARN, true);
         activity.startActivity(intent);
     }
 

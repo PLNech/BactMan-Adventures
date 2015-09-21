@@ -1,6 +1,10 @@
 package fr.plnech.igem.game;
 
+import android.content.Context;
+import android.content.res.Resources;
 import android.util.Log;
+import android.widget.Toast;
+import fr.plnech.igem.R;
 import fr.plnech.igem.game.managers.ResMan;
 import org.andengine.engine.camera.SmoothCamera;
 import org.andengine.engine.options.EngineOptions;
@@ -28,6 +32,7 @@ public class PortraitGameActivity extends AbstractGameActivity {
         super.onCreateScene();
 
         initSplashScene();
+        Log.d(TAG, "onCreateScene - Splash Scene created.");
 
         loadMenus();
         initMenuPause();
@@ -38,6 +43,11 @@ public class PortraitGameActivity extends AbstractGameActivity {
 
         loadGameAsync();
         return splashScene;
+    }
+
+    @Override
+    protected int getOrientationResId() {
+        return R.string.msg_orientation_landscape;
     }
 
     protected void loadSplashScene() {

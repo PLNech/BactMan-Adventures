@@ -1,8 +1,10 @@
 package fr.plnech.igem.game;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.AssetManager;
+import android.content.res.Resources;
 import android.opengl.GLES20;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -205,8 +207,7 @@ public abstract class AbstractGameActivity extends SimpleBaseGameActivity implem
     @Override
     public boolean onKeyDown(final int pKeyCode, @NonNull final KeyEvent pEvent) {
         if (gameScene != null && pauseScene != null &&
-                pKeyCode == KeyEvent.KEYCODE_MENU && pEvent.getAction() == KeyEvent.ACTION_DOWN)
-        {
+                pKeyCode == KeyEvent.KEYCODE_MENU && pEvent.getAction() == KeyEvent.ACTION_DOWN) {
             if (gameScene.hasChildScene()) { // The game is paused
                 pauseScene.back();
                 updateNextStatus();
@@ -234,6 +235,7 @@ public abstract class AbstractGameActivity extends SimpleBaseGameActivity implem
                 resetMenus();
                 return true;
             case OPTION_NEXT:
+                final Resources resources = getResources();
                 final int nextGameId = currentGame.getNextGameId();
 
                 if (nextGameId != BaseGame.ID_NONE) {
@@ -246,6 +248,7 @@ public abstract class AbstractGameActivity extends SimpleBaseGameActivity implem
                         mEngine.setScene(splashScene);
                     } else {
                         BaseGame.startGame(this, nextGameId);
+                        warnAboutOrientation();
                         onQuit();
                     }
 
@@ -253,7 +256,7 @@ public abstract class AbstractGameActivity extends SimpleBaseGameActivity implem
                     runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
-                            Toast.makeText(getApplicationContext(), getResources().getString(R.string.msg_last_game), Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getApplicationContext(), resources.getString(R.string.msg_last_game), Toast.LENGTH_SHORT).show();
                         }
                     });
                     NavUtils.navigateUpFromSameTask(AbstractGameActivity.this);
@@ -433,6 +436,16 @@ public abstract class AbstractGameActivity extends SimpleBaseGameActivity implem
         loadScene(currentGame);
         mEngine.setScene(gameScene);
     }
+
+    protected void warnAboutOrientation() {
+        Resources resources = getResources();
+        final String message = String.format(resources.getString(R.string.msg_next_game),
+                resources.getString(getOrientationResId()));
+        toastOnUIThread(message, Toast.LENGTH_LONG);
+        Log.d(TAG, "warnAboutOrientation - " + message);
+    }
+
+    protected abstract int getOrientationResId();
 
     private void loadScene(BaseGame game) {
         currentGame.setPlaying(true);
@@ -625,8 +638,7 @@ public abstract class AbstractGameActivity extends SimpleBaseGameActivity implem
 
     public Vector2 spritePosition(ITextureRegion textureRegion,
                                   float positionRatioX, float positionRatioY,
-                                  float ratio)
-    {
+                                  float ratio) {
         final float widthToRatio = textureRegion.getWidth() * ratio;
         final float heightToRatio = textureRegion.getHeight() * ratio;
         return spritePosition(new Vector2(widthToRatio, heightToRatio), new Vector2(positionRatioX, positionRatioY));

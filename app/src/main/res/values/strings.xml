@@ -693,6 +693,9 @@
         ensuite les incorporer dans une cellule vivante.
     </string>
     <string name="msg_last_game">Congratulations, you just won the last game!</string>
+    <string name="msg_next_game">The next game is in %s mode!</string>
+    <string name="msg_orientation_portrait">portrait</string>
+    <string name="msg_orientation_landscape">landscape</string>
 
     <string-array name="glossary_titles">
         <item>ADN</item>
