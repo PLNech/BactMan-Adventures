@@ -100,7 +100,9 @@ public class Item extends PhysicalWorldObject {
                 checkPosition();
             }
         };
-        shape.setScale(BIGGER_SHAPE_FACTOR * SCALE_DEFAULT, SCALE_DEFAULT);
+
+        shape.setScale(BIGGER_SHAPE_FACTOR * SCALE_DEFAULT * (isThin(pType) ? 4 : 2),
+                BIGGER_SHAPE_FACTOR * SCALE_DEFAULT);
         shape.setColor(Color.TRANSPARENT);
         shape.setRotation(sprite.getRotation());
 
@@ -109,6 +111,10 @@ public class Item extends PhysicalWorldObject {
         Log.v(TAG, "Item - Created " + type.toString() + " at " + sprite.getX() + ", " + sprite.getY()
                 + " with texture of w:" + texture.getWidth() + ", h:" + texture.getHeight());
         initialPosition = new Vector2(posX, posY);
+    }
+
+    private boolean isThin(Type pType) {
+        return pType == Type.MICROTUBE || pType == Type.PEN || pType == Type.TUBE;
     }
 
     public Type getType() {
