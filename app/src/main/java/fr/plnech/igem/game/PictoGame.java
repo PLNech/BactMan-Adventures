@@ -21,10 +21,7 @@ import org.andengine.opengl.texture.region.ITiledTextureRegion;
 import org.andengine.opengl.vbo.VertexBufferObjectManager;
 import org.andengine.util.modifier.IModifier;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Stack;
+import java.util.*;
 
 /**
  * Created by PLNech on 28/08/2015.
@@ -83,11 +80,19 @@ public class PictoGame extends PortraitGame {
         if (profAssets.isEmpty()) {
             final int profWidth = 1440;
             final int profHeight = 2400;
-            profAssets.add(new GFXAsset(ResMan.PROF_MEMO_1, profWidth, profHeight));
-            profAssets.add(new GFXAsset(ResMan.PROF_MEMO_2, profWidth, profHeight));
-            profAssets.add(new GFXAsset(ResMan.PROF_MEMO_3, profWidth, profHeight));
-            profAssets.add(new GFXAsset(ResMan.PROF_MEMO_4, profWidth, profHeight));
-            profAssets.add(new GFXAsset(ResMan.PROF_MEMO_5, profWidth, profHeight));
+            if (Locale.getDefault().getLanguage().equals("fr")) {
+                profAssets.add(new GFXAsset(ResMan.PROF_MEMO_1_FR, profWidth, profHeight));
+                profAssets.add(new GFXAsset(ResMan.PROF_MEMO_2_FR, profWidth, profHeight));
+                profAssets.add(new GFXAsset(ResMan.PROF_MEMO_3_FR, profWidth, profHeight));
+                profAssets.add(new GFXAsset(ResMan.PROF_MEMO_4_FR, profWidth, profHeight));
+                profAssets.add(new GFXAsset(ResMan.PROF_MEMO_5_FR, profWidth, profHeight));
+            } else {
+                profAssets.add(new GFXAsset(ResMan.PROF_MEMO_1, profWidth, profHeight));
+                profAssets.add(new GFXAsset(ResMan.PROF_MEMO_2, profWidth, profHeight));
+                profAssets.add(new GFXAsset(ResMan.PROF_MEMO_3, profWidth, profHeight));
+                profAssets.add(new GFXAsset(ResMan.PROF_MEMO_4, profWidth, profHeight));
+                profAssets.add(new GFXAsset(ResMan.PROF_MEMO_5, profWidth, profHeight));
+            }
         }
         return profAssets;
     }

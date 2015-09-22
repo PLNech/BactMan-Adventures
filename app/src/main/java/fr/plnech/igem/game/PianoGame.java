@@ -3,7 +3,10 @@ package fr.plnech.igem.game;
 import android.util.Log;
 import com.badlogic.gdx.math.Vector2;
 import fr.plnech.igem.game.managers.ResMan;
-import fr.plnech.igem.game.model.*;
+import fr.plnech.igem.game.model.HUDElement;
+import fr.plnech.igem.game.model.LandscapeGame;
+import fr.plnech.igem.game.model.TouchableAnimatedSprite;
+import fr.plnech.igem.game.model.WorldObject;
 import fr.plnech.igem.game.model.res.FontAsset;
 import fr.plnech.igem.game.model.res.GFXAsset;
 import fr.plnech.igem.game.piano.Base;
@@ -27,6 +30,7 @@ import org.andengine.util.modifier.IModifier;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 
 /**
  * Created by PLNech on 31/08/2015.
@@ -86,11 +90,17 @@ public class PianoGame extends LandscapeGame {
         if (profAssets.isEmpty()) {
             final int profWidth = 1433;
             final int profHeight = 1000;
-            profAssets.add(new GFXAsset(ResMan.PROF_PIANO_1, profWidth, profHeight));
-            profAssets.add(new GFXAsset(ResMan.PROF_PIANO_2, profWidth, profHeight));
+            if (Locale.getDefault().getLanguage().equals("fr")) {
+                profAssets.add(new GFXAsset(ResMan.PROF_PIANO_1_FR, profWidth, profHeight));
+                profAssets.add(new GFXAsset(ResMan.PROF_PIANO_2_FR, profWidth, profHeight));
+            } else {
+                profAssets.add(new GFXAsset(ResMan.PROF_PIANO_1, profWidth, profHeight));
+                profAssets.add(new GFXAsset(ResMan.PROF_PIANO_2, profWidth, profHeight));
+            }
         }
         return profAssets;
     }
+
     @Override
     public List<FontAsset> getFontAssets() {
         if (fontAssets.isEmpty()) {

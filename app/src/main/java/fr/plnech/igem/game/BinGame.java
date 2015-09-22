@@ -26,6 +26,7 @@ import org.andengine.opengl.vbo.VertexBufferObjectManager;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 
 /**
  * Created by PLNech on 21/08/2015.
@@ -99,12 +100,22 @@ public class BinGame extends PortraitGame {
         if (profAssets.isEmpty()) {
             final int profWidth = 1440;
             final int profHeight = 2400;
-            profAssets.add(new GFXAsset(ResMan.PROF_BIN_1, profWidth, profHeight));
-            profAssets.add(new GFXAsset(ResMan.PROF_BIN_2, profWidth, profHeight));
-            profAssets.add(new GFXAsset(ResMan.PROF_BIN_3, profWidth, profHeight));
-            profAssets.add(new GFXAsset(ResMan.PROF_BIN_4, profWidth, profHeight));
-            profAssets.add(new GFXAsset(ResMan.PROF_BIN_5, profWidth, profHeight));
-            profAssets.add(new GFXAsset(ResMan.PROF_BIN_6, profWidth, profHeight));
+
+            if (Locale.getDefault().getLanguage().equals("fr")) {
+                profAssets.add(new GFXAsset(ResMan.PROF_BIN_1_FR, profWidth, profHeight));
+                profAssets.add(new GFXAsset(ResMan.PROF_BIN_2_FR, profWidth, profHeight));
+                profAssets.add(new GFXAsset(ResMan.PROF_BIN_3_FR, profWidth, profHeight));
+                profAssets.add(new GFXAsset(ResMan.PROF_BIN_4_FR, profWidth, profHeight));
+                profAssets.add(new GFXAsset(ResMan.PROF_BIN_5_FR, profWidth, profHeight));
+                profAssets.add(new GFXAsset(ResMan.PROF_BIN_6_FR, profWidth, profHeight));
+            } else {
+                profAssets.add(new GFXAsset(ResMan.PROF_BIN_1, profWidth, profHeight));
+                profAssets.add(new GFXAsset(ResMan.PROF_BIN_2, profWidth, profHeight));
+                profAssets.add(new GFXAsset(ResMan.PROF_BIN_3, profWidth, profHeight));
+                profAssets.add(new GFXAsset(ResMan.PROF_BIN_4, profWidth, profHeight));
+                profAssets.add(new GFXAsset(ResMan.PROF_BIN_5, profWidth, profHeight));
+                profAssets.add(new GFXAsset(ResMan.PROF_BIN_6, profWidth, profHeight));
+            }
         }
         return profAssets;
     }

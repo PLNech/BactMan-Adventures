@@ -34,6 +34,7 @@ import org.andengine.util.color.Color;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 /**
  * Created by PLNech on 31/08/2015.
@@ -94,8 +95,13 @@ public class GutGame extends LandscapeGame {
         if (profAssets.isEmpty()) {
             final int profWidth = 2400;
             final int profHeight = 1311;
-            profAssets.add(new GFXAsset(ResMan.PROF_GUT_1, profWidth, profHeight));
-            profAssets.add(new GFXAsset(ResMan.PROF_GUT_2, profWidth, profHeight));
+            if (Locale.getDefault().getLanguage().equals("fr")) {
+                profAssets.add(new GFXAsset(ResMan.PROF_GUT_1_FR, profWidth, profHeight));
+                profAssets.add(new GFXAsset(ResMan.PROF_GUT_2_FR, profWidth, profHeight));
+            } else {
+                profAssets.add(new GFXAsset(ResMan.PROF_GUT_1, profWidth, profHeight));
+                profAssets.add(new GFXAsset(ResMan.PROF_GUT_2, profWidth, profHeight));
+            }
         }
         return profAssets;
     }
