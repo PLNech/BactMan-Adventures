@@ -81,9 +81,13 @@ public class PictoGame extends PortraitGame {
     @Override
     public List<GFXAsset> getProfAssets() {
         if (profAssets.isEmpty()) {
-//            final int profWidth = 1440;
-//            final int profHeight = 2400;
-//            profAssets.add(new GFXAsset(ResMan.PROF_BIN_1, profWidth, profHeight));
+            final int profWidth = 1440;
+            final int profHeight = 2400;
+            profAssets.add(new GFXAsset(ResMan.PROF_MEMO_1, profWidth, profHeight));
+            profAssets.add(new GFXAsset(ResMan.PROF_MEMO_2, profWidth, profHeight));
+            profAssets.add(new GFXAsset(ResMan.PROF_MEMO_3, profWidth, profHeight));
+            profAssets.add(new GFXAsset(ResMan.PROF_MEMO_4, profWidth, profHeight));
+            profAssets.add(new GFXAsset(ResMan.PROF_MEMO_5, profWidth, profHeight));
         }
         return profAssets;
     }

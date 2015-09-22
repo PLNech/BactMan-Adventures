@@ -76,7 +76,7 @@ public abstract class AbstractGameActivity extends SimpleBaseGameActivity implem
     public static final int CAMERA_WIDTH = 480;
     public static final int CAMERA_HEIGHT = 800;
 
-    public static final float SPLASH_DURATION = 0.5f;
+    public static final float SPLASH_DURATION = 1.0f;
 
     public static final String ASSET_PATH_GFX = "gfx/";
     public static final String ASSET_PATH_FONT = "fonts/";

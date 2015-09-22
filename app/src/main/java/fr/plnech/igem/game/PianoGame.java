@@ -84,9 +84,10 @@ public class PianoGame extends LandscapeGame {
     @Override
     public List<GFXAsset> getProfAssets() {
         if (profAssets.isEmpty()) {
-            final int profWidth = getWidth();
-            final int profHeight = getHeight();
-//            profAssets.add(new GFXAsset(ResMan.PROF_BIN_6, profWidth, profHeight));
+            final int profWidth = 1433;
+            final int profHeight = 1000;
+            profAssets.add(new GFXAsset(ResMan.PROF_PIANO_1, profWidth, profHeight));
+            profAssets.add(new GFXAsset(ResMan.PROF_PIANO_2, profWidth, profHeight));
         }
         return profAssets;
     }

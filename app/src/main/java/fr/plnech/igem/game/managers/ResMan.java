@@ -105,13 +105,41 @@ public class ResMan {
     public static final String PIANO_C = "piano/base_c.png";
     public static final String PIANO_C_CPL = "piano/base_c_cpl.png";
 
-    public static final String PROF_BIN_1 = "prof_bin_1.png";
-    public static final String PROF_BIN_2 = "prof_bin_2.png";
-    public static final String PROF_BIN_3 = "prof_bin_3.png";
-    public static final String PROF_BIN_4 = "prof_bin_4.png";
-    public static final String PROF_BIN_5 = "prof_bin_5.png";
-    public static final String PROF_BIN_6 = "prof_bin_6.png";
+    public static final String PROF_BIN_1 = "prof/bin_1.png";
+    public static final String PROF_BIN_2 = "prof/bin_2.png";
+    public static final String PROF_BIN_3 = "prof/bin_3.png";
+    public static final String PROF_BIN_4 = "prof/bin_4.png";
+    public static final String PROF_BIN_5 = "prof/bin_5.png";
+    public static final String PROF_BIN_6 = "prof/bin_6.png";
 
-    public static final String PROF_GUT_1 = "prof_gut_1.png";
-    public static final String PROF_GUT_2 = "prof_gut_2.png";
+    public static final String PROF_GUT_1 = "prof/gut_1.png";
+    public static final String PROF_GUT_2 = "prof/gut_2.png";
+
+    public static final String PROF_PIANO_1 = "prof/piano_1.png";
+    public static final String PROF_PIANO_2 = "prof/piano_2.png";
+
+    public static final String PROF_MEMO_1 = "prof/memo_1.png";
+    public static final String PROF_MEMO_2 = "prof/memo_2.png";
+    public static final String PROF_MEMO_3 = "prof/memo_3.png";
+    public static final String PROF_MEMO_4 = "prof/memo_4.png";
+    public static final String PROF_MEMO_5 = "prof/memo_5.png";
+
+    public static final String PROF_BIN_1_FR = "prof/bin_1_fr.png";
+    public static final String PROF_BIN_2_FR = "prof/bin_2_fr.png";
+    public static final String PROF_BIN_3_FR = "prof/bin_3_fr.png";
+    public static final String PROF_BIN_4_FR = "prof/bin_4_fr.png";
+    public static final String PROF_BIN_5_FR = "prof/bin_5_fr.png";
+    public static final String PROF_BIN_6_FR = "prof/bin_6_fr.png";
+
+    public static final String PROF_GUT_1_FR = "prof/gut_1_fr.png";
+    public static final String PROF_GUT_2_FR = "prof/gut_2_fr.png";
+
+    public static final String PROF_PIANO_1_FR = "prof/piano_1_fr.png";
+    public static final String PROF_PIANO_2_FR = "prof/piano_2_fr.png";
+
+    public static final String PROF_MEMO_1_FR = "prof/memo_1_fr.png";
+    public static final String PROF_MEMO_2_FR = "prof/memo_2_fr.png";
+    public static final String PROF_MEMO_3_FR = "prof/memo_3_fr.png";
+    public static final String PROF_MEMO_4_FR = "prof/memo_4_fr.png";
+    public static final String PROF_MEMO_5_FR = "prof/memo_5_fr.png";
 }
