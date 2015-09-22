@@ -104,4 +104,14 @@ public class ResMan {
     public static final String PIANO_G_CPL = "piano/base_g_cpl.png";
     public static final String PIANO_C = "piano/base_c.png";
     public static final String PIANO_C_CPL = "piano/base_c_cpl.png";
+
+    public static final String PROF_BIN_1 = "prof_bin_1.png";
+    public static final String PROF_BIN_2 = "prof_bin_2.png";
+    public static final String PROF_BIN_3 = "prof_bin_3.png";
+    public static final String PROF_BIN_4 = "prof_bin_4.png";
+    public static final String PROF_BIN_5 = "prof_bin_5.png";
+    public static final String PROF_BIN_6 = "prof_bin_6.png";
+
+    public static final String PROF_GUT_1 = "prof_gut_1.png";
+    public static final String PROF_GUT_2 = "prof_gut_2.png";
 }

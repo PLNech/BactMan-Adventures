@@ -1,6 +1,5 @@
 package fr.plnech.igem.game;
 
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.AssetManager;
@@ -42,6 +41,7 @@ import org.andengine.entity.text.Text;
 import org.andengine.entity.text.TextOptions;
 import org.andengine.entity.util.FPSLogger;
 import org.andengine.extension.physics.box2d.PhysicsWorld;
+import org.andengine.input.touch.TouchEvent;
 import org.andengine.opengl.font.Font;
 import org.andengine.opengl.font.FontFactory;
 import org.andengine.opengl.font.FontManager;
@@ -84,6 +84,8 @@ public abstract class AbstractGameActivity extends SimpleBaseGameActivity implem
     protected static final int OPTION_RESET = 0;
     protected static final int OPTION_NEXT = OPTION_RESET + 1;
     protected static final int OPTION_QUIT = OPTION_NEXT + 1;
+
+    private int profPosition;
 
     private HashMap<CharSequence, ITiledTextureRegion> textureMap = new HashMap<>();
     private HashMap<CharSequence, IFont> fontMap = new HashMap<>();
@@ -185,6 +187,8 @@ public abstract class AbstractGameActivity extends SimpleBaseGameActivity implem
 
     protected abstract void loadSplashScene();
 
+    protected abstract void loadMenus();
+
     @Override
     public synchronized void onResumeGame() {
         if (mEngine != null) {
@@ -200,8 +204,18 @@ public abstract class AbstractGameActivity extends SimpleBaseGameActivity implem
     @Override
     protected Scene onCreateScene() {
         this.mEngine.registerUpdateHandler(new FPSLogger());
+        initSplashScene();
+        Log.d(TAG, "onCreateScene - Splash Scene created.");
 
-        return null;
+        loadMenus();
+        initMenuPause();
+        initMenuWin();
+        updateNextStatus();
+
+        Log.d(TAG, "onCreateScene - Splash Scene created.");
+
+        loadGameAsync();
+        return splashScene;
     }
 
     @Override
@@ -304,7 +318,7 @@ public abstract class AbstractGameActivity extends SimpleBaseGameActivity implem
         Log.d(TAG, "loadGraphic - Finished loading game assets.");
     }
 
-    private void loadGFXAsset(GFXAsset asset) {
+    private String loadGFXAsset(GFXAsset asset) {
         BitmapTextureAtlas textureAtlas = new BitmapTextureAtlas(textureManager, asset.getWidth(), asset.getHeight(), TextureOptions.BILINEAR);
         final String filename = asset.getFilename();
         final int textureX = asset.getTextureX();
@@ -315,6 +329,7 @@ public abstract class AbstractGameActivity extends SimpleBaseGameActivity implem
         putTexture(filename, tiledTextureRegion);
 
         textureAtlas.load();
+        return filename;
     }
 
     private void loadFonts(BaseGame game) {
@@ -417,7 +432,10 @@ public abstract class AbstractGameActivity extends SimpleBaseGameActivity implem
         loadGFXAssets(currentGame);
         loadFonts(currentGame);
         //loadSounds(currentGame);
+        setGameScene();
+    }
 
+    private void setGameScene() {
         gameScene = new Scene();
         gameScene.setOnAreaTouchTraversalFrontToBack();
         final IOnSceneTouchListener sceneTouchListener = currentGame.getOnSceneTouchListener();
@@ -501,15 +519,52 @@ public abstract class AbstractGameActivity extends SimpleBaseGameActivity implem
     }
 
     protected void loadGameAsync() {
-        registerUpdateHandler(SPLASH_DURATION, new ITimerCallback() {
-            public void onTimePassed(final TimerHandler pTimerHandler) {
-                mEngine.unregisterUpdateHandler(pTimerHandler);
+        loadGameAsync(0, true);
+    }
 
-                initGameScene();
-                currentGame.logLevelStart();
-                Log.d(TAG, "onTimePassed - Game Scene created.");
-            }
-        });
+    protected void loadGameAsync(final int givenPosition, boolean shouldDelay) {
+        Log.d(TAG, "loadGameAsync - Loading with prof position " + givenPosition);
+        profPosition = givenPosition;
+        if (shouldDelay) {
+            registerUpdateHandler(SPLASH_DURATION, new ITimerCallback() {
+                public void onTimePassed(final TimerHandler pTimerHandler) {
+                    mEngine.unregisterUpdateHandler(pTimerHandler);
+                    showProfOrRunGame();
+                }
+            });
+        } else {
+            showProfOrRunGame();
+        }
+    }
+
+    private void showProfOrRunGame() {
+        final List<GFXAsset> profAssets = currentGame.getProfAssets();
+        if (profPosition < profAssets.size()) {
+            GFXAsset profAsset = profAssets.get(profPosition);
+            DitheredSprite splash = new DitheredSprite(0, 0, currentGame.getWidth(), currentGame.getHeight(),
+                    getTexture(loadGFXAsset(profAsset)), getVBOM());
+            splashScene.setBackground(new SpriteBackground(splash));
+            splashScene.setOnSceneTouchListener(new IOnSceneTouchListener() {
+                @Override
+                public boolean onSceneTouchEvent(Scene pScene, TouchEvent pSceneTouchEvent) {
+                    if (pSceneTouchEvent.isActionDown()) {
+                        Log.d(TAG, "onSceneTouchEvent - Touched splashScene: screen at position " + profPosition);
+                        loadGameAsync(++profPosition, false);
+                        return true;
+                    }
+                    return false;
+                }
+            });
+        } else {
+            Log.d(TAG, "onTimePassed - Finished prof screens, launching game!");
+            runCurrentGame();
+        }
+    }
+
+    private void runCurrentGame() {
+        initGameScene();
+        currentGame.logLevelStart();
+        Log.d(TAG, "runCurrentGame - Game Scene created.");
     }
 
     public void registerUpdateHandler(float duration, ITimerCallback pTimerCallback) {
@@ -685,6 +740,8 @@ public abstract class AbstractGameActivity extends SimpleBaseGameActivity implem
     public VertexBufferObjectManager getVBOM() {
         return vertexBufferObjectManager;
     }
+
+    protected abstract void initSplashScene();
 
     protected void initSplashScene(ITextureRegion splashTexture, int width, int height) {
         splashScene = new Scene();

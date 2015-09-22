@@ -4,8 +4,8 @@ import android.support.annotation.NonNull;
 import android.util.Log;
 import com.badlogic.gdx.math.Vector2;
 import fr.plnech.igem.game.managers.ResMan;
-import fr.plnech.igem.game.model.BaseGame;
 import fr.plnech.igem.game.model.HUDElement;
+import fr.plnech.igem.game.model.PortraitGame;
 import fr.plnech.igem.game.model.res.FontAsset;
 import fr.plnech.igem.game.model.res.GFXAsset;
 import fr.plnech.igem.game.picto.Card;
@@ -29,7 +29,7 @@ import java.util.Stack;
 /**
  * Created by PLNech on 28/08/2015.
  */
-public class PictoGame extends BaseGame {
+public class PictoGame extends PortraitGame {
     private static final String TAG = "PictoGame";
     public static final float FAIL_DURATION = 1.0f;
     public static final float WIN_DURATION = 1.0f;
@@ -76,6 +76,16 @@ public class PictoGame extends BaseGame {
             graphicalAssets.add(new GFXAsset(ResMan.HUD_SCORE, 1885, 1024, 0, 0));
         }
         return graphicalAssets;
+    }
+
+    @Override
+    public List<GFXAsset> getProfAssets() {
+        if (profAssets.isEmpty()) {
+//            final int profWidth = 1440;
+//            final int profHeight = 2400;
+//            profAssets.add(new GFXAsset(ResMan.PROF_BIN_1, profWidth, profHeight));
+        }
+        return profAssets;
     }
 
     @Override
@@ -239,7 +249,11 @@ public class PictoGame extends BaseGame {
             nameList.add(cardName(type));
         }
 
+        // Adding first cards of pairs, randomized to avoid position determinism
+        Collections.shuffle(nameList);
         nameStack.addAll(nameList);
+
+        // Adding second cards of pairs, randomized as well
         Collections.shuffle(nameList);
         nameStack.addAll(nameList);
         return nameStack;
@@ -251,6 +265,7 @@ public class PictoGame extends BaseGame {
         switch (type) {
             case BACK:
                 resName = ResMan.CARD_BACK;
+                break;
             case BIOHAZARD:
                 resName = ResMan.CARD_BIOHAZARD;
                 break;
@@ -291,11 +306,6 @@ public class PictoGame extends BaseGame {
                 throw new IllegalStateException("Missing sprite for type " + type);
         }
         return resName;
-    }
-
-    private void createCard(float pX, float pY) {
-        String resName = cardName(Card.Type.random());
-        createCard(resName, pX, pY);
     }
 
     private void createCard(String resCardName, float pX, float pY) {

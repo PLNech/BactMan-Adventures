@@ -1,16 +1,11 @@
 package fr.plnech.igem.game;
 
-import android.content.Context;
-import android.content.res.Resources;
-import android.util.Log;
-import android.widget.Toast;
 import fr.plnech.igem.R;
 import fr.plnech.igem.game.managers.ResMan;
 import org.andengine.engine.camera.SmoothCamera;
 import org.andengine.engine.options.EngineOptions;
 import org.andengine.engine.options.ScreenOrientation;
 import org.andengine.engine.options.resolutionpolicy.RatioResolutionPolicy;
-import org.andengine.entity.scene.Scene;
 import org.andengine.opengl.texture.TextureOptions;
 import org.andengine.opengl.texture.atlas.bitmap.BitmapTextureAtlas;
 import org.andengine.opengl.texture.atlas.bitmap.BitmapTextureAtlasTextureRegionFactory;
@@ -28,24 +23,6 @@ public class PortraitGameActivity extends AbstractGameActivity {
     }
 
     @Override
-    protected Scene onCreateScene() {
-        super.onCreateScene();
-
-        initSplashScene();
-        Log.d(TAG, "onCreateScene - Splash Scene created.");
-
-        loadMenus();
-        initMenuPause();
-        initMenuWin();
-        updateNextStatus();
-
-        Log.d(TAG, "onCreateScene - Splash Scene created.");
-
-        loadGameAsync();
-        return splashScene;
-    }
-
-    @Override
     protected int getOrientationResId() {
         return R.string.msg_orientation_landscape;
     }
@@ -59,11 +36,11 @@ public class PortraitGameActivity extends AbstractGameActivity {
         putTexture(ResMan.SPLASH, splashTextureRegion);
     }
 
-    private void initSplashScene() {
+    protected void initSplashScene() {
         super.initSplashScene(getTexture(ResMan.SPLASH), CAMERA_WIDTH, CAMERA_HEIGHT);
     }
 
-    private void loadMenus() {
+    protected void loadMenus() {
         checkSetGFXPath();
         BitmapTextureAtlas menuAtlas = new BitmapTextureAtlas(this.getTextureManager(), 200, 150, TextureOptions.BILINEAR);
         TiledTextureRegion menuBG = BitmapTextureAtlasTextureRegionFactory.createTiledFromAsset(menuAtlas, this, ResMan.MENU_BG, 0, 0, 1, 1);

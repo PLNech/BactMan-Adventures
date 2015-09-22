@@ -26,6 +26,10 @@ public class GFXAsset extends Asset {
         this(filename, width, height, textureX, textureY, 1, 1);
     }
 
+    public GFXAsset(String filename, int width, int height) {
+        this(filename, width, height, 0, 0, 1, 1);
+    }
+
     public int getHeight() {
         return height;
     }

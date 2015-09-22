@@ -3,16 +3,13 @@ package fr.plnech.igem.game.model;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.res.Resources;
 import android.support.annotation.Nullable;
 import android.util.Log;
-import android.widget.Toast;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.ContactListener;
 import com.crashlytics.android.answers.Answers;
 import com.crashlytics.android.answers.LevelEndEvent;
 import com.crashlytics.android.answers.LevelStartEvent;
-import fr.plnech.igem.R;
 import fr.plnech.igem.game.*;
 import fr.plnech.igem.game.model.res.FontAsset;
 import fr.plnech.igem.game.model.res.GFXAsset;
@@ -47,6 +44,7 @@ public abstract class BaseGame {
     public static final int INIT_TIME = 60;
 
     protected ArrayList<GFXAsset> graphicalAssets = new ArrayList<>();
+    protected ArrayList<GFXAsset> profAssets = new ArrayList<>();
     protected ArrayList<FontAsset> fontAssets = new ArrayList<>();
     protected ArrayList<HUDElement> elements = new ArrayList<>();
 
@@ -64,6 +62,8 @@ public abstract class BaseGame {
     }
 
     public abstract List<GFXAsset> getGraphicalAssets();
+
+    public abstract List<GFXAsset> getProfAssets();
 
     public abstract List<FontAsset> getFontAssets();
 
@@ -242,9 +242,7 @@ public abstract class BaseGame {
         return activity;
     }
 
-    public boolean isPortrait() {
-        return true;
-    }
+    public abstract boolean isPortrait();
 
     public int getScore() {
         return gameScore;
@@ -277,6 +275,9 @@ public abstract class BaseGame {
                 return true;
         }
     }
+
+    public abstract int getWidth();
+    public abstract int getHeight();
 
     public static int getLastUnlockedId(SharedPreferences preferences) {
         return preferences.getInt(KEY_GAME_ID, 1);

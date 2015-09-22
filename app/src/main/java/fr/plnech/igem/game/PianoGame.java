@@ -3,10 +3,7 @@ package fr.plnech.igem.game;
 import android.util.Log;
 import com.badlogic.gdx.math.Vector2;
 import fr.plnech.igem.game.managers.ResMan;
-import fr.plnech.igem.game.model.BaseGame;
-import fr.plnech.igem.game.model.HUDElement;
-import fr.plnech.igem.game.model.TouchableAnimatedSprite;
-import fr.plnech.igem.game.model.WorldObject;
+import fr.plnech.igem.game.model.*;
 import fr.plnech.igem.game.model.res.FontAsset;
 import fr.plnech.igem.game.model.res.GFXAsset;
 import fr.plnech.igem.game.piano.Base;
@@ -34,7 +31,7 @@ import java.util.List;
 /**
  * Created by PLNech on 31/08/2015.
  */
-public class PianoGame extends BaseGame {
+public class PianoGame extends LandscapeGame {
     private static final String TAG = "PianoGame";
 
     public static final int INIT_SCORE = 0;
@@ -84,6 +81,15 @@ public class PianoGame extends BaseGame {
         return graphicalAssets;
     }
 
+    @Override
+    public List<GFXAsset> getProfAssets() {
+        if (profAssets.isEmpty()) {
+            final int profWidth = getWidth();
+            final int profHeight = getHeight();
+//            profAssets.add(new GFXAsset(ResMan.PROF_BIN_6, profWidth, profHeight));
+        }
+        return profAssets;
+    }
     @Override
     public List<FontAsset> getFontAssets() {
         if (fontAssets.isEmpty()) {

@@ -8,8 +8,8 @@ import fr.plnech.igem.game.gut.Flow;
 import fr.plnech.igem.game.gut.Item;
 import fr.plnech.igem.game.gut.Player;
 import fr.plnech.igem.game.managers.ResMan;
-import fr.plnech.igem.game.model.BaseGame;
 import fr.plnech.igem.game.model.HUDElement;
+import fr.plnech.igem.game.model.LandscapeGame;
 import fr.plnech.igem.game.model.Wall;
 import fr.plnech.igem.game.model.res.FontAsset;
 import fr.plnech.igem.game.model.res.GFXAsset;
@@ -38,7 +38,7 @@ import java.util.List;
 /**
  * Created by PLNech on 31/08/2015.
  */
-public class GutGame extends BaseGame {
+public class GutGame extends LandscapeGame {
     private static final String TAG = "GutGame";
 
     public static final int INIT_LIVES = 3;
@@ -87,6 +87,17 @@ public class GutGame extends BaseGame {
             graphicalAssets.add(new GFXAsset(ResMan.HUD_SCORE, 1885, 1024, 0, 0));
         }
         return graphicalAssets;
+    }
+
+    @Override
+    public List<GFXAsset> getProfAssets() {
+        if (profAssets.isEmpty()) {
+            final int profWidth = 2400;
+            final int profHeight = 1311;
+            profAssets.add(new GFXAsset(ResMan.PROF_GUT_1, profWidth, profHeight));
+            profAssets.add(new GFXAsset(ResMan.PROF_GUT_2, profWidth, profHeight));
+        }
+        return profAssets;
     }
 
     @Override

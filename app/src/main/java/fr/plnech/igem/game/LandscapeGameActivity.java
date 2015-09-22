@@ -1,16 +1,11 @@
 package fr.plnech.igem.game;
 
-import android.content.Context;
-import android.content.res.Resources;
-import android.util.Log;
-import android.widget.Toast;
 import fr.plnech.igem.R;
 import fr.plnech.igem.game.managers.ResMan;
 import org.andengine.engine.camera.SmoothCamera;
 import org.andengine.engine.options.EngineOptions;
 import org.andengine.engine.options.ScreenOrientation;
 import org.andengine.engine.options.resolutionpolicy.RatioResolutionPolicy;
-import org.andengine.entity.scene.Scene;
 import org.andengine.opengl.texture.TextureOptions;
 import org.andengine.opengl.texture.atlas.bitmap.BitmapTextureAtlas;
 import org.andengine.opengl.texture.atlas.bitmap.BitmapTextureAtlasTextureRegionFactory;
@@ -19,8 +14,8 @@ import org.andengine.opengl.texture.region.TiledTextureRegion;
 public class LandscapeGameActivity extends AbstractGameActivity {
     private static final String TAG = "LandscapeGameActivity";
 
-    protected static final int CAMERA_WIDTH = AbstractGameActivity.CAMERA_HEIGHT;
-    protected static final int CAMERA_HEIGHT = AbstractGameActivity.CAMERA_WIDTH;
+    public static final int CAMERA_WIDTH = AbstractGameActivity.CAMERA_HEIGHT;
+    public static final int CAMERA_HEIGHT = AbstractGameActivity.CAMERA_WIDTH;
 
     @Override
     public EngineOptions onCreateEngineOptions() {
@@ -28,24 +23,6 @@ public class LandscapeGameActivity extends AbstractGameActivity {
         final EngineOptions engineOptions = new EngineOptions(true, ScreenOrientation.LANDSCAPE_SENSOR, new RatioResolutionPolicy(CAMERA_WIDTH, CAMERA_HEIGHT), gameCamera);
         engineOptions.getTouchOptions().setNeedsMultiTouch(true);
         return engineOptions;
-    }
-
-    @Override
-    protected Scene onCreateScene() {
-        super.onCreateScene();
-
-        initSplashScene();
-        Log.d(TAG, "onCreateScene - Splash Scene created.");
-
-        loadMenus();
-        initMenuPause();
-        initMenuWin();
-        updateNextStatus();
-
-        Log.d(TAG, "onCreateScene - Splash Scene created.");
-
-        loadGameAsync();
-        return splashScene;
     }
 
     @Override
@@ -62,11 +39,11 @@ public class LandscapeGameActivity extends AbstractGameActivity {
         putTexture(ResMan.SPLASH_LAND, splashTextureRegion);
     }
 
-    private void initSplashScene() {
+    protected void initSplashScene() {
         super.initSplashScene(getTexture(ResMan.SPLASH_LAND), CAMERA_WIDTH, CAMERA_HEIGHT);
     }
 
-    private void loadMenus() {
+    protected void loadMenus() {
         checkSetGFXPath();
         BitmapTextureAtlas menuAtlas = new BitmapTextureAtlas(this.getTextureManager(), 200, 150, TextureOptions.BILINEAR);
         TiledTextureRegion menuBG = BitmapTextureAtlasTextureRegionFactory.createTiledFromAsset(menuAtlas, this, ResMan.MENU_BG, 0, 0, 1, 1);

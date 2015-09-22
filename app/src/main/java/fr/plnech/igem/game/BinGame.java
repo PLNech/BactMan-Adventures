@@ -7,8 +7,8 @@ import com.badlogic.gdx.physics.box2d.*;
 import fr.plnech.igem.game.bins.Bin;
 import fr.plnech.igem.game.bins.Item;
 import fr.plnech.igem.game.managers.ResMan;
-import fr.plnech.igem.game.model.BaseGame;
 import fr.plnech.igem.game.model.HUDElement;
+import fr.plnech.igem.game.model.PortraitGame;
 import fr.plnech.igem.game.model.TouchableAnimatedSprite;
 import fr.plnech.igem.game.model.Wall;
 import fr.plnech.igem.game.model.res.FontAsset;
@@ -30,7 +30,7 @@ import java.util.List;
 /**
  * Created by PLNech on 21/08/2015.
  */
-public class BinGame extends BaseGame {
+public class BinGame extends PortraitGame {
 
     private ArrayList<Item> items = new ArrayList<>();
     private ArrayList<Integer> deadItems = new ArrayList<>();
@@ -51,47 +51,62 @@ public class BinGame extends BaseGame {
     @Override
     public List<GFXAsset> getGraphicalAssets() {
         if (graphicalAssets.isEmpty()) {
-            graphicalAssets.add(new GFXAsset(ResMan.BIN_BG, 960, 1600, 0, 0));
+            graphicalAssets.add(new GFXAsset(ResMan.BIN_BG, 960, 1600));
 
             /* Bins */
-            graphicalAssets.add(new GFXAsset(ResMan.BIN_SHARPS, 512, 753, 0, 0));
-            graphicalAssets.add(new GFXAsset(ResMan.BIN_CHEMICAL, 512, 753, 0, 0));
-            graphicalAssets.add(new GFXAsset(ResMan.BIN_REGULAR, 512, 753, 0, 0));
-            graphicalAssets.add(new GFXAsset(ResMan.BIN_BIO, 512, 753, 0, 0));
+            graphicalAssets.add(new GFXAsset(ResMan.BIN_SHARPS, 512, 753));
+            graphicalAssets.add(new GFXAsset(ResMan.BIN_CHEMICAL, 512, 753));
+            graphicalAssets.add(new GFXAsset(ResMan.BIN_REGULAR, 512, 753));
+            graphicalAssets.add(new GFXAsset(ResMan.BIN_BIO, 512, 753));
 
             /* Items */
 
-            graphicalAssets.add(new GFXAsset(ResMan.ITEM_TUBE, 99, 512, 0, 0));
-            graphicalAssets.add(new GFXAsset(ResMan.ITEM_CONE_BLUE, 59, 512, 0, 0));
-            graphicalAssets.add(new GFXAsset(ResMan.ITEM_PEN, 390, 2048, 0, 0));
-            graphicalAssets.add(new GFXAsset(ResMan.ITEM_CONE_WHITE, 235, 2048, 0, 0));
-            graphicalAssets.add(new GFXAsset(ResMan.ITEM_CONE_YELLOW, 235, 2048, 0, 0));
-            graphicalAssets.add(new GFXAsset(ResMan.ITEM_BECHER_GREEN, 462, 512, 0, 0));
-            graphicalAssets.add(new GFXAsset(ResMan.ITEM_BECHER_ORANGE, 462, 512, 0, 0));
-            graphicalAssets.add(new GFXAsset(ResMan.ITEM_BECHER_RED, 462, 512, 0, 0));
-            graphicalAssets.add(new GFXAsset(ResMan.ITEM_BECHER_BROKEN, 462, 512, 0, 0));
-            graphicalAssets.add(new GFXAsset(ResMan.ITEM_ERLEN_GREEN, 512, 705, 0, 0));
-            graphicalAssets.add(new GFXAsset(ResMan.ITEM_ERLEN_ORANGE, 512, 705, 0, 0));
-            graphicalAssets.add(new GFXAsset(ResMan.ITEM_ERLEN_RED, 512, 705, 0, 0));
-            graphicalAssets.add(new GFXAsset(ResMan.ITEM_ERLEN_BROKEN, 512, 704, 0, 0));
-            graphicalAssets.add(new GFXAsset(ResMan.ITEM_SLIDE, 151, 512, 0, 0));
-            graphicalAssets.add(new GFXAsset(ResMan.ITEM_SLIDE_BROKEN, 152, 512, 0, 0));
-            graphicalAssets.add(new GFXAsset(ResMan.ITEM_PETRI, 512, 323, 0, 0));
-            graphicalAssets.add(new GFXAsset(ResMan.ITEM_PAPER, 512, 560, 0, 0));
-            graphicalAssets.add(new GFXAsset(ResMan.ITEM_GLOVES, 512, 541, 0, 0));
-            graphicalAssets.add(new GFXAsset(ResMan.ITEM_GEL, 512, 394, 0, 0));
-            graphicalAssets.add(new GFXAsset(ResMan.ITEM_MICROTUBE_GREEN, 284, 512, 0, 0));
-            graphicalAssets.add(new GFXAsset(ResMan.ITEM_MICROTUBE_RED, 284, 512, 0, 0));
-            graphicalAssets.add(new GFXAsset(ResMan.ITEM_ROUNDFLASK_GREEN, 512, 782, 0, 0));
-            graphicalAssets.add(new GFXAsset(ResMan.ITEM_ROUNDFLASK_ORANGE, 512, 782, 0, 0));
-            graphicalAssets.add(new GFXAsset(ResMan.ITEM_ROUNDFLASK_RED, 512, 782, 0, 0));
-            graphicalAssets.add(new GFXAsset(ResMan.ITEM_ROUNDFLASK_BROKEN, 512, 782, 0, 0));
+            graphicalAssets.add(new GFXAsset(ResMan.ITEM_TUBE, 99, 512));
+            graphicalAssets.add(new GFXAsset(ResMan.ITEM_CONE_BLUE, 59, 512));
+            graphicalAssets.add(new GFXAsset(ResMan.ITEM_PEN, 390, 2048));
+            graphicalAssets.add(new GFXAsset(ResMan.ITEM_CONE_WHITE, 235, 2048));
+            graphicalAssets.add(new GFXAsset(ResMan.ITEM_CONE_YELLOW, 235, 2048));
+            graphicalAssets.add(new GFXAsset(ResMan.ITEM_BECHER_GREEN, 462, 512));
+            graphicalAssets.add(new GFXAsset(ResMan.ITEM_BECHER_ORANGE, 462, 512));
+            graphicalAssets.add(new GFXAsset(ResMan.ITEM_BECHER_RED, 462, 512));
+            graphicalAssets.add(new GFXAsset(ResMan.ITEM_BECHER_BROKEN, 462, 512));
+            graphicalAssets.add(new GFXAsset(ResMan.ITEM_ERLEN_GREEN, 512, 705));
+            graphicalAssets.add(new GFXAsset(ResMan.ITEM_ERLEN_ORANGE, 512, 705));
+            graphicalAssets.add(new GFXAsset(ResMan.ITEM_ERLEN_RED, 512, 705));
+            graphicalAssets.add(new GFXAsset(ResMan.ITEM_ERLEN_BROKEN, 512, 704));
+            graphicalAssets.add(new GFXAsset(ResMan.ITEM_SLIDE, 151, 512));
+            graphicalAssets.add(new GFXAsset(ResMan.ITEM_SLIDE_BROKEN, 152, 512));
+            graphicalAssets.add(new GFXAsset(ResMan.ITEM_PETRI, 512, 323));
+            graphicalAssets.add(new GFXAsset(ResMan.ITEM_PAPER, 512, 560));
+            graphicalAssets.add(new GFXAsset(ResMan.ITEM_GLOVES, 512, 541));
+            graphicalAssets.add(new GFXAsset(ResMan.ITEM_GEL, 512, 394));
+            graphicalAssets.add(new GFXAsset(ResMan.ITEM_MICROTUBE_GREEN, 284, 512));
+            graphicalAssets.add(new GFXAsset(ResMan.ITEM_MICROTUBE_RED, 284, 512));
+            graphicalAssets.add(new GFXAsset(ResMan.ITEM_ROUNDFLASK_GREEN, 512, 782));
+            graphicalAssets.add(new GFXAsset(ResMan.ITEM_ROUNDFLASK_ORANGE, 512, 782));
+            graphicalAssets.add(new GFXAsset(ResMan.ITEM_ROUNDFLASK_RED, 512, 782));
+            graphicalAssets.add(new GFXAsset(ResMan.ITEM_ROUNDFLASK_BROKEN, 512, 782));
 
             /* HUD */
-            graphicalAssets.add(new GFXAsset(ResMan.HUD_LIVES, 1479, 1024, 0, 0));
-            graphicalAssets.add(new GFXAsset(ResMan.HUD_SCORE, 1885, 1024, 0, 0));
+            graphicalAssets.add(new GFXAsset(ResMan.HUD_LIVES, 1479, 1024));
+            graphicalAssets.add(new GFXAsset(ResMan.HUD_SCORE, 1885, 1024));
         }
         return graphicalAssets;
+    }
+
+    @Override
+    public List<GFXAsset> getProfAssets() {
+        if (profAssets.isEmpty()) {
+            final int profWidth = 1440;
+            final int profHeight = 2400;
+            profAssets.add(new GFXAsset(ResMan.PROF_BIN_1, profWidth, profHeight));
+            profAssets.add(new GFXAsset(ResMan.PROF_BIN_2, profWidth, profHeight));
+            profAssets.add(new GFXAsset(ResMan.PROF_BIN_3, profWidth, profHeight));
+            profAssets.add(new GFXAsset(ResMan.PROF_BIN_4, profWidth, profHeight));
+            profAssets.add(new GFXAsset(ResMan.PROF_BIN_5, profWidth, profHeight));
+            profAssets.add(new GFXAsset(ResMan.PROF_BIN_6, profWidth, profHeight));
+        }
+        return profAssets;
     }
 
     @Override
