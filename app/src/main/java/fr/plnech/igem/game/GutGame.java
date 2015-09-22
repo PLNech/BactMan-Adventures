@@ -94,7 +94,7 @@ public class GutGame extends LandscapeGame {
     public List<GFXAsset> getProfAssets() {
         if (profAssets.isEmpty()) {
             final int profWidth = 2400;
-            final int profHeight = 1311;
+            final int profHeight = 1440;
             if (Locale.getDefault().getLanguage().equals("fr")) {
                 profAssets.add(new GFXAsset(ResMan.PROF_GUT_1_FR, profWidth, profHeight));
                 profAssets.add(new GFXAsset(ResMan.PROF_GUT_2_FR, profWidth, profHeight));

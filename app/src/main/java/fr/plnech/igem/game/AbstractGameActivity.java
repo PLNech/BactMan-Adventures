@@ -125,6 +125,7 @@ public abstract class AbstractGameActivity extends SimpleBaseGameActivity implem
     private ArrayList<PhysicalWorldObject> objectsToAdd = new ArrayList<>();
 
     protected BaseGame currentGame;
+    private SpriteBackground splashBackground;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -556,6 +557,7 @@ public abstract class AbstractGameActivity extends SimpleBaseGameActivity implem
                 }
             });
         } else {
+            splashScene.setBackground(splashBackground);
             Log.d(TAG, "onTimePassed - Finished prof screens, launching game!");
             runCurrentGame();
         }
@@ -746,6 +748,7 @@ public abstract class AbstractGameActivity extends SimpleBaseGameActivity implem
     protected void initSplashScene(ITextureRegion splashTexture, int width, int height) {
         splashScene = new Scene();
         DitheredSprite splash = new DitheredSprite(0, 0, width, height, splashTexture, getVBOM());
-        splashScene.setBackground(new SpriteBackground(splash));
+        splashBackground = new SpriteBackground(splash);
+        splashScene.setBackground(splashBackground);
     }
 }
