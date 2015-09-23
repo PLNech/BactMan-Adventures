@@ -31,7 +31,7 @@ public class Card extends Sprite {
 
         public static Type random() {
             final Type[] values = Type.values();
-            final int randomIndex = 1 + (int) (values.length - 1 * Math.random());
+            final int randomIndex = 1 + (int) ((values.length - 1) * Math.random()); // Random between second and last
             return values[randomIndex];
         }
     }

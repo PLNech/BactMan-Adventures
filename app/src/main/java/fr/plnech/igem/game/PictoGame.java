@@ -255,9 +255,7 @@ public class PictoGame extends PortraitGame {
         Card.Type[] typeArray = Card.Type.values();
 
         for (Card.Type type : typeArray) {
-            while (type == Card.Type.BACK) { // Back is not a card type, but a state
-                type = Card.Type.random();
-            }
+            type = Card.Type.random();
             nameList.add(cardName(type));
         }
 
