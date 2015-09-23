@@ -1,45 +1,42 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
                 xmlns:tools="http://schemas.android.com/tools"
-                style="@style/AppTheme.Layout">
-<ImageView style="@style/AppTheme.ImageView.Background"/>
-    <ScrollView style="@style/AppTheme.ScrollView">
-        <RelativeLayout style="@style/AppTheme.Layout.Detail"
-                        tools:context="fr.plnech.igem.ui.WhatActivity">
+                style="@style/AppTheme.Layout"
+                tools:context="fr.plnech.igem.ui.ContactUsActivity">
+    <ImageView style="@style/AppTheme.ImageView.Background"/>
+    <ImageView style="@style/AppTheme.ImageView.FullWidth"
+               android:id="@+id/mainPic"
+               android:src="@drawable/contact_us"
+               android:contentDescription="@string/igem_title"/>
 
-            <ImageView style="@style/AppTheme.ImageView.FullWidth"
-                       android:id="@+id/mainPic"
-                       android:src="@drawable/contact_us"
-                       android:contentDescription="@string/igem_title"/>
+    <RelativeLayout style="@style/AppTheme.Container.Title"
+                    android:id="@+id/box_title"
+                    android:layout_below="@id/mainPic">
 
-            <RelativeLayout style="@style/AppTheme.Container.Title"
-                            android:id="@+id/box_title"
-                            android:layout_below="@id/mainPic">
+        <TextView style="@style/AppTheme.TextView.Title"
+                  android:text="@string/contact_us_title"
+                  android:id="@+id/contact_us_title"/>
 
-                <TextView style="@style/AppTheme.TextView.Title"
-                          android:text="@string/contact_us_title"
-                          android:id="@+id/contact_us_title"/>
-
-                <TextView style="@style/AppTheme.TextView.Subtitle"
-                          android:text="@string/contact_us_subtitle"
-                          android:id="@+id/contact_us_subtitle"
-                          android:layout_below="@id/contact_us_title"/>
-            </RelativeLayout>
-
-            <RelativeLayout style="@style/AppTheme.Container.Paragraphs"
-                            android:layout_below="@id/box_title">
-
-                <TextView style="@style/AppTheme.TextView.Paragraphs"
-                          android:text="@string/lorem"
-                          android:id="@+id/paragraphs"/>
-
-                <TextView style="@style/AppTheme.TextView.Link"
-                          android:text="@string/contact_us_email"
-                          android:id="@+id/link"/>
-
-            </RelativeLayout>
-
-        </RelativeLayout>
-    </ScrollView>
-
+        <TextView style="@style/AppTheme.TextView.Subtitle"
+                  android:text="@string/contact_us_subtitle"
+                  android:id="@+id/contact_us_subtitle"
+                  android:layout_below="@id/contact_us_title"/>
+    </RelativeLayout>
+    <LinearLayout android:layout_width="match_parent" android:layout_height="match_parent"
+                  android:orientation="horizontal"
+                  android:layout_below="@id/box_title"
+                  android:weightSum="4">
+        <ImageView style="@style/AppTheme.ImageView.Icon"
+                   android:src="@drawable/youtube"
+                   android:id="@+id/icon_youtube"/>
+        <ImageView style="@style/AppTheme.ImageView.Icon"
+                   android:id="@+id/icon_facebook"
+                   android:src="@drawable/facebook"/>
+        <ImageView style="@style/AppTheme.ImageView.Icon"
+                   android:src="@drawable/twitter"
+                   android:id="@+id/icon_twitter"/>
+        <ImageView style="@style/AppTheme.ImageView.Icon"
+                   android:src="@drawable/email"
+                   android:id="@+id/icon_email"/>
+    </LinearLayout>
 </RelativeLayout>
 

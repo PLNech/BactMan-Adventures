@@ -569,6 +569,11 @@
     <string name="url_andengine" translatable="false">https://github.com/nicolasgramlich/AndEngine</string>
     <string name="url_butterknife" translatable="false">https://github.com/JakeWharton/butterknife</string>
     <string name="url_carousel" translatable="false">https://github.com/ludovicroland/carousel-android</string>
+    <string name="url_icons" translatable="false">https://simpleicons.org/</string>
+    <string name="url_contact_facebook" translatable="false">https://www.facebook.com/ionisigem</string>
+    <string name="url_contact_twitter" translatable="false">https://twitter.com/IONIS_iGEM</string>
+    <string name="url_contact_youtube" translatable="false">https://www.youtube.com/channel/UC0RyQsB5YpweSRBYQlAdZDA</string>
+
     <!-- Home -> Us -> Presentation -->
     <string name="title_activity_presentation">Our project</string>
     <string name="pres_title">The BioConsole</string>
@@ -673,6 +678,9 @@
     <string name="msg_next_game">The next game is in %s mode!</string>
     <string name="msg_orientation_portrait">portrait</string>
     <string name="msg_orientation_landscape">landscape</string>
+    <string name="content_icon">Icon</string>
+    <string name="content_background">Layout background image</string>
+    <string name="content_fullwidth">Illustration</string>
 
     <string-array name="glossary_titles">
         <item>ADN</item>

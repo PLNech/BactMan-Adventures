@@ -139,6 +139,7 @@
         <item name="android:layout_alignParentLeft">true</item>
         <item name="android:scaleType">fitXY</item>
         <item name="android:adjustViewBounds">true</item>
+        <item name="android:contentDescription">@string/content_fullwidth</item>
     </style>
 
     <style name="AppTheme.ImageView.Background">
@@ -146,17 +147,24 @@
         <item name="android:layout_height">match_parent</item>
         <item name="android:src">@drawable/background_menu</item>
         <item name="android:scaleType">centerCrop</item>
+        <item name="android:contentDescription">@string/content_background</item>
     </style>
 
     <style name="AppTheme.ImageView.Carousel">
-        <item name="android:layout_width">wrap_content</item>
-        <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_centerInParent">true</item>
         <item name="android:adjustViewBounds">true</item>
         <item name="android:maxHeight">@dimen/carouselImageMaxSize</item>
         <item name="android:maxWidth">@dimen/carouselImageMaxSize</item>
         <item name="android:paddingBottom">30dp</item>
     </style>
+
+    <style name="AppTheme.ImageView.Icon">
+        <item name="android:adjustViewBounds">true</item>
+        <item name="android:contentDescription">@string/content_icon</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:layout_gravity">center</item>
+    </style>
+
     <style name="AppTheme.ScrollView">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
