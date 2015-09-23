@@ -48,9 +48,13 @@
                           android:text="@string/text_credits_carousel"
                           android:layout_below="@id/paragraphs_butterknife"/>
                 <TextView style="@style/AppTheme.TextView.Paragraphs.Credits"
+                          android:id="@+id/paragraphs_icons"
+                          android:text="@string/text_credits_icons"
+                          android:layout_below="@id/paragraphs_butterknife"/>
+                <TextView style="@style/AppTheme.TextView.Paragraphs.Credits"
                           android:id="@+id/paragraphs_licenses"
                           android:text="@string/text_credits_licenses"
-                          android:layout_below="@id/paragraphs_carousel"/>
+                          android:layout_below="@id/paragraphs_icons"/>
             </RelativeLayout>
 
         </RelativeLayout>

@@ -36,6 +36,11 @@ public class CreditsActivity extends DetailActivity {
         DevUtils.openLink(getResources().getString(R.string.url_carousel), this);
     }
 
+    @OnClick(R.id.paragraphs_icons)
+    protected void onClickIcons() {
+        DevUtils.openLink(getResources().getString(R.string.url_icons), this);
+    }
+
     @Override
     public int getTitleResId() {
         return R.string.title_activity_credits;

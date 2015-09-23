@@ -175,6 +175,11 @@
         <a href="#">Igor Kushnarev</a>\n
         \n
     </string>
+    <string name="text_credits_icons">
+        Les icônes sur la page de contact viennent du jeu d\'icônes
+        <a href="#">SimpleIcons, réalisé par Dan Leech</a>
+        \n
+    </string>
     <string name="font_fontFamily_title">sans-serif</string>
 
 
@@ -182,6 +187,10 @@
     <string name="label_levels_bin">Le Tri au Labo</string>
     <string name="label_levels_picto">Le Memo du Labo</string>
     <string name="label_levels_piano">Le PolyPiano</string>
+
+    <string name="content_icon">Icône</string>
+    <string name="content_background">Image de fond (décoration)</string>
+    <string name="content_fullwidth">Illustration</string>
 
     <string-array name="glossary_titles">
         <item>ADN</item>
