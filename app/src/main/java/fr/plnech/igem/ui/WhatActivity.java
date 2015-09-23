@@ -9,6 +9,7 @@ import butterknife.InjectView;
 import butterknife.OnClick;
 import fr.plnech.igem.R;
 import fr.plnech.igem.ui.model.DetailActivity;
+import fr.plnech.igem.utils.DevUtils;
 import fr.plnech.igem.utils.ViewUtils;
 
 public class WhatActivity extends DetailActivity {
@@ -35,9 +36,7 @@ public class WhatActivity extends DetailActivity {
 
     @OnClick(R.id.link)
     protected void onClickLink() {
-        Intent iWebsite = new Intent(Intent.ACTION_VIEW);
-        iWebsite.setData(Uri.parse(getResources().getString(R.string.what_url)));
-        startActivity(iWebsite);
+        DevUtils.openLink(getResources().getString(R.string.what_url), this);
     }
 
 }
