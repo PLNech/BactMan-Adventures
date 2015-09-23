@@ -106,7 +106,7 @@
     <string name="credits_subtitle">Ils ont permis l\'aventure</string>
     <!--TODO:Translate-->
     <string name="title_activity_credits">Crédits</string>
-    <string name="credits_title">Crédits, Licences et Remerciements</string>
+    <string name="credits_title">Crédits, Licences \net Remerciements</string>
     <string name="msg_last_game">Félicitations, vous avez gagné le dernier jeu !</string>
     <string name="msg_next_game">The next game is in %s mode!</string>
     <string name="msg_orientation_portrait">portrait</string>
@@ -141,7 +141,11 @@
         \nMarwa Zerhouni
         \n
         \n
-        \nSpecial thanks to our KickStarter backers, and particularly to:
+        \nMerci à Sam Julliot, Guillaume Mercy et Pierre Parutto pour leur aide et leurs conseils
+        \n
+        \n
+        \n
+        \nUn grand merci à tous ceux qui nous ont soutenu sur KickStarter, en particulier :
         \n
         \nBendali-amor Samia
         \nChesnel Anthony et Véronique

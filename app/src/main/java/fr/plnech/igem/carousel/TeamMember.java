@@ -1,12 +1,14 @@
+/**
+ * Created by PLNech on 15/09/2015.
+ */
 package fr.plnech.igem.carousel;
 
 import android.support.annotation.Nullable;
 
-/**
- * Created by Paul-Louis Nech on 15/09/2015.
- */
 public class TeamMember {
-    String name;
+    //TODO: Create own class for sponsors
+    String firstName;
+    String lastName;
     String avatarResName;
     @Nullable String quote;
     @Nullable String urlLinkedin;
@@ -16,21 +18,26 @@ public class TeamMember {
     private boolean noName;
 
     public TeamMember(String name, String avatarResName) {
-        this(name, avatarResName, null, null, null);
+        this(name, null, avatarResName, null, null, null);
     }
 
-    public TeamMember(String name, String avatarResName, @Nullable String quote) {
-        this(name, avatarResName, quote, null, null);
+    public TeamMember(String firstName, String lastName, String avatarResName) {
+        this(firstName, lastName, avatarResName, null, null, null);
     }
 
-    public TeamMember(String name, String avatarResName,
+    public TeamMember(String firstName, String lastName, String avatarResName, @Nullable String quote) {
+        this(firstName, lastName, avatarResName, quote, null, null);
+    }
+
+    public TeamMember(String firstName, String lastName, String avatarResName,
                       @Nullable String quote, @Nullable String linkedin) {
-        this(name, avatarResName, quote, linkedin, null);
+        this(firstName, lastName, avatarResName, quote, linkedin, null);
     }
 
-    public TeamMember(String name, String avatarResName,
+    public TeamMember(String firstName, String lastName, String avatarResName,
                       @Nullable String quote, @Nullable String linkedin, @Nullable String twitter) {
-        this.name = name;
+        this.firstName = firstName;
+        this.lastName = lastName;
         this.avatarResName = avatarResName;
         this.quote = quote;
         this.urlLinkedin = linkedin;
@@ -38,7 +45,11 @@ public class TeamMember {
     }
 
     public String getName() {
-        return noName ? null : name;
+        return noName ? null : firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
     }
 
     public String getAvatarResName() {

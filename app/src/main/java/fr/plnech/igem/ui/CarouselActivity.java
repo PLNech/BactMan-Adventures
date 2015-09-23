@@ -2,7 +2,6 @@ package fr.plnech.igem.ui;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 import butterknife.ButterKnife;
@@ -34,13 +33,6 @@ public abstract class CarouselActivity extends DetailActivity {
 
         final List<TeamMember> dataList = new ArrayList<>();
         loadData(dataList);
-        String dataString = "";
-        for (int i = 0; i < dataList.size(); i++) {
-            TeamMember member = dataList.get(i);
-            dataString += member.getName() + (i != dataList.size() - 1 ? ", " : ".");
-        }
-        Log.d("DEBUG", "onCreate - dataList: " + dataString);
-
         final CarouselAdapter adapter = new MemberAdapter(this, dataList);
         final CarouselBaseAdapter.OnItemClickListener listener = getOnItemClickListener(dataList);
         carousel.setOnItemClickListener(listener);
