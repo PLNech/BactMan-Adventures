@@ -578,11 +578,6 @@ public abstract class AbstractGameActivity extends SimpleBaseGameActivity implem
         return preferences.getInt(keyHighScore, 0);
     }
 
-    public int getUnlockedStatus(BaseGame game) {
-        final String keyHighScore = game.getClass().getSimpleName() + SUFFIX_UNLOCKED;
-        return preferences.getInt(keyHighScore, 0);
-    }
-
     public void setPhysicsCoeff(float coeff) {
         final Vector2 gravity = physicsWorld.getGravity();
         final Vector2 physicsVector = currentGame.getPhysicsVector();
@@ -672,7 +667,11 @@ public abstract class AbstractGameActivity extends SimpleBaseGameActivity implem
         int lastUnlockedId = preferences.getInt(BaseGame.KEY_GAME_ID, 0);
         final int nextGameId = Math.max(currentGame.getNextGameId(), BaseGame.ID_GUT);
         if (nextGameId >= lastUnlockedId) {
-            preferences.edit().putInt(BaseGame.KEY_GAME_ID, nextGameId).apply();
+            preferences.edit()
+                    .putInt(BaseGame.KEY_GAME_ID, nextGameId)
+                    .putBoolean(nextGameId + AbstractGameActivity.SUFFIX_UNLOCKED, true)
+                    .apply();
+
             Log.d(TAG, "updateNextGame - New value: " + nextGameId);
         }
     }

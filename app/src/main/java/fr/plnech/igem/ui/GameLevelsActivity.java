@@ -1,17 +1,59 @@
 package fr.plnech.igem.ui;
 
+import android.content.SharedPreferences;
+import android.content.res.TypedArray;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.util.Log;
+import android.widget.Button;
+import android.widget.Toast;
 import butterknife.ButterKnife;
+import butterknife.InjectView;
 import butterknife.OnClick;
 import fr.plnech.igem.R;
+import fr.plnech.igem.game.AbstractGameActivity;
 import fr.plnech.igem.game.model.BaseGame;
 import fr.plnech.igem.ui.model.MenuActivity;
 
 public class GameLevelsActivity extends MenuActivity {
+
+    @InjectView(R.id.button_levels_gut)
+    Button gutButton;
+    @InjectView(R.id.button_levels_bin)
+    Button binButton;
+    @InjectView(R.id.button_levels_picto)
+    Button pictoButton;
+    @InjectView(R.id.button_levels_piano)
+    Button pianoButton;
+    private SharedPreferences preferences;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         ButterKnife.inject(this);
+        preferences = getSharedPreferences(getString(R.string.app_name), MODE_PRIVATE);
+
+        final boolean isLockedBin = setButtonStatus(BaseGame.ID_BIN, binButton);
+        final boolean isLockedPicto = setButtonStatus(BaseGame.ID_PICTO, pictoButton);
+        final boolean isLockedPiano = setButtonStatus(BaseGame.ID_PIANO, pianoButton);
+        Boolean isAtLeastOneLocked = isLockedBin || isLockedPicto || isLockedPiano;
+        if (isAtLeastOneLocked) {
+            Toast.makeText(GameLevelsActivity.this, getString(R.string.msg_game_unlock), Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    private boolean setButtonStatus(int gameId, Button button) {
+        /**
+         * Updates the given button according to the identified game's unlocked status
+         * Returns true if the game is locked
+         */
+        final boolean gameIsLocked = !BaseGame.getUnlockedStatus(gameId, preferences);
+        Log.d("DEBUG", "Game "  + gameId + " is unlocked: " + gameIsLocked);
+        if (gameIsLocked) {
+            button.setEnabled(false);
+        }
+
+        return gameIsLocked;
     }
 
     @Override

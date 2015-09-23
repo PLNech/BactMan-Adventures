@@ -822,6 +822,7 @@
     <string name="content_icon">Icon</string>
     <string name="content_background">Layout background image</string>
     <string name="content_fullwidth">Illustration</string>
+    <string name="msg_game_unlock">To unlock the next game, you need to win the previous one!</string>
 
     <string-array name="glossary_titles">
         <item>ADN</item>

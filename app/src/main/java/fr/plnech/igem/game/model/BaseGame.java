@@ -1,6 +1,7 @@
 package fr.plnech.igem.game.model;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.support.annotation.Nullable;
@@ -31,14 +32,15 @@ import java.util.Random;
 public abstract class BaseGame {
     public static final String KEY_GAME_ID = "game_id";
     public static final String KEY_WARN = "warn";
-    private static final String TAG = "BaseGame";
+    public static final String KEY_GAME_UNLOCKED = "unlocked_";
 
+    private static final String TAG = "BaseGame";
     public static final int ID_NONE = 0;
     public static final int ID_GUT = 1;
     public static final int ID_BIN = 2;
     public static final int ID_PICTO = 3;
-    public static final int ID_PIANO = 4;
 
+    public static final int ID_PIANO = 4;
     public static final int INIT_SCORE = 0;
     public static final int INIT_LIVES = 3;
     public static final int INIT_TIME = 60;
@@ -186,6 +188,10 @@ public abstract class BaseGame {
                 .putLevelName(this.getClass().getSimpleName())
                 .putScore(score)
                 .putSuccess(success));
+    }
+
+    public static boolean getUnlockedStatus(int gameId, SharedPreferences preferences) {
+        return preferences.getBoolean(gameId + AbstractGameActivity.SUFFIX_UNLOCKED, false);
     }
 
     public static void startGame(Activity activity, int gameId) {

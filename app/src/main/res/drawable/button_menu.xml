@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <selector xmlns:android="http://schemas.android.com/apk/res/android" android:constantSize="true">
-    <item android:drawable="@color/buttonMenuPressed" android:state_pressed="true" android:state_focused="false"/>
+    <item android:drawable="@color/buttonMenuPressed" android:state_pressed="true" android:state_enabled="true"/>
+    <item android:drawable="@color/buttonMenuLocked" android:state_enabled="false"/>
     <item android:drawable="@color/buttonMenu" />
 </selector>
 
