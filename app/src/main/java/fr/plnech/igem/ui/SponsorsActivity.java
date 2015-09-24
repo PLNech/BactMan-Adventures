@@ -25,7 +25,7 @@ public class SponsorsActivity extends CarouselActivity {
         addSponsor(sponsors, new TeamMember("Fluigent", "sponsor_fluigent"));
         addSponsor(sponsors, new TeamMember("Le BioClub", "sponsor_bioclub"));
         addSponsor(sponsors, new TeamMember("MicroFactory", "sponsor_microfactory"));
-        addSponsor(sponsors, new TeamMember("Embassy of France in the United States", "sponsor_embassy",
+        addSponsor(sponsors, new TeamMember("Embassy of France in the United States", null, "sponsor_embassy",
                 "Embassy of France in the United States\n\nOffice for Science and Technology"));
         addSponsor(sponsors, new TeamMember("BIOSS", "sponsor_bioss"));
         addSponsor(sponsors, new TeamMember("Glowee", "sponsor_glowee"));
@@ -37,7 +37,6 @@ public class SponsorsActivity extends CarouselActivity {
 
     private void addSponsor(List<TeamMember> sponsors, TeamMember member) {
         member.setTransparent(true);
-        member.setNoName(true);
         sponsors.add(member);
     }
 

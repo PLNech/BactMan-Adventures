@@ -10,9 +10,12 @@ public class TeamMember {
     String firstName;
     String lastName;
     String avatarResName;
-    @Nullable String quote;
-    @Nullable String urlLinkedin;
-    @Nullable String urlTwitter;
+    @Nullable
+    String quote;
+    @Nullable
+    String urlLinkedin;
+    @Nullable
+    String urlTwitter;
 
     private boolean isTransparent;
     private boolean noName;
@@ -79,7 +82,17 @@ public class TeamMember {
         this.isTransparent = isTransparent;
     }
 
-    public void setNoName(boolean noName) {
-        this.noName = noName;
+    @Override
+    public String toString() {
+        return "TeamMember{" +
+                "avatarResName='" + avatarResName + '\'' +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", quote='" + quote + '\'' +
+                ", urlLinkedin='" + urlLinkedin + '\'' +
+                ", urlTwitter='" + urlTwitter + '\'' +
+                ", isTransparent=" + isTransparent +
+                ", noName=" + noName +
+                '}';
     }
 }
