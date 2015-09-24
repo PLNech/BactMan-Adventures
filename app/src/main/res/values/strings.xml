@@ -53,16 +53,13 @@
     <string name="label_igem_biobricks">The BioBricks</string>
     <string name="label_igem_partners">Our Partners</string>
     <string name="text_igem">
-        <!-- TODO: Translate! -->
-        iGEM est la plus grande compétition internationale de Biologie de Synthèse et a pour but
-        de lier éducation et compétition afin de faire progresser la recherche dans ce secteur.
-        Organisée par le MIT depuis 2004, des étudiants du monde entier s’affrontent
-        en créant des projets innovants dans le domaine de la biologie de synthèse.\n
-        \nAu début de l’été, les équipes reçoivent un kit de composants biologiques
-        et travaillent au laboratoire afin de concevoir des circuits génétiques synthétiques
-        qui devront fonctionner dans des cellules vivantes. La collaboration et l’échange
-        entre les différentes équipes sont valorisés,
-        dans cette optique de progression de la biologie de synthèse.
+        iGEM is the biggest international competition of Synthetic Biology, and aims to connect education and
+        competition to advance research in this area.
+        Organised by the MIT since 2004, students from the whole world compete by creating innovative projects
+        in the field of Synthetic Biology.\n
+        \nAt the beginning of summer, the teams receive a kit of biologic parts and work in the laboratory to design
+        synthetic genetical circuits that must function in living cells. Collaboration and exchange between teams
+        is highly valued, in this perspective of advancing Synthetic Biology.
     </string>
 
     <!-- Home -> Credits -->
@@ -725,23 +722,23 @@
     <string name="pres_title">The BioConsole</string>
     <string name="pres_subtitle">A biological game to teach and learn</string>
     <string name="text_pres">
-        <!-- TODO: Translate! -->
-        Notre équipe, IONIS Paris, a développé un projet en deux parties autour de la vulgarisation scientifique
-        pour la compétition iGEM 2015. La première partie consiste à créer une bio-console,
-        un dispositif reliant le réel au virtuel. La bio-console IONIS Paris est composée de :
-        \n• une puce de microfluidique
-        \n• un microscope
-        \n• un ordinateur
-        \n• une manette
+        Our Team, IONIS Paris, developed a two part project around scientific popularisation for the iGEM 2015
+        competition. The first part consists in a Bio-Console, a device connecting the living with the digital.
+        The IONIS Paris bio-console is composed of:
+        \n• a microfluidic chip
+        \n• a microscope
+        \n• a computer
+        \n• a joystick
         \n
-        \nSur l’écran d’ordinateur, le joueur peut visualiser une bactérie fluorescente et contrôler ses mouvements
-        grâce à la manette. La bactérie est intégrée dans la puce microfluidique préalablement construite sous
-        forme de labyrinthe et agrandie via le microscope relié à l’ordinateur.
+        \nOn the computer screen, the player can visualise a fluorescent bacterium and control its move with the
+        joystick. The bacterium is integrated in the microfluidic chip build beforehand in a maze shape, and is
+        enlarged via the microscope linked to the computer.
         \n
-        \nLa deuxième partie de notre projet est l’application mobile Bact’Man proposant plusieurs jeux
-        autour des concepts de biotechnologie et de biologie de synthèse.
-        Ces jeux ont pour but de familiariser le grand public à ces grands concepts.
-        Notre philosophie : “Comprendre et apprendre tout en s\'amusant”.
+        \nThe second part of our project is the mobile application BactMan Adventures, offering several games on the
+        concepts of biotechnology and synthetic biology.
+        \n
+        \nThose games aim at familiarising general public with those big concepts.
+        \nOur philosophy: “Understand and learn while having fun”.
     </string>
     <!-- Home -> Us -> Team -->
     <string name="title_activity_team">Our team</string>
@@ -774,16 +771,14 @@
     <string name="bio_subtitle">Design and construction of biological systems</string>
     <string name="bio_image_desc">DNA Strands</string>
     <string name="text_bio">
-        <!-- TODO: Translate! -->
-        La biologie de synthèse est l’ingénierie de la biologie.
-        Elle vise à la conception rationnelle de systèmes fondés sur le vivant
-        ou inspiré du vivant,et dotés de fonction absentes dans la nature.
-        Ce domaine en pleine émergence pourra faire progresser nos connaissances du monde vivant
-        et permettra de développer de nombreuses applications industrielles
-        dans le domaine de la santé ou de l’environnement par exemple.
+        Synthetic biology is biological engineering.
+        \nIts aim is the rational design of systems based on the living or inspired by the living,
+        and endowed with functions inexistent in nature.
+        \nThis emerging field will push forward our knowledge of the living world and will enable the development
+        of several industrial applications in areas such as the health sector or the environmental field.
         \n
-        \nCependant, et comme toute nouvelle technologie,
-        la biologie de synthèse soulève optimisme et enthousiasme, mais aussi inquiétude et méfiance.
+        \nHowever, as with all technologies, synthetic biology raises optimism and enthousiasm, but also worry and
+        wariness.
     </string>
 
     <!-- Home -> iGEM -> BioBricks -->
@@ -813,12 +808,11 @@
     <string name="glossary_subtitle">Playing with serious concepts</string>
     <!-- Fonts -->
     <string name="font_fontFamily_title">sans-serif</string>
-    <string name="text_biobrick">Les BioBricks sont des fragments d’ADN standardisés, développés afin de permettre une
-        construction plus simple de systèmes biologiques. Chaque BioBrick est délimitée par des préfixes et suffixes
-        universels.
+    <string name="text_biobrick">
+        The BioBricks are standardised pieces of DNA, developed to permit a faster building of biological systems.
         \n
-        \nComme elles sont conçues sur le même modèle, on peut les assembler comme un jeu de LEGO® pour
-        ensuite les incorporer dans une cellule vivante.
+        \nAs they are built on the same model, we can assemble them as a LEGO® game to finally incorporate them
+        in a living cell.
     </string>
     <string name="msg_last_game">Congratulations, you just won the last game!</string>
     <string name="msg_next_game">The next game is in %s mode!</string>
@@ -981,7 +975,7 @@
             consequences
             because of the redundancy of the genetic code: among codons, there are many synonyms, so even if a base
             changes, the translation may remain correct.
-            \n
+        \n
             \n
             The mutations also allow genetic diversity: if we do not have all the eyes of the same color, it is due to
             individuals not having all the same genes and the same mutations!
