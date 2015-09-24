@@ -1,12 +1,14 @@
 package fr.plnech.igem.ui;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Point;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.view.Display;
 import android.view.SurfaceHolder;
@@ -23,7 +25,7 @@ import io.fabric.sdk.android.Fabric;
 
 public class HomeActivity extends LoggedActivity implements SurfaceHolder.Callback {
     private static final String TAG = "HomeActivity";
-
+    public static final long TIME_PRESENTATION_GMT = 1443360600000L;
     private MediaPlayer mPlayer;
 
     @InjectView(R.id.videoView)
@@ -37,6 +39,24 @@ public class HomeActivity extends LoggedActivity implements SurfaceHolder.Callba
 
         SurfaceHolder holder = videoView.getHolder();
         holder.addCallback(this);
+
+        alertAboutEvent();
+    }
+
+    private void alertAboutEvent() {
+        final long currentTimeMillis = System.currentTimeMillis();
+        if (currentTimeMillis <= TIME_PRESENTATION_GMT) {
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            builder.setTitle(getString(R.string.msg_event_title))
+                    .setMessage(getString(R.string.msg_event_message))
+                    .setCancelable(false)
+                    .setPositiveButton(getString(R.string.msg_event_button), new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                        }
+                    })
+                    .create().show();
+        }
     }
 
     @Override

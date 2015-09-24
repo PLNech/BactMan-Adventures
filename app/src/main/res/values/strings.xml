@@ -822,6 +822,11 @@
     <string name="content_background">Layout background image</string>
     <string name="content_fullwidth">Illustration</string>
     <string name="msg_game_unlock">To unlock the next game, you need to win the previous one!</string>
+    <string name="msg_event_button">I\'ll be there!</string>
+    <string name="msg_event_message">We will present our project on Sunday 27, at 09:30 AM in the Room 311.
+        \nCome and bring your friends with you!
+    </string>
+    <string name="msg_event_title" translatable="false">iGEM Giant Jamboree</string>
 
     <string-array name="glossary_titles">
         <item>ADN</item>
