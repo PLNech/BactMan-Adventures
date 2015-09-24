@@ -96,7 +96,7 @@
     <string name="game_subtitle">BactMan a besoin de ton aide</string>
     <string name="label_game_new">Jouer</string>
     <string name="label_game_levels">Niveaux</string>
-    <string name="label_game_help">Aide</string>
+    <string name="label_game_glossary">Glossaire</string>
     <string name="title_activity_game_glossary">Glossaire</string>
     <string name="glossary_title">Glossaire</string>
     <string name="glossary_subtitle">Apprendre en jouant</string>
@@ -142,7 +142,8 @@
         \nMarwa Zerhouni
         \n
         \n
-        \nMerci à Sam Julliot, Guillaume Mercy et Pierre Parutto pour leur aide et leurs conseils
+        \nMerci à notre superviseur Sam Julliot, et à nos advisors Guillaume Mercy et Pierre Parutto pour leur aide
+        et leurs conseils précieux
         \n
         \n
         \n
@@ -151,14 +152,14 @@
         \nBendali-amor Samia
         \nChesnel Anthony et Véronique
         \nCornille Catherine
-        \nCornille Pierre Jean
+        \nCornille Pierre-Jean
         \nCremaschi Laurent
+        \nDa Costa José
         \nDigan William
         \nJanny Sirwan
-        \nJosé Da Costa
         \nLouisy Patrick
         \nLouisy Valérie
-        \nPoignon
+        \nSophie Poignon
         \n
         \n
         \n
@@ -186,7 +187,6 @@
         \n
     </string>
     <string name="font_fontFamily_title">sans-serif</string>
-
 
     <string name="label_levels_gut">La Course dans l\'Intestin</string>
     <string name="label_levels_bin">Le Tri au Labo</string>
