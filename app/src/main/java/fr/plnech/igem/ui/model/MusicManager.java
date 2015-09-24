@@ -17,6 +17,7 @@ public class MusicManager {
 
     public static final int MUSIC_PREVIOUS = -1;
     public static final int MUSIC_MENU = 0;
+    private static final float DEFAULT_VOLUME = 0.25f;
 
     private static HashMap<Integer, MediaPlayer> players = new HashMap<>();
     private static int currentMusic = -1;
@@ -51,6 +52,7 @@ public class MusicManager {
         MediaPlayer mp = players.get(music);
         if (mp != null) {
             if (!mp.isPlaying()) {
+                mp.setVolume(DEFAULT_VOLUME, DEFAULT_VOLUME);
                 mp.start();
             }
         } else {
