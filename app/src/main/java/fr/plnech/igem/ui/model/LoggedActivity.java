@@ -3,14 +3,17 @@ package fr.plnech.igem.ui.model;
 import android.content.Context;
 import android.content.res.Resources;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.KeyEvent;
+import android.view.Menu;
+import android.view.MenuInflater;
 import com.crashlytics.android.answers.Answers;
 import com.crashlytics.android.answers.ContentViewEvent;
+import fr.plnech.igem.R;
 import fr.plnech.igem.ui.HomeActivity;
 import io.fabric.sdk.android.Fabric;
-import org.andengine.input.touch.TouchEvent;
 
 /**
  * Created by PLNech on 14/09/2015.
@@ -47,7 +50,6 @@ public abstract class LoggedActivity extends AppCompatActivity {
     protected void onPause() {
         super.onPause();
         if (!shouldContinueMusic()) {
-            Log.d("DEBUG", this.getClass().getSimpleName() + " - Should not continue, pausing.");
             MusicManager.pause();
         }
     }
@@ -55,19 +57,41 @@ public abstract class LoggedActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        Log.d("DEBUG", this.getClass().getSimpleName() + " - Resuming music...");
         MusicManager.start(this, MusicManager.MUSIC_MENU);
     }
 
     @Override
+    protected void onUserLeaveHint() {
+        MusicManager.pause();
+        super.onUserLeaveHint();
+    }
+
+    @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
-//        We pause music in two cases: when the button pressed is menu, and when back is pressed on HomeActivity
+//      We pause music in several cases:
+//      - when the button pressed is menu, and when back is pressed on HomeActivity
         final boolean isNotHomeActivity = this.getClass().getSimpleName().equals("HomeActivity");
-        if (isNotHomeActivity && event.getAction() == TouchEvent.ACTION_DOWN && keyCode == KeyEvent.KEYCODE_BACK ) {
-            Log.d("DEBUG", "onKeyDown - Action is DOWN and key is BACK,");
-            setContinueMusic(true);
+        switch (keyCode) {
+            case KeyEvent.KEYCODE_BACK:
+                if (isNotHomeActivity) {
+                    setContinueMusic(true);
+                }
+                break;
         }
         return super.onKeyDown(keyCode, event);
+    }
+
+    @Override
+    public boolean onKeyUp(int keyCode, @NonNull KeyEvent event) {
+//      We pause music in several cases:
+//      - when the button pressed is menu, and when back is pressed on HomeActivity
+        switch (keyCode) {
+            case KeyEvent.KEYCODE_MENU:
+            case KeyEvent.KEYCODE_HOME:
+                MusicManager.pause();
+                break;
+        }
+        return super.onKeyUp(keyCode, event);
     }
 
     protected boolean shouldContinueMusic() {
@@ -78,8 +102,17 @@ public abstract class LoggedActivity extends AppCompatActivity {
         continueMusic = val;
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu items for use in the action bar
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu_main, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
     protected abstract String getContentType();
 
     public abstract int getTitleResId();
+
     public abstract int getLayoutResId();
 }
