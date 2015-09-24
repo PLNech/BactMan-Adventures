@@ -7,7 +7,6 @@ import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Display;
 import android.view.SurfaceHolder;
@@ -18,11 +17,13 @@ import butterknife.InjectView;
 import butterknife.OnClick;
 import com.crashlytics.android.Crashlytics;
 import fr.plnech.igem.R;
+import fr.plnech.igem.ui.model.LoggedActivity;
+import fr.plnech.igem.ui.model.MusicManager;
 import io.fabric.sdk.android.Fabric;
 
-public class HomeActivity extends AppCompatActivity implements SurfaceHolder.Callback {
-
+public class HomeActivity extends LoggedActivity implements SurfaceHolder.Callback {
     private static final String TAG = "HomeActivity";
+
     private MediaPlayer mPlayer;
 
     @InjectView(R.id.videoView)
@@ -32,13 +33,26 @@ public class HomeActivity extends AppCompatActivity implements SurfaceHolder.Cal
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         initFabric(this);
-        setContentView(R.layout.activity_home);
         ButterKnife.inject(this);
 
         SurfaceHolder holder = videoView.getHolder();
         holder.addCallback(this);
     }
 
+    @Override
+    protected String getContentType() {
+        return TAG;
+    }
+
+    @Override
+    public int getTitleResId() {
+        return R.string.app_name;
+    }
+
+    @Override
+    public int getLayoutResId() {
+        return R.layout.activity_home;
+    }
 
     @OnClick(R.id.button_home_new_game)
     protected void onClickNewGame() {
@@ -88,7 +102,6 @@ public class HomeActivity extends AppCompatActivity implements SurfaceHolder.Cal
 
     @Override
     public void surfaceChanged(SurfaceHolder holder, int format, int width, int height) {
-
     }
 
     @Override
@@ -96,6 +109,13 @@ public class HomeActivity extends AppCompatActivity implements SurfaceHolder.Cal
         Log.d(TAG, "surfaceDestroyed - Destroying MediaPlayer.");
         mPlayer.release();
     }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        MusicManager.release();
+    }
+
     public static void initFabric(Context context) {
         /* Disabled on DEBUG builds */
 //        final CrashlyticsCore crashlyticsCore = new CrashlyticsCore.Builder().disabled(BuildConfig.DEBUG).build();

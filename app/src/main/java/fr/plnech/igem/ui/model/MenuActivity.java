@@ -6,7 +6,7 @@ package fr.plnech.igem.ui.model;
 public abstract class MenuActivity extends LoggedActivity {
     private static final String TAG = "MenuActivity";
 
-    final String getContentType() {
+    protected final String getContentType() {
         return TAG;
     }
 }

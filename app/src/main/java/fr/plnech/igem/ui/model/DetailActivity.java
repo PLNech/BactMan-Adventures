@@ -6,7 +6,7 @@ package fr.plnech.igem.ui.model;
 public abstract class DetailActivity extends LoggedActivity {
     private static final String TAG = "DetailActivity";
 
-    final String getContentType() {
+    protected final String getContentType() {
         return TAG;
     }
 }

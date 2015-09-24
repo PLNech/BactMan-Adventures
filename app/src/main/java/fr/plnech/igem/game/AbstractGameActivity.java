@@ -22,6 +22,7 @@ import fr.plnech.igem.game.model.PhysicalWorldObject;
 import fr.plnech.igem.game.model.res.FontAsset;
 import fr.plnech.igem.game.model.res.GFXAsset;
 import fr.plnech.igem.game.ui.DitheredSprite;
+import fr.plnech.igem.ui.model.MusicManager;
 import fr.plnech.igem.utils.FontsOverride;
 import org.andengine.audio.music.Music;
 import org.andengine.audio.music.MusicFactory;
@@ -377,7 +378,7 @@ public abstract class AbstractGameActivity extends SimpleBaseGameActivity implem
     private void loadMusic() {
         if (music == null) {
             try {
-                music = MusicFactory.createMusicFromAsset(mEngine.getMusicManager(), this, "mfx/music.mp3");
+                music = MusicFactory.createMusicFromAsset(mEngine.getMusicManager(), this, "mfx/games.mp3");
                 music.setLooping(true);
             } catch (IOException e) {
                 e.printStackTrace();
@@ -479,6 +480,7 @@ public abstract class AbstractGameActivity extends SimpleBaseGameActivity implem
         loadHUD(currentGame);
         loadScene(currentGame);
         mEngine.setScene(gameScene);
+        MusicManager.pause();
         music.play();
     }
 
