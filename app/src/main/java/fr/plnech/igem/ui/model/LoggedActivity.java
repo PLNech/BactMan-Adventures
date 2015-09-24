@@ -47,11 +47,12 @@ public abstract class LoggedActivity extends AppCompatActivity {
         MusicManager.start(this, MusicManager.MUSIC_MENU);
     }
 
-    @Override
-    protected void onUserLeaveHint() {
-        MusicManager.pause();
-        super.onUserLeaveHint();
-    }
+//FIXME: Pause music on Recents press but keep continuity across activities
+//    @Override
+//    protected void onUserLeaveHint() {
+//        MusicManager.pause();
+//        super.onUserLeaveHint();
+//    }
 
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
