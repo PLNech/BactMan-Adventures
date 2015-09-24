@@ -21,25 +21,25 @@
 
         </RelativeLayout>
         <RelativeLayout style="@style/AppTheme.Container.Button">
-            <Button style="@style/AppTheme.Button"
+            <Button style="@style/AppTheme.Button.Home"
                     android:text="@string/label_home_game"
                     android:id="@+id/button_home_new_game"/>
         </RelativeLayout>
 
         <RelativeLayout style="@style/AppTheme.Container.Button">
-            <Button style="@style/AppTheme.Button"
+            <Button style="@style/AppTheme.Button.Home"
                     android:text="@string/label_home_iGEM"
                     android:id="@+id/button_home_iGEM"/>
         </RelativeLayout>
 
         <RelativeLayout style="@style/AppTheme.Container.Button">
-            <Button style="@style/AppTheme.Button"
+            <Button style="@style/AppTheme.Button.Home"
                     android:text="@string/label_home_team"
                     android:id="@+id/button_home_team"/>
         </RelativeLayout>
 
         <RelativeLayout style="@style/AppTheme.Container.Button">
-            <Button style="@style/AppTheme.Button"
+            <Button style="@style/AppTheme.Button.Home"
                     android:text="@string/label_home_credits"
                     android:id="@+id/button_home_credits"
                     android:visibility="visible"/>

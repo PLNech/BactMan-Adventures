@@ -6,6 +6,16 @@
     <color name="softBlack">#1a1a1a</color>
     <color name="softWhite">#e6e6e6</color>
 
+    <color name="grey1">#11000000</color>
+    <color name="grey2">#22000000</color>
+    <color name="grey3">#33000000</color>
+    <color name="grey4">#44000000</color>
+    <color name="grey5">#55000000</color>
+    <color name="grey6">#66000000</color>
+    <color name="grey7">#77000000</color>
+    <color name="grey8">#66000000</color>
+    <color name="grey9">#66000000</color>
+
     <color name="ionisTurquoise">#6ccaa0</color>
     <color name="ionisLightGreen">#92d189</color>
     <color name="ionisMiddleGreen">#2e9c63</color>
@@ -15,8 +25,14 @@
     <color name="tintSecond">@color/ionisDarkGreen</color>
 
     <!-- Transparent Menu Buttons -->
-    <color name="buttonMenuPressed">#99000000</color>
-    <color name="buttonMenuLocked">#11000000</color>
-    <color name="buttonMenu">#44000000</color>
-    <color name="titleBox">#11000000</color>
+    <color name="buttonMenuPressed">@color/grey9</color>
+    <color name="buttonMenuLocked">@color/grey1</color>
+    <color name="buttonMenu">@color/grey5</color>
+
+    <color name="buttonMenuPressedText">@color/tintFirst</color>
+    <color name="buttonMenuLockedText">@color/grey1</color>
+    <color name="buttonMenuText">@color/softBlack</color>
+
+    <color name="titleBox">@color/grey1</color>
+
 </resources>

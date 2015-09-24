@@ -1,41 +1,43 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android" xmlns:tools="http://schemas.android.com/tools"
-              style="@style/AppTheme.Layout.Menu"
-              tools:context="fr.plnech.igem.ui.UsActivity">
-    <RelativeLayout style="@style/AppTheme.Container.Title.Menu">
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:tools="http://schemas.android.com/tools"
+                tools:context="fr.plnech.igem.ui.UsActivity"
+                style="@style/AppTheme.Layout">
+    <ImageView style="@style/AppTheme.ImageView.Background.Menus"/>
+    <LinearLayout style="@style/AppTheme.Layout.Menu">
+        <RelativeLayout style="@style/AppTheme.Container.Title.Menu">
 
-        <TextView style="@style/AppTheme.TextView.Title"
-                  android:text="@string/us_title"
-                  android:id="@+id/menu_title"/>
+            <TextView style="@style/AppTheme.TextView.Title"
+                      android:text="@string/us_title"
+                      android:id="@+id/menu_title"/>
 
-        <TextView style="@style/AppTheme.TextView.Subtitle"
-                  android:text="@string/us_subtitle"
-                  android:id="@+id/menu_subtitle"
-                  android:layout_below="@id/menu_title"/>
+            <TextView style="@style/AppTheme.TextView.Subtitle"
+                      android:text="@string/us_subtitle"
+                      android:id="@+id/menu_subtitle"
+                      android:layout_below="@id/menu_title"/>
 
-    </RelativeLayout>
-    <RelativeLayout style="@style/AppTheme.Container.Button">
-        <Button style="@style/AppTheme.Button"
-                android:text="@string/label_us_presentation"
-                android:id="@+id/button_us_presentation"/>
-    </RelativeLayout>
+        </RelativeLayout>
+        <RelativeLayout style="@style/AppTheme.Container.Button">
+            <Button style="@style/AppTheme.Button"
+                    android:text="@string/label_us_presentation"
+                    android:id="@+id/button_us_presentation"/>
+        </RelativeLayout>
 
-    <RelativeLayout style="@style/AppTheme.Container.Button">
-        <Button style="@style/AppTheme.Button"
-                android:text="@string/label_us_team"
-                android:id="@+id/button_us_team"/>
-    </RelativeLayout>
+        <RelativeLayout style="@style/AppTheme.Container.Button">
+            <Button style="@style/AppTheme.Button"
+                    android:text="@string/label_us_team"
+                    android:id="@+id/button_us_team"/>
+        </RelativeLayout>
 
-    <RelativeLayout style="@style/AppTheme.Container.Button">
-        <Button style="@style/AppTheme.Button"
-                android:text="@string/label_us_sponsors"
-                android:id="@+id/button_us_sponsors"/>
-    </RelativeLayout>
+        <RelativeLayout style="@style/AppTheme.Container.Button">
+            <Button style="@style/AppTheme.Button"
+                    android:text="@string/label_us_sponsors"
+                    android:id="@+id/button_us_sponsors"/>
+        </RelativeLayout>
 
-    <RelativeLayout style="@style/AppTheme.Container.Button">
-        <Button style="@style/AppTheme.Button"
-                android:text="@string/label_us_contact"
-                android:id="@+id/button_us_contact"/>
-    </RelativeLayout>
-
-
-</LinearLayout>
+        <RelativeLayout style="@style/AppTheme.Container.Button">
+            <Button style="@style/AppTheme.Button"
+                    android:text="@string/label_us_contact"
+                    android:id="@+id/button_us_contact"/>
+        </RelativeLayout>
+    </LinearLayout>
+</RelativeLayout>

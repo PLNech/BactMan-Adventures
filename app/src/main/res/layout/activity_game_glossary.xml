@@ -1,13 +1,11 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
                 xmlns:tools="http://schemas.android.com/tools"
                 style="@style/AppTheme.Layout">
-    <ImageView style="@style/AppTheme.ImageView.Background"/>
+    <ImageView style="@style/AppTheme.ImageView.Background.Texts"/>
     <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
                     xmlns:tools="http://schemas.android.com/tools"
                     style="@style/AppTheme.Layout.Detail"
                     tools:context="fr.plnech.igem.ui.GlossaryActivity">
-
-        <ImageView style="@style/AppTheme.ImageView.Background"/>
 
         <RelativeLayout style="@style/AppTheme.Container.Title"
                         android:id="@+id/box_title"
@@ -26,9 +24,6 @@
         <ListView android:layout_width="fill_parent" android:layout_height="wrap_content"
                   android:id="@android:id/list"
                   android:fastScrollEnabled="true"
-                  android:fastScrollAlwaysVisible="true"
-                  android:layout_below="@id/box_title">
-
-        </ListView>
+                  android:layout_below="@id/box_title"/>
     </RelativeLayout>
 </RelativeLayout>

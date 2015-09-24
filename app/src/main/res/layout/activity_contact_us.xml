@@ -2,7 +2,7 @@
                 xmlns:tools="http://schemas.android.com/tools"
                 style="@style/AppTheme.Layout"
                 tools:context="fr.plnech.igem.ui.ContactUsActivity">
-    <ImageView style="@style/AppTheme.ImageView.Background"/>
+    <ImageView style="@style/AppTheme.ImageView.Background.Texts"/>
     <ImageView style="@style/AppTheme.ImageView.FullWidth"
                android:id="@+id/mainPic"
                android:src="@drawable/contact_us"

@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <selector xmlns:android="http://schemas.android.com/apk/res/android" android:constantSize="true">
-    <item android:color="@color/tintFirst" android:state_pressed="true" android:state_focused="false"/>
-    <item android:color="@color/softWhite"/>
+    <item android:color="@color/buttonMenuPressedText" android:state_pressed="true" android:state_focused="false"/>
+    <item android:color="@color/buttonMenuLockedText" android:state_enabled="false"/>
+    <item android:color="@color/buttonMenuText"/>
 </selector>
 

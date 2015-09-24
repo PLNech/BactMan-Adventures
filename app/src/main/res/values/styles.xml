@@ -14,7 +14,6 @@
     </style>
 
     <style name="AppTheme.Layout.Menu">
-        <item name="android:background">@color/tintFirst</item>
         <item name="android:weightSum">100</item>
     </style>
 
@@ -128,6 +127,11 @@
         <item name="android:textColorHighlight">@color/ionisTurquoise</item>
     </style>
 
+    <style name="AppTheme.Button.Home">
+        <item name="android:textColor">@color/button_menu_text_home</item>
+        <item name="android:textColorHighlight">@color/ionisTurquoise</item>
+    </style>
+
     <style name="AppTheme.ImageView">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
@@ -145,9 +149,16 @@
     <style name="AppTheme.ImageView.Background">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">match_parent</item>
-        <item name="android:src">@drawable/background_menu</item>
         <item name="android:scaleType">centerCrop</item>
         <item name="android:contentDescription">@string/content_background</item>
+    </style>
+
+    <style name="AppTheme.ImageView.Background.Texts">
+        <item name="android:src">@drawable/background_texts</item>
+    </style>
+
+    <style name="AppTheme.ImageView.Background.Menus">
+        <item name="android:src">@drawable/background_menu</item>
     </style>
 
     <style name="AppTheme.ImageView.Carousel">
