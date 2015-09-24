@@ -1,24 +1,18 @@
 package fr.plnech.igem.ui;
 
 import android.content.SharedPreferences;
-import android.content.res.TypedArray;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-import android.util.Log;
 import android.widget.Button;
 import android.widget.Toast;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 import butterknife.OnClick;
 import fr.plnech.igem.R;
-import fr.plnech.igem.game.AbstractGameActivity;
 import fr.plnech.igem.game.model.BaseGame;
 import fr.plnech.igem.ui.model.MenuActivity;
 
 public class GameLevelsActivity extends MenuActivity {
 
-    @InjectView(R.id.button_levels_gut)
-    Button gutButton;
     @InjectView(R.id.button_levels_bin)
     Button binButton;
     @InjectView(R.id.button_levels_picto)
@@ -48,7 +42,6 @@ public class GameLevelsActivity extends MenuActivity {
          * Returns true if the game is locked
          */
         final boolean gameIsLocked = !BaseGame.getUnlockedStatus(gameId, preferences);
-        Log.d("DEBUG", "Game "  + gameId + " is unlocked: " + gameIsLocked);
         if (gameIsLocked) {
             button.setEnabled(false);
         }

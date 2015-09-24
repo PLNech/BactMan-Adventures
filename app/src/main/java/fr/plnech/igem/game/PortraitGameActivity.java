@@ -15,11 +15,9 @@ public class PortraitGameActivity extends AbstractGameActivity {
     private static final String TAG = "PortraitGameActivity";
 
     @Override
-    public EngineOptions onCreateEngineOptions() {
+    public EngineOptions getEngineOptions() {
         gameCamera = new SmoothCamera(0, 0, CAMERA_WIDTH, CAMERA_HEIGHT, MAX_SPEED_X, MAX_SPEED_Y, MAX_ZOOM_CHANGE);
-        final EngineOptions engineOptions = new EngineOptions(true, ScreenOrientation.PORTRAIT_SENSOR, new RatioResolutionPolicy(CAMERA_WIDTH, CAMERA_HEIGHT), gameCamera);
-        engineOptions.getTouchOptions().setNeedsMultiTouch(true);
-        return engineOptions;
+        return new EngineOptions(true, ScreenOrientation.PORTRAIT_SENSOR, new RatioResolutionPolicy(CAMERA_WIDTH, CAMERA_HEIGHT), gameCamera);
     }
 
     @Override

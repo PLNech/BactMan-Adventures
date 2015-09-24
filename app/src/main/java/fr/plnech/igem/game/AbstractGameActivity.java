@@ -23,6 +23,8 @@ import fr.plnech.igem.game.model.res.FontAsset;
 import fr.plnech.igem.game.model.res.GFXAsset;
 import fr.plnech.igem.game.ui.DitheredSprite;
 import fr.plnech.igem.utils.FontsOverride;
+import org.andengine.audio.music.Music;
+import org.andengine.audio.music.MusicFactory;
 import org.andengine.engine.Engine;
 import org.andengine.engine.camera.SmoothCamera;
 import org.andengine.engine.handler.timer.ITimerCallback;
@@ -58,6 +60,7 @@ import org.andengine.opengl.vbo.VertexBufferObjectManager;
 import org.andengine.ui.activity.SimpleBaseGameActivity;
 import org.andengine.util.HorizontalAlign;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -126,6 +129,7 @@ public abstract class AbstractGameActivity extends SimpleBaseGameActivity implem
 
     protected BaseGame currentGame;
     private SpriteBackground splashBackground;
+    private Music music;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -166,6 +170,15 @@ public abstract class AbstractGameActivity extends SimpleBaseGameActivity implem
         }
     }
 
+    @Override
+    public EngineOptions onCreateEngineOptions() {
+        gameCamera = new SmoothCamera(0, 0, CAMERA_WIDTH, CAMERA_HEIGHT, MAX_SPEED_X, MAX_SPEED_Y, MAX_ZOOM_CHANGE);
+        final EngineOptions engineOptions = getEngineOptions();
+        engineOptions.getTouchOptions().setNeedsMultiTouch(true);
+        engineOptions.getAudioOptions().setNeedsMusic(true);
+        engineOptions.getAudioOptions().setNeedsSound(true);
+        return engineOptions;
+    }
 
     @Override
     public Engine onCreateEngine(EngineOptions pEngineOptions) {
@@ -185,10 +198,6 @@ public abstract class AbstractGameActivity extends SimpleBaseGameActivity implem
         Log.d(TAG, "onCreateResources - Beginning resource creation.");
         loadSplashScene();
     }
-
-    protected abstract void loadSplashScene();
-
-    protected abstract void loadMenus();
 
     @Override
     public synchronized void onResumeGame() {
@@ -224,9 +233,11 @@ public abstract class AbstractGameActivity extends SimpleBaseGameActivity implem
         if (gameScene != null && pauseScene != null &&
                 pKeyCode == KeyEvent.KEYCODE_MENU && pEvent.getAction() == KeyEvent.ACTION_DOWN) {
             if (gameScene.hasChildScene()) { // The game is paused
+                music.play();
                 pauseScene.back();
                 updateNextStatus();
             } else {
+                music.pause();
                 gameScene.setChildScene(pauseScene, false, true, true);
             }
             return true;
@@ -247,6 +258,8 @@ public abstract class AbstractGameActivity extends SimpleBaseGameActivity implem
                 currentGame.setPlaying(true);
                 currentGame.resetGame();
                 gameScene.clearChildScene();
+                music.seekTo(0);
+                music.play();
                 resetMenus();
                 return true;
             case OPTION_NEXT:
@@ -361,6 +374,17 @@ public abstract class AbstractGameActivity extends SimpleBaseGameActivity implem
 //        }
 //    }
 
+    private void loadMusic() {
+        if (music == null) {
+            try {
+                music = MusicFactory.createMusicFromAsset(mEngine.getMusicManager(), this, "mfx/music.mp3");
+                music.setLooping(true);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
     public void checkSetGFXPath() {
         if (!BitmapTextureAtlasTextureRegionFactory.getAssetBasePath().equals(ASSET_PATH_GFX)) {
             BitmapTextureAtlasTextureRegionFactory.setAssetBasePath(ASSET_PATH_GFX);
@@ -432,7 +456,8 @@ public abstract class AbstractGameActivity extends SimpleBaseGameActivity implem
     protected void initGameScene() {
         loadGFXAssets(currentGame);
         loadFonts(currentGame);
-        //loadSounds(currentGame);
+        loadMusic();
+//        loadSounds(currentGame);
         setGameScene();
     }
 
@@ -454,6 +479,7 @@ public abstract class AbstractGameActivity extends SimpleBaseGameActivity implem
         loadHUD(currentGame);
         loadScene(currentGame);
         mEngine.setScene(gameScene);
+        music.play();
     }
 
     protected void warnAboutOrientation() {
@@ -464,7 +490,6 @@ public abstract class AbstractGameActivity extends SimpleBaseGameActivity implem
         Log.d(TAG, "warnAboutOrientation - " + message);
     }
 
-    protected abstract int getOrientationResId();
 
     private void loadScene(BaseGame game) {
         currentGame.setPlaying(true);
@@ -657,7 +682,7 @@ public abstract class AbstractGameActivity extends SimpleBaseGameActivity implem
     }
 
     protected void updateNextStatus() {
-        final boolean isUnlocked = getHighScore(currentGame) >= 50;
+        final boolean isUnlocked = true; //TODO REMOVE getHighScore(currentGame) >= 50;
         Log.d(TAG, "updateNextStatus: " + isUnlocked);
         updateNextStatus(nextPauseMenuItem, pauseScene, isUnlocked);
         updateNextStatus(nextWinMenuItem, winScene, isUnlocked);
@@ -718,12 +743,15 @@ public abstract class AbstractGameActivity extends SimpleBaseGameActivity implem
                 getCamera().getHeight() * positionRatio.y - textureDims.y / 2);
     }
 
-    public SmoothCamera getCamera() {
-        return gameCamera;
+    protected void initSplashScene(ITextureRegion splashTexture, int width, int height) {
+        splashScene = new Scene();
+        DitheredSprite splash = new DitheredSprite(0, 0, width, height, splashTexture, getVBOM());
+        splashBackground = new SpriteBackground(splash);
+        splashScene.setBackground(splashBackground);
     }
 
-    public SharedPreferences getPreferences() {
-        return preferences;
+    public SmoothCamera getCamera() {
+        return gameCamera;
     }
 
     public BaseGame getCurrentGame() {
@@ -742,12 +770,13 @@ public abstract class AbstractGameActivity extends SimpleBaseGameActivity implem
         return vertexBufferObjectManager;
     }
 
+    protected abstract void loadSplashScene();
+
+    protected abstract void loadMenus();
+
     protected abstract void initSplashScene();
 
-    protected void initSplashScene(ITextureRegion splashTexture, int width, int height) {
-        splashScene = new Scene();
-        DitheredSprite splash = new DitheredSprite(0, 0, width, height, splashTexture, getVBOM());
-        splashBackground = new SpriteBackground(splash);
-        splashScene.setBackground(splashBackground);
-    }
+    protected abstract int getOrientationResId();
+
+    protected abstract EngineOptions getEngineOptions();
 }
