@@ -105,6 +105,11 @@ public class ResMan {
     public static final String PIANO_C = "piano/base_c.png";
     public static final String PIANO_C_CPL = "piano/base_c_cpl.png";
 
+    /* Sounds */
+    public static final String SOUND_SUCCESS = "coin.ogg";
+    public static final String SOUND_FAILURE = "bash.wav";
+
+    /* Prof introductions */
     public static final String PROF_BIN_1 = "prof/bin_1.png";
     public static final String PROF_BIN_2 = "prof/bin_2.png";
     public static final String PROF_BIN_3 = "prof/bin_3.png";

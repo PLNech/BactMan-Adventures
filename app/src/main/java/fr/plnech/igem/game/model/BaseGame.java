@@ -1,7 +1,6 @@
 package fr.plnech.igem.game.model;
 
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.support.annotation.Nullable;
@@ -12,8 +11,11 @@ import com.crashlytics.android.answers.Answers;
 import com.crashlytics.android.answers.LevelEndEvent;
 import com.crashlytics.android.answers.LevelStartEvent;
 import fr.plnech.igem.game.*;
+import fr.plnech.igem.game.managers.ResMan;
+import fr.plnech.igem.game.model.res.Asset;
 import fr.plnech.igem.game.model.res.FontAsset;
 import fr.plnech.igem.game.model.res.GFXAsset;
+import fr.plnech.igem.game.model.res.SoundAsset;
 import org.andengine.engine.camera.Camera;
 import org.andengine.entity.IEntity;
 import org.andengine.entity.modifier.*;
@@ -48,6 +50,7 @@ public abstract class BaseGame {
     protected ArrayList<GFXAsset> graphicalAssets = new ArrayList<>();
     protected ArrayList<GFXAsset> profAssets = new ArrayList<>();
     protected ArrayList<FontAsset> fontAssets = new ArrayList<>();
+    protected ArrayList<SoundAsset> soundAssets = new ArrayList<>();
     protected ArrayList<HUDElement> elements = new ArrayList<>();
 
     protected boolean playing = false;
@@ -68,6 +71,14 @@ public abstract class BaseGame {
     public abstract List<GFXAsset> getProfAssets();
 
     public abstract List<FontAsset> getFontAssets();
+
+    public List<SoundAsset> getSoundAssets() {
+        if (soundAssets.isEmpty()) {
+            soundAssets.add(new SoundAsset(ResMan.SOUND_SUCCESS, 0.1f));
+            soundAssets.add(new SoundAsset(ResMan.SOUND_FAILURE));
+        }
+        return soundAssets;
+    }
 
     public abstract Scene prepareScene();
 
@@ -236,6 +247,14 @@ public abstract class BaseGame {
         }
     }
 
+    protected void playSoundFailure() {
+        activity.getSound(ResMan.SOUND_FAILURE).play();
+    }
+
+    protected void playSoundSuccess() {
+        activity.getSound(ResMan.SOUND_SUCCESS).play();
+    }
+
     public boolean isPlaying() {
         return playing;
     }
@@ -283,6 +302,7 @@ public abstract class BaseGame {
     }
 
     public abstract int getWidth();
+
     public abstract int getHeight();
 
     public static int getLastUnlockedId(SharedPreferences preferences) {

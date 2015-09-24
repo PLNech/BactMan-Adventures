@@ -244,6 +244,7 @@ public class BinGame extends PortraitGame {
     }
 
     private void decrementLives() {
+        super.playSoundFailure();
         Log.v(TAG, "beginContact - Decreasing lives to " + gameLives + ".");
         if (--gameLives == 0) {
             setPlaying(false);
@@ -268,6 +269,7 @@ public class BinGame extends PortraitGame {
     }
 
     private void incrementScore() {
+        super.playSoundSuccess();
         setScore(++gameScore);
         activity.setPhysicsCoeff(1.05f);
         Log.v(TAG, "beginContact - Increasing score to " + gameScore + ".");

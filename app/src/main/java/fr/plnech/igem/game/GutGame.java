@@ -11,6 +11,7 @@ import fr.plnech.igem.game.managers.ResMan;
 import fr.plnech.igem.game.model.HUDElement;
 import fr.plnech.igem.game.model.LandscapeGame;
 import fr.plnech.igem.game.model.Wall;
+import fr.plnech.igem.game.model.res.Asset;
 import fr.plnech.igem.game.model.res.FontAsset;
 import fr.plnech.igem.game.model.res.GFXAsset;
 import fr.plnech.igem.utils.CalcUtils;
@@ -326,6 +327,7 @@ public class GutGame extends LandscapeGame {
     }
 
     private void decrementLives() {
+        super.playSoundFailure();
         Log.v(TAG, "beginContact - Decreasing lives to " + gameLives + ".");
         if (--gameLives <= 0) {
             setPlaying(false);
@@ -342,9 +344,9 @@ public class GutGame extends LandscapeGame {
     }
 
     private void incrementScore() {
+        super.playSoundSuccess();
         setScore(++gameScore);
         Log.v(TAG, "beginContact - Increasing score to " + gameScore + ".");
-
         executeScenario();
     }
 

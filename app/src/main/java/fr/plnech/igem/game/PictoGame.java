@@ -170,6 +170,7 @@ public class PictoGame extends PortraitGame {
     }
 
     private void incrementScore() {
+        super.playSoundSuccess();
         gameScorePercent = ++gameScore * 2 * 100f / cardCount;
         Log.v(TAG, "beginContact - Increasing score to " + gameScore);
         setScore(gameScorePercent);
@@ -355,6 +356,7 @@ public class PictoGame extends PortraitGame {
                 animateCardDeletion(oldCard);
             } else {
                 Log.d(TAG, "onTimePassed - =/= types :( " + cardTypes);
+                super.playSoundFailure();
                 isDisplayingCards = true;
                 activity.registerUpdateHandler(FAIL_DURATION, new ITimerCallback() {
                     @Override

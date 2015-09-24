@@ -19,13 +19,17 @@ import fr.plnech.igem.game.managers.ResMan;
 import fr.plnech.igem.game.model.BaseGame;
 import fr.plnech.igem.game.model.HUDElement;
 import fr.plnech.igem.game.model.PhysicalWorldObject;
+import fr.plnech.igem.game.model.res.Asset;
 import fr.plnech.igem.game.model.res.FontAsset;
 import fr.plnech.igem.game.model.res.GFXAsset;
+import fr.plnech.igem.game.model.res.SoundAsset;
 import fr.plnech.igem.game.ui.DitheredSprite;
 import fr.plnech.igem.ui.model.MusicManager;
 import fr.plnech.igem.utils.FontsOverride;
 import org.andengine.audio.music.Music;
 import org.andengine.audio.music.MusicFactory;
+import org.andengine.audio.sound.Sound;
+import org.andengine.audio.sound.SoundFactory;
 import org.andengine.engine.Engine;
 import org.andengine.engine.camera.SmoothCamera;
 import org.andengine.engine.handler.timer.ITimerCallback;
@@ -93,6 +97,7 @@ public abstract class AbstractGameActivity extends SimpleBaseGameActivity implem
 
     private HashMap<CharSequence, ITiledTextureRegion> textureMap = new HashMap<>();
     private HashMap<CharSequence, IFont> fontMap = new HashMap<>();
+    private HashMap<CharSequence, Sound> soundMap = new HashMap<>();
 
     protected VertexBufferObjectManager vertexBufferObjectManager;
     protected TextureManager textureManager;
@@ -325,6 +330,21 @@ public abstract class AbstractGameActivity extends SimpleBaseGameActivity implem
         Log.v(TAG, "putTexture - Added texture " + textureName);
     }
 
+    public Sound getSound(String soundName) {
+        final Sound sound = soundMap.get(soundName);
+        if (sound != null) {
+            Log.v(TAG, "getSound - returning Sound " + soundName);
+        } else {
+            Log.v(TAG, "getSound - missing Sound " + soundName);
+        }
+        return sound;
+    }
+
+    public void putSound(String soundName, Sound sound) {
+        soundMap.put(soundName, sound);
+        Log.v(TAG, "putSound - Added Sound " + soundName);
+    }
+
 
     private void loadGFXAssets(BaseGame game) {
         for (GFXAsset asset : game.getGraphicalAssets()) {
@@ -365,15 +385,23 @@ public abstract class AbstractGameActivity extends SimpleBaseGameActivity implem
                 asset.getFilename(), asset.getSize(), asset.isAntialised(), asset.getColor());
     }
 
-//    private void loadSounds() {
-//        try {
-//            SoundFactory.setAssetBasePath("mfx/");
-//            SoundExplosion = SoundFactory.createSoundFromAsset(getEngine().getSoundManager(), getApplicationContext(), "explosion3.ogg");
-//            Log.d(TAG, "loadSounds - Finished loading sounds.");
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
-//    }
+    private void loadSounds(BaseGame game) {
+        for (SoundAsset sound : game.getSoundAssets()) {
+            loadSound(sound);
+        }
+        Log.d(TAG, "loadSounds - Finished loading sounds.");
+    }
+
+    protected void loadSound(SoundAsset soundAsset) {
+        try {
+            SoundFactory.setAssetBasePath("mfx/");
+            Sound sound = SoundFactory.createSoundFromAsset(getEngine().getSoundManager(), getApplicationContext(), soundAsset.getFilename());
+            sound.setVolume(soundAsset.getVolume(), soundAsset.getVolume());
+            soundMap.put(soundAsset.getFilename(), sound);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 
     private void loadMusic() {
         if (music == null) {
@@ -457,8 +485,8 @@ public abstract class AbstractGameActivity extends SimpleBaseGameActivity implem
     protected void initGameScene() {
         loadGFXAssets(currentGame);
         loadFonts(currentGame);
+        loadSounds(currentGame);
         loadMusic();
-//        loadSounds(currentGame);
         setGameScene();
     }
 

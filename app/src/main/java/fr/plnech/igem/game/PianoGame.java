@@ -290,11 +290,13 @@ public class PianoGame extends LandscapeGame {
     }
 
     private void incrementScore() {
+        super.playSoundSuccess();
         setScore(++gameScore);
         Log.v(TAG, "beginContact - Increasing score to " + gameScore + ".");
     }
 
     private void decrementScore() {
+        super.playSoundFailure();
         setScore(--gameScore);
         Log.v(TAG, "beginContact - Decreasing score to " + gameScore + ".");
     }
