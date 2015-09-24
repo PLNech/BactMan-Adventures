@@ -1,7 +1,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
                 xmlns:tools="http://schemas.android.com/tools"
                 style="@style/AppTheme.Layout">
-    <ImageView style="@style/AppTheme.ImageView.Background"/>
+    <ImageView style="@style/AppTheme.ImageView.Background.Texts"/>
     <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
                 xmlns:tools="http://schemas.android.com/tools"
                 android:id="@+id/scrollView"
@@ -50,7 +50,7 @@
                 <TextView style="@style/AppTheme.TextView.Paragraphs.Credits"
                           android:id="@+id/paragraphs_icons"
                           android:text="@string/text_credits_icons"
-                          android:layout_below="@id/paragraphs_butterknife"/>
+                          android:layout_below="@id/paragraphs_carousel"/>
                 <TextView style="@style/AppTheme.TextView.Paragraphs.Credits"
                           android:id="@+id/paragraphs_licenses"
                           android:text="@string/text_credits_licenses"
