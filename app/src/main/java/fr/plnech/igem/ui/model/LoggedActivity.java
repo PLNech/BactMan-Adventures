@@ -1,6 +1,9 @@
 package fr.plnech.igem.ui.model;
 
+import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.res.Resources;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -22,27 +25,11 @@ public abstract class LoggedActivity extends AppCompatActivity {
     private static final String TAG = "LoggedActivity";
     private boolean continueMusic = true;
 
-    protected void logView() {
-        final Resources resources = getResources();
-        final String contentName = resources.getString(getTitleResId());
-        final String contentType = getContentType();
-        final String contentId = resources.getResourceName(getLayoutResId()).replace("fr.plnech.igem:layout/", "");
-        logView(contentName, contentType, contentId, this);
-    }
-
-    public static void logView(String contentName, String contentType, String contentId, Context c) {
-        if (!Fabric.isInitialized()) HomeActivity.initFabric(c);
-        Answers.getInstance().logContentView(new ContentViewEvent()
-                .putContentType(contentType)
-                .putContentName(contentName)
-                .putContentId(contentId));
-        Log.d(TAG, "logView - " + contentType + ": " + contentName + "(" + contentId + ")");
-    }
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(getLayoutResId());
+        registerBroadcastReceiver();
         logView();
     }
 
@@ -94,6 +81,40 @@ public abstract class LoggedActivity extends AppCompatActivity {
         return super.onKeyUp(keyCode, event);
     }
 
+    protected void logView() {
+        final Resources resources = getResources();
+        final String contentName = resources.getString(getTitleResId());
+        final String contentType = getContentType();
+        final String contentId = resources.getResourceName(getLayoutResId()).replace("fr.plnech.igem:layout/", "");
+        logView(contentName, contentType, contentId, this);
+    }
+
+    public static void logView(String contentName, String contentType, String contentId, Context c) {
+        if (!Fabric.isInitialized()) HomeActivity.initFabric(c);
+        Answers.getInstance().logContentView(new ContentViewEvent()
+                .putContentType(contentType)
+                .putContentName(contentName)
+                .putContentId(contentId));
+        Log.d(TAG, "logView - " + contentType + ": " + contentName + "(" + contentId + ")");
+    }
+
+    private void registerBroadcastReceiver() {
+        final IntentFilter intentFilter = new IntentFilter();
+        intentFilter.addAction(Intent.ACTION_SCREEN_ON);
+        intentFilter.addAction(Intent.ACTION_SCREEN_OFF);
+
+        BroadcastReceiver screenOnOffReceiver = new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context context, Intent intent) {
+                if (intent.getAction().equals(Intent.ACTION_SCREEN_OFF)) {
+                    MusicManager.pause();
+                }
+            }
+        };
+
+        getApplicationContext().registerReceiver(screenOnOffReceiver, intentFilter);
+    }
+
     protected boolean shouldContinueMusic() {
         return continueMusic;
     }
@@ -102,17 +123,13 @@ public abstract class LoggedActivity extends AppCompatActivity {
         continueMusic = val;
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu items for use in the action bar
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.menu_main, menu);
-        return super.onCreateOptionsMenu(menu);
-    }
-
     protected abstract String getContentType();
 
     public abstract int getTitleResId();
 
     public abstract int getLayoutResId();
+
+    public LoggedActivity getThis() {
+        return this;
+    }
 }
