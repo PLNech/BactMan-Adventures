@@ -582,6 +582,7 @@ public abstract class AbstractGameActivity extends SimpleBaseGameActivity implem
         Log.d(TAG, "loadGameAsync - Loading with prof position " + givenPosition);
         profPosition = givenPosition;
         if (shouldDelay) {
+            MusicManager.start(this, MusicManager.MUSIC_MENU);
             registerUpdateHandler(SPLASH_DURATION, new ITimerCallback() {
                 public void onTimePassed(final TimerHandler pTimerHandler) {
                     mEngine.unregisterUpdateHandler(pTimerHandler);
