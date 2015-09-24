@@ -714,7 +714,7 @@ public abstract class AbstractGameActivity extends SimpleBaseGameActivity implem
     }
 
     protected void updateNextStatus() {
-        final boolean isUnlocked = getHighScore(currentGame) >= 50;
+        final boolean isUnlocked =  getHighScore(currentGame) >= 50;
         Log.d(TAG, "updateNextStatus: " + isUnlocked);
         updateNextStatus(nextPauseMenuItem, pauseScene, isUnlocked);
         updateNextStatus(nextWinMenuItem, winScene, isUnlocked);
