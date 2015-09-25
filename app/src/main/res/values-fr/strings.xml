@@ -72,11 +72,11 @@
         grâce à la manette. La bactérie est intégrée dans la puce microfluidique préalablement construite sous
         forme de labyrinthe et agrandie via le microscope relié à l’ordinateur.
         \n
-        \nLa deuxième partie de notre projet est l’application mobile "Les aventures de BactMan" proposant plusieurs
+        \nLa deuxième partie de notre projet est l’application mobile \"Les aventures de BactMan\" proposant plusieurs
         jeux autour des concepts de biotechnologie et de biologie de synthèse.
         \n
         \nCes jeux ont pour but de familiariser le grand public à ces grands concepts.
-        Notre philosophie : “Comprendre et apprendre tout en s\'amusant”.
+        Notre philosophie : "Comprendre et apprendre tout en s\'amusant".
     </string>
     <string name="what_link">Site officiel</string>
     <string name="title_activity_partners">Qui soutient l\'iGEM ?</string>
@@ -116,10 +116,12 @@
     <string name="msg_orientation_portrait">portrait</string>
     <string name="msg_orientation_landscape">paysage</string>
     <string name="msg_game_unlock">Pour débloquer le prochain jeu, il faut d\'abord gagner le jeu précédent.</string>
+    <string name="msg_event_button">Comptez sur moi !</string>
     <string name="msg_event_message">Nous présentons notre projet dimanche 27, à 9h30 en salle 311.
+        \n
         \nVenez nombreux !
     </string>
-    <string name="msg_event_button">Comptez sur moi !</string>
+    <string name="msg_event_title">IONIS Paris présente \"La BioConsole : les Aventures de BactMan\"</string>
     <string name="text_credits_people">
         Développement des jeux :
         \n
@@ -146,7 +148,7 @@
         \nArmelle Louisy
         \nMarine Mohmmed
         \nPaul-Louis Nech
-        \nPauline Trébullen
+        \nPauline Trébulle
         \nMarwa Zerhouni
         \n
         \n
@@ -154,7 +156,7 @@
         \nScott Gratton - Electro Lab
         \n
         \n
-        \nMerci à notre superviseur Sam Julliot, et à nos advisors Guillaume Mercy et Pierre Parutto pour leur aide
+        \nMerci à notre superviseur Sam Juillot, et à nos advisors Guillaume Mercy et Pierre Parutto pour leur aide
         et leurs conseils précieux
         \n
         \n
@@ -242,6 +244,7 @@
             \nOn obtiendra donc deux cellules filles avec chacune leur ADN à partir d’une cellule mère.
         </item>
         <item>Un nucléotide est un élément de base de l’ADN. Il est lui même compose de 3 éléments :
+            \n
             \n• Une base azotée
             \n• Un ribose (sucre)
             \n• Un phosphate.\n
@@ -275,7 +278,7 @@
             simple de systèmes biologiques.\n
             \nChaque BioBrick est délimitée par des préfixes et suffixes universels, elles débutent et se terminent
             donc toutes de la même façon.
-            \nComme elles sont conçues sur le même modèle, on peut les assembler comme un jeu de “LEGO” pour ensuite
+            \nComme elles sont conçues sur le même modèle, on peut les assembler comme un jeu de "LEGO" pour ensuite
             les incorporer dans une cellule vivante.\n
             \nCes standards permettent notamment aux équipes iGEM du monde entier de collaborer ensemble car toutes
             travaillent avec les mêmes normes.
@@ -308,11 +311,11 @@
             \nEn effet, l’ARN issue de l’ADN contient toutes les données nécessaires à la création des protéines, il ne
             reste qu’à décrypter ces informations !\n
             \nUne protéine appelée ribosome est responsable de ce décodage. Après s’être fixé sur le brin d’ARN, le
-            ribosome va lire la séquence nucléique en créant des “mots” de trois acides nucléiques chacun.
+            ribosome va lire la séquence nucléique en créant des "mots" de trois acides nucléiques chacun.
             \nCes mots, appelés codons, vont alors être reconnus et traduit en acide aminé pour former une protéine.
             \nComme dans un traducteur linguistique, le ribosome associe le mot à son équivalent en langage protéique.
             Le dictionnaire utilisé est appelé code génétique.
-            \nDurant ce processus, les acides aminés “lus” sont attachés les uns aux autres, tel un collier de perle.\n
+            \nDurant ce processus, les acides aminés "lus" sont attachés les uns aux autres, tel un collier de perle.\n
             \nUne fois la lecture finie, la chaîne d’acide aminée est libérée.
             \nElle se repliera alors afin d’adopter sa structure et sa fonction définitive avant de remplir son rôle.
         </item>
@@ -330,9 +333,9 @@
             \n• Les délétions, où un ou plusieurs nucléotides déjà existant seront supprimés
             \n• Les substitutions, où une ou plusieurs bases seront remplacées par d’autres\n
             \n
-            Comment expliquer que de si “petits” changements puissent avoir de si grandes conséquences?\n
+            Comment expliquer que de si "petits" changements puissent avoir de si grandes conséquences?\n
             \nLors de la traduction, les informations génétiques sont découpées en mots de 3 lettres, les codons.
-            \nLa traduction de ce codon est ensuite cherchée dans un “dictionnaire”, le code génétique, afin de
+            \nLa traduction de ce codon est ensuite cherchée dans un "dictionnaire", le code génétique, afin de
             traduire ce mot en langage protéique.
             \nSi l’une des lettres changent ou si les mots ne sont plus découpés de la même façon, la traduction en
             protéine sera altérée.

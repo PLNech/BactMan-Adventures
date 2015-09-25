@@ -92,7 +92,7 @@
         \nArmelle Louisy
         \nMarine Mohmmed
         \nPaul-Louis Nech
-        \nPauline Trébullen
+        \nPauline Trébulle
         \nMarwa Zerhouni
         \n
         \n
@@ -101,7 +101,7 @@
         \nplasterbrain - Coin GET!
         \nkantouth - CARTOON-BING-LOW
         \n
-        \nMany thanks to the help provided by our instructor Samuel Juilliot
+        \nMany thanks to the help provided by our instructor Samuel Juillot
         \nand by our advisors Guillaume Mercy and Pierre Parutto
         \n
         \n
@@ -725,6 +725,7 @@
         Our Team, IONIS Paris, developed a two part project around scientific popularisation for the iGEM 2015
         competition. The first part consists in a Bio-Console, a device connecting the living with the digital.
         The IONIS Paris bio-console is composed of:
+        \n
         \n• a microfluidic chip
         \n• a microscope
         \n• a computer
@@ -824,9 +825,10 @@
     <string name="msg_game_unlock">To unlock the next game, you need to win the previous one!</string>
     <string name="msg_event_button">I\'ll be there!</string>
     <string name="msg_event_message">We will present our project on Sunday 27, at 09:30 AM in the Room 311.
-        \nCome and bring your friends with you!
+        \n
+        \nCome and bring your teammates with you!
     </string>
-    <string name="msg_event_title" translatable="false">iGEM Giant Jamboree</string>
+    <string name="msg_event_title">IONIS Paris presents \"The BioConsole: BactMan Adventures\"</string>
 
     <string-array name="glossary_titles">
         <item>ADN</item>
@@ -903,7 +905,7 @@
             \n
             \nEach BioBrick is delimited by universal prefixes and suffixes, they thus begin and end all in the same
             way.
-            \nAs they are designed on the same model, we can assemble them like "LEGO" and then incorporate them into a
+            \nAs they are designed on the same model, we can assemble them like \"LEGO\" and then incorporate them into a
             living cell.
             \n
             \nThis standards allows iGEM teams around the world to work together as all work with the same standards.
@@ -941,12 +943,12 @@
             information!
             \n
             \nA protein called ribosome is responsible for decoding. After being fixed to the RNA strand, the ribosome
-            will read the nucleic acid sequence by creating "words" of three nucleic acids each.
+            will read the nucleic acid sequence by creating \"words\" of three nucleic acids each.
             \nThese words, called codons, will then be recognized and translated into amino acid to form a protein. As
             a
             language translator, the ribosome associates the word to its equivalent in protein language. The dictionary
             used is called genetic code.
-            \nDuring this process, the amino acid "read" are attached to each other like a pearl necklace.
+            \nDuring this process, the amino acid \"read\" are attached to each other like a pearl necklace.
             \n
             \nOnce finished reading the amino acid chain is released.
             \nShe then fold up to adopt its structure and function before finally fulfill its role in its orgaism.
@@ -970,7 +972,7 @@
             \nHow these small changes can have such great consequences?
             \n
             \nWhen translating the genetic information is cut into 3-letter words, the codons.
-            \nThe translation of this codon is then looked-up in a "dictionary", the genetic code to translate this
+            \nThe translation of this codon is then looked-up in a \"dictionary\", the genetic code to translate this
             word
             into protein language.
             \nIf one of the letters change or if the words are not separated the same way, the translation into a
@@ -980,7 +982,7 @@
             consequences
             because of the redundancy of the genetic code: among codons, there are many synonyms, so even if a base
             changes, the translation may remain correct.
-        \n
+            \n
             \n
             The mutations also allow genetic diversity: if we do not have all the eyes of the same color, it is due to
             individuals not having all the same genes and the same mutations!
