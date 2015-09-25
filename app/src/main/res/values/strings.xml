@@ -134,6 +134,13 @@
         library
         \n
     </string>
+    <string name="text_credits_background">
+        Background task handling thanks to
+        <a href="#">Steve Liles\' ForeDroid</a>
+        library, using
+        <a href="#">Benoit Lubek\' android-activitylifecyclecallbacks-compat</a>
+        \n
+    </string>
     <string name="text_credits_carousel">
         Sponsors and Team pages build with
         <a href="#">ludovicroland\'s Android Carousel</a>
@@ -712,6 +719,7 @@
     <string name="url_andengine" translatable="false">https://github.com/nicolasgramlich/AndEngine</string>
     <string name="url_butterknife" translatable="false">https://github.com/JakeWharton/butterknife</string>
     <string name="url_carousel" translatable="false">https://github.com/ludovicroland/carousel-android</string>
+    <string name="url_background" translatable="false">https://github.com/steveliles/Foredroid</string>
     <string name="url_icons" translatable="false">https://simpleicons.org/</string>
     <string name="url_contact_facebook" translatable="false">https://www.facebook.com/ionisigem</string>
     <string name="url_contact_twitter" translatable="false">https://twitter.com/IONIS_iGEM</string>

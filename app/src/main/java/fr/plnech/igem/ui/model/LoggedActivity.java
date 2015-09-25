@@ -7,27 +7,37 @@ import android.content.IntentFilter;
 import android.content.res.Resources;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.KeyEvent;
-import android.view.Menu;
-import android.view.MenuInflater;
+import android.widget.Toast;
 import com.crashlytics.android.answers.Answers;
 import com.crashlytics.android.answers.ContentViewEvent;
-import fr.plnech.igem.R;
 import fr.plnech.igem.ui.HomeActivity;
+import fr.plnech.igem.utils.Foreground;
 import io.fabric.sdk.android.Fabric;
+import org.jraf.android.util.activitylifecyclecallbackscompat.app.LifecycleDispatchActivity;
 
 /**
  * Created by PLNech on 14/09/2015.
  */
-public abstract class LoggedActivity extends AppCompatActivity {
+public abstract class LoggedActivity extends LifecycleDispatchActivity {
     private static final String TAG = "LoggedActivity";
     private boolean continueMusic = true;
+    private Foreground.Binding listenerBinding;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Foreground.init(getApplication());
+        Foreground.Listener bgListener = new Foreground.Listener(){
+            public void onBecameForeground(){
+                MusicManager.start(getThis(), MusicManager.MUSIC_MENU);
+            }
+            public void onBecameBackground(){
+                MusicManager.pause();
+            }
+        };
+        listenerBinding = Foreground.get().addListener(bgListener);
         setContentView(getLayoutResId());
         registerBroadcastReceiver();
         logView();

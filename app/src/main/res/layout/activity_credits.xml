@@ -44,9 +44,13 @@
                           android:text="@string/text_credits_butterknife"
                           android:layout_below="@id/paragraphs_andengine"/>
                 <TextView style="@style/AppTheme.TextView.Paragraphs.Credits"
+                          android:id="@+id/paragraphs_background"
+                          android:text="@string/text_credits_background"
+                          android:layout_below="@id/paragraphs_butterknife"/>
+                <TextView style="@style/AppTheme.TextView.Paragraphs.Credits"
                           android:id="@+id/paragraphs_carousel"
                           android:text="@string/text_credits_carousel"
-                          android:layout_below="@id/paragraphs_butterknife"/>
+                          android:layout_below="@id/paragraphs_background"/>
                 <TextView style="@style/AppTheme.TextView.Paragraphs.Credits"
                           android:id="@+id/paragraphs_icons"
                           android:text="@string/text_credits_icons"

@@ -188,6 +188,13 @@
         <a href="#">ButterKnife</a>\n
         \n
     </string>
+    <string name="text_credits_background">
+        Background task handling thanks to
+        <a href="#">Steve Liles\' ForeDroid</a>
+        library, using
+        <a href="#">Benoit Lubek\' android-activitylifecyclecallbacks-compat</a>
+        \n
+    </string>
     <string name="text_credits_carousel">
         Pages Sponsors et Équipe construites à l\'aide de la bibliothèque
         <a href="#">Android Carousel, par ludovicroland</a>

@@ -1,3 +1,4 @@
 include ':app'
 include ':AndEngine'
 include ':AndEnginePhysicsBox2DExtension'
+include ':androidactivitylifecyclecallbackscompat'
