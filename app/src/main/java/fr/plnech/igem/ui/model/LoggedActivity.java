@@ -29,7 +29,6 @@ public abstract class LoggedActivity extends LifecycleDispatchActivity implement
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Foreground.init(getApplication());
-        Toast.makeText(LoggedActivity.this, "Created listener", Toast.LENGTH_SHORT).show();
         listenerBinding = Foreground.get(getApplication()).addListener(this);
         setContentView(getLayoutResId());
         registerBroadcastReceiver();
