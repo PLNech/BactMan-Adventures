@@ -115,8 +115,10 @@ public class HomeActivity extends LoggedActivity implements SurfaceHolder.Callba
 
         Uri uri = Uri.parse("android.resource://" + getPackageName() + "/" + R.raw.animation);
         mPlayer = MediaPlayer.create(getApplicationContext(), uri, holder);
-        mPlayer.setLooping(true);
-        mPlayer.start();
+        if (mPlayer != null) {
+            mPlayer.setLooping(true);
+            mPlayer.start();
+        }
         Log.d(TAG, "onCreate - MediaPlayer started.");
     }
 
@@ -127,7 +129,9 @@ public class HomeActivity extends LoggedActivity implements SurfaceHolder.Callba
     @Override
     public void surfaceDestroyed(SurfaceHolder holder) {
         Log.d(TAG, "surfaceDestroyed - Destroying MediaPlayer.");
-        mPlayer.release();
+        if (mPlayer != null) {
+            mPlayer.release();
+        }
     }
 
     @Override
