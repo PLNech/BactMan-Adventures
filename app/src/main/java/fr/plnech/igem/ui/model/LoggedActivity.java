@@ -83,11 +83,19 @@ public abstract class LoggedActivity extends LifecycleDispatchActivity implement
 
     @Override
     public void onBecameForeground(){
+<<<<<<< HEAD
+=======
+        Toast.makeText(LoggedActivity.this, "Back foreground.", Toast.LENGTH_SHORT).show();
+>>>>>>> 5b279dddff58658e6241daa016be547e3eb1fb10
         MusicManager.start(getThis(), MusicManager.MUSIC_MENU);
     }
 
     @Override
     public void onBecameBackground(){
+<<<<<<< HEAD
+=======
+        Toast.makeText(LoggedActivity.this, "Went background.", Toast.LENGTH_SHORT).show();
+>>>>>>> 5b279dddff58658e6241daa016be547e3eb1fb10
         MusicManager.pause();
     }
 
