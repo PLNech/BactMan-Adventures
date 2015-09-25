@@ -195,10 +195,7 @@ public abstract class BaseGame {
 
     public void logLevelEnd(int score, boolean success) {
         Log.d(TAG, "logLevelEnd - score:" + score + ", " + (success ? "win" : "lose"));
-        Answers.getInstance().logLevelEnd(new LevelEndEvent()
-                .putLevelName(this.getClass().getSimpleName())
-                .putScore(score)
-                .putSuccess(success));
+        Answers.getInstance().logCustom(new GameEndEvent(this, score, success));
     }
 
     public static boolean getUnlockedStatus(int gameId, SharedPreferences preferences) {
@@ -299,6 +296,11 @@ public abstract class BaseGame {
             default:
                 return true;
         }
+    }
+
+    @Override
+    public String toString() {
+        return this.getClass().getSimpleName();
     }
 
     public abstract int getWidth();

@@ -10,7 +10,9 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
+import com.crashlytics.android.answers.Answers;
 import fr.plnech.igem.R;
+import fr.plnech.igem.game.model.GlossaryReadEvent;
 import fr.plnech.igem.glossary.Entry;
 import fr.plnech.igem.glossary.EntryListAdapter;
 import fr.plnech.igem.ui.model.LoggedActivity;
@@ -62,7 +64,7 @@ public class GlossaryActivity extends ListActivity {
                         .setCancelable(false)
                         .setPositiveButton("OK", new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int id) {
-                                //TODO: Read event? Feedback button?
+                                Answers.getInstance().logCustom(new GlossaryReadEvent(item.getName()));
                             }
                         });
                 AlertDialog alert = builder.create();

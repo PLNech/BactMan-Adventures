@@ -4,8 +4,10 @@ import android.content.DialogInterface;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AlertDialog;
 import android.view.View;
+import com.crashlytics.android.answers.Answers;
 import fr.plnech.igem.R;
 import fr.plnech.igem.carousel.TeamMember;
+import fr.plnech.igem.game.model.MemberEvent;
 import fr.plnech.igem.utils.DevUtils;
 import fr.rolandl.carousel.CarouselBaseAdapter;
 
@@ -69,10 +71,12 @@ public class TeamActivity extends CarouselActivity {
                         .setCancelable(false)
                         .setNeutralButton("Close", new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int id) {
+                                Answers.getInstance().logCustom(new MemberEvent(member, MemberEvent.ACTION_CLOSE));
                             }
                         })
                         .setPositiveButton("LinkedIn", new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int id) {
+                                Answers.getInstance().logCustom(new MemberEvent(member, MemberEvent.ACTION_LINKEDIN));
                                 DevUtils.openLink(member.getUrlLinkedin(), TeamActivity.this);
                             }
                         });
@@ -80,6 +84,7 @@ public class TeamActivity extends CarouselActivity {
                 if (urlTwitter != null) {
                     builder.setNegativeButton("Twitter", new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int id) {
+                            Answers.getInstance().logCustom(new MemberEvent(member, MemberEvent.ACTION_TWITTER));
                             DevUtils.openLink(urlTwitter, TeamActivity.this);
                         }
                     });
