@@ -17,11 +17,18 @@ import fr.plnech.igem.utils.Foreground;
 import io.fabric.sdk.android.Fabric;
 import org.jraf.android.util.activitylifecyclecallbackscompat.app.LifecycleDispatchActivity;
 
+import java.util.Calendar;
+import java.util.Locale;
+import java.util.TimeZone;
+
 /**
  * Created by PLNech on 14/09/2015.
  */
 public abstract class LoggedActivity extends LifecycleDispatchActivity implements Foreground.Listener {
     private static final String TAG = "LoggedActivity";
+    public static final String KEY_TIMEZONE = "Timezone";
+    public static final String KEY_LANG = "Language";
+
     private boolean continueMusic = true;
     private Foreground.Binding listenerBinding;
 
@@ -114,9 +121,16 @@ public abstract class LoggedActivity extends LifecycleDispatchActivity implement
 
     public static void logView(String contentName, String contentType, String contentId, Context c) {
         if (!Fabric.isInitialized()) HomeActivity.initFabric(c);
+
+        Calendar cal = Calendar.getInstance();
+        TimeZone tz = cal.getTimeZone();
+        String language = Locale.getDefault().getDisplayName();
+
         Answers.getInstance().logContentView(new ContentViewEvent()
                 .putContentType(contentType)
                 .putContentName(contentName)
+                .putCustomAttribute(KEY_TIMEZONE, tz.getID())
+                .putCustomAttribute(KEY_LANG, language)
                 .putContentId(contentId));
         Log.d(TAG, "logView - " + contentType + ": " + contentName + "(" + contentId + ")");
     }
