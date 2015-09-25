@@ -2,6 +2,7 @@ package fr.plnech.igem.ui;
 
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.Button;
 import android.widget.Toast;
 import butterknife.ButterKnife;
@@ -42,10 +43,7 @@ public class GameLevelsActivity extends MenuActivity {
          * Returns true if the game is locked
          */
         final boolean gameIsLocked = !BaseGame.getUnlockedStatus(gameId, preferences);
-        if (gameIsLocked) {
-            button.setEnabled(false);
-        }
-
+        button.setEnabled(!gameIsLocked); //Button is disabled if game is locked
         return gameIsLocked;
     }
 
