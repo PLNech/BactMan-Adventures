@@ -253,10 +253,9 @@ public class PictoGame extends PortraitGame {
     private Stack<String> generateCardStack() {
         Stack<String> nameStack = new Stack<>();
         List<String> nameList = new ArrayList<>();
-        Card.Type[] typeArray = Card.Type.values();
+        Card.Type[] typeArray = Card.Type.valuesButBack();
 
         for (Card.Type type : typeArray) {
-            type = Card.Type.random();
             nameList.add(cardName(type));
         }
 

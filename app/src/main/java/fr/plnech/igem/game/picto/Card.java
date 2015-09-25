@@ -1,9 +1,9 @@
 package fr.plnech.igem.game.picto;
 
 import android.util.Log;
+import fr.plnech.igem.game.AbstractGameActivity;
 import fr.plnech.igem.game.PictoGame;
 import fr.plnech.igem.game.managers.ResMan;
-import fr.plnech.igem.game.AbstractGameActivity;
 import fr.plnech.igem.utils.WorldUtils;
 import org.andengine.entity.sprite.Sprite;
 import org.andengine.input.touch.TouchEvent;
@@ -33,6 +33,23 @@ public class Card extends Sprite {
             final Type[] values = Type.values();
             final int randomIndex = 1 + (int) ((values.length - 1) * Math.random()); // Random between second and last
             return values[randomIndex];
+        }
+
+        public static Type[] valuesButBack() {
+            Type[] array = new Type[12];
+            array[0] = BIOHAZARD;
+            array[1] = CMR;
+            array[2] = ENVIRONMENT;
+            array[3] = FACE;
+            array[4] = FLAMMABLE;
+            array[5] = GLOVES;
+            array[6] = MASK;
+            array[7] = OXIDISING;
+            array[8] = RADIOACTIVE;
+            array[9] = TOXIC;
+            array[10] = EYE;
+            array[11] = SHOWER;
+            return array;
         }
     }
 
