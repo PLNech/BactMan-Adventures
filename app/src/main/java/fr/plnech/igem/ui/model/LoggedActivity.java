@@ -20,7 +20,7 @@ import org.jraf.android.util.activitylifecyclecallbackscompat.app.LifecycleDispa
 /**
  * Created by PLNech on 14/09/2015.
  */
-public abstract class LoggedActivity extends LifecycleDispatchActivity {
+public abstract class LoggedActivity extends LifecycleDispatchActivity implements Foreground.Listener {
     private static final String TAG = "LoggedActivity";
     private boolean continueMusic = true;
     private Foreground.Binding listenerBinding;
@@ -29,15 +29,8 @@ public abstract class LoggedActivity extends LifecycleDispatchActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Foreground.init(getApplication());
-        Foreground.Listener bgListener = new Foreground.Listener(){
-            public void onBecameForeground(){
-                MusicManager.start(getThis(), MusicManager.MUSIC_MENU);
-            }
-            public void onBecameBackground(){
-                MusicManager.pause();
-            }
-        };
-        listenerBinding = Foreground.get().addListener(bgListener);
+        Toast.makeText(LoggedActivity.this, "Created listener", Toast.LENGTH_SHORT).show();
+        listenerBinding = Foreground.get(getApplication()).addListener(this);
         setContentView(getLayoutResId());
         registerBroadcastReceiver();
         logView();
@@ -57,7 +50,17 @@ public abstract class LoggedActivity extends LifecycleDispatchActivity {
         MusicManager.start(this, MusicManager.MUSIC_MENU);
     }
 
-//FIXME: Pause music on Recents press but keep continuity across activities
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+
+        // not strictly necessary as Foreground only holds a weak reference
+        // to the listener to defensively prevent leaks, but its always better
+        // to be explicit and WR's play monkey with the Garbage Collector
+        listenerBinding.unbind();
+    }
+
+    //FIXME: Pause music on Recents press but keep continuity across activities
 //    @Override
 //    protected void onUserLeaveHint() {
 //        MusicManager.pause();
@@ -77,6 +80,16 @@ public abstract class LoggedActivity extends LifecycleDispatchActivity {
                 break;
         }
         return super.onKeyDown(keyCode, event);
+    }
+
+    @Override
+    public void onBecameForeground(){
+        MusicManager.start(getThis(), MusicManager.MUSIC_MENU);
+    }
+
+    @Override
+    public void onBecameBackground(){
+        MusicManager.pause();
     }
 
     @Override
