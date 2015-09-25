@@ -23,8 +23,8 @@ android {
         applicationId "fr.plnech.igem"
         minSdkVersion 10
         targetSdkVersion 10
-        versionCode 6
-        versionName "1.01"
+        versionCode 7
+        versionName "1.02"
     }
 
     buildTypes {
