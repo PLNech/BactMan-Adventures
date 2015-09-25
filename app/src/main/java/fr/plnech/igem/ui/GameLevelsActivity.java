@@ -26,6 +26,11 @@ public class GameLevelsActivity extends MenuActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         ButterKnife.inject(this);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
         preferences = getSharedPreferences(getString(R.string.app_name), MODE_PRIVATE);
 
         final boolean isLockedBin = setButtonStatus(BaseGame.ID_BIN, binButton);
@@ -44,6 +49,7 @@ public class GameLevelsActivity extends MenuActivity {
          */
         final boolean gameIsLocked = !BaseGame.getUnlockedStatus(gameId, preferences);
         button.setEnabled(!gameIsLocked); //Button is disabled if game is locked
+        Log.d("DEBUG", "setButtonStatus - game " + gameId + "isLocked: " + gameIsLocked);
         return gameIsLocked;
     }
 
