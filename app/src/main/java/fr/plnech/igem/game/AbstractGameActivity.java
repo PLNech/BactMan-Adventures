@@ -673,8 +673,8 @@ public abstract class AbstractGameActivity extends SimpleBaseGameActivity implem
         final Vector2 textPosition = spritePosition(gameOverText.getWidth(), gameOverText.getHeight(), posRatioX, posRatioY);
         gameOverText.setPosition(textPosition.x, textPosition.y);
         pauseScene.attachChild(gameOverText);
-        gameScene.setChildScene(pauseScene, false, true, true);
         currentGame.logLevelEnd(score, false);
+        gameScene.setChildScene(pauseScene, false, true, true);
     }
 
     public void onWin(int score, float posRatioX, float posRatioY) {
@@ -684,9 +684,9 @@ public abstract class AbstractGameActivity extends SimpleBaseGameActivity implem
         final Vector2 textPosition = spritePosition(winText.getWidth(), winText.getHeight(), posRatioX, posRatioY);
         winText.setPosition(textPosition.x, textPosition.y);
         winScene.attachChild(winText);
-        gameScene.setChildScene(winScene, false, true, true);
-        currentGame.logLevelEnd(score, true);
         updateNextGame();
+        currentGame.logLevelEnd(score, true);
+        gameScene.setChildScene(winScene, false, true, true);
     }
 
     private void onQuit() {
@@ -715,7 +715,7 @@ public abstract class AbstractGameActivity extends SimpleBaseGameActivity implem
     }
 
     protected void updateNextStatus() {
-        final boolean isUnlocked =  getHighScore(currentGame) >= 50;
+        final boolean isUnlocked = getHighScore(currentGame) >= 50;
         Log.d(TAG, "updateNextStatus: " + isUnlocked);
         updateNextStatus(nextPauseMenuItem, pauseScene, isUnlocked);
         updateNextStatus(nextWinMenuItem, winScene, isUnlocked);
