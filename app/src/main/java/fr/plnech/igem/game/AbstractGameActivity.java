@@ -19,7 +19,6 @@ import fr.plnech.igem.game.managers.ResMan;
 import fr.plnech.igem.game.model.BaseGame;
 import fr.plnech.igem.game.model.HUDElement;
 import fr.plnech.igem.game.model.PhysicalWorldObject;
-import fr.plnech.igem.game.model.res.Asset;
 import fr.plnech.igem.game.model.res.FontAsset;
 import fr.plnech.igem.game.model.res.GFXAsset;
 import fr.plnech.igem.game.model.res.SoundAsset;
@@ -724,14 +723,16 @@ public abstract class AbstractGameActivity extends SimpleBaseGameActivity implem
     private void updateNextGame() {
         int lastUnlockedId = preferences.getInt(BaseGame.KEY_GAME_ID, 0);
         final int nextGameId = Math.max(currentGame.getNextGameId(), BaseGame.ID_GUT);
-        if (nextGameId >= lastUnlockedId) {
-            preferences.edit()
-                    .putInt(BaseGame.KEY_GAME_ID, nextGameId)
-                    .putBoolean(nextGameId + AbstractGameActivity.SUFFIX_UNLOCKED, true)
-                    .apply();
+        final SharedPreferences.Editor editor = preferences.edit();
+        Log.d("DEBUG", "updateNextGame - Unlocking game " + nextGameId);
+        editor.putBoolean(nextGameId + AbstractGameActivity.SUFFIX_UNLOCKED, true);
 
-            Log.d(TAG, "updateNextGame - New value: " + nextGameId);
+        if (nextGameId >= lastUnlockedId) {
+            editor.putInt(BaseGame.KEY_GAME_ID, nextGameId);
+            Log.d("DEBUG", "updateNextGame - New value: " + nextGameId);
         }
+
+        editor.apply();
     }
 
     private void updateNextStatus(SpriteMenuItem item, Scene scene, boolean isUnlocking) {
