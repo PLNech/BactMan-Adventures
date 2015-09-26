@@ -33,8 +33,8 @@ public class TeamMember {
     }
 
     public TeamMember(String firstName, String lastName, String avatarResName,
-                      @Nullable String quote, @Nullable String linkedin) {
-        this(firstName, lastName, avatarResName, quote, linkedin, null);
+                      @Nullable String quote, @Nullable String linkedIn) {
+        this(firstName, lastName, avatarResName, quote, linkedIn, null);
     }
 
     public TeamMember(String firstName, String lastName, String avatarResName,

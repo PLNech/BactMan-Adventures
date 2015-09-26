@@ -782,16 +782,16 @@
     <string name="text_bio">
         Synthetic biology is biological engineering.
         \nIts aim is the rational design of systems based on the living or inspired by the living,
-        and endowed with functions inexistent in nature.
+        and endowed with functions nonexistent in nature.
         \nThis emerging field will push forward our knowledge of the living world and will enable the development
         of several industrial applications in areas such as the health sector or the environmental field.
         \n
-        \nHowever, as with all technologies, synthetic biology raises optimism and enthousiasm, but also worry and
+        \nHowever, as with all technologies, synthetic biology raises optimism and enthusiasm, but also worry and
         wariness.
     </string>
 
     <!-- Home -> iGEM -> BioBricks -->
-    <string name="title_activity_biobrick">What is a Biobrick ?</string>
+    <string name="title_activity_biobrick">What is a BioBrick ?</string>
     <string name="biobrick_subtitle">A good way to work together</string>
 
     <!-- Home -> iGEM -> Partners -->
@@ -839,14 +839,14 @@
     <string name="msg_event_title">IONIS Paris presents \"The BioConsole\"</string>
 
     <string-array name="glossary_titles">
-        <item>ADN</item>
+        <item>DNA</item>
         <item>Replication</item>
         <item>Nucleotide</item>
         <item>Complementarity</item>
         <item>Plasmid</item>
         <item>Restriction site (digestion)</item>
         <item>Ligation</item>
-        <item>Biobrick</item>
+        <item>BioBrick</item>
         <item>Petri Dish</item>
         <item>Electrophoresis</item>
         <item>Transcription</item>
@@ -959,7 +959,7 @@
             \nDuring this process, the amino acid \"read\" are attached to each other like a pearl necklace.
             \n
             \nOnce finished reading the amino acid chain is released.
-            \nShe then fold up to adopt its structure and function before finally fulfill its role in its orgaism.
+            \nShe then fold up to adopt its structure and function before finally fulfill its role in its organism.
         </item>
         <item>A mutation is a modification in the DNA sequence. This modification can occur naturally, by errors during
             replication for example, or be induced by mutagens or phenomena said. For example, UV damages DNA and induce
