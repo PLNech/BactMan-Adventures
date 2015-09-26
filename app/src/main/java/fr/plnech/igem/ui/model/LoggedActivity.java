@@ -10,6 +10,7 @@ import android.support.annotation.NonNull;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.widget.Toast;
+import com.crashlytics.android.Crashlytics;
 import com.crashlytics.android.answers.Answers;
 import com.crashlytics.android.answers.ContentViewEvent;
 import fr.plnech.igem.ui.HomeActivity;
@@ -26,6 +27,7 @@ import java.util.TimeZone;
  */
 public abstract class LoggedActivity extends LifecycleDispatchActivity implements Foreground.Listener {
     private static final String TAG = "LoggedActivity";
+    public static final String KEY_ACTIVITY = "Activity";
     public static final String KEY_TIMEZONE = "Timezone";
     public static final String KEY_LANG = "Language";
 
@@ -36,6 +38,7 @@ public abstract class LoggedActivity extends LifecycleDispatchActivity implement
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Foreground.init(getApplication());
+        Crashlytics.setString(KEY_ACTIVITY, this.getClass().getSimpleName());
         listenerBinding = Foreground.get(getApplication()).addListener(this);
         setContentView(getLayoutResId());
         registerBroadcastReceiver();
