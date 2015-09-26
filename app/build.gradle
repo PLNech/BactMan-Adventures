@@ -22,9 +22,9 @@ android {
     defaultConfig {
         applicationId "fr.plnech.igem"
         minSdkVersion 10
-        targetSdkVersion 10
-        versionCode 8
-        versionName "1.03"
+        targetSdkVersion 23
+        versionCode 9
+        versionName "1.04"
     }
 
     buildTypes {
