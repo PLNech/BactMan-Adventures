@@ -1,12 +1,12 @@
 /**
  * Copyright 2015 Steve Liles
- *
+ * <p/>
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- *
+ * <p/>
  * http://www.apache.org/licenses/LICENSE-2.0
- *
+ * <p/>
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -22,6 +22,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
+import fr.plnech.igem.ui.model.LoggedActivity;
 import org.jraf.android.util.activitylifecyclecallbackscompat.ActivityLifecycleCallbacksCompat;
 import org.jraf.android.util.activitylifecyclecallbackscompat.ApplicationHelper;
 
@@ -32,34 +33,34 @@ import java.util.concurrent.CopyOnWriteArrayList;
 
 /**
  * Usage:
- *
+ * <p/>
  * 1. Get the Foreground Singleton, passing a Context or Application object unless you
  * are sure that the Singleton has definitely already been initialised elsewhere.
- *
+ * <p/>
  * 2.a) Perform a direct, synchronous check: Foreground.isForeground() / .isBackground()
- *
+ * <p/>
  * or
- *
+ * <p/>
  * 2.b) Register to be notified (useful in Service or other non-UI components):
- *
- *   Foreground.Listener myListener = new Foreground.Listener(){
- *       public void onBecameForeground(){
- *           // ... whatever you want to do
- *       }
- *       public void onBecameBackground(){
- *           // ... whatever you want to do
- *       }
- *   }
- *
- *   public void onCreate(){
- *      super.onCreate();
- *      Foreground.get(getApplication()).addListener(listener);
- *   }
- *
- *   public void onDestroy(){
- *      super.onCreate();
- *      Foreground.get(getApplication()).removeListener(listener);
- *   }
+ * <p/>
+ * Foreground.Listener myListener = new Foreground.Listener(){
+ * public void onBecameForeground(){
+ * // ... whatever you want to do
+ * }
+ * public void onBecameBackground(){
+ * // ... whatever you want to do
+ * }
+ * }
+ * <p/>
+ * public void onCreate(){
+ * super.onCreate();
+ * Foreground.get(getApplication()).addListener(listener);
+ * }
+ * <p/>
+ * public void onDestroy(){
+ * super.onCreate();
+ * Foreground.get(getApplication()).removeListener(listener);
+ * }
  */
 @TargetApi(Build.VERSION_CODES.ICE_CREAM_SANDWICH)
 public class Foreground implements ActivityLifecycleCallbacksCompat {
@@ -69,6 +70,7 @@ public class Foreground implements ActivityLifecycleCallbacksCompat {
 
     public interface Listener {
         public void onBecameForeground();
+
         public void onBecameBackground();
     }
 
@@ -83,18 +85,18 @@ public class Foreground implements ActivityLifecycleCallbacksCompat {
     private static class Listeners {
         private List<WeakReference<Listener>> listeners = new CopyOnWriteArrayList<>();
 
-        public Binding add(Listener listener){
+        public Binding add(Listener listener) {
             final WeakReference<Listener> wr = new WeakReference<>(listener);
             listeners.add(wr);
-            return new Binding(){
+            return new Binding() {
                 public void unbind() {
                     listeners.remove(wr);
                 }
             };
         }
 
-        public void each(Callback callback){
-            for (Iterator<WeakReference<Listener>> it = listeners.iterator(); it.hasNext();) {
+        public void each(Callback callback) {
+            for (Iterator<WeakReference<Listener>> it = listeners.iterator(); it.hasNext(); ) {
                 try {
                     WeakReference<Listener> wr = it.next();
                     Listener l = wr.get();
@@ -131,7 +133,7 @@ public class Foreground implements ActivityLifecycleCallbacksCompat {
     private Handler handler = new Handler();
     private Runnable check;
 
-    public static Foreground init(Application application){
+    public static Foreground init(Application application) {
         if (instance == null) {
             instance = new Foreground();
             ApplicationHelper.registerActivityLifecycleCallbacks(application, instance);
@@ -139,41 +141,42 @@ public class Foreground implements ActivityLifecycleCallbacksCompat {
         return instance;
     }
 
-    public static Foreground get(Application application){
+    public static Foreground get(Application application) {
         if (instance == null) {
             init(application);
         }
         return instance;
     }
 
-    public static Foreground get(){
+    public static Foreground get() {
         if (instance == null) {
             throw new IllegalStateException(
-                "Foreground is not initialised - first invocation must use parameterised init/get");
+                    "Foreground is not initialised - first invocation must use parameterised init/get");
         }
         return instance;
     }
 
-    public boolean isForeground(){
+    public boolean isForeground() {
         return foreground;
     }
 
-    public boolean isBackground(){
+    public boolean isBackground() {
         return !foreground;
     }
 
-    public Binding addListener(Listener listener){
+    public Binding addListener(Listener listener) {
         return listeners.add(listener);
     }
 
     @Override
-    public void onActivityResumed(Activity activity) {}
+    public void onActivityResumed(Activity activity) {
+    }
 
     @Override
     public void onActivityPaused(Activity activity) {
         // if we're changing configurations we aren't going background so
         // no need to schedule the check
-        if (!activity.isChangingConfigurations()) {
+        if (!isChangingConfigurations(activity)) {
             // don't prevent activity being gc'd
             final WeakReference<Activity> ref = new WeakReference<>(activity);
             handler.postDelayed(check = new Runnable() {
@@ -195,7 +198,7 @@ public class Foreground implements ActivityLifecycleCallbacksCompat {
         }
 
         // check if we're becoming foreground and notify listeners
-        if (!foreground && (activity != null && !activity.isChangingConfigurations())){
+        if (!foreground && (activity != null && !isChangingConfigurations(activity))) {
             foreground = true;
             Log.w(TAG, "became foreground");
             listeners.each(becameForeground);
@@ -213,18 +216,21 @@ public class Foreground implements ActivityLifecycleCallbacksCompat {
     }
 
     @Override
-    public void onActivityCreated(Activity activity, Bundle savedInstanceState) {}
+    public void onActivityCreated(Activity activity, Bundle savedInstanceState) {
+    }
 
     @Override
-    public void onActivitySaveInstanceState(Activity activity, Bundle outState) {}
+    public void onActivitySaveInstanceState(Activity activity, Bundle outState) {
+    }
 
     @Override
-    public void onActivityDestroyed(Activity activity) {}
+    public void onActivityDestroyed(Activity activity) {
+    }
 
 
-    private void onActivityCeased(Activity activity){
+    private void onActivityCeased(Activity activity) {
         if (foreground) {
-            if ((activity == current) && (activity != null && !activity.isChangingConfigurations())){
+            if ((activity == current) && (activity != null && !isChangingConfigurations(activity))) {
                 foreground = false;
                 Log.w(TAG, "went background");
                 listeners.each(becameBackground);
@@ -234,5 +240,9 @@ public class Foreground implements ActivityLifecycleCallbacksCompat {
         } else {
             Log.i(TAG, "still background");
         }
+    }
+
+    private boolean isChangingConfigurations(Activity activity) {
+        return ((LoggedActivity) activity).isChangingConfigurations();
     }
 }

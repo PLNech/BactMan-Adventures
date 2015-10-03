@@ -1,10 +1,12 @@
 package fr.plnech.igem.ui.model;
 
+import android.annotation.TargetApi;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.res.Resources;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.util.Log;
@@ -32,17 +34,30 @@ public abstract class LoggedActivity extends LifecycleDispatchActivity implement
     public static final String KEY_LANG = "Language";
 
     private boolean continueMusic = true;
+    private boolean isChangingConfiguration;
     private Foreground.Binding listenerBinding;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Foreground.init(getApplication());
+        checkInitFabric(this);
         Crashlytics.setString(KEY_ACTIVITY, this.getClass().getSimpleName());
         listenerBinding = Foreground.get(getApplication()).addListener(this);
         setContentView(getLayoutResId());
         registerBroadcastReceiver();
         logView();
+        isChangingConfiguration = true;
+    }
+
+    @TargetApi(Build.VERSION_CODES.HONEYCOMB)
+    @Override
+    public boolean isChangingConfigurations() {
+        if(android.os.Build.VERSION.SDK_INT >= 11){
+            return super.isChangingConfigurations();
+        }else {
+            return isChangingConfiguration;
+        }
     }
 
     @Override
@@ -123,7 +138,7 @@ public abstract class LoggedActivity extends LifecycleDispatchActivity implement
     }
 
     public static void logView(String contentName, String contentType, String contentId, Context c) {
-        if (!Fabric.isInitialized()) HomeActivity.initFabric(c);
+        checkInitFabric(c);
 
         Calendar cal = Calendar.getInstance();
         TimeZone tz = cal.getTimeZone();
@@ -136,6 +151,10 @@ public abstract class LoggedActivity extends LifecycleDispatchActivity implement
                 .putCustomAttribute(KEY_LANG, language)
                 .putContentId(contentId));
         Log.d(TAG, "logView - " + contentType + ": " + contentName + "(" + contentId + ")");
+    }
+
+    private static void checkInitFabric(Context c) {
+        if (!Fabric.isInitialized()) HomeActivity.initFabric(c);
     }
 
     private void registerBroadcastReceiver() {
