@@ -34,11 +34,13 @@ public class HomeActivity extends LoggedActivity implements SurfaceHolder.Callba
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        initFabric(this);
         ButterKnife.inject(this);
 
         SurfaceHolder holder = videoView.getHolder();
         holder.addCallback(this);
+        if(Build.VERSION.SDK_INT < Build.VERSION_CODES.HONEYCOMB) {
+            holder.setType(SurfaceHolder.SURFACE_TYPE_PUSH_BUFFERS);
+        }
 
         alertAboutEvent();
     }
