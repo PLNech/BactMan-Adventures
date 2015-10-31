@@ -1,10 +1,15 @@
+/*
+=======================================================================
+BactMan Adventures | Scientific popularisation through mini-games
+Copyright (C) 2015 IONIS iGEM Team
+Distributed under the GNU GPLv3 License.
+(See file LICENSE.txt or copy at https://www.gnu.org/licenses/gpl.txt)
+=======================================================================
+*/
 package fr.plnech.igem.utils;
 
 import java.util.Random;
 
-/**
- * Created by PLNech on 28/08/2015.
- */
 public class CalcUtils {
     private static Random random;
 

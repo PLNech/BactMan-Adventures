@@ -1,3 +1,12 @@
+/*
+=======================================================================
+BactMan Adventures | Scientific popularisation through mini-games
+Copyright (C) 2015 IONIS iGEM Team
+Distributed under the GNU GPLv3 License.
+(See file LICENSE.txt or copy at https://www.gnu.org/licenses/gpl.txt)
+=======================================================================
+*/
+
 package fr.plnech.igem.game.ui;
 
 import org.andengine.engine.camera.Camera;
@@ -6,9 +15,6 @@ import org.andengine.opengl.texture.region.ITextureRegion;
 import org.andengine.opengl.util.GLState;
 import org.andengine.opengl.vbo.VertexBufferObjectManager;
 
-/**
- * Created by PLNech on 22/08/2015.
- */
 public class DitheredSprite extends Sprite {
     public DitheredSprite(float pX, float pY, ITextureRegion pTextureRegion, VertexBufferObjectManager pVertexBufferObjectManager) {
         super(pX, pY, pTextureRegion, pVertexBufferObjectManager);

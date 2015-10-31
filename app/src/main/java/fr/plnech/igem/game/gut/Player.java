@@ -1,3 +1,12 @@
+/*
+=======================================================================
+BactMan Adventures | Scientific popularisation through mini-games
+Copyright (C) 2015 IONIS iGEM Team
+Distributed under the GNU GPLv3 License.
+(See file LICENSE.txt or copy at https://www.gnu.org/licenses/gpl.txt)
+=======================================================================
+*/
+
 package fr.plnech.igem.game.gut;
 
 import android.util.Pair;
@@ -9,9 +18,6 @@ import fr.plnech.igem.game.GutGame;
 import fr.plnech.igem.game.model.PhysicalWorldObject;
 import org.andengine.opengl.texture.region.ITiledTextureRegion;
 
-/**
- * Created by PLNech on 31/08/2015.
- */
 public class Player extends PhysicalWorldObject {
     private static final float SCALE_DEFAULT = 0.20f;
     private final Vector2 initialPosition;

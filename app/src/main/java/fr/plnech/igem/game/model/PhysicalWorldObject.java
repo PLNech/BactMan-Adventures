@@ -1,3 +1,12 @@
+/*
+=======================================================================
+BactMan Adventures | Scientific popularisation through mini-games
+Copyright (C) 2015 IONIS iGEM Team
+Distributed under the GNU GPLv3 License.
+(See file LICENSE.txt or copy at https://www.gnu.org/licenses/gpl.txt)
+=======================================================================
+*/
+
 package fr.plnech.igem.game.model;
 
 import android.util.Log;
@@ -12,9 +21,6 @@ import org.andengine.extension.physics.box2d.util.constants.PhysicsConstants;
 import org.andengine.opengl.texture.region.ITiledTextureRegion;
 import org.andengine.opengl.vbo.VertexBufferObjectManager;
 
-/**
- * Created by PLN on 23/08/2015.
- */
 public abstract class PhysicalWorldObject extends WorldObject {
     private static final String TAG = "PhysicalWorldObject";
 

@@ -1,3 +1,12 @@
+/*
+=======================================================================
+BactMan Adventures | Scientific popularisation through mini-games
+Copyright (C) 2015 IONIS iGEM Team
+Distributed under the GNU GPLv3 License.
+(See file LICENSE.txt or copy at https://www.gnu.org/licenses/gpl.txt)
+=======================================================================
+*/
+
 package fr.plnech.igem.game.piano;
 
 import fr.plnech.igem.game.AbstractGameActivity;
@@ -6,9 +15,6 @@ import fr.plnech.igem.game.model.WorldObject;
 import org.andengine.entity.sprite.Sprite;
 import org.andengine.opengl.texture.region.ITiledTextureRegion;
 
-/**
- * Created by PLNech on 06/09/2015.
- */
 public class Base extends WorldObject {
     static final String TAG = "WorldObject";
 

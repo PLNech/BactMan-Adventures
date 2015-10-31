@@ -1,3 +1,12 @@
+/*
+=======================================================================
+BactMan Adventures | Scientific popularisation through mini-games
+Copyright (C) 2015 IONIS iGEM Team
+Distributed under the GNU GPLv3 License.
+(See file LICENSE.txt or copy at https://www.gnu.org/licenses/gpl.txt)
+=======================================================================
+*/
+
 package fr.plnech.igem.carousel;
 
 import android.content.Context;
@@ -7,9 +16,6 @@ import android.widget.TextView;
 import fr.plnech.igem.R;
 import fr.rolandl.carousel.CarouselItem;
 
-/**
- * Created by PLNech on 15/09/2015.
- */
 public class MemberItem extends CarouselItem<TeamMember> {
     private final Context context;
     private TextView name;

@@ -1,3 +1,12 @@
+/*
+=======================================================================
+BactMan Adventures | Scientific popularisation through mini-games
+Copyright (C) 2015 IONIS iGEM Team
+Distributed under the GNU GPLv3 License.
+(See file LICENSE.txt or copy at https://www.gnu.org/licenses/gpl.txt)
+=======================================================================
+*/
+
 package fr.plnech.igem.glossary;
 
 import android.content.Context;
@@ -8,9 +17,6 @@ import fr.plnech.igem.R;
 
 import java.util.*;
 
-/**
- * Created by PLNech on 15/09/2015.
- */
 public class EntryListAdapter extends ArrayAdapter<Entry> implements SectionIndexer {
     private static final String TAG = "EntryAdapter";
     private final HashMap<String, Integer> mapIndex;
@@ -18,11 +24,10 @@ public class EntryListAdapter extends ArrayAdapter<Entry> implements SectionInde
 
     public EntryListAdapter(Context context, List<Entry> pEntries) {
         super(context, R.layout.glossary_item, R.id.txt_title, pEntries);
-        List<Entry> entries = pEntries;
         mapIndex = new LinkedHashMap<>();
 
-        for (int i = 0; i < entries.size(); i++) {
-            Entry e = entries.get(i);
+        for (int i = 0; i < pEntries.size(); i++) {
+            Entry e = pEntries.get(i);
             String initial = e.getName().substring(0, 1).toUpperCase(Locale.US);
 
             mapIndex.put(initial, i);

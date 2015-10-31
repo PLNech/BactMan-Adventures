@@ -1,3 +1,12 @@
+/*
+=======================================================================
+BactMan Adventures | Scientific popularisation through mini-games
+Copyright (C) 2015 IONIS iGEM Team
+Distributed under the GNU GPLv3 License.
+(See file LICENSE.txt or copy at https://www.gnu.org/licenses/gpl.txt)
+=======================================================================
+*/
+
 package fr.plnech.igem.game;
 
 import android.annotation.TargetApi;
@@ -71,9 +80,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-/**
- * Created by PLNech on 11/08/2015.
- */
 public abstract class AbstractGameActivity extends SimpleBaseGameActivity implements MenuScene.IOnMenuItemClickListener {
 
     private static final String TAG = "BaseGameActivity";

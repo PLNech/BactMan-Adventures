@@ -1,11 +1,17 @@
+/*
+=======================================================================
+BactMan Adventures | Scientific popularisation through mini-games
+Copyright (C) 2015 IONIS iGEM Team
+Distributed under the GNU GPLv3 License.
+(See file LICENSE.txt or copy at https://www.gnu.org/licenses/gpl.txt)
+=======================================================================
+*/
+
 package fr.plnech.igem.game.model;
 
 import com.crashlytics.android.answers.CustomEvent;
 import fr.plnech.igem.carousel.TeamMember;
 
-/**
- * Created by PLNech on 25/09/2015.
- */
 public class MemberEvent extends CustomEvent{
     public static final int ACTION_CLOSE = 0;
     public static final int ACTION_LINKEDIN = 1;

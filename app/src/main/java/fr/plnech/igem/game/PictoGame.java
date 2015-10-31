@@ -1,3 +1,12 @@
+/*
+=======================================================================
+BactMan Adventures | Scientific popularisation through mini-games
+Copyright (C) 2015 IONIS iGEM Team
+Distributed under the GNU GPLv3 License.
+(See file LICENSE.txt or copy at https://www.gnu.org/licenses/gpl.txt)
+=======================================================================
+*/
+
 package fr.plnech.igem.game;
 
 import android.support.annotation.NonNull;
@@ -23,9 +32,6 @@ import org.andengine.util.modifier.IModifier;
 
 import java.util.*;
 
-/**
- * Created by PLNech on 28/08/2015.
- */
 public class PictoGame extends PortraitGame {
     private static final String TAG = "PictoGame";
     private static final float FAIL_DURATION = 1.0f;

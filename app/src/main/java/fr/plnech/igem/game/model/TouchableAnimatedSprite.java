@@ -1,3 +1,12 @@
+/*
+=======================================================================
+BactMan Adventures | Scientific popularisation through mini-games
+Copyright (C) 2015 IONIS iGEM Team
+Distributed under the GNU GPLv3 License.
+(See file LICENSE.txt or copy at https://www.gnu.org/licenses/gpl.txt)
+=======================================================================
+*/
+
 package fr.plnech.igem.game.model;
 
 import org.andengine.entity.sprite.AnimatedSprite;
@@ -5,9 +14,6 @@ import org.andengine.input.touch.TouchEvent;
 import org.andengine.opengl.texture.region.ITiledTextureRegion;
 import org.andengine.opengl.vbo.VertexBufferObjectManager;
 
-/**
- * Created by PLNech on 25/08/2015.
- */
 public class TouchableAnimatedSprite extends AnimatedSprite {
 
     private WorldObject object;

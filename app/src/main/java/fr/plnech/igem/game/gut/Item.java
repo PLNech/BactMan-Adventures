@@ -1,3 +1,12 @@
+/*
+=======================================================================
+BactMan Adventures | Scientific popularisation through mini-games
+Copyright (C) 2015 IONIS iGEM Team
+Distributed under the GNU GPLv3 License.
+(See file LICENSE.txt or copy at https://www.gnu.org/licenses/gpl.txt)
+=======================================================================
+*/
+
 package fr.plnech.igem.game.gut;
 
 import com.badlogic.gdx.physics.box2d.BodyDef;
@@ -8,9 +17,6 @@ import fr.plnech.igem.game.model.PhysicalWorldObject;
 import org.andengine.extension.physics.box2d.util.constants.PhysicsConstants;
 import org.andengine.opengl.texture.region.ITiledTextureRegion;
 
-/**
- * Created by PLNech on 31/08/2015.
- */
 public class Item extends PhysicalWorldObject {
     public enum Type {
         VITAMIN, PROTEIN, ANTIBIO, IMMUNO;

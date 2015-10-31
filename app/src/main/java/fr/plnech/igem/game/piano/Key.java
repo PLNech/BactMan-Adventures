@@ -1,3 +1,12 @@
+/*
+=======================================================================
+BactMan Adventures | Scientific popularisation through mini-games
+Copyright (C) 2015 IONIS iGEM Team
+Distributed under the GNU GPLv3 License.
+(See file LICENSE.txt or copy at https://www.gnu.org/licenses/gpl.txt)
+=======================================================================
+*/
+
 package fr.plnech.igem.game.piano;
 
 import android.util.Log;
@@ -11,9 +20,6 @@ import org.andengine.input.touch.TouchEvent;
 import org.andengine.opengl.texture.region.ITiledTextureRegion;
 import org.andengine.util.color.Color;
 
-/**
- * Created by PLNech on 10/09/2015.
- */
 public class Key extends Base {
 
     private static final float SCALE_DEFAULT = 0.1f;
