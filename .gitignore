@@ -7,3 +7,4 @@
 *.iml
 .idea
 *.apk
+fabric.properties
