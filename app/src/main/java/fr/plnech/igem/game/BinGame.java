@@ -462,7 +462,6 @@ public class BinGame extends PortraitGame {
     }
 
     private void createItem(float posX, float posY, ITiledTextureRegion textureRegion, Item.Type type) {
-        //TODO: Mark for addition?
         Item item = new Item(type, textureRegion, posX, posY, this);
         items.add(item);
         final Scene gameScene = activity.getScene();

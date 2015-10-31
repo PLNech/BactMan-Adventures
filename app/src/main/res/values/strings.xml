@@ -1,6 +1,4 @@
 <resources>
-    <!-- TODO: Review naming with team -->
-
     <!-- Main texts -->
     <string name="app_name" translatable="false">BactMan Adventures</string>
     <string name="app_name_short" translatable="false">BactMan</string>
