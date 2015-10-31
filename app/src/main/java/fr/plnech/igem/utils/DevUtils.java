@@ -19,9 +19,6 @@ import android.widget.Toast;
 
 import java.util.List;
 
-/**
- * Created by PLNech on 14/08/2015.
- */
 public class DevUtils {
 
     public static void logToast(Context context, String message) {

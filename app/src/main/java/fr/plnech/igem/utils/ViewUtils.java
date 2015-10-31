@@ -14,9 +14,6 @@ import android.text.style.UnderlineSpan;
 import android.text.style.UpdateAppearance;
 import android.widget.TextView;
 
-/**
- * Created by PLNech on 07/07/2015.
- */
 public class ViewUtils {
     public static void textUnderline(TextView view) {
         UnderlineSpan sUnder = new UnderlineSpan();
