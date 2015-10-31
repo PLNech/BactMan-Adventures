@@ -181,7 +181,7 @@ public class Item extends PhysicalWorldObject {
         float x = body.getPosition().x;
         float y = body.getPosition().y;
         if (x < 0 || y < 0 || x > PortraitGameActivity.CAMERA_WIDTH || y > PortraitGameActivity.CAMERA_HEIGHT) {
-            Log.d(TAG, "logShittyPosition - Shitty position!");
+            Log.d(TAG, "checkPosition - Position is out of screen!");
 
             body.setTransform(initialPosition.x / PhysicsConstants.PIXEL_TO_METER_RATIO_DEFAULT,
                     initialPosition.y / PhysicsConstants.PIXEL_TO_METER_RATIO_DEFAULT, body.getAngle());

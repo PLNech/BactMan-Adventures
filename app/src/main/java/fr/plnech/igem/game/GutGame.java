@@ -16,6 +16,7 @@ import fr.plnech.igem.game.model.res.FontAsset;
 import fr.plnech.igem.game.model.res.GFXAsset;
 import fr.plnech.igem.utils.CalcUtils;
 import org.andengine.engine.camera.SmoothCamera;
+import org.andengine.engine.handler.IUpdateHandler;
 import org.andengine.engine.handler.timer.ITimerCallback;
 import org.andengine.engine.handler.timer.TimerHandler;
 import org.andengine.entity.IEntity;
@@ -189,6 +190,28 @@ public class GutGame extends LandscapeGame {
         player = new Player(150, 240, 0, activity.getTexture(ResMan.GUT_BACTMAN), activity);
         final Scene scene = activity.getScene();
         scene.getChildByIndex(AbstractGameActivity.LAYER_FOREGROUND).attachChild(player.getSprite());
+        scene.registerUpdateHandler(new IUpdateHandler() {
+            @Override
+            public void onUpdate(float pSecondsElapsed) {
+                //TODO: Merge with Bin.Item's checkPosition()
+                final Body body = player.getBody();
+                final Vector2 initialPosition = player.getInitialPosition();
+                float x = body.getPosition().x;
+                float y = body.getPosition().y;
+
+                if (x < 0 || y < 0 || x > LandscapeGameActivity.CAMERA_WIDTH || y > LandscapeGameActivity.CAMERA_HEIGHT) {
+                    Log.d(TAG, "onUpdate - Position is out of screen!");
+
+                    body.setTransform(initialPosition.x / PhysicsConstants.PIXEL_TO_METER_RATIO_DEFAULT,
+                                initialPosition.y / PhysicsConstants.PIXEL_TO_METER_RATIO_DEFAULT, body.getAngle());
+                    }
+            }
+
+            @Override
+            public void reset() {
+
+            }
+        });
     }
 
     private void createItems(final int count) {
