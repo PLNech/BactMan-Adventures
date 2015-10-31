@@ -16,9 +16,3 @@ This is IONIS iGEM 2015, the app popularizing biology through mini-games!
 sdk.dir=C\:\\Path\\To\\Your\\AndroidSDK\\sdk
 ndk.dir=C\:\\Path\\To\\Your\\AndroidSDK\\sdk\\ndk-bundle   
 ```
-
-
-### Who do I talk to? ###
-
-* Repo owner or admin
-* Other community or team contact
