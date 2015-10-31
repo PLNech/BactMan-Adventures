@@ -22,6 +22,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
+import fr.plnech.igem.game.AbstractGameActivity;
 import fr.plnech.igem.ui.model.LoggedActivity;
 import org.jraf.android.util.activitylifecyclecallbackscompat.ActivityLifecycleCallbacksCompat;
 import org.jraf.android.util.activitylifecyclecallbackscompat.ApplicationHelper;
@@ -243,6 +244,11 @@ public class Foreground implements ActivityLifecycleCallbacksCompat {
     }
 
     private boolean isChangingConfigurations(Activity activity) {
-        return ((LoggedActivity) activity).isChangingConfigurations();
+        if (activity instanceof AbstractGameActivity) {
+            return activity.isChangingConfigurations();
+        } else if (activity instanceof  LoggedActivity) {
+            return activity.isChangingConfigurations();
+        }
+        return false;
     }
 }

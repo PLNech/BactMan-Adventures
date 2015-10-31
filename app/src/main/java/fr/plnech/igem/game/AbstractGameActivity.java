@@ -1,10 +1,12 @@
 package fr.plnech.igem.game;
 
+import android.annotation.TargetApi;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.AssetManager;
 import android.content.res.Resources;
 import android.opengl.GLES20;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.NavUtils;
@@ -135,11 +137,13 @@ public abstract class AbstractGameActivity extends SimpleBaseGameActivity implem
     protected BaseGame currentGame;
     private SpriteBackground splashBackground;
     private Music music;
+    private boolean isChangingConfiguration;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         FontsOverride.setDefaultFont(this, "SANS_SERIF", "fonts/Roboto-Medium.ttf");
+        isChangingConfiguration = true;
 
         if (vertexBufferObjectManager == null) {
             vertexBufferObjectManager = super.getVertexBufferObjectManager();
@@ -297,6 +301,16 @@ public abstract class AbstractGameActivity extends SimpleBaseGameActivity implem
                 return true;
         }
         return false;
+    }
+
+    @TargetApi(Build.VERSION_CODES.HONEYCOMB)
+    @Override
+    public boolean isChangingConfigurations() {
+        if(android.os.Build.VERSION.SDK_INT >= 11){
+            return super.isChangingConfigurations();
+        }else {
+            return isChangingConfiguration;
+        }
     }
 
     public IFont getFont(String fontName) {
