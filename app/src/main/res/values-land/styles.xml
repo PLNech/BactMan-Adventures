@@ -1,4 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!--
+=======================================================================
+BactMan Adventures | Scientific popularisation through mini-games
+Copyright (C) 2015 IONIS iGEM Team
+Distributed under the GNU GPLv3 License.
+(See file LICENSE.txt or copy at https://www.gnu.org/licenses/gpl.txt)
+=======================================================================
+-->
+
 <resources>
     <style name="AppTheme.ImageView.FullWidth">
         <item name="android:layout_width">match_parent</item>
