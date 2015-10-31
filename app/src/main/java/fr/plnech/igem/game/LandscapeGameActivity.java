@@ -11,6 +11,7 @@ import org.andengine.opengl.texture.atlas.bitmap.BitmapTextureAtlas;
 import org.andengine.opengl.texture.atlas.bitmap.BitmapTextureAtlasTextureRegionFactory;
 import org.andengine.opengl.texture.region.TiledTextureRegion;
 
+@SuppressWarnings("SuspiciousNameCombination")
 public class LandscapeGameActivity extends AbstractGameActivity {
     private static final String TAG = "LandscapeGameActivity";
 

@@ -15,11 +15,11 @@ import java.util.HashMap;
 public class MusicManager {
     private static final String TAG = "MusicManager";
 
-    public static final int MUSIC_PREVIOUS = -1;
+    private static final int MUSIC_PREVIOUS = -1;
     public static final int MUSIC_MENU = 0;
     private static final float DEFAULT_VOLUME = 0.25f;
 
-    private static HashMap<Integer, MediaPlayer> players = new HashMap<>();
+    private static final HashMap<Integer, MediaPlayer> players = new HashMap<>();
     private static int currentMusic = -1;
     private static int previousMusic = -1;
 

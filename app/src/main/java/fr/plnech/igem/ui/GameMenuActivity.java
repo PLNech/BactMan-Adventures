@@ -2,7 +2,6 @@ package fr.plnech.igem.ui;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.widget.Toast;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import fr.plnech.igem.R;

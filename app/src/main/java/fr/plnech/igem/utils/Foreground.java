@@ -66,25 +66,25 @@ import java.util.concurrent.CopyOnWriteArrayList;
 @TargetApi(Build.VERSION_CODES.ICE_CREAM_SANDWICH)
 public class Foreground implements ActivityLifecycleCallbacksCompat {
 
-    public static final String TAG = Foreground.class.getName();
-    public static final long CHECK_DELAY = 2000;
+    private static final String TAG = "Foreground";
+    private static final long CHECK_DELAY = 2000;
 
     public interface Listener {
-        public void onBecameForeground();
+        void onBecameForeground();
 
-        public void onBecameBackground();
+        void onBecameBackground();
     }
 
     public interface Binding {
-        public void unbind();
+        void unbind();
     }
 
     private interface Callback {
-        public void invoke(Listener listener);
+        void invoke(Listener listener);
     }
 
     private static class Listeners {
-        private List<WeakReference<Listener>> listeners = new CopyOnWriteArrayList<>();
+        private final List<WeakReference<Listener>> listeners = new CopyOnWriteArrayList<>();
 
         public Binding add(Listener listener) {
             final WeakReference<Listener> wr = new WeakReference<>(listener);
@@ -112,14 +112,14 @@ public class Foreground implements ActivityLifecycleCallbacksCompat {
         }
     }
 
-    private static Callback becameForeground = new Callback() {
+    private static final Callback becameForeground = new Callback() {
         @Override
         public void invoke(Listener listener) {
             listener.onBecameForeground();
         }
     };
 
-    private static Callback becameBackground = new Callback() {
+    private static final Callback becameBackground = new Callback() {
         @Override
         public void invoke(Listener listener) {
             listener.onBecameBackground();
@@ -130,8 +130,8 @@ public class Foreground implements ActivityLifecycleCallbacksCompat {
 
     private boolean foreground;
     private Activity current;
-    private Listeners listeners = new Listeners();
-    private Handler handler = new Handler();
+    private final Listeners listeners = new Listeners();
+    private final Handler handler = new Handler();
     private Runnable check;
 
     public static Foreground init(Application application) {

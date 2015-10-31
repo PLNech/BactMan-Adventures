@@ -1,12 +1,12 @@
 package fr.plnech.igem.glossary;
 
 /**
- * Created by Paul-Louis Nech on 14/09/2015.
+ * Created by PLNech on 14/09/2015.
  */
 public class Entry {
 
-    private String name;
-    private String description;
+    private final String name;
+    private final String description;
 
     public Entry(String pName, String pDescription) {
         name = pName;

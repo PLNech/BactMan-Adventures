@@ -72,44 +72,44 @@ import java.util.HashMap;
 import java.util.List;
 
 /**
- * Created by PLN on 11/08/2015.
+ * Created by PLNech on 11/08/2015.
  */
 public abstract class AbstractGameActivity extends SimpleBaseGameActivity implements MenuScene.IOnMenuItemClickListener {
 
     private static final String TAG = "BaseGameActivity";
     public static final String SUFFIX_UNLOCKED = "_unlocked";
-    public static final String SUFFIX_SCORE = "_highscore";
+    private static final String SUFFIX_SCORE = "_highscore";
 
     private Boolean shouldStartEngine = false;
 
     public static final int CAMERA_WIDTH = 480;
     public static final int CAMERA_HEIGHT = 800;
 
-    public static final float SPLASH_DURATION = 1.0f;
+    private static final float SPLASH_DURATION = 1.0f;
 
-    public static final String ASSET_PATH_GFX = "gfx/";
-    public static final String ASSET_PATH_FONT = "fonts/";
+    private static final String ASSET_PATH_GFX = "gfx/";
+    private static final String ASSET_PATH_FONT = "fonts/";
 
-    protected static final int OPTION_RESET = 0;
-    protected static final int OPTION_NEXT = OPTION_RESET + 1;
-    protected static final int OPTION_QUIT = OPTION_NEXT + 1;
+    private static final int OPTION_RESET = 0;
+    private static final int OPTION_NEXT = OPTION_RESET + 1;
+    private static final int OPTION_QUIT = OPTION_NEXT + 1;
 
     private int profPosition;
 
-    private HashMap<CharSequence, ITiledTextureRegion> textureMap = new HashMap<>();
-    private HashMap<CharSequence, IFont> fontMap = new HashMap<>();
-    private HashMap<CharSequence, Sound> soundMap = new HashMap<>();
+    private final HashMap<CharSequence, ITiledTextureRegion> textureMap = new HashMap<>();
+    private final HashMap<CharSequence, IFont> fontMap = new HashMap<>();
+    private final HashMap<CharSequence, Sound> soundMap = new HashMap<>();
 
-    protected VertexBufferObjectManager vertexBufferObjectManager;
+    private VertexBufferObjectManager vertexBufferObjectManager;
     protected TextureManager textureManager;
-    protected FontManager fontManager;
-    protected AssetManager assetManager;
-    protected SharedPreferences preferences;
+    private FontManager fontManager;
+    private AssetManager assetManager;
+    private SharedPreferences preferences;
 
-    protected Scene gameScene;
-    protected Scene splashScene;
-    protected MenuScene pauseScene;
-    protected MenuScene winScene;
+    private Scene gameScene;
+    private Scene splashScene;
+    private MenuScene pauseScene;
+    private MenuScene winScene;
 
     private SpriteMenuItem nextWinMenuItem;
     private SpriteMenuItem nextPauseMenuItem;
@@ -117,24 +117,24 @@ public abstract class AbstractGameActivity extends SimpleBaseGameActivity implem
     private Text gameOverText;
     private Text winText;
 
-    protected SmoothCamera gameCamera;
-    protected PhysicsWorld physicsWorld;
+    SmoothCamera gameCamera;
+    private PhysicsWorld physicsWorld;
 
     public static final int LAYER_BACKGROUND = 0;
     public static final int LAYER_FOREGROUND = LAYER_BACKGROUND + 1;
     public static final int LAYER_OVERGROUND = LAYER_FOREGROUND + 1;
     public static final int LAYER_HUD = LAYER_OVERGROUND + 1;
     public static final int LAYER_HUD_TEXT = LAYER_HUD + 1;
-    protected static final int LAYER_COUNT = LAYER_HUD_TEXT + 1;
+    public static final int LAYER_COUNT = LAYER_HUD_TEXT + 1;
 
-    protected static final float MAX_SPEED_X = 200.0f;
-    protected static final float MAX_SPEED_Y = 200.0f;
-    protected static final float MAX_ZOOM_CHANGE = 0.8f;
+    static final float MAX_SPEED_X = 200.0f;
+    static final float MAX_SPEED_Y = 200.0f;
+    static final float MAX_ZOOM_CHANGE = 0.8f;
 
-    private ArrayList<PhysicalWorldObject> objectsToDelete = new ArrayList<>();
-    private ArrayList<PhysicalWorldObject> objectsToAdd = new ArrayList<>();
+    private final ArrayList<PhysicalWorldObject> objectsToDelete = new ArrayList<>();
+    private final ArrayList<PhysicalWorldObject> objectsToAdd = new ArrayList<>();
 
-    protected BaseGame currentGame;
+    private BaseGame currentGame;
     private SpriteBackground splashBackground;
     private Music music;
     private boolean isChangingConfiguration;
@@ -323,7 +323,7 @@ public abstract class AbstractGameActivity extends SimpleBaseGameActivity implem
         return font;
     }
 
-    public void putFont(String fontName, IFont font) {
+    private void putFont(String fontName, IFont font) {
         fontMap.put(fontName, font);
         Log.v(TAG, "putFont - Added font " + fontName);
     }
@@ -338,7 +338,7 @@ public abstract class AbstractGameActivity extends SimpleBaseGameActivity implem
         return texture;
     }
 
-    public void putTexture(String textureName, ITiledTextureRegion texture) {
+    void putTexture(String textureName, ITiledTextureRegion texture) {
         textureMap.put(textureName, texture);
         Log.v(TAG, "putTexture - Added texture " + textureName);
     }
@@ -405,7 +405,7 @@ public abstract class AbstractGameActivity extends SimpleBaseGameActivity implem
         Log.d(TAG, "loadSounds - Finished loading sounds.");
     }
 
-    protected void loadSound(SoundAsset soundAsset) {
+    private void loadSound(SoundAsset soundAsset) {
         try {
             SoundFactory.setAssetBasePath("mfx/");
             Sound sound = SoundFactory.createSoundFromAsset(getEngine().getSoundManager(), getApplicationContext(), soundAsset.getFilename());
@@ -427,7 +427,7 @@ public abstract class AbstractGameActivity extends SimpleBaseGameActivity implem
         }
     }
 
-    public void checkSetGFXPath() {
+    void checkSetGFXPath() {
         if (!BitmapTextureAtlasTextureRegionFactory.getAssetBasePath().equals(ASSET_PATH_GFX)) {
             BitmapTextureAtlasTextureRegionFactory.setAssetBasePath(ASSET_PATH_GFX);
         }
@@ -495,7 +495,7 @@ public abstract class AbstractGameActivity extends SimpleBaseGameActivity implem
         gameScene.registerUpdateHandler(physicsWorld);
     }
 
-    protected void initGameScene() {
+    private void initGameScene() {
         loadGFXAssets(currentGame);
         loadFonts(currentGame);
         loadSounds(currentGame);
@@ -525,7 +525,7 @@ public abstract class AbstractGameActivity extends SimpleBaseGameActivity implem
         music.play();
     }
 
-    protected void warnAboutOrientation() {
+    private void warnAboutOrientation() {
         Resources resources = getResources();
         final String message = String.format(resources.getString(R.string.msg_next_game),
                 resources.getString(getOrientationResId()));
@@ -539,7 +539,7 @@ public abstract class AbstractGameActivity extends SimpleBaseGameActivity implem
         gameScene = game.prepareScene();
     }
 
-    protected void initMenuPause() {
+    private void initMenuPause() {
         pauseScene = new MenuScene(gameCamera, this);
         final ITextureRegion textureNext = getTexture(ResMan.MENU_NEXT);
         final ITextureRegion textureReset = getTexture(ResMan.MENU_RESET);
@@ -563,7 +563,7 @@ public abstract class AbstractGameActivity extends SimpleBaseGameActivity implem
         pauseScene.setOnMenuItemClickListener(this);
     }
 
-    protected void initMenuWin() {
+    private void initMenuWin() {
         winScene = new MenuScene(gameCamera, this);
         final ITextureRegion textureNext = getTexture(ResMan.MENU_NEXT);
         final ITextureRegion textureReset = getTexture(ResMan.MENU_RESET);
@@ -587,11 +587,11 @@ public abstract class AbstractGameActivity extends SimpleBaseGameActivity implem
         winScene.setOnMenuItemClickListener(this);
     }
 
-    protected void loadGameAsync() {
+    private void loadGameAsync() {
         loadGameAsync(0, true);
     }
 
-    protected void loadGameAsync(final int givenPosition, boolean shouldDelay) {
+    private void loadGameAsync(final int givenPosition, boolean shouldDelay) {
         Log.d(TAG, "loadGameAsync - Loading with prof position " + givenPosition);
         profPosition = givenPosition;
         if (shouldDelay) {
@@ -642,7 +642,7 @@ public abstract class AbstractGameActivity extends SimpleBaseGameActivity implem
         mEngine.registerUpdateHandler(new TimerHandler(duration, pTimerCallback));
     }
 
-    public int getHighScore(BaseGame game) {
+    private int getHighScore(BaseGame game) {
         final String keyHighScore = game.getClass().getSimpleName() + SUFFIX_SCORE;
         return preferences.getInt(keyHighScore, 0);
     }
@@ -669,7 +669,7 @@ public abstract class AbstractGameActivity extends SimpleBaseGameActivity implem
         }
     }
 
-    public void resetMenus() {
+    private void resetMenus() {
         pauseScene.detachChild(gameOverText);
         pauseScene.reset();
 
@@ -727,7 +727,7 @@ public abstract class AbstractGameActivity extends SimpleBaseGameActivity implem
         return winBuilder.toString();
     }
 
-    protected void updateNextStatus() {
+    private void updateNextStatus() {
         final boolean isUnlocked = getHighScore(currentGame) >= 50;
         Log.d(TAG, "updateNextStatus: " + isUnlocked);
         updateNextStatus(nextPauseMenuItem, pauseScene, isUnlocked);
@@ -786,12 +786,12 @@ public abstract class AbstractGameActivity extends SimpleBaseGameActivity implem
         return spritePosition(new Vector2(textureDimX, textureDimY), new Vector2(posRatioX, posRatioY));
     }
 
-    protected Vector2 spritePosition(Vector2 textureDims, Vector2 positionRatio) {
+    private Vector2 spritePosition(Vector2 textureDims, Vector2 positionRatio) {
         return new Vector2(getCamera().getWidth() * positionRatio.x - textureDims.x / 2,
                 getCamera().getHeight() * positionRatio.y - textureDims.y / 2);
     }
 
-    protected void initSplashScene(ITextureRegion splashTexture, int width, int height) {
+    void initSplashScene(ITextureRegion splashTexture, int width, int height) {
         splashScene = new Scene();
         DitheredSprite splash = new DitheredSprite(0, 0, width, height, splashTexture, getVBOM());
         splashBackground = new SpriteBackground(splash);

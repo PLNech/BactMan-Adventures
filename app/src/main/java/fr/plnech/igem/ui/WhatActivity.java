@@ -1,7 +1,5 @@
 package fr.plnech.igem.ui;
 
-import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.widget.TextView;
 import butterknife.ButterKnife;

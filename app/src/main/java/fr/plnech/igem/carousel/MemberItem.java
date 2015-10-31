@@ -8,7 +8,7 @@ import fr.plnech.igem.R;
 import fr.rolandl.carousel.CarouselItem;
 
 /**
- * Created by Paul-Louis Nech on 15/09/2015.
+ * Created by PLNech on 15/09/2015.
  */
 public class MemberItem extends CarouselItem<TeamMember> {
     private final Context context;

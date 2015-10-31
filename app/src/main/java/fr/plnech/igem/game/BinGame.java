@@ -33,10 +33,10 @@ import java.util.Locale;
  */
 public class BinGame extends PortraitGame {
 
-    private ArrayList<Item> items = new ArrayList<>();
-    private ArrayList<Integer> deadItems = new ArrayList<>();
-    private ArrayList<Bin> bins = new ArrayList<>();
-    private HashMap<Bin.Type, Bin> binMap = new HashMap<>();
+    private final ArrayList<Item> items = new ArrayList<>();
+    private final ArrayList<Integer> deadItems = new ArrayList<>();
+    private final ArrayList<Bin> bins = new ArrayList<>();
+    private final HashMap<Bin.Type, Bin> binMap = new HashMap<>();
 
     private static final String TAG = "BinGame";
 

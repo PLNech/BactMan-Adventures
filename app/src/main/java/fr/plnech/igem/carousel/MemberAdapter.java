@@ -7,7 +7,7 @@ import fr.rolandl.carousel.CarouselItem;
 import java.util.List;
 
 /**
- * Created by Paul-Louis Nech on 15/09/2015.
+ * Created by PLNech on 15/09/2015.
  */
 public class MemberAdapter extends CarouselAdapter<TeamMember> {
     public MemberAdapter(Context context, List<TeamMember> items) {

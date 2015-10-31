@@ -11,7 +11,6 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.util.Log;
 import android.view.KeyEvent;
-import android.widget.Toast;
 import com.crashlytics.android.Crashlytics;
 import com.crashlytics.android.answers.Answers;
 import com.crashlytics.android.answers.ContentViewEvent;
@@ -24,14 +23,11 @@ import java.util.Calendar;
 import java.util.Locale;
 import java.util.TimeZone;
 
-/**
- * Created by PLNech on 14/09/2015.
- */
 public abstract class LoggedActivity extends LifecycleDispatchActivity implements Foreground.Listener {
     private static final String TAG = "LoggedActivity";
-    public static final String KEY_ACTIVITY = "Activity";
-    public static final String KEY_TIMEZONE = "Timezone";
-    public static final String KEY_LANG = "Language";
+    private static final String KEY_ACTIVITY = "Activity";
+    private static final String KEY_TIMEZONE = "Timezone";
+    private static final String KEY_LANG = "Language";
 
     private boolean continueMusic = true;
     private boolean isChangingConfiguration;
@@ -53,9 +49,9 @@ public abstract class LoggedActivity extends LifecycleDispatchActivity implement
     @TargetApi(Build.VERSION_CODES.HONEYCOMB)
     @Override
     public boolean isChangingConfigurations() {
-        if(android.os.Build.VERSION.SDK_INT >= 11){
+        if (android.os.Build.VERSION.SDK_INT >= 11) {
             return super.isChangingConfigurations();
-        }else {
+        } else {
             return isChangingConfiguration;
         }
     }
@@ -92,7 +88,7 @@ public abstract class LoggedActivity extends LifecycleDispatchActivity implement
 //    }
 
     @Override
-    public boolean onKeyDown(int keyCode, KeyEvent event) {
+    public boolean onKeyDown(int keyCode, @NonNull KeyEvent event) {
 //      We pause music in several cases:
 //      - when the button pressed is menu, and when back is pressed on HomeActivity
         final boolean isNotHomeActivity = this.getClass().getSimpleName().equals("HomeActivity");
@@ -107,12 +103,12 @@ public abstract class LoggedActivity extends LifecycleDispatchActivity implement
     }
 
     @Override
-    public void onBecameForeground(){
+    public void onBecameForeground() {
         MusicManager.start(getThis(), MusicManager.MUSIC_MENU);
     }
 
     @Override
-    public void onBecameBackground(){
+    public void onBecameBackground() {
         MusicManager.pause();
     }
 
@@ -129,7 +125,7 @@ public abstract class LoggedActivity extends LifecycleDispatchActivity implement
         return super.onKeyUp(keyCode, event);
     }
 
-    protected void logView() {
+    private void logView() {
         final Resources resources = getResources();
         final String contentName = resources.getString(getTitleResId());
         final String contentType = getContentType();
@@ -174,21 +170,21 @@ public abstract class LoggedActivity extends LifecycleDispatchActivity implement
         getApplicationContext().registerReceiver(screenOnOffReceiver, intentFilter);
     }
 
-    protected boolean shouldContinueMusic() {
+    private boolean shouldContinueMusic() {
         return continueMusic;
     }
 
-    protected void setContinueMusic(boolean val) {
+    private void setContinueMusic(boolean val) {
         continueMusic = val;
     }
 
     protected abstract String getContentType();
 
-    public abstract int getTitleResId();
+    protected abstract int getTitleResId();
 
-    public abstract int getLayoutResId();
+    protected abstract int getLayoutResId();
 
-    public LoggedActivity getThis() {
+    private LoggedActivity getThis() {
         return this;
     }
 }

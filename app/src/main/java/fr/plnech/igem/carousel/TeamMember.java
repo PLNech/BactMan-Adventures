@@ -7,15 +7,15 @@ import android.support.annotation.Nullable;
 
 public class TeamMember {
     //TODO: Create own class for sponsors
-    String firstName;
-    String lastName;
-    String avatarResName;
+    private final String firstName;
+    private final String lastName;
+    private final String avatarResName;
     @Nullable
-    String quote;
+    private final String quote;
     @Nullable
-    String urlLinkedin;
+    private final String urlLinkedin;
     @Nullable
-    String urlTwitter;
+    private final String urlTwitter;
 
     private boolean isTransparent;
     private boolean noName;

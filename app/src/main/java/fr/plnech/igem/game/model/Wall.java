@@ -21,7 +21,7 @@ public class Wall extends Rectangle {
         TOP, LEFT, RIGHT, BOTTOM
     }
 
-    private Type type;
+    private final Type type;
 
     public Wall(float pX, float pY, float pWidth, float pHeight, Type pType,
                 VertexBufferObjectManager pVertexBufferObjectManager, PhysicsWorld physicsWorld, boolean masked)

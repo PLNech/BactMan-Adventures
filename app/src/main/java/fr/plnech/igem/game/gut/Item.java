@@ -30,10 +30,10 @@ public class Item extends PhysicalWorldObject {
         REPEAT, /* Repeated with same type */
         RANDOM  /* Repeated with random type */
     }
-    public static float SCALE_DEFAULT = 0.1f;
+    public static final float SCALE_DEFAULT = 0.1f;
 
     private final float speedCoeff;
-    private Type type;
+    private final Type type;
     private Role role;
 
     private final GutGame game;

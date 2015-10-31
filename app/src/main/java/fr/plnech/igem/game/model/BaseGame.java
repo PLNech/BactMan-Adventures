@@ -8,11 +8,9 @@ import android.util.Log;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.ContactListener;
 import com.crashlytics.android.answers.Answers;
-import com.crashlytics.android.answers.LevelEndEvent;
 import com.crashlytics.android.answers.LevelStartEvent;
 import fr.plnech.igem.game.*;
 import fr.plnech.igem.game.managers.ResMan;
-import fr.plnech.igem.game.model.res.Asset;
 import fr.plnech.igem.game.model.res.FontAsset;
 import fr.plnech.igem.game.model.res.GFXAsset;
 import fr.plnech.igem.game.model.res.SoundAsset;
@@ -29,7 +27,7 @@ import java.util.List;
 import java.util.Random;
 
 /**
- * Created by PLN on 21/08/2015.
+ * Created by PLNech on 21/08/2015.
  */
 public abstract class BaseGame {
     public static final String KEY_GAME_ID = "game_id";
@@ -47,16 +45,16 @@ public abstract class BaseGame {
     public static final int INIT_LIVES = 3;
     public static final int INIT_TIME = 60;
 
-    protected ArrayList<GFXAsset> graphicalAssets = new ArrayList<>();
-    protected ArrayList<GFXAsset> profAssets = new ArrayList<>();
-    protected ArrayList<FontAsset> fontAssets = new ArrayList<>();
-    protected ArrayList<SoundAsset> soundAssets = new ArrayList<>();
-    protected ArrayList<HUDElement> elements = new ArrayList<>();
+    protected final ArrayList<GFXAsset> graphicalAssets = new ArrayList<>();
+    protected final ArrayList<GFXAsset> profAssets = new ArrayList<>();
+    protected final ArrayList<FontAsset> fontAssets = new ArrayList<>();
+    protected final ArrayList<SoundAsset> soundAssets = new ArrayList<>();
+    protected final ArrayList<HUDElement> elements = new ArrayList<>();
 
     protected boolean playing = false;
 
-    protected AbstractGameActivity activity;
-    protected Random random;
+    protected final AbstractGameActivity activity;
+    protected final Random random;
     protected int gameScore = INIT_SCORE;
     private int nextGameId;
     private int id;

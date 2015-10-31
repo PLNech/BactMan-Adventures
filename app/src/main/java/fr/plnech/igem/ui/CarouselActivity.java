@@ -41,7 +41,7 @@ public abstract class CarouselActivity extends DetailActivity {
     }
 
     @NonNull
-    protected CarouselBaseAdapter.OnItemClickListener getOnItemClickListener(final List<TeamMember> dataList) {
+    CarouselBaseAdapter.OnItemClickListener getOnItemClickListener(final List<TeamMember> dataList) {
         return new CarouselBaseAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(CarouselBaseAdapter<?> carouselBaseAdapter, View view, int position, long id) {

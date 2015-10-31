@@ -24,8 +24,6 @@ import java.util.Comparator;
 public class GlossaryActivity extends ListActivity {
     public static final String TAG = "GlossaryActivity";
 
-    private ArrayList<Entry> entries = new ArrayList<>();
-
     @InjectView(android.R.id.list)
     protected ListView glossaryListView;
 
@@ -44,7 +42,7 @@ public class GlossaryActivity extends ListActivity {
         String[] entryTitles = resources.getStringArray(R.array.glossary_titles);
         String[] entryTexts = resources.getStringArray(R.array.glossary_texts);
 
-        entries = buildList(entryTitles, entryTexts);
+        ArrayList<Entry> entries = buildList(entryTitles, entryTexts);
         Collections.sort(entries, new Comparator<Entry>() {
             @Override
             public int compare(Entry lhs, Entry rhs) {

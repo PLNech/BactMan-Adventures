@@ -10,19 +10,19 @@ import org.andengine.opengl.vbo.VertexBufferObjectManager;
 import org.andengine.util.color.Color;
 
 /**
- * Created by PLN on 23/08/2015.
+ * Created by PLNech on 23/08/2015.
  */
 public abstract class WorldObject {
     private static final String TAG = "WorldObject";
-    public static final float SCALE_DEFAULT = 0.150f;
-    public static final float SCALE_GRABBED = 0.200f;
+    protected static final float SCALE_DEFAULT = 0.150f;
+    protected static final float SCALE_GRABBED = 0.200f;
 
-    protected TouchableAnimatedSprite sprite;
+    protected final TouchableAnimatedSprite sprite;
 
-    private Color defaultColor;
+    private final Color defaultColor;
 
-    public WorldObject(float pX, float pY, boolean touchable, @Nullable Float pScale,
-                       ITiledTextureRegion pTiledTextureRegion, VertexBufferObjectManager pVertexBufferObjectManager) {
+    protected WorldObject(float pX, float pY, boolean touchable, @Nullable Float pScale,
+                          ITiledTextureRegion pTiledTextureRegion, VertexBufferObjectManager pVertexBufferObjectManager) {
         if (pScale == null) {
             pScale = SCALE_DEFAULT;
         }
@@ -42,7 +42,7 @@ public abstract class WorldObject {
         sprite.registerEntityModifier(entityModifier);
     }
 
-    public static float getIdealScale(float scale, ITiledTextureRegion textureRegion) {
+    protected static float getIdealScale(float scale, ITiledTextureRegion textureRegion) {
         if (textureRegion.getHeight() + textureRegion.getWidth() <= 256) {
             return scale * 4;
         }

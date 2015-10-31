@@ -12,7 +12,7 @@ public class MemberEvent extends CustomEvent{
     public static final int ACTION_TWITTER = 2;
 
     private static final String TAG = "GlossaryReadEvent";
-    public static final String KEY_ACTION = "Action";
+    private static final String KEY_ACTION = "Action";
 
     public MemberEvent(TeamMember member, int action) {
         super("TeamView" + member.getName());

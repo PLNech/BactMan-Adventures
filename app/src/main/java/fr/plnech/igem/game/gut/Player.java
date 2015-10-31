@@ -13,8 +13,8 @@ import org.andengine.opengl.texture.region.ITiledTextureRegion;
  * Created by PLNech on 31/08/2015.
  */
 public class Player extends PhysicalWorldObject {
-    public static float SCALE_DEFAULT = 0.20f;
-    private Vector2 initialPosition;
+    private static final float SCALE_DEFAULT = 0.20f;
+    private final Vector2 initialPosition;
 
     public Player(float pX, float pY, float pAngle, ITiledTextureRegion pTiledTextureRegion, AbstractGameActivity activity) {
         super(new PhysicalWorldObject.Builder(pX, pY, pTiledTextureRegion, activity.getVBOM(), activity.getPhysicsWorld())

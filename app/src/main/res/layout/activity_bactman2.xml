@@ -1,23 +1,20 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools" android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
-    tools:context="com.example.lionel.bactman.bactman2"
-    android:background="@drawable/bactman_bg13">
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:tools="http://schemas.android.com/tools"
+              tools:context="com.example.lionel.bactman.bactman2"
+              android:background="@drawable/bactman_bg13"
+              android:orientation="vertical"
+              android:layout_width="fill_parent"
+              android:layout_height="fill_parent"
+              android:weightSum="1">
 
     <LinearLayout
-        android:orientation="vertical"
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:weightSum="1">
-
-        <LinearLayout
             android:orientation="horizontal"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="212dp">
 
-            <ImageButton
+        <ImageButton
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/imageButton"
@@ -26,9 +23,9 @@
                 android:layout_margin="10dp"
                 android:layout_gravity="center_horizontal"
                 android:clickable="true"
-                android:src="@drawable/bactman_play" />
+                android:src="@drawable/bactman_play"/>
 
-            <ImageButton
+        <ImageButton
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/imageButton2"
@@ -36,16 +33,16 @@
                 android:background="#0000"
                 android:layout_margin="10dp"
                 android:layout_gravity="center_horizontal"
-                android:clickable="true" />
-        </LinearLayout>
+                android:clickable="true"/>
+    </LinearLayout>
 
-        <LinearLayout
+    <LinearLayout
             android:orientation="horizontal"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_gravity="center_horizontal">
 
-            <ImageButton
+        <ImageButton
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/imageButton3"
@@ -53,9 +50,9 @@
                 android:background="#0000"
                 android:layout_margin="10dp"
                 android:layout_gravity="center_horizontal"
-                android:clickable="true" />
+                android:clickable="true"/>
 
-            <ImageButton
+        <ImageButton
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/imageButton4"
@@ -63,7 +60,6 @@
                 android:background="#0000"
                 android:layout_margin="10dp"
                 android:layout_gravity="center_horizontal"
-                android:clickable="true" />
-        </LinearLayout>
+                android:clickable="true"/>
     </LinearLayout>
-</RelativeLayout>
+</LinearLayout>

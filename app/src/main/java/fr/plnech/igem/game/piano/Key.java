@@ -12,17 +12,17 @@ import org.andengine.opengl.texture.region.ITiledTextureRegion;
 import org.andengine.util.color.Color;
 
 /**
- * Created by Paul-Louis Nech on 10/09/2015.
+ * Created by PLNech on 10/09/2015.
  */
 public class Key extends Base {
 
-    public static final float SCALE_DEFAULT = 0.1f;
-    public static final float BIGGER_SHAPE_FACTOR = 3f;
+    private static final float SCALE_DEFAULT = 0.1f;
+    private static final float BIGGER_SHAPE_FACTOR = 3f;
 
-    private PianoGame game;
-    private TouchableAnimatedSprite shape;
-    private Sprite shadowValid;
-    private Sprite shadowInvalid;
+    private final PianoGame game;
+    private final TouchableAnimatedSprite shape;
+    private final Sprite shadowValid;
+    private final Sprite shadowInvalid;
 
     public Key(Type type, PianoGame pGame) {
         super(position(type, pGame.getActivity()).x, position(type, pGame.getActivity()).y, type, true, true, pGame.getActivity());
@@ -45,7 +45,7 @@ public class Key extends Base {
         setMemberScales(SCALE_DEFAULT);
     }
 
-    protected void setMemberScales(float scale) {
+    private void setMemberScales(float scale) {
         setScaleAndCenter(shape, scale, true);
         setScaleAndCenter(shadowInvalid, scale, false);
         setScaleAndCenter(shadowValid, scale, false);

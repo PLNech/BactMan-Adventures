@@ -9,7 +9,7 @@ import org.andengine.opengl.texture.region.ITiledTextureRegion;
 import org.andengine.opengl.vbo.VertexBufferObjectManager;
 
 /**
- * Created by PLN on 19/08/2015.
+ * Created by PLNech on 19/08/2015.
  */
 public class Bin extends PhysicalWorldObject {
 
@@ -19,11 +19,11 @@ public class Bin extends PhysicalWorldObject {
         NORMAL, GLASS, BIO, LIQUIDS
     }
 
-    public static short ID = 0;
+    private static short ID = 0;
     public static final float SCALE_DEFAULT = 0.17f;
 
-    int id;
-    Type type;
+    private final int id;
+    private final Type type;
 
     public Bin(Type binType, float pX, float pY, ITiledTextureRegion pTextureRegion,
                VertexBufferObjectManager pVertexBufferObject, PhysicsWorld physicsWorld) {

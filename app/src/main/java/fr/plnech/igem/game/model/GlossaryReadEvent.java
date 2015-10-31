@@ -7,7 +7,7 @@ import com.crashlytics.android.answers.CustomEvent;
  */
 public class GlossaryReadEvent extends CustomEvent{
     private static final String TAG = "GlossaryReadEvent";
-    public static final String KEY_ENTRY = "Entry";
+    private static final String KEY_ENTRY = "Entry";
 
     public GlossaryReadEvent(String entryName) {
         super(TAG);

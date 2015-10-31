@@ -1,6 +1,5 @@
 package fr.plnech.igem.game.piano;
 
-import android.util.Log;
 import fr.plnech.igem.game.AbstractGameActivity;
 import fr.plnech.igem.game.managers.ResMan;
 import fr.plnech.igem.game.model.WorldObject;
@@ -11,11 +10,11 @@ import org.andengine.opengl.texture.region.ITiledTextureRegion;
  * Created by PLNech on 06/09/2015.
  */
 public class Base extends WorldObject {
-    public static final String TAG = "WorldObject";
+    static final String TAG = "WorldObject";
 
-    public static final float SCALE_DEFAULT = 0.08f; //TODO-OPTI: Scale upfront sprites instead of relying on this
+    private static final float SCALE_DEFAULT = 0.08f; //TODO-OPTI: Scale upfront sprites instead of relying on this
 
-    protected final Sprite phosphate;
+    private final Sprite phosphate;
 
     public enum Type {
         A, T, G, C;
@@ -28,13 +27,13 @@ public class Base extends WorldObject {
 
     }
 
-    protected Type type;
+    final Type type;
 
     public Base(float pX, float pY, Type pType, boolean cpl, AbstractGameActivity activity) {
         this(pX, pY, pType, cpl, false, activity);
     }
 
-    protected Base(float pX, float pY, Type pType, boolean cpl, boolean touchable, AbstractGameActivity activity) {
+    Base(float pX, float pY, Type pType, boolean cpl, boolean touchable, AbstractGameActivity activity) {
         super(pX, pY, touchable, SCALE_DEFAULT, activity.getTexture(chooseTextureName(pType, cpl)), activity.getVBOM());
         final ITiledTextureRegion texture = activity.getTexture(cpl ? ResMan.PIANO_L_PHO_CPL : ResMan.PIANO_L_PHO);
         final float phosphateX = pX - 0.45f * sprite.getWidth() * SCALE_DEFAULT;
@@ -51,7 +50,7 @@ public class Base extends WorldObject {
         setScale(SCALE_DEFAULT);
     }
 
-    protected void setScale(float scale) {
+    private void setScale(float scale) {
         sprite.setScaleCenter(sprite.getScaleCenterX() * scale,
                 sprite.getScaleCenterY() * scale); //TODO: Correct scaleCenter and position of all WorldObjects
         sprite.setScale(scale);
@@ -86,7 +85,7 @@ public class Base extends WorldObject {
         return getCplType(type);
     }
 
-    public static Type getCplType(Type type) {
+    private static Type getCplType(Type type) {
         switch (type) {
             case A:
                 return Type.T;

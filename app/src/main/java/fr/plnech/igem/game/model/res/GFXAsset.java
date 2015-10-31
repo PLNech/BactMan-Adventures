@@ -1,16 +1,16 @@
 package fr.plnech.igem.game.model.res;
 
 /**
- * Created by PLN on 21/08/2015.
+ * Created by PLNech on 21/08/2015.
  */
 public class GFXAsset extends Asset {
-    int width;
-    int height;
-    int textureX;
-    int textureY;
+    private final int width;
+    private final int height;
+    private final int textureX;
+    private final int textureY;
 
-    int tileColumns;
-    int tileRows;
+    private final int tileColumns;
+    private final int tileRows;
 
     public GFXAsset(String filename, int width, int height, int textureX, int textureY, int tileColumns, int tileRows) {
         super(filename);

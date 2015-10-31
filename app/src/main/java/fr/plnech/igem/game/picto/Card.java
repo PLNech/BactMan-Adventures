@@ -57,11 +57,11 @@ public class Card extends Sprite {
 
     public static final float SCALE_DEFAULT = 0.15f;
 
-    String type;
-    Sprite backSprite;
-    boolean isVisible = false;
+    private String type;
+    private Sprite backSprite;
+    private boolean isVisible = false;
 
-    PictoGame game;
+    private PictoGame game;
 
     public Card(float pX, float pY, String resCardName, ITextureRegion pTiledTextureRegion, AbstractGameActivity activity) {
         this(pX, pY, pTiledTextureRegion, activity.getVBOM());

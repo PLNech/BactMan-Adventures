@@ -4,7 +4,7 @@ package fr.plnech.igem.game.model.res;
  * Created by PLNech on 24/09/2015.
  */
 public class SoundAsset extends Asset {
-    private float volume;
+    private final float volume;
 
     public SoundAsset(String filename, float volume) {
         super(filename);

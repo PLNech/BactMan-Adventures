@@ -16,12 +16,12 @@ import org.andengine.util.color.Color;
 import java.util.Random;
 
 /**
- * Created by PLN on 19/08/2015.
+ * Created by PLNech on 19/08/2015.
  */
 public class Item extends PhysicalWorldObject {
 
 
-    public static final float BIGGER_SHAPE_FACTOR = 3f;
+    private static final float BIGGER_SHAPE_FACTOR = 3f;
 
     public enum Type {
         PAPER(Bin.Type.NORMAL),
@@ -41,7 +41,7 @@ public class Item extends PhysicalWorldObject {
         ROUNDFLASK_BROKEN(Bin.Type.GLASS),
         MICROTUBE(Bin.Type.BIO);
 
-        Bin.Type validBinType;
+        final Bin.Type validBinType;
 
         Type(Bin.Type pType) {
             validBinType = pType;
@@ -60,18 +60,18 @@ public class Item extends PhysicalWorldObject {
 
     private static final String TAG = "Item";
 
-    public static final float BODY_DENSITY = 1;
-    public static final float BODY_ELASTICITY = 0.5f;
-    public static final float BODY_FRICTION = 0.125f;
+    private static final float BODY_DENSITY = 1;
+    private static final float BODY_ELASTICITY = 0.5f;
+    private static final float BODY_FRICTION = 0.125f;
 
-    public static short ID = 0;
+    private static short ID = 0;
 
     private final BinGame game;
 
-    private int id;
+    private final int id;
     private int value = 1;
-    private Type type;
-    private TouchableAnimatedSprite shape;
+    private final Type type;
+    private final TouchableAnimatedSprite shape;
     private final Vector2 initialPosition;
 
     private boolean isGrabbed;

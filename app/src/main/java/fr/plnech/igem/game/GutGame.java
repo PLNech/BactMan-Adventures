@@ -11,7 +11,6 @@ import fr.plnech.igem.game.managers.ResMan;
 import fr.plnech.igem.game.model.HUDElement;
 import fr.plnech.igem.game.model.LandscapeGame;
 import fr.plnech.igem.game.model.Wall;
-import fr.plnech.igem.game.model.res.Asset;
 import fr.plnech.igem.game.model.res.FontAsset;
 import fr.plnech.igem.game.model.res.GFXAsset;
 import fr.plnech.igem.utils.CalcUtils;
@@ -44,10 +43,10 @@ import java.util.Locale;
 public class GutGame extends LandscapeGame {
     private static final String TAG = "GutGame";
 
-    public static final int INIT_LIVES = 3;
-    public static final float POS_ITEM_X = 850; // Initial item abscissa
+    private static final int INIT_LIVES = 3;
+    private static final float POS_ITEM_X = 850; // Initial item abscissa
     public static final int SPEED_ITEM_PPS = -150; // Initial item horizontal velocity
-    public static final int[] POS_FLOW = {110, 185, 260, 335};
+    private static final int[] POS_FLOW = {110, 185, 260, 335};
     private static final short NB_ITEMS = 4;
 
     public static final short CATEGORY_WALL = 1;
@@ -58,7 +57,7 @@ public class GutGame extends LandscapeGame {
     public static final short MASK_ITEM = CATEGORY_WALL + CATEGORY_PLAYER;
 
     public static final short GROUP_INDEX = 0;
-    public static final float ITEM_INTERVAL = 0.25f;
+    private static final float ITEM_INTERVAL = 0.25f;
 
     private int gameLives = INIT_LIVES;
 

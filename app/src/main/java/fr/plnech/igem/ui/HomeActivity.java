@@ -25,7 +25,7 @@ import io.fabric.sdk.android.Fabric;
 
 public class HomeActivity extends LoggedActivity implements SurfaceHolder.Callback {
     private static final String TAG = "HomeActivity";
-    public static final long TIME_PRESENTATION_GMT = 1443360600000L;
+    private static final long TIME_PRESENTATION_GMT = 1443360600000L;
     private MediaPlayer mPlayer;
 
     @InjectView(R.id.videoView)

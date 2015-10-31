@@ -28,15 +28,15 @@ import java.util.*;
  */
 public class PictoGame extends PortraitGame {
     private static final String TAG = "PictoGame";
-    public static final float FAIL_DURATION = 1.0f;
-    public static final float WIN_DURATION = 1.0f;
+    private static final float FAIL_DURATION = 1.0f;
+    private static final float WIN_DURATION = 1.0f;
 
     private double gameScorePercent = 0;
     private int gameTime = 100;
 
     private boolean isDisplayingCards = false;
 
-    private ArrayList<Card> cards = new ArrayList<>();
+    private final ArrayList<Card> cards = new ArrayList<>();
 
     private Card currentCard;
     private HUDElement HUDScore;

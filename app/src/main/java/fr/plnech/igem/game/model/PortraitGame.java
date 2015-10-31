@@ -1,14 +1,13 @@
 package fr.plnech.igem.game.model;
 
 import fr.plnech.igem.game.AbstractGameActivity;
-import fr.plnech.igem.game.LandscapeGameActivity;
 import fr.plnech.igem.game.PortraitGameActivity;
 
 /**
  * Created by PLNech on 22/09/2015.
  */
 public abstract class PortraitGame extends BaseGame {
-    public PortraitGame(AbstractGameActivity pActivity) {
+    protected PortraitGame(AbstractGameActivity pActivity) {
         super(pActivity);
     }
 

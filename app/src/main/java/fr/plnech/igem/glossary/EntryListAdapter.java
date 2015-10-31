@@ -9,17 +9,16 @@ import fr.plnech.igem.R;
 import java.util.*;
 
 /**
- * Created by Paul-Louis Nech on 15/09/2015.
+ * Created by PLNech on 15/09/2015.
  */
 public class EntryListAdapter extends ArrayAdapter<Entry> implements SectionIndexer {
-    public static final String TAG = "EntryAdapter";
-    public List<Entry> entries;
-    HashMap<String, Integer> mapIndex;
-    String[] sections;
+    private static final String TAG = "EntryAdapter";
+    private final HashMap<String, Integer> mapIndex;
+    private final String[] sections;
 
     public EntryListAdapter(Context context, List<Entry> pEntries) {
         super(context, R.layout.glossary_item, R.id.txt_title, pEntries);
-        entries = pEntries;
+        List<Entry> entries = pEntries;
         mapIndex = new LinkedHashMap<>();
 
         for (int i = 0; i < entries.size(); i++) {

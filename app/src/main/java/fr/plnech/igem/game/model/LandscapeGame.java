@@ -7,7 +7,7 @@ import fr.plnech.igem.game.LandscapeGameActivity;
  * Created by PLNech on 22/09/2015.
  */
 public abstract class LandscapeGame extends BaseGame {
-    public LandscapeGame(AbstractGameActivity pActivity) {
+    protected LandscapeGame(AbstractGameActivity pActivity) {
         super(pActivity);
     }
 

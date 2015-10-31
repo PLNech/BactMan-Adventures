@@ -38,17 +38,17 @@ import java.util.Locale;
 public class PianoGame extends LandscapeGame {
     private static final String TAG = "PianoGame";
 
-    public static final int INIT_SCORE = 0;
-    public static final float CREATION_INTERVAL = 0.05f;
-    public static final float DURATION_SHADER = 0.25f;
+    private static final int INIT_SCORE = 0;
+    private static final float CREATION_INTERVAL = 0.05f;
+    private static final float DURATION_SHADER = 0.25f;
 
     private HUDElement HUDScore;
     private HUDElement HUDTime;
 
     private int gameTime;
-    private ArrayList<Base> bases = new ArrayList<>();
-    private ArrayList<Base> baseCpls = new ArrayList<>();
-    private HashMap<Key.Type, Key> keyMap = new HashMap<>();
+    private final ArrayList<Base> bases = new ArrayList<>();
+    private final ArrayList<Base> baseCpls = new ArrayList<>();
+    private final HashMap<Key.Type, Key> keyMap = new HashMap<>();
 
     private int currentBaseIndex = 0;
 

@@ -23,7 +23,7 @@ public abstract class PhysicalWorldObject extends WorldObject {
     public static final float BODY_FRICTION = 0;
 
     protected Body body;
-    private Builder b;
+    private final Builder b;
 
     public static class Builder {
         private final float pX;

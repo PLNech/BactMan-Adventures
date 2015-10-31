@@ -10,7 +10,7 @@ import org.andengine.opengl.vbo.VertexBufferObjectManager;
 import org.andengine.util.color.Color;
 
 /**
- * Created by PLN on 21w/08/2015.
+ * Created by PLNech on 21w/08/2015.
  */
 public class HUDElement {
 
@@ -18,10 +18,10 @@ public class HUDElement {
         UNDEFINED, NORMAL, URGENT
     }
 
-    public static final float SCALE_DEFAULT = 0.125f;
-    Text text;
-    Sprite sprite;
-    State state = State.UNDEFINED;
+    private static final float SCALE_DEFAULT = 0.125f;
+    private Text text;
+    private Sprite sprite;
+    private State state = State.UNDEFINED;
 
     public HUDElement() {
     }

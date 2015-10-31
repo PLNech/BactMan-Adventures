@@ -3,13 +3,13 @@ package fr.plnech.igem.game.model.res;
 import android.graphics.Color;
 
 /**
- * Created by PLN on 21/08/2015.
+ * Created by PLNech on 21/08/2015.
  */
 public class FontAsset extends Asset {
 
-    int size;
-    int color;
-    boolean antialised;
+    private final int size;
+    private final int color;
+    private final boolean antialised;
 
     public FontAsset(String filename, int size, int color, boolean antialised) {
         super(filename);
