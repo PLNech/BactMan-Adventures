@@ -1,8 +1,23 @@
-# README #
+# BactMan Adventures
 
-This is IONIS iGEM 2015, the app popularizing biology through mini-games!
+BactMan Adventures is an Android app popularizing biology through several mini-games.
 
-### Developer setup guide ###
+>This program is free software: you can redistribute it and/or modify
+>it under the terms of the GNU General Public License as published by
+>the Free Software Foundation, either version 3 of the License, or
+>(at your option) any later version.  
+
+See accompanying [license](LICENSE.txt) and [disclaimer](DISCLAIMER.txt).
+
+--------
+
+### Contributing
+
+* All contributions are welcome as pull requests from a [feature branch](https://www.atlassian.com/git/tutorials/comparing-workflows/feature-branch-workflow).
+* This project has no formal coding style, yet **please do your best** to be consistent with its codebase.
+
+
+### Developer setup guide
 
 * Ensure you have the last version of Android SDK installed, with the [NDK Bundle](https://developer.android.com/tools/sdk/ndk/index.html)
 * Clone this repository and cd in its folder
