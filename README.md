@@ -1,6 +1,6 @@
 # BactMan Adventures
 
-[![BactMan Adventures](/../screenshots/img/poster.png "Optional Title")](https://play.google.com/store/apps/details?id=fr.plnech.igem)
+[![Download BactMan Adventures on the Google Play Store](/../screenshots/img/poster.png "Optional Title")](https://play.google.com/store/apps/details?id=fr.plnech.igem)
 
 
 BactMan Adventures is an Android game popularizing biology and science.
