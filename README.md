@@ -1,6 +1,11 @@
 # BactMan Adventures
 
-BactMan Adventures is an Android app popularizing biology through several mini-games.
+[![BactMan Adventures](/../screenshots/img/poster.png "Optional Title")](https://play.google.com/store/apps/details?id=fr.plnech.igem)
+
+
+BactMan Adventures is an Android game popularizing biology and science.
+It has been developed by the [2015 IONIS iGEM Team](http://2015.igem.org/Team:IONIS_Paris),
+who was awarded a gold medal for their participation in the 2015 competition. 
 
 >This program is free software: you can redistribute it and/or modify
 >it under the terms of the GNU General Public License as published by
@@ -10,6 +15,8 @@ BactMan Adventures is an Android app popularizing biology through several mini-g
 See accompanying [license](LICENSE.txt) and [disclaimer](DISCLAIMER.txt).
 
 --------
+ 
+
 
 ### Contributing
 
