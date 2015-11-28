@@ -12,7 +12,6 @@ package fr.plnech.igem.carousel;
 import android.support.annotation.Nullable;
 
 public class TeamMember {
-    //TODO: Create own class for sponsors
     private final String firstName;
     private final String lastName;
     private final String avatarResName;
@@ -24,14 +23,9 @@ public class TeamMember {
     private final String urlTwitter;
 
     private boolean isTransparent;
-    private boolean noName;
 
     public TeamMember(String name, String avatarResName) {
         this(name, null, avatarResName, null, null, null);
-    }
-
-    public TeamMember(String firstName, String lastName, String avatarResName) {
-        this(firstName, lastName, avatarResName, null, null, null);
     }
 
     public TeamMember(String firstName, String lastName, String avatarResName, @Nullable String quote) {
@@ -54,7 +48,7 @@ public class TeamMember {
     }
 
     public String getName() {
-        return noName ? null : firstName;
+        return firstName;
     }
 
     public String getLastName() {
@@ -98,7 +92,6 @@ public class TeamMember {
                 ", urlLinkedin='" + urlLinkedin + '\'' +
                 ", urlTwitter='" + urlTwitter + '\'' +
                 ", isTransparent=" + isTransparent +
-                ", noName=" + noName +
                 '}';
     }
 }

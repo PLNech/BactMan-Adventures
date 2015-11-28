@@ -11,7 +11,7 @@ Distributed under the GNU GPLv3 License.
                 xmlns:tools="http://schemas.android.com/tools"
                 style="@style/AppTheme.Layout"
                 tools:context="fr.plnech.igem.ui.ContactUsActivity">
-    <ImageView style="@style/AppTheme.ImageView.Background.Texts"/>
+    <ImageView style="@style/AppTheme.ImageView.Background.Texts" tools:ignore="ContentDescription"/>
     <ImageView style="@style/AppTheme.ImageView.FullWidth"
                android:id="@+id/mainPic"
                android:src="@drawable/contact_us"
@@ -36,16 +36,16 @@ Distributed under the GNU GPLv3 License.
                   android:weightSum="4">
         <ImageView style="@style/AppTheme.ImageView.Icon"
                    android:src="@drawable/youtube"
-                   android:id="@+id/icon_youtube"/>
+                   android:id="@+id/icon_youtube" android:contentDescription="@string/content_background"/>
         <ImageView style="@style/AppTheme.ImageView.Icon"
                    android:id="@+id/icon_facebook"
-                   android:src="@drawable/facebook"/>
+                   android:src="@drawable/facebook" android:contentDescription="@string/content_facebook"/>
         <ImageView style="@style/AppTheme.ImageView.Icon"
                    android:src="@drawable/twitter"
-                   android:id="@+id/icon_twitter"/>
+                   android:id="@+id/icon_twitter" android:contentDescription="@string/content_twitter"/>
         <ImageView style="@style/AppTheme.ImageView.Icon"
                    android:src="@drawable/email"
-                   android:id="@+id/icon_email"/>
+                   android:id="@+id/icon_email" android:contentDescription="@string/content_email"/>
     </LinearLayout>
 </RelativeLayout>
 

@@ -12,7 +12,7 @@ Distributed under the GNU GPLv3 License.
                 xmlns:tools="http://schemas.android.com/tools" android:layout_height="wrap_content" android:layout_width="fill_parent">
     <ImageView style="@style/AppTheme.ImageView.Carousel"
                android:id="@+id/avatar"
-               android:src="@drawable/avatar_armelle" />
+               android:src="@drawable/avatar_armelle" tools:ignore="ContentDescription"/>
 
     <TextView xmlns:android="http://schemas.android.com/apk/res/android"
               style="@style/AppTheme.TextView"

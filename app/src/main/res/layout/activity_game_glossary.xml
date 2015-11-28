@@ -10,7 +10,7 @@ Distributed under the GNU GPLv3 License.
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
                 xmlns:tools="http://schemas.android.com/tools"
                 style="@style/AppTheme.Layout">
-    <ImageView style="@style/AppTheme.ImageView.Background.Texts"/>
+    <ImageView style="@style/AppTheme.ImageView.Background.Texts" tools:ignore="ContentDescription"/>
     <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
                     xmlns:tools="http://schemas.android.com/tools"
                     style="@style/AppTheme.Layout.Detail"

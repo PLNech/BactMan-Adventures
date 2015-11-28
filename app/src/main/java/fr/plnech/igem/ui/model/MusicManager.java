@@ -7,10 +7,6 @@ Distributed under the GNU GPLv3 License.
 =======================================================================
 */
 
-/**
- * Created by Robert Green on 08/03/2009.
- */
-
 package fr.plnech.igem.ui.model;
 
 import android.content.Context;

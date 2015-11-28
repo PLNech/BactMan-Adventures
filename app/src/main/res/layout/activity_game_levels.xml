@@ -11,7 +11,7 @@ Distributed under the GNU GPLv3 License.
                 xmlns:tools="http://schemas.android.com/tools"
                 tools:context="fr.plnech.igem.ui.GameLevelsActivity"
                 style="@style/AppTheme.Layout">
-    <ImageView style="@style/AppTheme.ImageView.Background.Menus"/>
+    <ImageView style="@style/AppTheme.ImageView.Background.Menus" tools:ignore="ContentDescription"/>
     <LinearLayout style="@style/AppTheme.Layout.Menu">
         <RelativeLayout style="@style/AppTheme.Container.Title.Menu">
             <TextView style="@style/AppTheme.TextView.Title"

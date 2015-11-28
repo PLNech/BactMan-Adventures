@@ -9,9 +9,6 @@ Distributed under the GNU GPLv3 License.
 
 package fr.plnech.igem.game.model.res;
 
-/**
- * Created by PLNech on 24/09/2015.
- */
 public class SoundAsset extends Asset {
     private final float volume;
 

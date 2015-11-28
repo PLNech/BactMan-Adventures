@@ -9,9 +9,6 @@ Distributed under the GNU GPLv3 License.
 
 package fr.plnech.igem.game.model.res;
 
-/**
- * Created by PLNech on 21/08/2015.
- */
 public class GFXAsset extends Asset {
     private final int width;
     private final int height;

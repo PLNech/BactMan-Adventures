@@ -10,7 +10,7 @@ Distributed under the GNU GPLv3 License.
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
                 xmlns:tools="http://schemas.android.com/tools"
                 style="@style/AppTheme.Layout">
-    <ImageView style="@style/AppTheme.ImageView.Background.Texts"/>
+    <ImageView style="@style/AppTheme.ImageView.Background.Texts" tools:ignore="ContentDescription"/>
     <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
                 xmlns:tools="http://schemas.android.com/tools"
                 style="@style/AppTheme.ScrollView">
@@ -21,7 +21,7 @@ Distributed under the GNU GPLv3 License.
             <ImageView style="@style/AppTheme.ImageView.FullWidth"
                        android:id="@+id/mainPic"
                        android:src="@drawable/people"
-                       android:contentDescription="@string/igem_title"/>
+                       android:contentDescription="@string/content_igem"/>
 
             <RelativeLayout style="@style/AppTheme.Container.Title"
                             android:padding="0dp" android:layout_margin="0dp"

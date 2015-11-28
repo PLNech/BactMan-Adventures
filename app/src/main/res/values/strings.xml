@@ -844,6 +844,11 @@ Distributed under the GNU GPLv3 License.
         \nCome and bring your teammates with you!
     </string>
     <string name="msg_event_title">IONIS Paris presents \"The BioConsole\"</string>
+    <string name="content_igem">iGEM From Above Jamboree Picture</string>
+    <string name="content_youtube"/>
+    <string name="content_email">E-Mail</string>
+    <string name="content_twitter">Twitter</string>
+    <string name="content_facebook">Facebook</string>
 
     <string-array name="glossary_titles">
         <item>DNA</item>

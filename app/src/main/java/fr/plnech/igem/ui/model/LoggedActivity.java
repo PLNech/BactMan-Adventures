@@ -89,13 +89,6 @@ public abstract class LoggedActivity extends LifecycleDispatchActivity implement
         listenerBinding.unbind();
     }
 
-    //FIXME: Pause music on Recents press but keep continuity across activities
-//    @Override
-//    protected void onUserLeaveHint() {
-//        MusicManager.pause();
-//        super.onUserLeaveHint();
-//    }
-
     @Override
     public boolean onKeyDown(int keyCode, @NonNull KeyEvent event) {
 //      We pause music in several cases:

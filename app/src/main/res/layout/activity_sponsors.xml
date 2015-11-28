@@ -11,7 +11,7 @@ Distributed under the GNU GPLv3 License.
                 xmlns:tools="http://schemas.android.com/tools"
                 tools:context="fr.plnech.igem.ui.SponsorsActivity"
                 style="@style/AppTheme.Layout">
-    <ImageView style="@style/AppTheme.ImageView.Background.Texts"/>
+    <ImageView style="@style/AppTheme.ImageView.Background.Texts" tools:ignore="ContentDescription"/>
     <fr.rolandl.carousel.Carousel
             xmlns:android="http://schemas.android.com/apk/res/android"
             android:id="@+id/carousel"

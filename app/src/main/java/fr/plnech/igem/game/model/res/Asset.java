@@ -9,9 +9,6 @@ Distributed under the GNU GPLv3 License.
 
 package fr.plnech.igem.game.model.res;
 
-/**
- * Created by PLNech on 21/08/2015.
- */
 public class Asset {
     final String filename;
 

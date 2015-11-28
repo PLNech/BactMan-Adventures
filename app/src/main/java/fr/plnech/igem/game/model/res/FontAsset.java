@@ -11,9 +11,6 @@ package fr.plnech.igem.game.model.res;
 
 import android.graphics.Color;
 
-/**
- * Created by PLNech on 21/08/2015.
- */
 public class FontAsset extends Asset {
 
     private final int size;
